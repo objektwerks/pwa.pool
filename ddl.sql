@@ -3,7 +3,7 @@ timers, timersettings, heaters, heateron, heateroff,
 cleanings, measurements, chemicals, supplies, repairs;
 
 CREATE TABLE owners (
- license String DEFAULT uuid_generate_v4(),
+ license String NOT NULL,
  email VARCHAR NOT NULL,
  PRIMARY KEY (license)
 );
