@@ -5,6 +5,7 @@ name := "tripletail"
 
 val akkaVersion = "2.5.19"
 val akkkHttpVersion = "10.1.7"
+val quillVersion = "2.6.0"
 val circeVersion =  "0.11.0"
 val scalaJsDomVersion = "0.9.6"
 
@@ -67,7 +68,8 @@ lazy val jvm = (project in file("jvm"))
       "com.typesafe.akka" %% "akka-stream" % akkaVersion,
       "com.typesafe.akka" %% "akka-slf4j" % akkaVersion,
       "de.heikoseeberger" %% "akka-http-circe" % "1.23.0",
-      "io.getquill" %% "quill-sql" % "2.6.0",
+      "io.getquill" %% "quill-sql" % quillVersion,
+      "io.getquill" %% "quill-async-postgres" % quillVersion,
       "com.typesafe" % "config" % "1.3.3",
       "ch.qos.logback" % "logback-classic" % "1.2.3",
       "com.typesafe.akka" %% "akka-testkit" % akkaVersion % "test",

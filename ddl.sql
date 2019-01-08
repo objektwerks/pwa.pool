@@ -1,18 +1,16 @@
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-
 DROP TABLE IF EXISTS owners, pools, surfaces, pumps,
 timers, timersettings, heaters, heateron, heateroff,
 cleanings, measurements, chemicals, supplies, repairs;
 
 CREATE TABLE owners (
- license UUID DEFAULT uuid_generate_v4(),
+ license String DEFAULT uuid_generate_v4(),
  email VARCHAR NOT NULL,
  PRIMARY KEY (license)
 );
 
 CREATE TABLE pools {
   id SERIAL NOT NULL,
-  license UUID NOT NULL,
+  license String NOT NULL,
   built DATE NOT NULL,
   lat FLOAT NOT NULL CHECK (lat > 0.0),
   lon FLOAT NOT NULL CHECK (long > 0.0),
