@@ -8,7 +8,7 @@ CREATE TABLE owners (
  PRIMARY KEY (license)
 );
 
-CREATE TABLE pools {
+CREATE TABLE pools (
   id SERIAL NOT NULL,
   license String NOT NULL,
   built DATE NOT NULL,
@@ -17,36 +17,36 @@ CREATE TABLE pools {
   volume INTEGER NOT NULL CHECK (volume > 1000),
   PRIMARY KEY (id, license),
   FOREIGN KEY (license) REFERENCES owners(license)
-};
+);
 
-CREATE TABLE surfaces {
+CREATE TABLE surfaces (
   id SERIAL NOT NULL,
   pid INTEGER NOT NULL,
   installed DATE NOT NULL,
   kind VARCHAR NOT NULL,
   PRIMARY KEY (id, pid),
   FOREIGN KEY (pid) REFERENCES pools(id)
-};
+);
 
-CREATE TABLE pumps {
+CREATE TABLE pumps (
   id SERIAL NOT NULL,
   pid INTEGER NOT NULL,
   installed DATE NOT NULL,
   model VARCHAR NOT NULL,
   PRIMARY KEY (id, pid),
   FOREIGN KEY (pid) REFERENCES pools(id)
-};
+);
 
-CREATE TABLE timers {
+CREATE TABLE timers (
   id SERIAL NOT NULL,
   pid INTEGER NOT NULL,
   installed DATE NOT NULL,
   model VARCHAR NOT NULL,
   PRIMARY KEY (id, pid),
   FOREIGN KEY (pid) REFERENCES pools(id)
-};
+);
 
-CREATE TABLE timersettings {
+CREATE TABLE timersettings (
   id SERIAL NOT NULL,
   tid INTEGER NOT NULL,
   set DATE NOT NULL,
@@ -54,35 +54,35 @@ CREATE TABLE timersettings {
   off TIME NOT NULL CHECK (on > off),
   PRIMARY KEY (id, tid),
   FOREIGN KEY (tid) REFERENCES timers(id)
-};
+);
 
-CREATE TABLE heaters {
+CREATE TABLE heaters (
   id SERIAL NOT NULL,
   pid INTEGER NOT NULL,
   installed DATE NOT NULL,
   model VARCHAR NOT NULL,
   PRIMARY KEY (id, pid),
   FOREIGN KEY (pid) REFERENCES pools(id)
-};
+);
 
-CREATE TABLE heateron {
+CREATE TABLE heateron (
   id SERIAL NOT NULL,
   hid INTEGER NOT NULL,
   temp INTEGER NOT NULL CHECK (temp > 70),
   on DATE NOT NULL,
   PRIMARY KEY (id, hid),
   FOREIGN KEY (hid) REFERENCES heaters(hid)    
-};
+);
 
-CREATE TABLE heateroff {
+CREATE TABLE heateroff (
   id SERIAL NOT NULL,
   hid INTEGER NOT NULL,
   off DATE NOT NULL,
   PRIMARY KEY (id, hid),
   FOREIGN KEY (hid) REFERENCES heaters(hid)    
-};
+);
 
-CREATE TABLE cleanings {
+CREATE TABLE cleanings (
   id SERIAL NOT NULL,
   pid INTEGER NOT NULL,
   brush BOOL NOT NULL,
@@ -95,9 +95,9 @@ CREATE TABLE cleanings {
   deck BOOL NOT NULL,
   PRIMARY KEY (id, pid),
   FOREIGN KEY (pid) REFERENCES pools(id)
-};
+);
 
-CREATE TABLE measurements {
+CREATE TABLE measurements (
   id SERIAL NOT NULL,
   pid INTEGER NOT NULL,
   temp FLOAT NOT NULL CHECK (temp > 32.0 AND temp < 100.0),
@@ -110,9 +110,9 @@ CREATE TABLE measurements {
   cyanuricAcid INTEGER NOT NULL CHECK (cyanuricAcid >= 0 AND cyanuricAcid <= 300),
   PRIMARY KEY (id, pid),
   FOREIGN KEY (pid) REFERENCES pools(id)
-};
+);
 
-CREATE TABLE chemicals {
+CREATE TABLE chemicals (
   id SERIAL NOT NULL,
   pid INTEGER NOT NULL,
   added DATE NOT NULL,
@@ -121,9 +121,9 @@ CREATE TABLE chemicals {
   unit VARCHAR NOT NULL,
   PRIMARY KEY (id, pid),
   FOREIGN KEY (pid) REFERENCES pools(id)
-};
+);
 
-CREATE TABLE supplies {
+CREATE TABLE supplies (
   id SERIAL NOT NULL,
   pid INTEGER NOT NULL,
   purchased DATE NOT NULL,
@@ -133,9 +133,9 @@ CREATE TABLE supplies {
   unit VARCHAR NOT NULL,
   PRIMARY KEY (id, pid),
   FOREIGN KEY (pid) REFERENCES pools(id)
-};
+);
 
-CREATE TABLE repairs {
+CREATE TABLE repairs (
   id SERIAL NOT NULL,
   pid INTEGER NOT NULL,
   repaired DATE NOT NULL,
@@ -143,4 +143,4 @@ CREATE TABLE repairs {
   repair VACHAR NOT NULL,
   PRIMARY KEY (id, pid),
   FOREIGN KEY (pid) REFERENCES pools(id)
-};
+);
