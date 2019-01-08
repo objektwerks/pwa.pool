@@ -11,8 +11,8 @@ CREATE TABLE pools (
   id SERIAL PRIMARY KEY,
   license VARCHAR REFERENCES owners(license),
   built DATE NOT NULL,
-  lat NUMERIC(2, 6) CHECK (lat > 0.0),
-  lon NUMERIC(3, 6) CHECK (lon > 0.0),
+  lat DOUBLE PRECISION NOT NULL CHECK (lat > 0.0),
+  lon DOUBLE PRECISION NOT NULL CHECK (lon > 0.0),
   volume INTEGER NOT NULL CHECK (volume > 1000)
 );
 
