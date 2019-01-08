@@ -34,9 +34,9 @@ Rest
 * /pool/:id/surfaces
 * /pool/:id/pumps
 * /pool/:id/timers
-* /pool/:id/timers/:pid/timersettings
-* /pool/:id/heaters/:pid/heaterons
-* /pool/:id/heaters/:pid/heateroffs
+* /pool/:id/timers/:id/timersettings
+* /pool/:id/heaters/:id/heaterons
+* /pool/:id/heaters/:id/heateroffs
 * /pool/:id/heaters
 * /pool/:id/cleanings
 * /pool/:id/measurements
@@ -48,18 +48,18 @@ Object Model
 ------------
 * Owner(license, email)
 * Pool(id, license, built, lat, lon, volume)
-* Surface(id, pid, installed, kind)
-* Pump(id, pid, installed, model)
-* Timer(id, pid, installed, model)
-* TimerSetting(id, tid, set, on, off)
-* Heater(id, pid, installed, model)
-* HeaterOn(id, hid, temp, on)
-* HeaterOff(id, hid, off)
-* Cleaning(id, pid, brush, net, vacuum, skimmerBasket, pumpBasket, pumpFilter, pumpChlorineTablets, deck)
-* Measurement(id, pid, temp, totalHardness, totalChlorine, totalBromine, freeChlorine, ph, totalAlkalinity, cyanuricAcid)
-* Chemical(id, pid, added, name, amount, unit)
-* Supply(id, pid, purchased, cost, name, amount, unit)
-* Repair(id, pid, repaired, cost, repair)
+* Surface(id, poolId, installed, kind)
+* Pump(id, poolId, installed, model)
+* Timer(id, poolId, installed, model)
+* TimerSetting(id, timerId, set, timerOn, timerOff)
+* Heater(id, poolId, installed, model)
+* HeaterOn(id, heaterId, temp, heaterOn)
+* HeaterOff(id, heaterId, heatorOff)
+* Cleaning(id, poolId, brush, net, vacuum, skimmerBasket, pumpBasket, pumpFilter, pumpChlorineTablets, deck)
+* Measurement(id, poolId, temp, totalHardness, totalChlorine, totalBromine, freeChlorine, ph, totalAlkalinity, cyanuricAcid)
+* Chemical(id, poolId, added, chemical, amount, unit)
+* Supply(id, poolId, purchased, cost, supply, amount, unit)
+* Repair(id, poolId, repaired, cost, repair)
 
 Relational Model
 ----------------
