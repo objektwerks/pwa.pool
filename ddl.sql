@@ -83,7 +83,7 @@ CREATE TABLE cleanings (
 CREATE TABLE measurements (
   id SERIAL PRIMARY KEY,
   pool_id INTEGER REFERENCES pools(id),
-  temp NUMERIC(3, 1) CHECK (temp > 32.0 AND temp < 100.0),
+  temp INTEGER CHECK (temp >= 32 AND temp <= 100),
   totalHardness INTEGER NOT NULL CHECK (totalHardness >= 0 AND totalHardness <= 1000),
   totalChlorine INTEGER NOT NULL CHECK (totalChlorine >= 0 AND totalChlorine <= 10),
   totalBromine INTEGER NOT NULL CHECK (totalBromine >= 0 AND totalBromine <= 20),
@@ -107,7 +107,7 @@ CREATE TABLE supplies (
   pool_id INTEGER REFERENCES pools(id),
   purchased DATE NOT NULL,
   cost NUMERIC(5, 2) CHECK (cost > 0.0),
-  supply VARCHAR NOT NULL,
+  item VARCHAR NOT NULL,
   amount NUMERIC(4, 2),
   unit VARCHAR NOT NULL
 );
