@@ -1,5 +1,5 @@
 DROP TABLE IF EXISTS owners, pools, surfaces, pumps,
-timers, timersettings, heaters, heateron, heateroff,
+timers, timer_settings, heaters, heater_on, heater_off,
 cleanings, measurements, chemicals, supplies, repairs;
 
 CREATE TABLE owners (
@@ -39,12 +39,12 @@ CREATE TABLE timers (
   model VARCHAR NOT NULL
 );
 
-CREATE TABLE timersettings (
+CREATE TABLE timer_settings (
   id SERIAL PRIMARY KEY,
   timer_id INTEGER REFERENCES timers(id),
   set DATE NOT NULL,
-  timer_on TIME(4) NOT NULL,
-  timer_off TIME(4) NOT NULL CHECK (timer_on > timer_off)
+  set_on TIME(4) NOT NULL,
+  set_off TIME(4) NOT NULL CHECK (set_on > set_off)
 );
 
 CREATE TABLE heaters (
@@ -54,17 +54,17 @@ CREATE TABLE heaters (
   model VARCHAR NOT NULL
 );
 
-CREATE TABLE heateron (
+CREATE TABLE heater_on (
   id SERIAL PRIMARY KEY,
   heater_id INTEGER REFERENCES heaters(id),
   temp INTEGER NOT NULL CHECK (temp > 70),
-  heater_on DATE NOT NULL
+  set DATE NOT NULL
 );
 
-CREATE TABLE heateroff (
+CREATE TABLE heater_off (
   id SERIAL PRIMARY KEY,
   heater_id INTEGER REFERENCES heaters(id),
-  heater_off DATE NOT NULL
+  set DATE NOT NULL
 );
 
 CREATE TABLE cleanings (
@@ -76,7 +76,7 @@ CREATE TABLE cleanings (
   skimmerBasket BOOL NOT NULL,
   pumpBasket BOOL NOT NULL,
   pumpFilter BOOL NOT NULL,
-  pumpChlorineTablets INTEGER NOT NULL CHECK (pumpChlorineTablets > 0),
+  pumpChlorineTablets INTEGER NOT NULL,
   deck BOOL NOT NULL
 );
 

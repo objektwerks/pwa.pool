@@ -5,6 +5,7 @@ import java.time.{LocalDate, LocalDateTime, LocalTime}
 
 object Entity {
   private final case class Owner(id: Integer, email: String, established: Timestamp, license: String)
+
   object Owner {
     def apply(email: String): Owner = {
       val established = Timestamp.valueOf(LocalDateTime.now)
@@ -20,13 +21,13 @@ object Entity {
 
   final case class Timer(id: Integer, poolId: Integer, installed: LocalDate, model: String)
 
-  final case class Timersettings(id: Integer, timerId: Integer, set: LocalDate, timeOn: LocalTime, timeOff: LocalTime)
+  final case class TimerSetting(id: Integer, timerId: Integer, set: LocalDate, setOn: LocalTime, setOff: LocalTime)
 
   final case class Heater(id: Integer, poolId: Integer, installed: LocalDate, model: String)
 
-  final case class HeaterOn(id: Integer, heaterId: Integer, temp: Integer, heaterOn: LocalDate)
+  final case class HeaterOn(id: Integer, heaterId: Integer, temp: Integer, set: LocalDate)
 
-  final case class HeaterOff(id: Integer, heaterId: Integer, heaterOff: LocalDate)
+  final case class HeaterOff(id: Integer, heaterId: Integer, set: LocalDate)
 
   final case class Cleaning(id: Integer, poolId: Integer, brush: Boolean, net: Boolean, vacuum: Boolean, skimmerBasket: Boolean,
                             pumpBasket: Boolean, pumpFilter: Boolean, pumpChlorineTablets: Integer, deck: Boolean)
