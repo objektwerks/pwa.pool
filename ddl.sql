@@ -3,13 +3,15 @@ timers, timersettings, heaters, heateron, heateroff,
 cleanings, measurements, chemicals, supplies, repairs;
 
 CREATE TABLE owners (
- license VARCHAR PRIMARY KEY,
- email VARCHAR NOT NULL
+ id SERIAL PRIMARY KEY,
+ email VARCHAR NOT NULL,
+ establisehd TIMESTAMP NOT NULL,
+ license VARCHAR NOT NULL
 );
 
 CREATE TABLE pools (
   id SERIAL PRIMARY KEY,
-  license VARCHAR REFERENCES owners(license),
+  owner_id INTEGER REFERENCES owners(id),
   built DATE NOT NULL,
   lat DOUBLE PRECISION NOT NULL CHECK (lat > 0.0),
   lon DOUBLE PRECISION NOT NULL CHECK (lon > 0.0),
@@ -41,8 +43,8 @@ CREATE TABLE timersettings (
   id SERIAL PRIMARY KEY,
   timer_id INTEGER REFERENCES timers(id),
   set DATE NOT NULL,
-  timer_on TIME NOT NULL,
-  timer_off TIME NOT NULL CHECK (timer_on > timer_off)
+  timer_on TIME(4) NOT NULL,
+  timer_off TIME(4) NOT NULL CHECK (timer_on > timer_off)
 );
 
 CREATE TABLE heaters (
