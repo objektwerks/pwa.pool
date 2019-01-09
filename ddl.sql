@@ -44,7 +44,7 @@ CREATE TABLE timer_settings (
   timer_id INTEGER REFERENCES timers(id),
   set DATE NOT NULL,
   set_on TIME(4) NOT NULL,
-  set_off TIME(4) NOT NULL CHECK (set_on > set_off)
+  set_off TIME(4) NOT NULL CHECK (set_off > set_on)
 );
 
 CREATE TABLE heaters (
