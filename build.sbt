@@ -38,8 +38,7 @@ lazy val js = (project in file("js"))
       "org.scala-js" %%% "scalajs-dom" % scalaJsDomVersion,
       "org.scala-js" %%% "scalajs-java-time" % "0.2.5",
       "io.circe" %%% "circe-core" % circeVersion,
-      "io.circe" %%% "circe-generic" % circeVersion,
-      "io.circe" %%% "circe-parser" % circeVersion
+      "io.circe" %%% "circe-generic" % circeVersion
     )
   ) dependsOn sharedJS
 
@@ -63,6 +62,8 @@ lazy val jvm = (project in file("jvm"))
       "com.typesafe.akka" %% "akka-stream" % akkaVersion,
       "com.typesafe.akka" %% "akka-slf4j" % akkaVersion,
       "de.heikoseeberger" %% "akka-http-circe" % "1.23.0",
+      "io.circe" %% "circe-core" % circeVersion,
+      "io.circe" %% "circe-generic" % circeVersion,
       "io.getquill" %% "quill-sql" % quillVersion,
       "io.getquill" %% "quill-async-postgres" % quillVersion,
       "com.typesafe" % "config" % "1.3.3",
