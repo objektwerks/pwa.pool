@@ -4,7 +4,7 @@ import java.sql.Timestamp
 import java.time.{LocalDate, LocalDateTime, LocalTime}
 
 object Entity {
-  private final case class Owner(id: Integer, email: String, established: Timestamp, license: String)
+  final case class Owner(id: Integer, email: String, established: Timestamp, license: String)
 
   object Owner {
     def apply(email: String): Owner = {
