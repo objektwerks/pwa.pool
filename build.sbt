@@ -26,11 +26,6 @@ lazy val root = project.in(file("."))
 lazy val shared = crossProject(JSPlatform, JVMPlatform)
   .crossType(CrossType.Pure)
   .settings(commonSettings)
-  .settings(
-    libraryDependencies ++= Seq(
-      "io.circe" %% "circe-core" % circeVersion
-    )
-  )
 
 lazy val sharedJS = shared.js
 lazy val sharedJVM = shared.jvm
