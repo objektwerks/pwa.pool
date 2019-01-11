@@ -27,10 +27,9 @@ Panes
 Rest
 ----
 * /api/v1/..
-* /signup
-* /signin
-* /owners/:license
-* /owners/:license/pools
+* /signup/:email
+* /signin/:license
+* /pools/:license
 * /pool/:id/surfaces
 * /pool/:id/pumps
 * /pool/:id/timers

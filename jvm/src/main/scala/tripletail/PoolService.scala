@@ -1,5 +1,8 @@
 package tripletail
 
+import java.time.LocalDate
+import java.util.UUID
+
 import akka.http.scaladsl.marshalling.ToResponseMarshallable
 import akka.http.scaladsl.model.StatusCodes._
 import akka.http.scaladsl.server.Directives._
@@ -13,25 +16,24 @@ object PoolService {
   val resources = get {
     getFromResourceDirectory("public")
   }
-  val postOwner = path("owners") {
-    post {
-      entity(as[Owner]) { owner =>
-        onSuccess(PoolRepository.postOwner(owner)) {
-          complete( OK )
-        }
+  val signup = path("signup" / Segment ) { email =>
+    get {
+      val owner = Owner(UUID.randomUUID.toString, LocalDate.now, email)
+      onSuccess(PoolRepository.signup(owner)) {
+        complete( ToResponseMarshallable[Owner](owner) )
       }
     }
   }
-  val getOwner = path("owners" / Segment) { license =>
+  val signin = path("signin" / Segment) { license =>
     get {
-      onSuccess(PoolRepository.getOwner(license)) {
+      onSuccess(PoolRepository.signin(license)) {
         case Some(owner) => complete( ToResponseMarshallable[Owner](owner) )
         case None => complete( NotFound )
       }
     }
   }
   val api = pathPrefix("api" / "v1" / "tripletail") {
-    postOwner ~ getOwner
+    signup ~ signin
   }
   val routes = index ~ resources ~ api
 }
