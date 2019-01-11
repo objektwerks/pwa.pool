@@ -3,15 +3,14 @@ timer, timer_setting, heater, heater_on, heater_off,
 cleaning, measurement, chemical, supply, repair;
 
 CREATE TABLE owner (
- id SERIAL PRIMARY KEY,
- email VARCHAR NOT NULL,
- establisehd TIMESTAMP NOT NULL,
- license VARCHAR NOT NULL
+ license VARCHAR PRIMARY KEY,
+ establisehd DATE NOT NULL,
+ email VARCHAR NOT NULL
 );
 
 CREATE TABLE pool (
   id SERIAL PRIMARY KEY,
-  owner_id INTEGER REFERENCES owner(id),
+  license VARCHAR REFERENCES owner(license),
   built DATE NOT NULL,
   lat DOUBLE PRECISION NOT NULL CHECK (lat > 0.0),
   lon DOUBLE PRECISION NOT NULL CHECK (lon > 0.0),

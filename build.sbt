@@ -26,7 +26,12 @@ lazy val root = project.in(file("."))
 lazy val shared = crossProject(JSPlatform, JVMPlatform)
   .crossType(CrossType.Pure)
   .settings(commonSettings)
-
+  .settings(
+    libraryDependencies ++= Seq(
+      "io.circe" %% "circe-core" % circeVersion,
+      "io.circe" %% "circe-generic" % circeVersion
+    )
+  )
 lazy val sharedJS = shared.js
 lazy val sharedJVM = shared.jvm
 
@@ -62,8 +67,6 @@ lazy val jvm = (project in file("jvm"))
       "com.typesafe.akka" %% "akka-stream" % akkaVersion,
       "com.typesafe.akka" %% "akka-slf4j" % akkaVersion,
       "de.heikoseeberger" %% "akka-http-circe" % "1.23.0",
-      "io.circe" %% "circe-core" % circeVersion,
-      "io.circe" %% "circe-generic" % circeVersion,
       "io.getquill" %% "quill-sql" % quillVersion,
       "io.getquill" %% "quill-async-postgres" % quillVersion,
       "com.typesafe" % "config" % "1.3.3",

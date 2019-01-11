@@ -1,5 +1,7 @@
 package tripletail
 
+import akka.http.scaladsl.marshalling.ToResponseMarshallable
+import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.Directives._
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport._
 import io.circe.generic.auto._
@@ -15,10 +17,11 @@ object PoolService {
   val resources = get {
     getFromResourceDirectory("public")
   }
-  val getOwner = path("owners" / IntNumber) { id =>
+  val getOwner = path("owners" / Segment) { license =>
     get {
-      complete {
-        PoolRepository.getOwner(id)
+      onSuccess(PoolRepository.getOwner(license)) {
+        case Some(owner) => complete( ToResponseMarshallable[Owner](owner) )
+        case None => complete( StatusCodes.NotFound )
       }
     }
   }

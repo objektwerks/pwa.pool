@@ -29,8 +29,8 @@ Rest
 * /api/v1/..
 * /signup
 * /signin
-* /owners/:id
-* /owners/:id/pools
+* /owners/:license
+* /owners/:license/pools
 * /pool/:id/surfaces
 * /pool/:id/pumps
 * /pool/:id/timers
