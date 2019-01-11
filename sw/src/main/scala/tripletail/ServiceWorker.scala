@@ -14,7 +14,6 @@ import scala.util.{Failure, Success}
 object ServiceWorker {
   val poolCache = "pool-cache"
   val poolAssets: js.Array[RequestInfo] = List[RequestInfo](
-    "/",
     "index.html",
     "style.css",
     "w3c.css",
