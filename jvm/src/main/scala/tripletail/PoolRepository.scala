@@ -8,9 +8,6 @@ object PoolRepository {
   import ctx._
 
   def getOwner(license: String)(implicit ec: ExecutionContext): Future[Option[Owner]] = {
-    val q = quote {
-      query[Owner].filter(_.license == lift(license))
-    }
-    ctx.run(q).map(_.headOption)
+    run( query[Owner].filter(_.license == lift(license)) ).map(_.headOption)
   }
 }
