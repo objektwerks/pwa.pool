@@ -11,8 +11,8 @@ Scenarios
 
 Panes
 -----
-* Signup
-* Signin
+* Signup ( email )
+* Signin ( license )
 * Owner
 * Pools -> Pool -> Surfaces
 * Pumps -> Pump
