@@ -9,7 +9,7 @@ object PoolRepository {
   implicit val ctx = new PostgresAsyncContext(SnakeCase, "quill.ctx")
   import ctx._
 
-  def signup(owner: Owner): Future[Unit] = run( query[Owner].insert(lift(owner)) ).mapTo[Unit]
+  def signup(licensee: Licensee): Future[Unit] = run( query[Licensee].insert(lift(licensee)) ).mapTo[Unit]
 
-  def signin(license: String): Future[Option[Owner]] = run( query[Owner].filter(_.license == lift(license)) ).map(_.headOption)
+  def signin(license: String): Future[Option[Licensee]] = run( query[Licensee].filter(_.license == lift(license)) ).map(_.headOption)
 }

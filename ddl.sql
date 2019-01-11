@@ -1,8 +1,8 @@
-DROP TABLE IF EXISTS owner, pool, surface, pump,
+DROP TABLE IF EXISTS licensee, pool, surface, pump,
 timer, timer_setting, heater, heater_on, heater_off,
 cleaning, measurement, chemical, supply, repair;
 
-CREATE TABLE owner (
+CREATE TABLE licensee (
   license VARCHAR PRIMARY KEY,
   established DATE NOT NULL,
   email VARCHAR NOT NULL
@@ -10,7 +10,7 @@ CREATE TABLE owner (
 
 CREATE TABLE pool (
   id SERIAL PRIMARY KEY,
-  license VARCHAR REFERENCES owner(license),
+  license VARCHAR REFERENCES licensee(license),
   built DATE NOT NULL,
   lat DOUBLE PRECISION NOT NULL CHECK (lat > 0.0),
   lon DOUBLE PRECISION NOT NULL CHECK (lon > 0.0),

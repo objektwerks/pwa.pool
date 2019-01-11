@@ -13,7 +13,7 @@ Panes
 -----
 * Signup ( email )
 * Signin ( license )
-* Owner
+* LIcensee
 * Pools -> Pool -> Surfaces
 * Pumps -> Pump
 * Timers -> Timer -> TimerSettings
@@ -45,7 +45,7 @@ Rest
 
 Object Model
 ------------
-* Owner(license, email)
+* LIcensee(license, established, email)
 * Pool(id, license, built, lat, lon, volume)
 * Surface(id, poolId, installed, kind)
 * Pump(id, poolId, installed, model)
@@ -62,7 +62,7 @@ Object Model
 
 Relational Model
 ----------------
-* Owner 1 ---> * Pool
+* LIcensee 1 ---> * Pool
 * Pool 1 ---> * Surface | Pump | Timer | Heater | Cleaning | Measurement | Chemical | Supply | Repair
 * Timer 1 ---> * TimerSetting
 * Heater 1 ---> * HeaterOn | HeaterOff

@@ -18,16 +18,16 @@ object PoolService {
   }
   val signup = path("signup" / Segment ) { email =>
     get {
-      val owner = Owner(UUID.randomUUID.toString, LocalDate.now, email)
-      onSuccess(PoolRepository.signup(owner)) {
-        complete( ToResponseMarshallable[Owner](owner) )
+      val licensee = Licensee(UUID.randomUUID.toString, LocalDate.now, email)
+      onSuccess(PoolRepository.signup(licensee)) {
+        complete( ToResponseMarshallable[Licensee](licensee) )
       }
     }
   }
   val signin = path("signin" / Segment) { license =>
     get {
       onSuccess(PoolRepository.signin(license)) {
-        case Some(owner) => complete( ToResponseMarshallable[Owner](owner) )
+        case Some(owner) => complete( ToResponseMarshallable[Licensee](owner) )
         case None => complete( NotFound )
       }
     }
