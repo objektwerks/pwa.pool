@@ -4,7 +4,7 @@ import java.time.LocalDate
 import java.util.UUID
 
 import akka.http.scaladsl.marshalling.ToResponseMarshallable
-import akka.http.scaladsl.model.StatusCodes._
+import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.Directives._
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport._
 import io.circe.generic.auto._
@@ -27,8 +27,8 @@ object PoolService {
   val signin = path("signin" / Segment) { license =>
     get {
       onSuccess(PoolRepository.signin(license)) {
-        case Some(owner) => complete( ToResponseMarshallable[Licensee](owner) )
-        case None => complete( NotFound )
+        case Some(licensee) => complete( ToResponseMarshallable[Licensee](licensee) )
+        case None => complete( StatusCodes.Unauthorized )
       }
     }
   }
