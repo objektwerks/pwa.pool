@@ -3,9 +3,9 @@ timer, timer_setting, heater, heater_on, heater_off,
 cleaning, measurement, chemical, supply, repair;
 
 CREATE TABLE owner (
- license VARCHAR PRIMARY KEY,
- establisehd DATE NOT NULL,
- email VARCHAR NOT NULL
+  license VARCHAR PRIMARY KEY,
+  established DATE NOT NULL,
+  email VARCHAR NOT NULL
 );
 
 CREATE TABLE pool (
