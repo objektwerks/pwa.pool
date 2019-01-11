@@ -6,14 +6,14 @@ Scenarios
 ---------
 1. Signup with email.
 2. Signin with license.
-3. Add, Edit pool, surface, pump, heater, timer, lifecycle, cleaning, measurement, chemical, supply, repair.
-4. View measurements, chemicals, supplies and repairs chart.
+3. List, Add, Edit pool, surface, pump, heater, timer, lifecycle, cleaning, measurement, chemical, supply, repair.
+4. Chart measurements, chemicals, supplies and repairs.
 
 Panes
 -----
 * Signup ( email )
 * Signin ( license )
-* LIcensee
+* Licensee
 * Pools -> Pool -> Surfaces
 * Pumps -> Pump
 * Timers -> Timer -> TimerSettings
@@ -45,7 +45,7 @@ Rest
 
 Object Model
 ------------
-* LIcensee(license, established, email)
+* Licensee(license, established, email)
 * Pool(id, license, built, lat, lon, volume)
 * Surface(id, poolId, installed, kind)
 * Pump(id, poolId, installed, model)
@@ -62,7 +62,7 @@ Object Model
 
 Relational Model
 ----------------
-* LIcensee 1 ---> * Pool
+* Licensee 1 ---> * Pool
 * Pool 1 ---> * Surface | Pump | Timer | Heater | Cleaning | Measurement | Chemical | Supply | Repair
 * Timer 1 ---> * TimerSetting
 * Heater 1 ---> * HeaterOn | HeaterOff
