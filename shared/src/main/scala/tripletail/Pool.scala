@@ -2,6 +2,10 @@ package tripletail
 
 import java.time.{LocalDate, LocalTime}
 
+final case class Signup(email: String)
+
+final case class Signin(license: String)
+
 final case class Licensee(license: String, established: LocalDate, email: String)
 
 final case class Pool(id: Integer, license: String, built: LocalDate, lat: Double, lon: Double, volume: Integer)

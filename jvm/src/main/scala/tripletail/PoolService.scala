@@ -16,19 +16,23 @@ object PoolService {
   val resources = get {
     getFromResourceDirectory("public")
   }
-  val signup = path("signup" / Segment ) { email =>
-    get {
-      val licensee = Licensee(UUID.randomUUID.toString, LocalDate.now, email)
-      onSuccess(PoolRepository.signup(licensee)) {
-        complete( ToResponseMarshallable[Licensee](licensee) )
+  val signup = path("signup") {
+    post {
+      entity(as[Signup]) { signup =>
+        val licensee = Licensee(UUID.randomUUID.toString, LocalDate.now, signup.email)
+        onSuccess(PoolRepository.signup(licensee)) {
+          complete(ToResponseMarshallable[Licensee](licensee))
+        }
       }
     }
   }
-  val signin = path("signin" / Segment) { license =>
-    get {
-      onSuccess(PoolRepository.signin(license)) {
-        case Some(licensee) => complete( ToResponseMarshallable[Licensee](licensee) )
-        case None => complete( StatusCodes.Unauthorized )
+  val signin = path("signin") {
+    post {
+      entity(as[Signin]) { signin =>
+        onSuccess(PoolRepository.signin(signin.license)) {
+          case Some(licensee) => complete(ToResponseMarshallable[Licensee](licensee))
+          case None => complete(StatusCodes.Unauthorized)
+        }
       }
     }
   }
