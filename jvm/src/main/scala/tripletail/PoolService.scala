@@ -3,7 +3,6 @@ package tripletail
 import java.time.LocalDate
 import java.util.UUID
 
-import akka.http.scaladsl.marshalling.ToResponseMarshallable
 import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.Directives._
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport._
@@ -21,7 +20,7 @@ object PoolService {
       entity(as[SignUp]) { signup =>
         val licensee = Licensee(UUID.randomUUID.toString, LocalDate.now, signup.email)
         onSuccess(PoolRepository.signup(licensee)) {
-          complete(ToResponseMarshallable[SignedIn](SignedIn(licensee)))
+          complete(StatusCodes.OK -> SignedIn(licensee))
         }
       }
     }
@@ -30,7 +29,7 @@ object PoolService {
     post {
       entity(as[SignIn]) { signin =>
         onSuccess(PoolRepository.signin(signin.license)) {
-          case Some(licensee) => complete(ToResponseMarshallable[SignedIn](SignedIn(licensee)))
+          case Some(licensee) => complete(StatusCodes.OK -> SignedIn(licensee))
           case None => complete(StatusCodes.Unauthorized)
         }
       }
