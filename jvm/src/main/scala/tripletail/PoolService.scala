@@ -18,19 +18,19 @@ object PoolService {
   }
   val signup = path("signup") {
     post {
-      entity(as[Signup]) { signup =>
+      entity(as[SignUp]) { signup =>
         val licensee = Licensee(UUID.randomUUID.toString, LocalDate.now, signup.email)
         onSuccess(PoolRepository.signup(licensee)) {
-          complete(ToResponseMarshallable[Licensee](licensee))
+          complete(ToResponseMarshallable[SignedIn](SignedIn(licensee)))
         }
       }
     }
   }
   val signin = path("signin") {
     post {
-      entity(as[Signin]) { signin =>
+      entity(as[SignIn]) { signin =>
         onSuccess(PoolRepository.signin(signin.license)) {
-          case Some(licensee) => complete(ToResponseMarshallable[Licensee](licensee))
+          case Some(licensee) => complete(ToResponseMarshallable[SignedIn](SignedIn(licensee)))
           case None => complete(StatusCodes.Unauthorized)
         }
       }
