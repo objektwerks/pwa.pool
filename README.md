@@ -13,7 +13,6 @@ Panes
 -----
 * Signup ( email )
 * Signin ( license, email )
-* Licensee
 * Pools -> Pool -> Surfaces
 * Pumps -> Pump
 * Timers -> Timer -> TimerSettings
@@ -27,9 +26,8 @@ Panes
 Rest
 ----
 * /api/v1/..
-* /signup::Signup | SignedIn
+* /signup::Signup | SignedUp
 * /signin::Signin | SignedIn
-* /pools/:license
 * /pools/:id/surfaces
 * /pools/:id/pumps
 * /pools/:id/timers
