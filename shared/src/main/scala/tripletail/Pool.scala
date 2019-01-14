@@ -4,7 +4,7 @@ import java.time.{LocalDate, LocalTime}
 
 final case class Licensee(license: String, established: LocalDate, email: String)
 
-final case class Pool(id: Integer, license: String, built: LocalDate, lat: Double, lon: Double, volume: Integer)
+final case class Pool(id: Integer, license: String, built: LocalDate, address: String, volume: Integer)
 
 final case class Surface(id: Integer, poolId: Integer, installed: LocalDate, kind: String)
 

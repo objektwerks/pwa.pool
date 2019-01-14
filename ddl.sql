@@ -12,8 +12,7 @@ CREATE TABLE pool (
   id SERIAL PRIMARY KEY,
   license VARCHAR REFERENCES licensee(license),
   built DATE NOT NULL,
-  lat DOUBLE PRECISION NOT NULL CHECK (lat > 0.0),
-  lon DOUBLE PRECISION NOT NULL CHECK (lon > 0.0),
+  address VARCAR NOT NULL,
   volume INTEGER NOT NULL CHECK (volume > 1000)
 );
 
