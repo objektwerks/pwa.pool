@@ -50,7 +50,7 @@ Object Model
 * Surface(id, poolId, installed, kind)
 * Pump(id, poolId, installed, model)
 * Timer(id, poolId, installed, model)
-* TimerSetting(id, timerId, set, timerOn, timerOff)
+* TimerSetting(id, timerId, set, setOn, setOff)
 * Heater(id, poolId, installed, model)
 * HeaterOn(id, heaterId, temp, heaterOn)
 * HeaterOff(id, heaterId, heatorOff)
