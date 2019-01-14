@@ -14,16 +14,15 @@ object PoolRepository {
     val q = quote {
       query[Licensee]
         .insert( lift(licensee) )
-        .returning(_.license)
     }
-    run(q).map(_ => licensee.copy(license = licensee.license))
+    run(q).map(_ => licensee)
   }
 
   def signin(license: String, email: String): Future[Option[Licensee]] = {
     val q = quote {
       query[Licensee]
         .filter( _.license == lift(license) )
-        .filter( _.email == lift(email) )
+        .filter( licensee => licensee.email == lift(email) && licensee.deactivated.isEmpty )
     }
     run(q).map(_.headOption)
   }
