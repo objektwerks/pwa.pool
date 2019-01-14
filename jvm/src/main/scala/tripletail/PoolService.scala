@@ -16,7 +16,7 @@ object PoolService {
     post {
       entity(as[SignUp]) { signup =>
         onSuccess(PoolRepository.signup(signup.email)) { licensee =>
-          complete(StatusCodes.OK -> SignedIn(licensee))
+          complete(StatusCodes.OK -> SignedUp(licensee))
         }
       }
     }
@@ -25,7 +25,10 @@ object PoolService {
     post {
       entity(as[SignIn]) { signin =>
         onSuccess(PoolRepository.signin(signin.license, signin.email)) {
-          case Some(licensee) => complete(StatusCodes.OK -> SignedIn(licensee))
+          case Some(licensee) =>
+            onSuccess(PoolRepository.pools(licensee.license)) { pools =>
+              complete(StatusCodes.OK -> SignedIn(licensee, pools))
+            }
           case None => complete(StatusCodes.Unauthorized)
         }
       }
