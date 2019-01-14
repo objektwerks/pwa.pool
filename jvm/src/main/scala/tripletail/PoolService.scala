@@ -15,8 +15,7 @@ object PoolService {
   val signup = path("signup") {
     post {
       entity(as[SignUp]) { signup =>
-        val licensee = Licensee(email = signup.email)
-        onSuccess(PoolRepository.signup(licensee)) {
+        onSuccess(PoolRepository.signup(signup.email)) { licensee =>
           complete(StatusCodes.OK -> SignedIn(licensee))
         }
       }
