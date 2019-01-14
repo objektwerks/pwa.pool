@@ -5,7 +5,7 @@ Tripletail
 Scenarios
 ---------
 1. Signup with email.
-2. Signin with license.
+2. Signin with license and email.
 3. List, Add, Edit pool, surface, pump, heater, timer, lifecycle, cleaning, measurement, chemical, supply, repair.
 4. Chart measurements, chemicals, supplies and repairs.
 
