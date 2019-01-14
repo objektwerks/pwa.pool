@@ -30,18 +30,18 @@ Rest
 * /signup::Signup | SignedIn
 * /signin::Signin | SignedIn
 * /pools/:license
-* /pool/:id/surfaces
-* /pool/:id/pumps
-* /pool/:id/timers
-* /pool/:id/timers/:id/timersettings
-* /pool/:id/heaters/:id/heaterons
-* /pool/:id/heaters/:id/heateroffs
-* /pool/:id/heaters
-* /pool/:id/cleanings
-* /pool/:id/measurements
-* /pool/:id/chemicals
-* /pool/:id/supplies
-* /pool/:id/repairs
+* /pools/:id/surfaces
+* /pools/:id/pumps
+* /pools/:id/timers
+* /pools/:id/timers/:id/timersettings
+* /pools/:id/heaters/:id/heaterons
+* /pools/:id/heaters/:id/heateroffs
+* /pools/:id/heaters
+* /pools/:id/cleanings
+* /pools/:id/measurements
+* /pools/:id/chemicals
+* /pools/:id/supplies
+* /pools/:id/repairs
 
 Object Model
 ------------
