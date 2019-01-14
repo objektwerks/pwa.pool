@@ -1,8 +1,10 @@
 package tripletail
 
 import java.time.{LocalDate, LocalTime}
+import java.util.UUID
 
-final case class Licensee(license: String, established: LocalDate, email: String)
+final case class Licensee(license: String = UUID.randomUUID.toString, email: String, activated: LocalDate = LocalDate.now,
+                          deactivated: Option[LocalDate] = None)
 
 final case class Pool(id: Integer, license: String, built: LocalDate, address: String, volume: Integer)
 

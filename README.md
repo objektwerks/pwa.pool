@@ -45,7 +45,7 @@ Rest
 
 Object Model
 ------------
-* Licensee(license, established, email)
+* Licensee(license, email, activated, deactivated)
 * Pool(id, license, built, address, volume)
 * Surface(id, poolId, installed, kind)
 * Pump(id, poolId, installed, model)

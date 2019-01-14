@@ -1,8 +1,5 @@
 package tripletail
 
-import java.time.LocalDate
-import java.util.UUID
-
 import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.Directives._
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport._
@@ -18,7 +15,7 @@ object PoolService {
   val signup = path("signup") {
     post {
       entity(as[SignUp]) { signup =>
-        val licensee = Licensee(UUID.randomUUID.toString, LocalDate.now, signup.email)
+        val licensee = Licensee(email = signup.email)
         onSuccess(PoolRepository.signup(licensee)) {
           complete(StatusCodes.OK -> SignedIn(licensee))
         }
@@ -28,7 +25,7 @@ object PoolService {
   val signin = path("signin") {
     post {
       entity(as[SignIn]) { signin =>
-        onSuccess(PoolRepository.signin(signin.license)) {
+        onSuccess(PoolRepository.signin(signin.license, signin.email)) {
           case Some(licensee) => complete(StatusCodes.OK -> SignedIn(licensee))
           case None => complete(StatusCodes.Unauthorized)
         }

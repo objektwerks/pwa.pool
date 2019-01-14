@@ -4,8 +4,9 @@ cleaning, measurement, chemical, supply, repair;
 
 CREATE TABLE licensee (
   license VARCHAR PRIMARY KEY,
-  established DATE NOT NULL,
-  email VARCHAR NOT NULL
+  email VARCHAR NOT NULL,
+  activated DATE NOT NULL,
+  deactivated DATE NULL
 );
 
 CREATE TABLE pool (
