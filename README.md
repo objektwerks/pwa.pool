@@ -12,7 +12,7 @@ Scenarios
 Panes
 -----
 * Signup ( email )
-* Signin ( license )
+* Signin ( license, email )
 * Licensee
 * Pools -> Pool -> Surfaces
 * Pumps -> Pump
