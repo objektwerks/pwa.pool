@@ -26,4 +26,12 @@ object PoolRepository {
     }
     run(q).map(_.headOption)
   }
+
+  def pools(license: String): Future[Seq[Pool]] = {
+    val q = quote {
+      query[Pool]
+        .filter( _.license == lift(license) )
+    }
+    run(q)
+  }
 }
