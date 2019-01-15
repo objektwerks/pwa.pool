@@ -34,7 +34,7 @@ object Service {
       }
     }
   }
-  val listPools = path("list-pools") {
+  val pools = path("pools") {
     post {
       entity(as[ListPools]) { listPools =>
         onSuccess(Repository.listPools(listPools.license)) { pools =>
@@ -42,8 +42,7 @@ object Service {
         }
       }
     }
-  }
-  val addPool = path("add-pool") {
+  } ~ path("pools" / "add") {
     post {
       entity(as[SavePool]) { savePool =>
         onSuccess(Repository.addPool(savePool.pool)) { id =>
@@ -51,8 +50,7 @@ object Service {
         }
       }
     }
-  }
-  val updatePool = path("update-pool") {
+  } ~ path("pools" / "update") {
     post {
       entity(as[SavePool]) { savePool =>
         onSuccess(Repository.updatePool(savePool.pool)) {
@@ -61,7 +59,7 @@ object Service {
       }
     }
   }
-  val listSurfaces = path("list-surfaces") {
+  val surfaces = path("surfaces") {
     post {
       entity(as[ListSurfaces]) { listSurfaces =>
         onSuccess(Repository.listSurfaces(listSurfaces.poolId)) { surfaces =>
@@ -69,8 +67,7 @@ object Service {
         }
       }
     }
-  }
-  val addSurface = path("add-surface") {
+  } ~ path("surfaces" / "add") {
     post {
       entity(as[SaveSurface]) { saveSurface =>
         onSuccess(Repository.addSurface(saveSurface.surface)) { id =>
@@ -78,8 +75,7 @@ object Service {
         }
       }
     }
-  }
-  val updateSurface = path("update-surface") {
+  } ~ path("surfaces" / "update") {
     post {
       entity(as[SaveSurface]) { saveSurface =>
         onSuccess(Repository.updateSurface(saveSurface.surface)) {
@@ -88,7 +84,7 @@ object Service {
       }
     }
   }
-  val listPumps = path("list-pumps") {
+  val pumps = path("pumps") {
     post {
       entity(as[ListPumps]) { listPumps =>
         onSuccess(Repository.listPumps(listPumps.poolId)) { pumps =>
@@ -96,8 +92,7 @@ object Service {
         }
       }
     }
-  }
-  val addPump = path("add-pump") {
+  } ~ path("pumps" / "add") {
     post {
       entity(as[SavePump]) { savePump =>
         onSuccess(Repository.addPump(savePump.pump)) { id =>
@@ -105,8 +100,7 @@ object Service {
         }
       }
     }
-  }
-  val updatePump = path("update-pump") {
+  } ~ path("pumps" / "update") {
     post {
       entity(as[SavePump]) { savePump =>
         onSuccess(Repository.updatePump(savePump.pump)) {
@@ -115,7 +109,7 @@ object Service {
       }
     }
   }
-  val listTimers = path("list-timers") {
+  val timers = path("timers") {
     post {
       entity(as[ListTimers]) { listTimers =>
         onSuccess(Repository.listTimers(listTimers.poolId)) { timers =>
@@ -123,8 +117,7 @@ object Service {
         }
       }
     }
-  }
-  val addTimer = path("add-timer") {
+  } ~ path("timers" / "add") {
     post {
       entity(as[SaveTimer]) { saveTimer =>
         onSuccess(Repository.addTimer(saveTimer.timer)) { id =>
@@ -132,8 +125,7 @@ object Service {
         }
       }
     }
-  }
-  val updateTimer = path("update-timer") {
+  } ~ path("timers" / "update") {
     post {
       entity(as[SaveTimer]) { saveTimer =>
         onSuccess(Repository.updateTimer(saveTimer.timer)) {
@@ -143,8 +135,7 @@ object Service {
     }
   }
   val api = pathPrefix("api" / "v1" / "tripletail") {
-    signUp ~ signIn ~ listPools ~ addPool ~ updatePool ~ listSurfaces ~ addSurface ~ updateSurface ~
-      listPumps ~ addPump ~ updatePump ~ listTimers ~ addTimer ~ updateTimer
+    signUp ~ signIn ~ pools ~ surfaces ~ pumps ~ timers
   }
   val routes = index ~ resources ~ api
 }

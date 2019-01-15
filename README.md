@@ -30,19 +30,19 @@ Rest
 * /api/v1/..
 * /signup
 * /signin
-* /list-pools           /add-pool           /update-pool
-* /list-surfaces        /add-surface        /update-surface
-* /list-pumps           /add-pump           /update-pum
-* /list-timers          /add-timer          /update-timer
-* /list-timersettings   /add-timersetting   /update-timersetting
-* /list-heaters         /add-heater         /update-heater
-* /list-heater-ons      /add-heater-on      /update-heater-on
-* /list-heater-offs     /add-heater-off     /update-heater-off
-* /list-cleanings       /add-cleaning       /update-cleaning
-* /list-measurements    /add-measurement    /update-measurement
-* /list-chemicals       /add-chemical       /update-chemical
-* /list-supplies        /add-supply         /update-supply
-* /list-repairs         /add-repair         /update-repair
+* /pools           /add   /update
+* /surfaces        /add   /update
+* /pumps           /add   /update
+* /timers          /add   /update
+* /timersettings   /add   /update
+* /heaters         /add   /update
+* /heater-ons      /add   /updaten
+* /heater-offs     /add   /update
+* /cleanings       /add   /update
+* /measurements    /add   /update
+* /chemicals       /add   /update
+* /supplies        /add   /update
+* /repairs         /add   /update
 
 Object Model
 ------------
