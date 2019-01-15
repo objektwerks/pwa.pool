@@ -16,7 +16,7 @@ object App {
 
     val host = conf.getString("app.host")
     val port = conf.getInt("app.port")
-    val server = Http().bindAndHandle(Routes.routes, host, port)
+    val server = Http().bindAndHandle(Service.routes, host, port)
     println(s"Tripletail app started at http://$host:$port/\nPress RETURN to stop...")
 
     StdIn.readLine()
