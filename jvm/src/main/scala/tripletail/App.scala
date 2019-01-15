@@ -7,7 +7,7 @@ import com.typesafe.config.ConfigFactory
 
 import scala.io.StdIn
 
-object PoolApp {
+object App {
   def main(args: Array[String]): Unit = {
     implicit val system = ActorSystem()
     implicit val materlizer = ActorMaterializer()
@@ -16,7 +16,7 @@ object PoolApp {
 
     val host = conf.getString("app.host")
     val port = conf.getInt("app.port")
-    val server = Http().bindAndHandle(PoolService.routes, host, port)
+    val server = Http().bindAndHandle(Routes.routes, host, port)
     println(s"Pool app started at http://$host:$port/\nPress RETURN to stop...")
 
     StdIn.readLine()

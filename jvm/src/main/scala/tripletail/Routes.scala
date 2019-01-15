@@ -4,9 +4,8 @@ import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.Directives._
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport._
 import io.circe.generic.auto._
-import tripletail.{ PoolRepository => Pools }
 
-object PoolService {
+object Routes {
   val index = path("") {
     getFromResource("public/index.html")
   }
