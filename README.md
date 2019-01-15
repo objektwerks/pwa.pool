@@ -4,10 +4,10 @@ Tripletail
 
 Scenarios
 ---------
-1. Sign up with email.
-2. Sign in with license and email.
-3. List, Add, Update pool, surface, pump, timer, timersetting heater, heater-on, heater-off, lifecycle, cleaning, measurement, chemical, supply, repair.
-4. Chart measurements, chemicals, supplies and repairs.
+1. Sign up with email
+2. Sign in with license and email
+3. List, Add, Update pool, surface, pump, timer, timersetting heater, heater-on, heater-off, lifecycle, cleaning, measurement, chemical, supply, repair
+4. Chart measurements, chemicals, supplies and repairs
 
 Panes
 -----
