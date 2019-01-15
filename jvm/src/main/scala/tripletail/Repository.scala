@@ -39,4 +39,10 @@ object Repository {
   def addPump(pump: Pump): Future[Int] = run( query[Pump].insert(lift(pump)).returning(_.id) )
 
   def updatePump(pump: Pump): Future[Unit] = run( query[Pump].update(lift(pump)) ).mapTo[Unit]
+
+  def listTimers(poolId: Int): Future[Seq[Timer]] = run( query[Timer].filter(_.id == lift(poolId)) )
+
+  def addTimer(timer: Timer): Future[Int] = run( query[Timer].insert(lift(timer)).returning(_.id) )
+
+  def updateTimer(timer: Timer): Future[Unit] = run( query[Timer].update(lift(timer)) ).mapTo[Unit]
 }

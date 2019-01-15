@@ -115,9 +115,36 @@ object Service {
       }
     }
   }
+  val listTimers = path("list-timers") {
+    post {
+      entity(as[ListTimers]) { listTimers =>
+        onSuccess(Repository.listTimers(listTimers.poolId)) { timers =>
+          complete(StatusCodes.OK -> Timers(timers))
+        }
+      }
+    }
+  }
+  val addTimer = path("add-timer") {
+    post {
+      entity(as[SaveTimer]) { saveTimer =>
+        onSuccess(Repository.addTimer(saveTimer.timer)) { id =>
+          complete(StatusCodes.OK -> Id(id))
+        }
+      }
+    }
+  }
+  val updateTimer = path("update-timer") {
+    post {
+      entity(as[SaveTimer]) { saveTimer =>
+        onSuccess(Repository.updateTimer(saveTimer.timer)) {
+          complete(StatusCodes.OK)
+        }
+      }
+    }
+  }
   val api = pathPrefix("api" / "v1" / "tripletail") {
     signUp ~ signIn ~ listPools ~ addPool ~ updatePool ~ listSurfaces ~ addSurface ~ updateSurface ~
-      listPumps ~ addPump ~ updatePump
+      listPumps ~ addPump ~ updatePump ~ listTimers ~ addTimer ~ updateTimer
   }
   val routes = index ~ resources ~ api
 }
