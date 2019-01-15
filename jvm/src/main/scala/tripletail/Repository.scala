@@ -33,4 +33,10 @@ object Repository {
   def addSurface(surface: Surface): Future[Int] = run( query[Surface].insert(lift(surface)).returning(_.id) )
 
   def updateSurface(surface: Surface): Future[Unit] = run( query[Surface].update(lift(surface)) ).mapTo[Unit]
+
+  def listPumps(poolId: Int): Future[Seq[Pump]] = run( query[Pump].filter(_.id == lift(poolId)) )
+
+  def addPump(pump: Pump): Future[Int] = run( query[Pump].insert(lift(pump)).returning(_.id) )
+
+  def updatePump(pump: Pump): Future[Unit] = run( query[Pump].update(lift(pump)) ).mapTo[Unit]
 }

@@ -88,8 +88,36 @@ object Service {
       }
     }
   }
+  val listPumps = path("list-pumps") {
+    post {
+      entity(as[ListPumps]) { listPumps =>
+        onSuccess(Repository.listPumps(listPumps.poolId)) { pumps =>
+          complete(StatusCodes.OK -> Pumps(pumps))
+        }
+      }
+    }
+  }
+  val addPump = path("add-pump") {
+    post {
+      entity(as[SavePump]) { savePump =>
+        onSuccess(Repository.addPump(savePump.pump)) { id =>
+          complete(StatusCodes.OK -> Id(id))
+        }
+      }
+    }
+  }
+  val updatePump = path("update-pump") {
+    post {
+      entity(as[SavePump]) { savePump =>
+        onSuccess(Repository.updatePump(savePump.pump)) {
+          complete(StatusCodes.OK)
+        }
+      }
+    }
+  }
   val api = pathPrefix("api" / "v1" / "tripletail") {
-    signUp ~ signIn ~ listPools ~ addPool ~ updatePool ~ listSurfaces ~ addSurface ~ updateSurface
+    signUp ~ signIn ~ listPools ~ addPool ~ updatePool ~ listSurfaces ~ addSurface ~ updateSurface ~
+      listPumps ~ addPump ~ updatePump
   }
   val routes = index ~ resources ~ api
 }

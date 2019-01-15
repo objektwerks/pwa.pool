@@ -13,3 +13,7 @@ final case class SavePool(license: String, pool: Pool) extends Command
 final case class ListSurfaces(license: String, poolId: Int) extends Command
 
 final case class SaveSurface(license: String, surface: Surface) extends Command
+
+final case class ListPumps(license: String, poolId: Int) extends Command
+
+final case class SavePump(license: String, pump: Pump) extends Command
