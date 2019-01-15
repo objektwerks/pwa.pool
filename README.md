@@ -26,8 +26,9 @@ Panes
 Rest
 ----
 * /api/v1/..
-* /signup::Signup | SignedUp
-* /signin::Signin | SignedIn
+* /signup
+* /signin
+* /pools
 * /pools/:id/surfaces
 * /pools/:id/pumps
 * /pools/:id/timers
