@@ -14,8 +14,8 @@ object PoolService {
   }
   val signup = path("signup") {
     post {
-      entity(as[SignUp]) { signup =>
-        onSuccess(PoolRepository.signup(signup.email)) { licensee =>
+      entity(as[SignUp]) { signUp =>
+        onSuccess(PoolRepository.signUp(signUp.email)) { licensee =>
           complete(StatusCodes.OK -> SignedUp(licensee))
         }
       }
@@ -23,10 +23,10 @@ object PoolService {
   }
   val signin = path("signin") {
     post {
-      entity(as[SignIn]) { signin =>
-        onSuccess(PoolRepository.signin(signin.license, signin.email)) {
+      entity(as[SignIn]) { signIn =>
+        onSuccess(PoolRepository.signIn(signIn.license, signIn.email)) {
           case Some(licensee) =>
-            onSuccess(PoolRepository.pools(licensee.license)) { pools =>
+            onSuccess(PoolRepository.listPools(licensee.license)) { pools =>
               complete(StatusCodes.OK -> SignedIn(licensee, pools))
             }
           case None => complete(StatusCodes.Unauthorized)
@@ -34,8 +34,17 @@ object PoolService {
       }
     }
   }
+  val pools = path("pools") {
+    post {
+      entity(as[AddPool]) { addPool =>
+        onSuccess(PoolRepository.addPool(addPool.pool)) { id =>
+          complete(StatusCodes.OK -> Id(id))
+        }
+      }
+    }
+  }
   val api = pathPrefix("api" / "v1" / "tripletail") {
-    signup ~ signin
+    signup ~ signin ~ pools
   }
   val routes = index ~ resources ~ api
 }
