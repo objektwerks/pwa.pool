@@ -4,6 +4,7 @@ import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.Directives._
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport._
 import io.circe.generic.auto._
+import tripletail.{ PoolRepository => Pools }
 
 object PoolService {
   val index = path("") {
@@ -12,21 +13,21 @@ object PoolService {
   val resources = get {
     getFromResourceDirectory("public")
   }
-  val signup = path("signup") {
+  val signUp = path("sign-up") {
     post {
       entity(as[SignUp]) { signUp =>
-        onSuccess(PoolRepository.signUp(signUp.email)) { licensee =>
+        onSuccess(Pools.signUp(signUp.email)) { licensee =>
           complete(StatusCodes.OK -> SignedUp(licensee))
         }
       }
     }
   }
-  val signin = path("signin") {
+  val signIn = path("sign-in") {
     post {
       entity(as[SignIn]) { signIn =>
-        onSuccess(PoolRepository.signIn(signIn.license, signIn.email)) {
+        onSuccess(Pools.signIn(signIn.license, signIn.email)) {
           case Some(licensee) =>
-            onSuccess(PoolRepository.listPools(licensee.license)) { pools =>
+            onSuccess(Pools.listPools(licensee.license)) { pools =>
               complete(StatusCodes.OK -> SignedIn(licensee, pools))
             }
           case None => complete(StatusCodes.Unauthorized)
@@ -34,35 +35,35 @@ object PoolService {
       }
     }
   }
-  val addPool = path("addPool") {
+  val addPool = path("add-pool") {
     post {
       entity(as[AddPool]) { addPool =>
-        onSuccess(PoolRepository.addPool(addPool.pool)) { id =>
+        onSuccess(Pools.addPool(addPool.pool)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
     }
   }
-  val surfaces = path("listSurfaces") {
+  val listSurfaces = path("list-surfaces") {
     post {
       entity(as[ListSurfaces]) { listSurfaces =>
-        onSuccess(PoolRepository.listSurfaces(listSurfaces.poolId)) { surfaces =>
+        onSuccess(Pools.listSurfaces(listSurfaces.poolId)) { surfaces =>
           complete(StatusCodes.OK -> Surfaces(surfaces))
         }
       }
     }
   }
-  val addSurface = path("addSurface") {
+  val addSurface = path("add-surface") {
     post {
       entity(as[AddSurface]) { addSurface =>
-        onSuccess(PoolRepository.addSurface(addSurface.surface)) { id =>
+        onSuccess(Pools.addSurface(addSurface.surface)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
     }
   }
   val api = pathPrefix("api" / "v1" / "tripletail") {
-    signup ~ signin ~ addPool ~ surfaces ~ addSurface
+    signUp ~ signIn ~ addPool ~ listSurfaces ~ addSurface
   }
   val routes = index ~ resources ~ api
 }
