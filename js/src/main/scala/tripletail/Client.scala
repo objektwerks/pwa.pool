@@ -8,13 +8,13 @@ import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
 import scala.util.{Failure, Success}
 
 @JSExportTopLevel("PoolClient")
-object PoolClient {
+object Client {
   @JSExport
   def init(): Unit = {
     version()
     registerServiceWorker()
-    val poolRestClient = PoolRestClient(url = "http://127.0.0.1:7979/api/v1/tripletail")
-    val poolModelView = PoolModelView(poolRestClient)
+    val poolRestClient = RestClient(url = "http://127.0.0.1:7979/api/v1/tripletail")
+    val poolModelView = ModelView(poolRestClient)
     poolModelView.init()
   }
 
