@@ -11,53 +11,22 @@ object Pools {
 
   def signUp(email: String): Future[Licensee] = {
     val licensee = Licensee(email = email)
-    val q = quote {
-      query[Licensee]
-        .insert( lift(licensee) )
-    }
-    run(q).map(_ => licensee)
+    run( query[Licensee].insert(lift(licensee)) ).map(_ => licensee)
   }
 
   def signIn(license: String, email: String): Future[Option[Licensee]] = {
-    val q = quote {
+    run(
       query[Licensee]
         .filter( _.license == lift(license) )
         .filter( licensee => licensee.email == lift(email) && licensee.deactivated.isEmpty )
-    }
-    run(q).map(_.headOption)
+    ).map(_.headOption)
   }
 
-  def listPools(license: String): Future[Seq[Pool]] = {
-    val q = quote {
-      query[Pool]
-        .filter( _.license == lift(license) )
-    }
-    run(q)
-  }
+  def listPools(license: String): Future[Seq[Pool]] = run( query[Pool].filter(_.license == lift(license)) )
 
-  def addPool(pool: Pool): Future[Int] = {
-    val q = quote {
-      query[Pool]
-        .insert( lift(pool) )
-        .returning(_.id)
-    }
-    run(q)
-  }
+  def addPool(pool: Pool): Future[Int] = run( query[Pool].insert(lift(pool)).returning(_.id) )
 
-  def listSurfaces(poolId: Int): Future[Seq[Surface]] = {
-    val q = quote {
-      query[Surface]
-        .filter( _.poolId == lift(poolId) )
-    }
-    run(q)
-  }
+  def listSurfaces(poolId: Int): Future[Seq[Surface]] = run( query[Surface].filter(_.poolId == lift(poolId)) )
 
-  def addSurface(surface: Surface): Future[Int] = {
-    val q = quote {
-      query[Surface]
-        .insert( lift(surface) )
-        .returning(_.id)
-    }
-    run(q)
-  }
+  def addSurface(surface: Surface): Future[Int] = run( query[Surface].insert(lift(surface)).returning(_.id) )
 }
