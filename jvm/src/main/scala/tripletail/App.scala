@@ -17,12 +17,12 @@ object App {
     val host = conf.getString("app.host")
     val port = conf.getInt("app.port")
     val server = Http().bindAndHandle(Routes.routes, host, port)
-    println(s"Pool app started at http://$host:$port/\nPress RETURN to stop...")
+    println(s"Tripletail app started at http://$host:$port/\nPress RETURN to stop...")
 
     StdIn.readLine()
     server.flatMap(_.unbind()).onComplete { _ =>
       system.terminate()
-      println("Pool app stopped.")
+      println("Tripletail app stopped.")
     }
   }
 }
