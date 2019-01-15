@@ -45,8 +45,8 @@ object Service {
   }
   val addPool = path("add-pool") {
     post {
-      entity(as[AddPool]) { addPool =>
-        onSuccess(Repository.addPool(addPool.pool)) { id =>
+      entity(as[SavePool]) { savePool =>
+        onSuccess(Repository.addPool(savePool.pool)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
@@ -54,8 +54,8 @@ object Service {
   }
   val updatePool = path("update-pool") {
     post {
-      entity(as[UpdatePool]) { updatePool =>
-        onSuccess(Repository.updatePool(updatePool.pool)) {
+      entity(as[SavePool]) { savePool =>
+        onSuccess(Repository.updatePool(savePool.pool)) {
           complete(StatusCodes.OK)
         }
       }
@@ -72,8 +72,8 @@ object Service {
   }
   val addSurface = path("add-surface") {
     post {
-      entity(as[AddSurface]) { addSurface =>
-        onSuccess(Repository.addSurface(addSurface.surface)) { id =>
+      entity(as[SaveSurface]) { saveSurface =>
+        onSuccess(Repository.addSurface(saveSurface.surface)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
@@ -81,8 +81,8 @@ object Service {
   }
   val updateSurface = path("update-surface") {
     post {
-      entity(as[UpdateSurface]) { updateSurface =>
-        onSuccess(Repository.updateSurface(updateSurface.surface)) {
+      entity(as[SaveSurface]) { saveSurface =>
+        onSuccess(Repository.updateSurface(saveSurface.surface)) {
           complete(StatusCodes.OK)
         }
       }
