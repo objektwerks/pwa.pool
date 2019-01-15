@@ -27,7 +27,7 @@ object PoolRepository {
     run(q).map(_.headOption)
   }
 
-  def getPools(license: String): Future[Seq[Pool]] = {
+  def listPools(license: String): Future[Seq[Pool]] = {
     val q = quote {
       query[Pool]
         .filter( _.license == lift(license) )
@@ -35,10 +35,27 @@ object PoolRepository {
     run(q)
   }
 
-  def postPool(pool: Pool): Future[Int] = {
+  def addPool(pool: Pool): Future[Int] = {
     val q = quote {
       query[Pool]
         .insert( lift(pool) )
+        .returning(_.id)
+    }
+    run(q)
+  }
+
+  def listSurfaces(poolId: Int): Future[Seq[Surface]] = {
+    val q = quote {
+      query[Surface]
+        .filter( _.poolId == lift(poolId) )
+    }
+    run(q)
+  }
+
+  def addSurface(surface: Surface): Future[Int] = {
+    val q = quote {
+      query[Surface]
+        .insert( lift(surface) )
         .returning(_.id)
     }
     run(q)

@@ -1,5 +1,7 @@
 package tripletail
 
-sealed trait State
+sealed trait State extends Product with Serializable
 
 final case class Id(id: Int) extends State
+
+final case class Surfaces(surfaces: Seq[Surface]) extends State

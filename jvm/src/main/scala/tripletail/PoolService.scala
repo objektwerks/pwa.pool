@@ -26,7 +26,7 @@ object PoolService {
       entity(as[SignIn]) { signIn =>
         onSuccess(PoolRepository.signIn(signIn.license, signIn.email)) {
           case Some(licensee) =>
-            onSuccess(PoolRepository.getPools(licensee.license)) { pools =>
+            onSuccess(PoolRepository.listPools(licensee.license)) { pools =>
               complete(StatusCodes.OK -> SignedIn(licensee, pools))
             }
           case None => complete(StatusCodes.Unauthorized)
@@ -34,17 +34,35 @@ object PoolService {
       }
     }
   }
-  val pools = path("pools") {
+  val addPool = path("addPool") {
     post {
-      entity(as[PostPool]) { postPool =>
-        onSuccess(PoolRepository.postPool(postPool.pool)) { id =>
+      entity(as[AddPool]) { addPool =>
+        onSuccess(PoolRepository.addPool(addPool.pool)) { id =>
+          complete(StatusCodes.OK -> Id(id))
+        }
+      }
+    }
+  }
+  val surfaces = path("listSurfaces") {
+    post {
+      entity(as[ListSurfaces]) { listSurfaces =>
+        onSuccess(PoolRepository.listSurfaces(listSurfaces.poolId)) { surfaces =>
+          complete(StatusCodes.OK -> Surfaces(surfaces))
+        }
+      }
+    }
+  }
+  val addSurface = path("addSurface") {
+    post {
+      entity(as[AddSurface]) { addSurface =>
+        onSuccess(PoolRepository.addSurface(addSurface.surface)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
     }
   }
   val api = pathPrefix("api" / "v1" / "tripletail") {
-    signup ~ signin ~ pools
+    signup ~ signin ~ addPool ~ surfaces ~ addSurface
   }
   val routes = index ~ resources ~ api
 }
