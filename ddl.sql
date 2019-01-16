@@ -5,51 +5,51 @@ cleaning, measurement, chemical, supply, repair;
 CREATE TABLE licensee (
   license VARCHAR PRIMARY KEY,
   email VARCHAR NOT NULL,
-  activated DATE NOT NULL,
+  activated TIMESTAMP NOT NULL,
   deactivated DATE NULL
 );
 
 CREATE TABLE pool (
   id SERIAL PRIMARY KEY,
   license VARCHAR REFERENCES licensee(license),
-  built DATE NOT NULL,
-  address VARCAR NOT NULL,
+  built TIMESTAMP NOT NULL,
+  address VARCHAR NOT NULL,
   volume INTEGER NOT NULL CHECK (volume > 1000)
 );
 
 CREATE TABLE surface (
   id SERIAL PRIMARY KEY,
   pool_id INTEGER REFERENCES pool(id),
-  installed DATE NOT NULL,
+  installed TIMESTAMP NOT NULL,
   kind VARCHAR NOT NULL
 );
 
 CREATE TABLE pump (
   id SERIAL PRIMARY KEY,
   pool_id INTEGER REFERENCES pool(id),
-  installed DATE NOT NULL,
+  installed TIMESTAMP NOT NULL,
   model VARCHAR NOT NULL
 );
 
 CREATE TABLE timer (
   id SERIAL PRIMARY KEY,
   pool_id INTEGER REFERENCES pool(id),
-  installed DATE NOT NULL,
+  installed TIMESTAMP NOT NULL,
   model VARCHAR NOT NULL
 );
 
 CREATE TABLE timer_setting (
   id SERIAL PRIMARY KEY,
   timer_id INTEGER REFERENCES timer(id),
-  set DATE NOT NULL,
-  set_on TIME(4) NOT NULL,
-  set_off TIME(4) NOT NULL CHECK (set_off > set_on)
+  set TIMESTAMP NOT NULL,
+  set_on TIMESTAMP NOT NULL,
+  set_off TIMESTAMP NOT NULL CHECK (set_off > set_on)
 );
 
 CREATE TABLE heater (
   id SERIAL PRIMARY KEY,
   pool_id INTEGER REFERENCES pool(id),
-  installed DATE NOT NULL,
+  installed TIMESTAMP NOT NULL,
   model VARCHAR NOT NULL
 );
 
@@ -57,13 +57,13 @@ CREATE TABLE heater_on (
   id SERIAL PRIMARY KEY,
   heater_id INTEGER REFERENCES heater(id),
   temp INTEGER NOT NULL CHECK (temp > 70),
-  set DATE NOT NULL
+  set TIMESTAMP NOT NULL
 );
 
 CREATE TABLE heater_off (
   id SERIAL PRIMARY KEY,
   heater_id INTEGER REFERENCES heater(id),
-  set DATE NOT NULL
+  set TIMESTAMP NOT NULL
 );
 
 CREATE TABLE cleaning (
@@ -95,7 +95,7 @@ CREATE TABLE measurement (
 CREATE TABLE chemical (
   id SERIAL PRIMARY KEY,
   pool_id INTEGER REFERENCES pool(id),
-  added DATE NOT NULL,
+  added TIMESTAMP NOT NULL,
   chemical VARCHAR NOT NULL,
   amount NUMERIC(5, 2),
   unit VARCHAR NOT NULL
@@ -104,7 +104,7 @@ CREATE TABLE chemical (
 CREATE TABLE supply (
   id SERIAL PRIMARY KEY,
   pool_id INTEGER REFERENCES pool(id),
-  purchased DATE NOT NULL,
+  purchased TIMESTAMP NOT NULL,
   cost NUMERIC(5, 2) CHECK (cost > 0.0),
   item VARCHAR NOT NULL,
   amount NUMERIC(4, 2),
@@ -114,7 +114,7 @@ CREATE TABLE supply (
 CREATE TABLE repair (
   id SERIAL PRIMARY KEY,
   pool_id INTEGER REFERENCES pool(id),
-  repaired DATE NOT NULL,
+  repaired TIMESTAMP NOT NULL,
   cost NUMERIC(5, 2) CHECK (cost > 0.0),
   repair VARCHAR NOT NULL
 );

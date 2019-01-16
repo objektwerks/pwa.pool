@@ -6,6 +6,8 @@ final case class Id(id: Int) extends State
 
 final case class PoolId(id: Int, license: String) extends State
 
+final case class TimerId(id: Int, license: String) extends State
+
 final case class Sequence[T](seq: Seq[T]) extends State
 
 final case class Item[T](license: String, item: T) extends State

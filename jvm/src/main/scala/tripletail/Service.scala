@@ -134,8 +134,33 @@ object Service {
       }
     }
   }
+  val timersettings = path("timersettings") {
+    post {
+      entity(as[TimerId]) { timerId =>
+        onSuccess(Repository.listTimerSettings(timerId.id)) { timers =>
+          complete(StatusCodes.OK -> Sequence(timers))
+        }
+      }
+    }
+  } ~ path("timersettings" / "add") {
+    post {
+      entity(as[Item[TimerSetting]]) { add =>
+        onSuccess(Repository.addTimerSetting(add.item)) { id =>
+          complete(StatusCodes.OK -> Id(id))
+        }
+      }
+    }
+  } ~ path("timersettings" / "update") {
+    post {
+      entity(as[Item[TimerSetting]]) { update =>
+        onSuccess(Repository.updateTimerSetting(update.item)) {
+          complete(StatusCodes.OK)
+        }
+      }
+    }
+  }
   val api = pathPrefix("api" / "v1" / "tripletail") {
-    signUp ~ signIn ~ pools ~ surfaces ~ pumps ~ timers
+    signUp ~ signIn ~ pools ~ surfaces ~ pumps ~ timers ~ timersettings
   }
   val routes = index ~ resources ~ api
 }

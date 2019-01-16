@@ -45,4 +45,10 @@ object Repository {
   def addTimer(timer: Timer): Future[Int] = run( query[Timer].insert(lift(timer)).returning(_.id) )
 
   def updateTimer(timer: Timer): Future[Unit] = run( query[Timer].update(lift(timer)) ).mapTo[Unit]
+
+  def listTimerSettings(timerId: Int): Future[Seq[TimerSetting]] = run( query[TimerSetting].filter(_.id == lift(timerId)) )
+
+  def addTimerSetting(timerSetting: TimerSetting): Future[Int] = run( query[TimerSetting].insert(lift(timerSetting)).returning(_.id) )
+
+  def updateTimerSetting(timerSetting: TimerSetting): Future[Unit] = run( query[TimerSetting].update(lift(timerSetting)) ).mapTo[Unit]
 }
