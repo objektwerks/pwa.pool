@@ -36,24 +36,24 @@ object Service {
   }
   val pools = path("pools") {
     post {
-      entity(as[ListPools]) { listPools =>
-        onSuccess(Repository.listPools(listPools.license)) { pools =>
-          complete(StatusCodes.OK -> Pools(pools))
+      entity(as[Licensee]) { licensee =>
+        onSuccess(Repository.listPools(licensee.license)) { pools =>
+          complete(StatusCodes.OK -> Sequence(pools))
         }
       }
     }
   } ~ path("pools" / "add") {
     post {
-      entity(as[SavePool]) { savePool =>
-        onSuccess(Repository.addPool(savePool.pool)) { id =>
+      entity(as[Item[Pool]]) { add =>
+        onSuccess(Repository.addPool(add.item)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
     }
   } ~ path("pools" / "update") {
     post {
-      entity(as[SavePool]) { savePool =>
-        onSuccess(Repository.updatePool(savePool.pool)) {
+      entity(as[Item[Pool]]) { update =>
+        onSuccess(Repository.updatePool(update.item)) {
           complete(StatusCodes.OK)
         }
       }
@@ -61,24 +61,24 @@ object Service {
   }
   val surfaces = path("surfaces") {
     post {
-      entity(as[ListSurfaces]) { listSurfaces =>
-        onSuccess(Repository.listSurfaces(listSurfaces.poolId)) { surfaces =>
-          complete(StatusCodes.OK -> Surfaces(surfaces))
+      entity(as[PoolId]) { poolId =>
+        onSuccess(Repository.listSurfaces(poolId.id)) { surfaces =>
+          complete(StatusCodes.OK -> Sequence(surfaces))
         }
       }
     }
   } ~ path("surfaces" / "add") {
     post {
-      entity(as[SaveSurface]) { saveSurface =>
-        onSuccess(Repository.addSurface(saveSurface.surface)) { id =>
+      entity(as[Item[Surface]]) { add =>
+        onSuccess(Repository.addSurface(add.item)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
     }
   } ~ path("surfaces" / "update") {
     post {
-      entity(as[SaveSurface]) { saveSurface =>
-        onSuccess(Repository.updateSurface(saveSurface.surface)) {
+      entity(as[Item[Surface]]) { update =>
+        onSuccess(Repository.updateSurface(update.item)) {
           complete(StatusCodes.OK)
         }
       }
@@ -86,24 +86,24 @@ object Service {
   }
   val pumps = path("pumps") {
     post {
-      entity(as[ListPumps]) { listPumps =>
-        onSuccess(Repository.listPumps(listPumps.poolId)) { pumps =>
-          complete(StatusCodes.OK -> Pumps(pumps))
+      entity(as[PoolId]) { poolId =>
+        onSuccess(Repository.listPumps(poolId.id)) { pumps =>
+          complete(StatusCodes.OK -> Sequence(pumps))
         }
       }
     }
   } ~ path("pumps" / "add") {
     post {
-      entity(as[SavePump]) { savePump =>
-        onSuccess(Repository.addPump(savePump.pump)) { id =>
+      entity(as[Item[Pump]]) { add =>
+        onSuccess(Repository.addPump(add.item)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
     }
   } ~ path("pumps" / "update") {
     post {
-      entity(as[SavePump]) { savePump =>
-        onSuccess(Repository.updatePump(savePump.pump)) {
+      entity(as[Item[Pump]]) { update =>
+        onSuccess(Repository.updatePump(update.item)) {
           complete(StatusCodes.OK)
         }
       }
@@ -111,24 +111,24 @@ object Service {
   }
   val timers = path("timers") {
     post {
-      entity(as[ListTimers]) { listTimers =>
-        onSuccess(Repository.listTimers(listTimers.poolId)) { timers =>
-          complete(StatusCodes.OK -> Timers(timers))
+      entity(as[PoolId]) { poolId =>
+        onSuccess(Repository.listTimers(poolId.id)) { timers =>
+          complete(StatusCodes.OK -> Sequence(timers))
         }
       }
     }
   } ~ path("timers" / "add") {
     post {
-      entity(as[SaveTimer]) { saveTimer =>
-        onSuccess(Repository.addTimer(saveTimer.timer)) { id =>
+      entity(as[Item[Timer]]) { add =>
+        onSuccess(Repository.addTimer(add.item)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
     }
   } ~ path("timers" / "update") {
     post {
-      entity(as[SaveTimer]) { saveTimer =>
-        onSuccess(Repository.updateTimer(saveTimer.timer)) {
+      entity(as[Item[Timer]]) { update =>
+        onSuccess(Repository.updateTimer(update.item)) {
           complete(StatusCodes.OK)
         }
       }

@@ -4,10 +4,8 @@ sealed trait State extends Product with Serializable
 
 final case class Id(id: Int) extends State
 
-final case class Pools(pools: Seq[Pool]) extends State
+final case class PoolId(id: Int, license: String) extends State
 
-final case class Surfaces(surfaces: Seq[Surface]) extends State
+final case class Sequence[T](seq: Seq[T]) extends State
 
-final case class Pumps(pumps: Seq[Pump]) extends State
-
-final case class Timers(timers: Seq[Timer]) extends State
+final case class Item[T](license: String, item: T) extends State
