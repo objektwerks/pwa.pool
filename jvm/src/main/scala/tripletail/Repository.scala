@@ -69,4 +69,34 @@ object Repository {
   def addHeaterOff(heaterOff: HeaterOff): Future[Int] = run( query[HeaterOff].insert(lift(heaterOff)).returning(_.id) )
 
   def updateHeaterOff(heaterOff: HeaterOff): Future[Unit] = run( query[HeaterOff].update(lift(heaterOff)) ).mapTo[Unit]
+
+  def listCleanings(poolId: Int): Future[Seq[Cleaning]] = run( query[Cleaning].filter(_.id == lift(poolId)) )
+
+  def addCleaning(cleaning: Cleaning): Future[Int] = run( query[Cleaning].insert(lift(cleaning)).returning(_.id) )
+
+  def updateCleaning(cleaning: Cleaning): Future[Unit] = run( query[Cleaning].update(lift(cleaning)) ).mapTo[Unit]
+
+  def listMeasurements(poolId: Int): Future[Seq[Measurement]] = run( query[Measurement].filter(_.id == lift(poolId)) )
+
+  def addMeasurement(measurement: Measurement): Future[Int] = run( query[Measurement].insert(lift(measurement)).returning(_.id) )
+
+  def updateMeasurement(measurement: Measurement): Future[Unit] = run( query[Measurement].update(lift(measurement)) ).mapTo[Unit]
+
+  def listChemicals(poolId: Int): Future[Seq[Chemical]] = run( query[Chemical].filter(_.id == lift(poolId)) )
+
+  def addChemical(chemical: Chemical): Future[Int] = run( query[Chemical].insert(lift(chemical)).returning(_.id) )
+
+  def updateChemical(chemical: Chemical): Future[Unit] = run( query[Chemical].update(lift(chemical)) ).mapTo[Unit]
+
+  def listSupplies(poolId: Int): Future[Seq[Supply]] = run( query[Supply].filter(_.id == lift(poolId)) )
+
+  def addSupply(supply: Supply): Future[Int] = run( query[Supply].insert(lift(supply)).returning(_.id) )
+
+  def updateSupply(supply: Supply): Future[Unit] = run( query[Supply].update(lift(supply)) ).mapTo[Unit]
+
+  def listRepairs(poolId: Int): Future[Seq[Repair]] = run( query[Repair].filter(_.id == lift(poolId)) )
+
+  def addRepair(repair: Repair): Future[Int] = run( query[Repair].insert(lift(repair)).returning(_.id) )
+
+  def updateRepair(repair: Repair): Future[Unit] = run( query[Repair].update(lift(repair)) ).mapTo[Unit]
 }

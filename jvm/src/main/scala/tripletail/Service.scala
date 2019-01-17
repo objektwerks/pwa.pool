@@ -234,8 +234,134 @@ object Service {
       }
     }
   }
+  val cleanings = path("cleanings") {
+    post {
+      entity(as[IdLicense]) { poolId =>
+        onSuccess(Repository.listCleanings(poolId.id)) { cleanings =>
+          complete(StatusCodes.OK -> Sequence(cleanings))
+        }
+      }
+    }
+  } ~ path("cleanings" / "add") {
+    post {
+      entity(as[Item[Cleaning]]) { add =>
+        onSuccess(Repository.addCleaning(add.item)) { id =>
+          complete(StatusCodes.OK -> Id(id))
+        }
+      }
+    }
+  } ~ path("cleanings" / "update") {
+    post {
+      entity(as[Item[Cleaning]]) { update =>
+        onSuccess(Repository.updateCleaning(update.item)) {
+          complete(StatusCodes.OK)
+        }
+      }
+    }
+  }
+  val measurements = path("measurements") {
+    post {
+      entity(as[IdLicense]) { poolId =>
+        onSuccess(Repository.listMeasurements(poolId.id)) { measurements =>
+          complete(StatusCodes.OK -> Sequence(measurements))
+        }
+      }
+    }
+  } ~ path("measurements" / "add") {
+    post {
+      entity(as[Item[Measurement]]) { add =>
+        onSuccess(Repository.addMeasurement(add.item)) { id =>
+          complete(StatusCodes.OK -> Id(id))
+        }
+      }
+    }
+  } ~ path("measurements" / "update") {
+    post {
+      entity(as[Item[Measurement]]) { update =>
+        onSuccess(Repository.updateMeasurement(update.item)) {
+          complete(StatusCodes.OK)
+        }
+      }
+    }
+  }
+  val chemicals = path("chemicals") {
+    post {
+      entity(as[IdLicense]) { poolId =>
+        onSuccess(Repository.listChemicals(poolId.id)) { chemicals =>
+          complete(StatusCodes.OK -> Sequence(chemicals))
+        }
+      }
+    }
+  } ~ path("chemicals" / "add") {
+    post {
+      entity(as[Item[Chemical]]) { add =>
+        onSuccess(Repository.addChemical(add.item)) { id =>
+          complete(StatusCodes.OK -> Id(id))
+        }
+      }
+    }
+  } ~ path("chemicals" / "update") {
+    post {
+      entity(as[Item[Chemical]]) { update =>
+        onSuccess(Repository.updateChemical(update.item)) {
+          complete(StatusCodes.OK)
+        }
+      }
+    }
+  }
+  val supplies = path("supplies") {
+    post {
+      entity(as[IdLicense]) { poolId =>
+        onSuccess(Repository.listSupplies(poolId.id)) { supplies =>
+          complete(StatusCodes.OK -> Sequence(supplies))
+        }
+      }
+    }
+  } ~ path("supplies" / "add") {
+    post {
+      entity(as[Item[Supply]]) { add =>
+        onSuccess(Repository.addSupply(add.item)) { id =>
+          complete(StatusCodes.OK -> Id(id))
+        }
+      }
+    }
+  } ~ path("supplies" / "update") {
+    post {
+      entity(as[Item[Supply]]) { update =>
+        onSuccess(Repository.updateSupply(update.item)) {
+          complete(StatusCodes.OK)
+        }
+      }
+    }
+  }
+  val repairs = path("repairs") {
+    post {
+      entity(as[IdLicense]) { poolId =>
+        onSuccess(Repository.listRepairs(poolId.id)) { repairs =>
+          complete(StatusCodes.OK -> Sequence(repairs))
+        }
+      }
+    }
+  } ~ path("repairs" / "add") {
+    post {
+      entity(as[Item[Repair]]) { add =>
+        onSuccess(Repository.addRepair(add.item)) { id =>
+          complete(StatusCodes.OK -> Id(id))
+        }
+      }
+    }
+  } ~ path("repairs" / "update") {
+    post {
+      entity(as[Item[Repair]]) { update =>
+        onSuccess(Repository.updateRepair(update.item)) {
+          complete(StatusCodes.OK)
+        }
+      }
+    }
+  }
   val api = pathPrefix("api" / "v1" / "tripletail") {
-    signUp ~ signIn ~ pools ~ surfaces ~ pumps ~ timers ~ timersettings ~ heaters ~ heaterons ~ heateroffs
+    signUp ~ signIn ~ pools ~ surfaces ~ pumps ~ timers ~ timersettings ~ heaters ~ heaterons ~ heateroffs ~
+    cleanings ~ measurements ~ chemicals ~ supplies ~ repairs
   }
   val routes = index ~ resources ~ api
 }
