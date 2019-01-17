@@ -61,7 +61,7 @@ object Service {
   }
   val surfaces = path("surfaces") {
     post {
-      entity(as[PoolId]) { poolId =>
+      entity(as[IdLicense]) { poolId =>
         onSuccess(Repository.listSurfaces(poolId.id)) { surfaces =>
           complete(StatusCodes.OK -> Sequence(surfaces))
         }
@@ -86,7 +86,7 @@ object Service {
   }
   val pumps = path("pumps") {
     post {
-      entity(as[PoolId]) { poolId =>
+      entity(as[IdLicense]) { poolId =>
         onSuccess(Repository.listPumps(poolId.id)) { pumps =>
           complete(StatusCodes.OK -> Sequence(pumps))
         }
@@ -111,7 +111,7 @@ object Service {
   }
   val timers = path("timers") {
     post {
-      entity(as[PoolId]) { poolId =>
+      entity(as[IdLicense]) { poolId =>
         onSuccess(Repository.listTimers(poolId.id)) { timers =>
           complete(StatusCodes.OK -> Sequence(timers))
         }
@@ -136,7 +136,7 @@ object Service {
   }
   val timersettings = path("timersettings") {
     post {
-      entity(as[TimerId]) { timerId =>
+      entity(as[IdLicense]) { timerId =>
         onSuccess(Repository.listTimerSettings(timerId.id)) { timers =>
           complete(StatusCodes.OK -> Sequence(timers))
         }
@@ -161,7 +161,7 @@ object Service {
   }
   val heaters = path("heaters") {
     post {
-      entity(as[PoolId]) { poolId =>
+      entity(as[IdLicense]) { poolId =>
         onSuccess(Repository.listHeaters(poolId.id)) { timers =>
           complete(StatusCodes.OK -> Sequence(timers))
         }
