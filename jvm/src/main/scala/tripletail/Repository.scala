@@ -51,4 +51,10 @@ object Repository {
   def addTimerSetting(timerSetting: TimerSetting): Future[Int] = run( query[TimerSetting].insert(lift(timerSetting)).returning(_.id) )
 
   def updateTimerSetting(timerSetting: TimerSetting): Future[Unit] = run( query[TimerSetting].update(lift(timerSetting)) ).mapTo[Unit]
+
+  def listHeaters(poolId: Int): Future[Seq[Heater]] = run( query[Heater].filter(_.id == lift(poolId)) )
+
+  def addHeater(heater: Heater): Future[Int] = run( query[Heater].insert(lift(heater)).returning(_.id) )
+
+  def updateHeater(heater: Heater): Future[Unit] = run( query[Heater].update(lift(heater)) ).mapTo[Unit]
 }

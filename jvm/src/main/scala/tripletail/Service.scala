@@ -159,8 +159,33 @@ object Service {
       }
     }
   }
+  val heaters = path("heaters") {
+    post {
+      entity(as[PoolId]) { poolId =>
+        onSuccess(Repository.listHeaters(poolId.id)) { timers =>
+          complete(StatusCodes.OK -> Sequence(timers))
+        }
+      }
+    }
+  } ~ path("heaters" / "add") {
+    post {
+      entity(as[Item[Heater]]) { add =>
+        onSuccess(Repository.addHeater(add.item)) { id =>
+          complete(StatusCodes.OK -> Id(id))
+        }
+      }
+    }
+  } ~ path("heaters" / "update") {
+    post {
+      entity(as[Item[Heater]]) { update =>
+        onSuccess(Repository.updateHeater(update.item)) {
+          complete(StatusCodes.OK)
+        }
+      }
+    }
+  }
   val api = pathPrefix("api" / "v1" / "tripletail") {
-    signUp ~ signIn ~ pools ~ surfaces ~ pumps ~ timers ~ timersettings
+    signUp ~ signIn ~ pools ~ surfaces ~ pumps ~ timers ~ timersettings ~ heaters
   }
   val routes = index ~ resources ~ api
 }
