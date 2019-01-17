@@ -137,8 +137,8 @@ object Service {
   val timersettings = path("timersettings") {
     post {
       entity(as[IdLicense]) { timerId =>
-        onSuccess(Repository.listTimerSettings(timerId.id)) { timers =>
-          complete(StatusCodes.OK -> Sequence(timers))
+        onSuccess(Repository.listTimerSettings(timerId.id)) { timersettings =>
+          complete(StatusCodes.OK -> Sequence(timersettings))
         }
       }
     }
@@ -162,8 +162,8 @@ object Service {
   val heaters = path("heaters") {
     post {
       entity(as[IdLicense]) { poolId =>
-        onSuccess(Repository.listHeaters(poolId.id)) { timers =>
-          complete(StatusCodes.OK -> Sequence(timers))
+        onSuccess(Repository.listHeaters(poolId.id)) { heaters =>
+          complete(StatusCodes.OK -> Sequence(heaters))
         }
       }
     }
@@ -184,8 +184,58 @@ object Service {
       }
     }
   }
+  val heaterons = path("heaterons") {
+    post {
+      entity(as[IdLicense]) { heaterId =>
+        onSuccess(Repository.listHeaterOns(heaterId.id)) { heaterOns =>
+          complete(StatusCodes.OK -> Sequence(heaterOns))
+        }
+      }
+    }
+  } ~ path("heaterons" / "add") {
+    post {
+      entity(as[Item[HeaterOn]]) { add =>
+        onSuccess(Repository.addHeaterOn(add.item)) { id =>
+          complete(StatusCodes.OK -> Id(id))
+        }
+      }
+    }
+  } ~ path("heaterons" / "update") {
+    post {
+      entity(as[Item[HeaterOn]]) { update =>
+        onSuccess(Repository.updateHeaterOn(update.item)) {
+          complete(StatusCodes.OK)
+        }
+      }
+    }
+  }
+  val heateroffs = path("heateroffs") {
+    post {
+      entity(as[IdLicense]) { heaterId =>
+        onSuccess(Repository.listHeaterOffs(heaterId.id)) { heaterOffs =>
+          complete(StatusCodes.OK -> Sequence(heaterOffs))
+        }
+      }
+    }
+  } ~ path("heateroffs" / "add") {
+    post {
+      entity(as[Item[HeaterOff]]) { add =>
+        onSuccess(Repository.addHeaterOff(add.item)) { id =>
+          complete(StatusCodes.OK -> Id(id))
+        }
+      }
+    }
+  } ~ path("heateroffs" / "update") {
+    post {
+      entity(as[Item[HeaterOff]]) { update =>
+        onSuccess(Repository.updateHeaterOff(update.item)) {
+          complete(StatusCodes.OK)
+        }
+      }
+    }
+  }
   val api = pathPrefix("api" / "v1" / "tripletail") {
-    signUp ~ signIn ~ pools ~ surfaces ~ pumps ~ timers ~ timersettings ~ heaters
+    signUp ~ signIn ~ pools ~ surfaces ~ pumps ~ timers ~ timersettings ~ heaters ~ heaterons ~ heateroffs
   }
   val routes = index ~ resources ~ api
 }

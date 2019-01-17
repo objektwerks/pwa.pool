@@ -57,4 +57,16 @@ object Repository {
   def addHeater(heater: Heater): Future[Int] = run( query[Heater].insert(lift(heater)).returning(_.id) )
 
   def updateHeater(heater: Heater): Future[Unit] = run( query[Heater].update(lift(heater)) ).mapTo[Unit]
+
+  def listHeaterOns(heaterId: Int): Future[Seq[HeaterOn]] = run( query[HeaterOn].filter(_.id == lift(heaterId)) )
+
+  def addHeaterOn(heaterOn: HeaterOn): Future[Int] = run( query[HeaterOn].insert(lift(heaterOn)).returning(_.id) )
+
+  def updateHeaterOn(heaterOn: HeaterOn): Future[Unit] = run( query[HeaterOn].update(lift(heaterOn)) ).mapTo[Unit]
+
+  def listHeaterOffs(heaterId: Int): Future[Seq[HeaterOff]] = run( query[HeaterOff].filter(_.id == lift(heaterId)) )
+
+  def addHeaterOff(heaterOff: HeaterOff): Future[Int] = run( query[HeaterOff].insert(lift(heaterOff)).returning(_.id) )
+
+  def updateHeaterOff(heaterOff: HeaterOff): Future[Unit] = run( query[HeaterOff].update(lift(heaterOff)) ).mapTo[Unit]
 }
