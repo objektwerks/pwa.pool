@@ -5,7 +5,7 @@ import akka.http.scaladsl.server.Directives._
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport._
 import io.circe.generic.auto._
 
-object Service {
+object PoolRoutes {
   val index = path("") {
     getFromResource("public/index.html")
   }
@@ -15,7 +15,7 @@ object Service {
   val signUp = path("sign-up") {
     post {
       entity(as[SignUp]) { signUp =>
-        onSuccess(Repository.signUp(signUp.email)) { licensee =>
+        onSuccess(PoolStore.signUp(signUp.email)) { licensee =>
           complete(StatusCodes.OK -> SignedUp(licensee))
         }
       }
@@ -24,9 +24,9 @@ object Service {
   val signIn = path("sign-in") {
     post {
       entity(as[SignIn]) { signIn =>
-        onSuccess(Repository.signIn(signIn.license, signIn.email)) {
+        onSuccess(PoolStore.signIn(signIn.license, signIn.email)) {
           case Some(licensee) =>
-            onSuccess(Repository.listPools(licensee.license)) { pools =>
+            onSuccess(PoolStore.listPools(licensee.license)) { pools =>
               complete(StatusCodes.OK -> SignedIn(licensee, pools))
             }
           case None => complete(StatusCodes.Unauthorized)
@@ -37,7 +37,7 @@ object Service {
   val pools = path("pools") {
     post {
       entity(as[Licensee]) { licensee =>
-        onSuccess(Repository.listPools(licensee.license)) { pools =>
+        onSuccess(PoolStore.listPools(licensee.license)) { pools =>
           complete(StatusCodes.OK -> Sequence(pools))
         }
       }
@@ -45,7 +45,7 @@ object Service {
   } ~ path("pools" / "add") {
     post {
       entity(as[Item[Pool]]) { add =>
-        onSuccess(Repository.addPool(add.item)) { id =>
+        onSuccess(PoolStore.addPool(add.item)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
@@ -53,7 +53,7 @@ object Service {
   } ~ path("pools" / "update") {
     post {
       entity(as[Item[Pool]]) { update =>
-        onSuccess(Repository.updatePool(update.item)) {
+        onSuccess(PoolStore.updatePool(update.item)) {
           complete(StatusCodes.OK)
         }
       }
@@ -62,7 +62,7 @@ object Service {
   val surfaces = path("surfaces") {
     post {
       entity(as[IdLicense]) { poolId =>
-        onSuccess(Repository.listSurfaces(poolId.id)) { surfaces =>
+        onSuccess(PoolStore.listSurfaces(poolId.id)) { surfaces =>
           complete(StatusCodes.OK -> Sequence(surfaces))
         }
       }
@@ -70,7 +70,7 @@ object Service {
   } ~ path("surfaces" / "add") {
     post {
       entity(as[Item[Surface]]) { add =>
-        onSuccess(Repository.addSurface(add.item)) { id =>
+        onSuccess(PoolStore.addSurface(add.item)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
@@ -78,7 +78,7 @@ object Service {
   } ~ path("surfaces" / "update") {
     post {
       entity(as[Item[Surface]]) { update =>
-        onSuccess(Repository.updateSurface(update.item)) {
+        onSuccess(PoolStore.updateSurface(update.item)) {
           complete(StatusCodes.OK)
         }
       }
@@ -87,7 +87,7 @@ object Service {
   val pumps = path("pumps") {
     post {
       entity(as[IdLicense]) { poolId =>
-        onSuccess(Repository.listPumps(poolId.id)) { pumps =>
+        onSuccess(PoolStore.listPumps(poolId.id)) { pumps =>
           complete(StatusCodes.OK -> Sequence(pumps))
         }
       }
@@ -95,7 +95,7 @@ object Service {
   } ~ path("pumps" / "add") {
     post {
       entity(as[Item[Pump]]) { add =>
-        onSuccess(Repository.addPump(add.item)) { id =>
+        onSuccess(PoolStore.addPump(add.item)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
@@ -103,7 +103,7 @@ object Service {
   } ~ path("pumps" / "update") {
     post {
       entity(as[Item[Pump]]) { update =>
-        onSuccess(Repository.updatePump(update.item)) {
+        onSuccess(PoolStore.updatePump(update.item)) {
           complete(StatusCodes.OK)
         }
       }
@@ -112,7 +112,7 @@ object Service {
   val timers = path("timers") {
     post {
       entity(as[IdLicense]) { poolId =>
-        onSuccess(Repository.listTimers(poolId.id)) { timers =>
+        onSuccess(PoolStore.listTimers(poolId.id)) { timers =>
           complete(StatusCodes.OK -> Sequence(timers))
         }
       }
@@ -120,7 +120,7 @@ object Service {
   } ~ path("timers" / "add") {
     post {
       entity(as[Item[Timer]]) { add =>
-        onSuccess(Repository.addTimer(add.item)) { id =>
+        onSuccess(PoolStore.addTimer(add.item)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
@@ -128,7 +128,7 @@ object Service {
   } ~ path("timers" / "update") {
     post {
       entity(as[Item[Timer]]) { update =>
-        onSuccess(Repository.updateTimer(update.item)) {
+        onSuccess(PoolStore.updateTimer(update.item)) {
           complete(StatusCodes.OK)
         }
       }
@@ -137,7 +137,7 @@ object Service {
   val timersettings = path("timersettings") {
     post {
       entity(as[IdLicense]) { timerId =>
-        onSuccess(Repository.listTimerSettings(timerId.id)) { timersettings =>
+        onSuccess(PoolStore.listTimerSettings(timerId.id)) { timersettings =>
           complete(StatusCodes.OK -> Sequence(timersettings))
         }
       }
@@ -145,7 +145,7 @@ object Service {
   } ~ path("timersettings" / "add") {
     post {
       entity(as[Item[TimerSetting]]) { add =>
-        onSuccess(Repository.addTimerSetting(add.item)) { id =>
+        onSuccess(PoolStore.addTimerSetting(add.item)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
@@ -153,7 +153,7 @@ object Service {
   } ~ path("timersettings" / "update") {
     post {
       entity(as[Item[TimerSetting]]) { update =>
-        onSuccess(Repository.updateTimerSetting(update.item)) {
+        onSuccess(PoolStore.updateTimerSetting(update.item)) {
           complete(StatusCodes.OK)
         }
       }
@@ -162,7 +162,7 @@ object Service {
   val heaters = path("heaters") {
     post {
       entity(as[IdLicense]) { poolId =>
-        onSuccess(Repository.listHeaters(poolId.id)) { heaters =>
+        onSuccess(PoolStore.listHeaters(poolId.id)) { heaters =>
           complete(StatusCodes.OK -> Sequence(heaters))
         }
       }
@@ -170,7 +170,7 @@ object Service {
   } ~ path("heaters" / "add") {
     post {
       entity(as[Item[Heater]]) { add =>
-        onSuccess(Repository.addHeater(add.item)) { id =>
+        onSuccess(PoolStore.addHeater(add.item)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
@@ -178,7 +178,7 @@ object Service {
   } ~ path("heaters" / "update") {
     post {
       entity(as[Item[Heater]]) { update =>
-        onSuccess(Repository.updateHeater(update.item)) {
+        onSuccess(PoolStore.updateHeater(update.item)) {
           complete(StatusCodes.OK)
         }
       }
@@ -187,7 +187,7 @@ object Service {
   val heaterons = path("heaterons") {
     post {
       entity(as[IdLicense]) { heaterId =>
-        onSuccess(Repository.listHeaterOns(heaterId.id)) { heaterOns =>
+        onSuccess(PoolStore.listHeaterOns(heaterId.id)) { heaterOns =>
           complete(StatusCodes.OK -> Sequence(heaterOns))
         }
       }
@@ -195,7 +195,7 @@ object Service {
   } ~ path("heaterons" / "add") {
     post {
       entity(as[Item[HeaterOn]]) { add =>
-        onSuccess(Repository.addHeaterOn(add.item)) { id =>
+        onSuccess(PoolStore.addHeaterOn(add.item)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
@@ -203,7 +203,7 @@ object Service {
   } ~ path("heaterons" / "update") {
     post {
       entity(as[Item[HeaterOn]]) { update =>
-        onSuccess(Repository.updateHeaterOn(update.item)) {
+        onSuccess(PoolStore.updateHeaterOn(update.item)) {
           complete(StatusCodes.OK)
         }
       }
@@ -212,7 +212,7 @@ object Service {
   val heateroffs = path("heateroffs") {
     post {
       entity(as[IdLicense]) { heaterId =>
-        onSuccess(Repository.listHeaterOffs(heaterId.id)) { heaterOffs =>
+        onSuccess(PoolStore.listHeaterOffs(heaterId.id)) { heaterOffs =>
           complete(StatusCodes.OK -> Sequence(heaterOffs))
         }
       }
@@ -220,7 +220,7 @@ object Service {
   } ~ path("heateroffs" / "add") {
     post {
       entity(as[Item[HeaterOff]]) { add =>
-        onSuccess(Repository.addHeaterOff(add.item)) { id =>
+        onSuccess(PoolStore.addHeaterOff(add.item)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
@@ -228,7 +228,7 @@ object Service {
   } ~ path("heateroffs" / "update") {
     post {
       entity(as[Item[HeaterOff]]) { update =>
-        onSuccess(Repository.updateHeaterOff(update.item)) {
+        onSuccess(PoolStore.updateHeaterOff(update.item)) {
           complete(StatusCodes.OK)
         }
       }
@@ -237,7 +237,7 @@ object Service {
   val cleanings = path("cleanings") {
     post {
       entity(as[IdLicense]) { poolId =>
-        onSuccess(Repository.listCleanings(poolId.id)) { cleanings =>
+        onSuccess(PoolStore.listCleanings(poolId.id)) { cleanings =>
           complete(StatusCodes.OK -> Sequence(cleanings))
         }
       }
@@ -245,7 +245,7 @@ object Service {
   } ~ path("cleanings" / "add") {
     post {
       entity(as[Item[Cleaning]]) { add =>
-        onSuccess(Repository.addCleaning(add.item)) { id =>
+        onSuccess(PoolStore.addCleaning(add.item)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
@@ -253,7 +253,7 @@ object Service {
   } ~ path("cleanings" / "update") {
     post {
       entity(as[Item[Cleaning]]) { update =>
-        onSuccess(Repository.updateCleaning(update.item)) {
+        onSuccess(PoolStore.updateCleaning(update.item)) {
           complete(StatusCodes.OK)
         }
       }
@@ -262,7 +262,7 @@ object Service {
   val measurements = path("measurements") {
     post {
       entity(as[IdLicense]) { poolId =>
-        onSuccess(Repository.listMeasurements(poolId.id)) { measurements =>
+        onSuccess(PoolStore.listMeasurements(poolId.id)) { measurements =>
           complete(StatusCodes.OK -> Sequence(measurements))
         }
       }
@@ -270,7 +270,7 @@ object Service {
   } ~ path("measurements" / "add") {
     post {
       entity(as[Item[Measurement]]) { add =>
-        onSuccess(Repository.addMeasurement(add.item)) { id =>
+        onSuccess(PoolStore.addMeasurement(add.item)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
@@ -278,7 +278,7 @@ object Service {
   } ~ path("measurements" / "update") {
     post {
       entity(as[Item[Measurement]]) { update =>
-        onSuccess(Repository.updateMeasurement(update.item)) {
+        onSuccess(PoolStore.updateMeasurement(update.item)) {
           complete(StatusCodes.OK)
         }
       }
@@ -287,7 +287,7 @@ object Service {
   val chemicals = path("chemicals") {
     post {
       entity(as[IdLicense]) { poolId =>
-        onSuccess(Repository.listChemicals(poolId.id)) { chemicals =>
+        onSuccess(PoolStore.listChemicals(poolId.id)) { chemicals =>
           complete(StatusCodes.OK -> Sequence(chemicals))
         }
       }
@@ -295,7 +295,7 @@ object Service {
   } ~ path("chemicals" / "add") {
     post {
       entity(as[Item[Chemical]]) { add =>
-        onSuccess(Repository.addChemical(add.item)) { id =>
+        onSuccess(PoolStore.addChemical(add.item)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
@@ -303,7 +303,7 @@ object Service {
   } ~ path("chemicals" / "update") {
     post {
       entity(as[Item[Chemical]]) { update =>
-        onSuccess(Repository.updateChemical(update.item)) {
+        onSuccess(PoolStore.updateChemical(update.item)) {
           complete(StatusCodes.OK)
         }
       }
@@ -312,7 +312,7 @@ object Service {
   val supplies = path("supplies") {
     post {
       entity(as[IdLicense]) { poolId =>
-        onSuccess(Repository.listSupplies(poolId.id)) { supplies =>
+        onSuccess(PoolStore.listSupplies(poolId.id)) { supplies =>
           complete(StatusCodes.OK -> Sequence(supplies))
         }
       }
@@ -320,7 +320,7 @@ object Service {
   } ~ path("supplies" / "add") {
     post {
       entity(as[Item[Supply]]) { add =>
-        onSuccess(Repository.addSupply(add.item)) { id =>
+        onSuccess(PoolStore.addSupply(add.item)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
@@ -328,7 +328,7 @@ object Service {
   } ~ path("supplies" / "update") {
     post {
       entity(as[Item[Supply]]) { update =>
-        onSuccess(Repository.updateSupply(update.item)) {
+        onSuccess(PoolStore.updateSupply(update.item)) {
           complete(StatusCodes.OK)
         }
       }
@@ -337,7 +337,7 @@ object Service {
   val repairs = path("repairs") {
     post {
       entity(as[IdLicense]) { poolId =>
-        onSuccess(Repository.listRepairs(poolId.id)) { repairs =>
+        onSuccess(PoolStore.listRepairs(poolId.id)) { repairs =>
           complete(StatusCodes.OK -> Sequence(repairs))
         }
       }
@@ -345,7 +345,7 @@ object Service {
   } ~ path("repairs" / "add") {
     post {
       entity(as[Item[Repair]]) { add =>
-        onSuccess(Repository.addRepair(add.item)) { id =>
+        onSuccess(PoolStore.addRepair(add.item)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
@@ -353,7 +353,7 @@ object Service {
   } ~ path("repairs" / "update") {
     post {
       entity(as[Item[Repair]]) { update =>
-        onSuccess(Repository.updateRepair(update.item)) {
+        onSuccess(PoolStore.updateRepair(update.item)) {
           complete(StatusCodes.OK)
         }
       }

@@ -5,7 +5,7 @@ import io.getquill._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-object Repository {
+object PoolStore {
   implicit val ctx = new PostgresAsyncContext(SnakeCase, "quill.ctx")
   import ctx._
 
