@@ -29,7 +29,8 @@ lazy val shared = crossProject(JSPlatform, JVMPlatform)
   .settings(
     libraryDependencies ++= Seq(
       "io.circe" %% "circe-core" % circeVersion,
-      "io.circe" %% "circe-generic" % circeVersion
+      "io.circe" %% "circe-generic" % circeVersion,
+      "io.circe" %% "circe-parser" % circeVersion
     )
   )
 lazy val sharedJS = shared.js
@@ -43,7 +44,8 @@ lazy val js = (project in file("js"))
       "org.scala-js" %%% "scalajs-dom" % scalaJsDomVersion,
       "org.scala-js" %%% "scalajs-java-time" % "0.2.5",
       "io.circe" %%% "circe-core" % circeVersion,
-      "io.circe" %%% "circe-generic" % circeVersion
+      "io.circe" %%% "circe-generic" % circeVersion,
+      "io.circe" %%% "circe-parser" % circeVersion
     )
   ) dependsOn sharedJS
 
