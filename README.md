@@ -2,6 +2,14 @@ Tripletail
 ----------
 >Pool maintenance application.
 
+Test
+----
+sbt clean test
+
+Run
+---
+sbt jvm/run
+
 Scenarios
 ---------
 1. Sign up with email
