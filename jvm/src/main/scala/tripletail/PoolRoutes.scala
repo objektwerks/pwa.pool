@@ -360,8 +360,9 @@ object PoolRoutes {
     }
   }
   val api = pathPrefix("api" / "v1" / "tripletail") {
-    pools ~ surfaces ~ pumps ~ timers ~ timersettings ~ heaters ~ heaterons ~
-      heateroffs ~ cleanings ~ measurements ~ chemicals ~ supplies ~ repairs
+      pools ~ surfaces ~ pumps ~ timers ~ timersettings ~ heaters ~ heaterons ~
+        heateroffs ~ cleanings ~ measurements ~ chemicals ~ supplies ~ repairs
   }
-  val routes = index ~ resources ~ signup ~ signin ~ api
+  val secureApi = secure { api }
+  val routes = index ~ resources ~ signup ~ signin ~ secureApi
 }
