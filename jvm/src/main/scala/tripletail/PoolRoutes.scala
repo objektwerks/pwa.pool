@@ -14,20 +14,20 @@ object PoolRoutes {
   }
   val signup = path("signup") {
     post {
-      entity(as[Signup]) { signup =>
-        onSuccess(PoolStore.signup(signup.email)) { licensee =>
-          complete(StatusCodes.OK -> Signedup(licensee))
+      entity(as[SignUp]) { signUp =>
+        onSuccess(PoolStore.signUp(signUp.email)) { licensee =>
+          complete(StatusCodes.OK -> SignedUp(licensee))
         }
       }
     }
   }
   val signin = path("signin") {
     post {
-      entity(as[Signin]) { signin =>
-        onSuccess(PoolStore.signin(signin.license, signin.email)) {
+      entity(as[SignIn]) { signIn =>
+        onSuccess(PoolStore.signIn(signIn.license, signIn.email)) {
           case Some(licensee) =>
             onSuccess(PoolStore.listPools(licensee.license)) { pools =>
-              complete(StatusCodes.OK -> Signedin(licensee, pools))
+              complete(StatusCodes.OK -> SignedIn(licensee, pools))
             }
           case None => complete(StatusCodes.Unauthorized)
         }

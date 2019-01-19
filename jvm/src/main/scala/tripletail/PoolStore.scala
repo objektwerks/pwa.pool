@@ -9,12 +9,12 @@ object PoolStore {
   implicit val ctx = new PostgresAsyncContext(SnakeCase, "quill.ctx")
   import ctx._
 
-  def signup(email: String): Future[Licensee] = {
+  def signUp(email: String): Future[Licensee] = {
     val licensee = Licensee(email = email)
     run( query[Licensee].insert(lift(licensee)) ).map(_ => licensee)
   }
 
-  def signin(license: String, email: String): Future[Option[Licensee]] = {
+  def signIn(license: String, email: String): Future[Option[Licensee]] = {
     run(
       query[Licensee]
         .filter( _.license == lift(license) )
