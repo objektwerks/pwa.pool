@@ -12,19 +12,19 @@ object PoolRoutes {
   val resources = get {
     getFromResourceDirectory("public")
   }
-  val signUp = path("sign-up") {
+  val signup = path("signup") {
     post {
-      entity(as[SignUp]) { signUp =>
-        onSuccess(PoolStore.signUp(signUp.email)) { licensee =>
+      entity(as[Signup]) { signup =>
+        onSuccess(PoolStore.signup(signup.email)) { licensee =>
           complete(StatusCodes.OK -> SignedUp(licensee))
         }
       }
     }
   }
-  val signIn = path("sign-in") {
+  val signin = path("signin") {
     post {
-      entity(as[SignIn]) { signIn =>
-        onSuccess(PoolStore.signIn(signIn.license, signIn.email)) {
+      entity(as[Signin]) { signin =>
+        onSuccess(PoolStore.signin(signin.license, signin.email)) {
           case Some(licensee) =>
             onSuccess(PoolStore.listPools(licensee.license)) { pools =>
               complete(StatusCodes.OK -> SignedIn(licensee, pools))
@@ -360,8 +360,8 @@ object PoolRoutes {
     }
   }
   val api = pathPrefix("api" / "v1" / "tripletail") {
-    signUp ~ signIn ~ pools ~ surfaces ~ pumps ~ timers ~ timersettings ~ heaters ~ heaterons ~ heateroffs ~
-    cleanings ~ measurements ~ chemicals ~ supplies ~ repairs
+    pools ~ surfaces ~ pumps ~ timers ~ timersettings ~ heaters ~ heaterons ~
+      heateroffs ~ cleanings ~ measurements ~ chemicals ~ supplies ~ repairs
   }
-  val routes = index ~ resources ~ api
+  val routes = index ~ resources ~ signup ~ signin ~ api
 }
