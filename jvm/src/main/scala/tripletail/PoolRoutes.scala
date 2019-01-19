@@ -16,7 +16,7 @@ object PoolRoutes {
     post {
       entity(as[Signup]) { signup =>
         onSuccess(PoolStore.signup(signup.email)) { licensee =>
-          complete(StatusCodes.OK -> SignedUp(licensee))
+          complete(StatusCodes.OK -> Signedup(licensee))
         }
       }
     }
@@ -27,7 +27,7 @@ object PoolRoutes {
         onSuccess(PoolStore.signin(signin.license, signin.email)) {
           case Some(licensee) =>
             onSuccess(PoolStore.listPools(licensee.license)) { pools =>
-              complete(StatusCodes.OK -> SignedIn(licensee, pools))
+              complete(StatusCodes.OK -> Signedin(licensee, pools))
             }
           case None => complete(StatusCodes.Unauthorized)
         }
