@@ -22,6 +22,13 @@ object PoolStore {
     ).map(_.headOption)
   }
 
+  def getLicensee(license: String): Future[Option[Licensee]] = {
+    run(
+      query[Licensee]
+        .filter( _.license == lift(license) )
+    ).map(_.headOption)
+  }
+
   def listPools(license: String): Future[Seq[Pool]] = run( query[Pool].filter(_.license == lift(license)) )
 
   def addPool(pool: Pool): Future[Int] = run( query[Pool].insert(lift(pool)).returning(_.id) )
