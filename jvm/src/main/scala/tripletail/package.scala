@@ -12,17 +12,17 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 package object tripletail {
-  val cacheConf = Caffeine.newBuilder.maximumSize(10000L).expireAfterWrite(24, TimeUnit.HOURS).build[String, Entry[String]]
-  implicit val cache: Cache[String] = CaffeineCache[String](cacheConf)
+  val licenseeCacheConf = Caffeine.newBuilder.maximumSize(1000L).expireAfterWrite(24, TimeUnit.HOURS).build[String, Entry[Licensee]]
+  implicit val licenseeCache: Cache[Licensee] = CaffeineCache[Licensee](licenseeCacheConf)
 
   def isLicenseValid(license: String): Future[Boolean] = {
-    if (cache.get(license).nonEmpty) {
+    if (licenseeCache.get(license).nonEmpty) {
       Future.successful(true)
     } else {
       PoolStore.getLicensee(license).flatMap { option =>
         if (option.nonEmpty) {
-          val _license = option.get.license
-          cache.put(_license)(_license)
+          val licensee = option.get
+          licenseeCache.put(licensee.license)(licensee)
           Future.successful(true)
         } else {
           Future.successful(false)

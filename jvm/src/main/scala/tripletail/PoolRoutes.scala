@@ -4,6 +4,7 @@ import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.Directives._
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport._
 import io.circe.generic.auto._
+import scalacache.modes.sync._
 
 object PoolRoutes {
   val index = path("") {
@@ -16,6 +17,7 @@ object PoolRoutes {
     post {
       entity(as[SignUp]) { signUp =>
         onSuccess(PoolStore.signUp(signUp.email)) { licensee =>
+          licenseeCache.put(licensee.license)(licensee)
           complete(StatusCodes.OK -> SignedUp(licensee))
         }
       }
@@ -26,6 +28,7 @@ object PoolRoutes {
       entity(as[SignIn]) { signIn =>
         onSuccess(PoolStore.signIn(signIn.license, signIn.email)) {
           case Some(licensee) =>
+            licenseeCache.put(licensee.license)(licensee)
             onSuccess(PoolStore.listPools(licensee.license)) { pools =>
               complete(StatusCodes.OK -> SignedIn(licensee, pools))
             }
