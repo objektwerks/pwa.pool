@@ -6,7 +6,7 @@ import java.util.UUID
 final case class Licensee(license: String = UUID.randomUUID.toString.toLowerCase, email: String,
                           activated: Long = Instant.now.toEpochMilli, deactivated: Option[Long] = None)
 
-final case class Pool(id: Int, license: String, built: Long, address: String, volume: Int)
+final case class Pool(id: Int, license: String, built: Long, lat: Long, lon: Long, volume: Int)
 
 final case class Surface(id: Int, poolId: Int, installed: Long, kind: String)
 
