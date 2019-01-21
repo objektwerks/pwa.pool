@@ -55,7 +55,7 @@ Rest
 Object Model
 ------------
 * Licensee(license, email, activated, deactivated)
-* Pool(id, license, built, address, volume)
+* Pool(id, license, built, lat, lon, volume)
 * Surface(id, poolId, installed, kind)
 * Pump(id, poolId, installed, model)
 * Timer(id, poolId, installed, model)
