@@ -56,7 +56,7 @@ object PoolRoutes {
     post {
       entity(as[Pool]) { update =>
         onSuccess(PoolStore.updatePool(update)) {
-          complete(StatusCodes.OK)
+          complete(StatusCodes.OK -> Ok)
         }
       }
     }
@@ -81,7 +81,7 @@ object PoolRoutes {
     post {
       entity(as[Surface]) { update =>
         onSuccess(PoolStore.updateSurface(update)) {
-          complete(StatusCodes.OK)
+          complete(StatusCodes.OK -> Ok)
         }
       }
     }
@@ -106,7 +106,7 @@ object PoolRoutes {
     post {
       entity(as[Pump]) { update =>
         onSuccess(PoolStore.updatePump(update)) {
-          complete(StatusCodes.OK)
+          complete(StatusCodes.OK -> Ok)
         }
       }
     }
@@ -131,7 +131,7 @@ object PoolRoutes {
     post {
       entity(as[Timer]) { update =>
         onSuccess(PoolStore.updateTimer(update)) {
-          complete(StatusCodes.OK)
+          complete(StatusCodes.OK -> Ok)
         }
       }
     }
@@ -156,7 +156,7 @@ object PoolRoutes {
     post {
       entity(as[TimerSetting]) { update =>
         onSuccess(PoolStore.updateTimerSetting(update)) {
-          complete(StatusCodes.OK)
+          complete(StatusCodes.OK -> Ok)
         }
       }
     }
@@ -181,7 +181,7 @@ object PoolRoutes {
     post {
       entity(as[Heater]) { update =>
         onSuccess(PoolStore.updateHeater(update)) {
-          complete(StatusCodes.OK)
+          complete(StatusCodes.OK -> Ok)
         }
       }
     }
@@ -206,7 +206,7 @@ object PoolRoutes {
     post {
       entity(as[HeaterOn]) { update =>
         onSuccess(PoolStore.updateHeaterOn(update)) {
-          complete(StatusCodes.OK)
+          complete(StatusCodes.OK -> Ok)
         }
       }
     }
@@ -231,7 +231,7 @@ object PoolRoutes {
     post {
       entity(as[HeaterOff]) { update =>
         onSuccess(PoolStore.updateHeaterOff(update)) {
-          complete(StatusCodes.OK)
+          complete(StatusCodes.OK -> Ok)
         }
       }
     }
@@ -256,7 +256,7 @@ object PoolRoutes {
     post {
       entity(as[Cleaning]) { update =>
         onSuccess(PoolStore.updateCleaning(update)) {
-          complete(StatusCodes.OK)
+          complete(StatusCodes.OK -> Ok)
         }
       }
     }
@@ -281,7 +281,7 @@ object PoolRoutes {
     post {
       entity(as[Measurement]) { update =>
         onSuccess(PoolStore.updateMeasurement(update)) {
-          complete(StatusCodes.OK)
+          complete(StatusCodes.OK -> Ok)
         }
       }
     }
@@ -306,7 +306,7 @@ object PoolRoutes {
     post {
       entity(as[Chemical]) { update =>
         onSuccess(PoolStore.updateChemical(update)) {
-          complete(StatusCodes.OK)
+          complete(StatusCodes.OK -> Ok)
         }
       }
     }
@@ -331,7 +331,7 @@ object PoolRoutes {
     post {
       entity(as[Supply]) { update =>
         onSuccess(PoolStore.updateSupply(update)) {
-          complete(StatusCodes.OK)
+          complete(StatusCodes.OK -> Ok)
         }
       }
     }
@@ -356,7 +356,7 @@ object PoolRoutes {
     post {
       entity(as[Repair]) { update =>
         onSuccess(PoolStore.updateRepair(update)) {
-          complete(StatusCodes.OK)
+          complete(StatusCodes.OK -> Ok)
         }
       }
     }
