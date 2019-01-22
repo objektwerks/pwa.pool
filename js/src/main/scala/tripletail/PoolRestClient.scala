@@ -30,7 +30,7 @@ class PoolRestClient(url: String) {
     }
   }
 
-  def toFault(statusCode: Int): Fault = Fault(s"status code: ${statusCode.toString}")
+  def toFault(statusCode: Int): Fault = Fault(s"http status code: ${statusCode.toString}", statusCode)
 }
 
 object PoolRestClient {
