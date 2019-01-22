@@ -11,25 +11,23 @@ import scala.concurrent.Future
 class PoolRestClient(url: String) {
   val headers = Map("Content-Type" -> "application/json; charset=utf-8", "Accept" -> "application/json")
 
-  def post(path: String, command: Command): Future[Either[Fault, Event]] = (for {
-    xhr <- Ajax.post(url = url + path, headers = headers, data = command.asJson.toString)
-  } yield {
-    xhr.status match {
-      case 200 => decode[Event](xhr.responseText).fold(e => Left(Fault(e.getMessage)), v => Right(v))
-      case _ => Left(toFault(xhr.status))
-    }
-  }).recover { case e => Left(Fault(e.getMessage)) }
+  def post(path: String, command: Command): Future[Either[Fault, Event]] = {
+    Ajax.post(url = url + path, headers = headers, data = command.asJson.toString).map { xhr =>
+      xhr.status match {
+        case 200 => decode[Event](xhr.responseText).fold(e => Left(Fault(e.getMessage)), v => Right(v))
+        case _ => Left(toFault(xhr.status))
+      }
+    }.recover { case e => Left(Fault(e.getMessage)) }
+  }
 
   def post(path: String, license: String, entity: Entity): Future[Either[Fault, State]] = {
     val headersWithLicense = headers ++: Map("license" -> license)
-    (for {
-      xhr <- Ajax.post(url = url + path, headers = headersWithLicense, data = entity.asJson.toString)
-    } yield {
+    Ajax.post(url = url + path, headers = headersWithLicense, data = entity.asJson.toString).map { xhr =>
       xhr.status match {
         case 200 => decode[State](xhr.responseText).fold(e => Left(Fault(e.getMessage)), v => Right(v))
         case _ => Left(toFault(xhr.status))
       }
-    }).recover { case e => Left(Fault(e.getMessage)) }
+    }.recover { case e => Left(Fault(e.getMessage)) }
   }
 
   def toFault(statusCode: Int): Fault = Fault(s"http status code: ${statusCode.toString}", statusCode)
