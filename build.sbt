@@ -45,7 +45,8 @@ lazy val js = (project in file("js"))
       "org.scala-js" %%% "scalajs-java-time" % "0.2.5",
       "io.circe" %%% "circe-core" % circeVersion,
       "io.circe" %%% "circe-generic" % circeVersion,
-      "io.circe" %%% "circe-parser" % circeVersion
+      "io.circe" %%% "circe-parser" % circeVersion,
+      "com.lihaoyi" %%% "scalatags" % "0.6.7"
     )
   ) dependsOn sharedJS
 
