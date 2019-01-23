@@ -8,4 +8,4 @@ shared/jvm
 .DS_Store
 node_modules
 package-lock.json
-postgresql-42.2.5.jars
+postgresql-42.2.5.jar
