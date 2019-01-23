@@ -1,8 +1,11 @@
 target/
 project/project/
 project/target/
+.js
+.jvm
 .idea
+shared/jvm
 .DS_Store
 node_modules
 package-lock.json
-postgresql-42.2.5.jar
+postgresql-42.2.5.jars
