@@ -21,7 +21,7 @@ object PoolClient {
   def registerServiceWorker(): Unit = {
     toServiceWorkerNavigator(window.navigator)
       .serviceWorker
-      .register("/sw-opt.js")
+      .register("../sw-opt.js")
       .toFuture
       .onComplete {
         case Success(registration) =>
