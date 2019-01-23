@@ -1,4 +1,4 @@
-import sbt.Keys.version
+import sbt.Keys._
 import sbtcrossproject.CrossPlugin.autoImport.{CrossType, crossProject}
 
 name := "tripletail"
