@@ -15,7 +15,6 @@ object ServiceWorker {
   val poolCache = "pool-cache"
   val poolAssets: js.Array[RequestInfo] = List[RequestInfo](
     "index.html",
-    "style.css",
     "w3c.css",
     "favicon.ico",
     "logo.png",
