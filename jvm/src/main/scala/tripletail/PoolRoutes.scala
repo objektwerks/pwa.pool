@@ -7,10 +7,10 @@ import io.circe.generic.auto._
 
 object PoolRoutes {
   val index = path("") {
-    getFromResource("public/index.html")
+    getFromResource("index.html")
   }
   val resources = get {
-    getFromResourceDirectory("public")
+    getFromResourceDirectory("./")
   }
   val signup = path("signup") {
     post {

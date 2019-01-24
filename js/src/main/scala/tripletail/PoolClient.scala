@@ -21,7 +21,7 @@ object PoolClient {
   def registerServiceWorker(): Unit = {
     toServiceWorkerNavigator(window.navigator)
       .serviceWorker
-      .register("../sw-opt.js")
+      .register("sw-opt.js")
       .toFuture
       .onComplete {
         case Success(registration) =>
@@ -34,7 +34,7 @@ object PoolClient {
   def version(): Unit = {
     val div = document.getElementById("version")
     val p = document.createElement("p")
-    val text = document.createTextNode("V3")
+    val text = document.createTextNode("V1")
     val node = p.appendChild(text)
     div.appendChild(node)
     ()
