@@ -11,7 +11,6 @@ import scala.util.{Failure, Success}
 object PoolClient {
   @JSExport
   def init(): Unit = {
-    version()
     registerServiceWorker()
     val poolRestClient = PoolRestClient("http://127.0.0.1:7979/api/v1/tripletail/")
     val poolModelView = PoolModelView(poolRestClient)
@@ -29,14 +28,5 @@ object PoolClient {
           registration.update()
         case Failure(error) => println(s"registerServiceWorker: service worker registration failed > ${error.printStackTrace()}")
       }
-  }
-
-  def version(): Unit = {
-    val div = document.getElementById("version")
-    val p = document.createElement("p")
-    val text = document.createTextNode("V1")
-    val node = p.appendChild(text)
-    div.appendChild(node)
-    ()
   }
 }
