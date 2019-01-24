@@ -2,13 +2,20 @@ Tripletail
 ----------
 >Pool maintenance application.
 
+Dev
+---
+1. sbt
+2. ~reStart
+3. open browser to http://127.0.0.1:7979
+
 Test
 ----
-sbt clean test
+1. sbt clean test
 
 Run
 ---
-sbt jvm/run
+1. sbt jvm/run
+2. open browser to http://127.0.0.1:7979
 
 Scenarios
 ---------
