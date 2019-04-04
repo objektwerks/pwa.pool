@@ -52,7 +52,7 @@ Rest
 * /timers          /add   /update
 * /timersettings   /add   /update
 * /heaters         /add   /update
-* /heater-ons      /add   /updaten
+* /heater-ons      /add   /update
 * /heater-offs     /add   /update
 * /cleanings       /add   /update
 * /measurements    /add   /update
