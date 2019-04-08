@@ -6,4 +6,4 @@ final case class Id(id: Int) extends State
 
 final case class Count(value: Int) extends State
 
-final case class Sequence(seq: Seq[Entity]) extends State
+final case class Sequence(entities: Seq[Entity]) extends State
