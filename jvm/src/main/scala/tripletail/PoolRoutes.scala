@@ -55,8 +55,8 @@ object PoolRoutes {
   } ~ path("pools" / "update") {
     post {
       entity(as[Pool]) { pool =>
-        onSuccess(PoolStore.updatePool(pool)) {
-          complete(StatusCodes.OK -> Ok)
+        onSuccess(PoolStore.updatePool(pool)) { count =>
+          complete(StatusCodes.OK -> Count(count))
         }
       }
     }
@@ -80,8 +80,8 @@ object PoolRoutes {
   } ~ path("surfaces" / "update") {
     post {
       entity(as[Surface]) { surface =>
-        onSuccess(PoolStore.updateSurface(surface)) {
-          complete(StatusCodes.OK -> Ok)
+        onSuccess(PoolStore.updateSurface(surface)) { count =>
+          complete(StatusCodes.OK -> Count(count))
         }
       }
     }
@@ -105,8 +105,8 @@ object PoolRoutes {
   } ~ path("pumps" / "update") {
     post {
       entity(as[Pump]) { pump =>
-        onSuccess(PoolStore.updatePump(pump)) {
-          complete(StatusCodes.OK -> Ok)
+        onSuccess(PoolStore.updatePump(pump)) { count =>
+          complete(StatusCodes.OK -> Count(count))
         }
       }
     }
@@ -130,8 +130,8 @@ object PoolRoutes {
   } ~ path("timers" / "update") {
     post {
       entity(as[Timer]) { timer =>
-        onSuccess(PoolStore.updateTimer(timer)) {
-          complete(StatusCodes.OK -> Ok)
+        onSuccess(PoolStore.updateTimer(timer)) { count =>
+          complete(StatusCodes.OK -> Count(count))
         }
       }
     }
@@ -155,8 +155,8 @@ object PoolRoutes {
   } ~ path("timersettings" / "update") {
     post {
       entity(as[TimerSetting]) { timersetting =>
-        onSuccess(PoolStore.updateTimerSetting(timersetting)) {
-          complete(StatusCodes.OK -> Ok)
+        onSuccess(PoolStore.updateTimerSetting(timersetting)) { count =>
+          complete(StatusCodes.OK -> Count(count))
         }
       }
     }
@@ -180,8 +180,8 @@ object PoolRoutes {
   } ~ path("heaters" / "update") {
     post {
       entity(as[Heater]) { heater =>
-        onSuccess(PoolStore.updateHeater(heater)) {
-          complete(StatusCodes.OK -> Ok)
+        onSuccess(PoolStore.updateHeater(heater)) { count =>
+          complete(StatusCodes.OK -> Count(count))
         }
       }
     }
@@ -205,8 +205,8 @@ object PoolRoutes {
   } ~ path("heaterons" / "update") {
     post {
       entity(as[HeaterOn]) { heateron =>
-        onSuccess(PoolStore.updateHeaterOn(heateron)) {
-          complete(StatusCodes.OK -> Ok)
+        onSuccess(PoolStore.updateHeaterOn(heateron)) { count =>
+          complete(StatusCodes.OK -> Count(count))
         }
       }
     }
@@ -230,8 +230,8 @@ object PoolRoutes {
   } ~ path("heateroffs" / "update") {
     post {
       entity(as[HeaterOff]) { heateroff =>
-        onSuccess(PoolStore.updateHeaterOff(heateroff)) {
-          complete(StatusCodes.OK -> Ok)
+        onSuccess(PoolStore.updateHeaterOff(heateroff)) { count =>
+          complete(StatusCodes.OK -> Count(count))
         }
       }
     }
@@ -255,8 +255,8 @@ object PoolRoutes {
   } ~ path("cleanings" / "update") {
     post {
       entity(as[Cleaning]) { cleaning =>
-        onSuccess(PoolStore.updateCleaning(cleaning)) {
-          complete(StatusCodes.OK -> Ok)
+        onSuccess(PoolStore.updateCleaning(cleaning)) { count =>
+          complete(StatusCodes.OK -> Count(count))
         }
       }
     }
@@ -280,8 +280,8 @@ object PoolRoutes {
   } ~ path("measurements" / "update") {
     post {
       entity(as[Measurement]) { measurement =>
-        onSuccess(PoolStore.updateMeasurement(measurement)) {
-          complete(StatusCodes.OK -> Ok)
+        onSuccess(PoolStore.updateMeasurement(measurement)) { count =>
+          complete(StatusCodes.OK -> Count(count))
         }
       }
     }
@@ -305,8 +305,8 @@ object PoolRoutes {
   } ~ path("chemicals" / "update") {
     post {
       entity(as[Chemical]) { chemical =>
-        onSuccess(PoolStore.updateChemical(chemical)) {
-          complete(StatusCodes.OK -> Ok)
+        onSuccess(PoolStore.updateChemical(chemical)) { count =>
+          complete(StatusCodes.OK -> Count(count))
         }
       }
     }
@@ -330,8 +330,8 @@ object PoolRoutes {
   } ~ path("supplies" / "update") {
     post {
       entity(as[Supply]) { supply =>
-        onSuccess(PoolStore.updateSupply(supply)) {
-          complete(StatusCodes.OK -> Ok)
+        onSuccess(PoolStore.updateSupply(supply)) { count =>
+          complete(StatusCodes.OK -> Count(count))
         }
       }
     }
@@ -355,8 +355,8 @@ object PoolRoutes {
   } ~ path("repairs" / "update") {
     post {
       entity(as[Repair]) { repair =>
-        onSuccess(PoolStore.updateRepair(repair)) {
-          complete(StatusCodes.OK -> Ok)
+        onSuccess(PoolStore.updateRepair(repair)) { count =>
+          complete(StatusCodes.OK -> Count(count))
         }
       }
     }

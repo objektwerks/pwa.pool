@@ -3,10 +3,10 @@ import sbtcrossproject.CrossPlugin.autoImport.{CrossType, crossProject}
 
 name := "tripletail"
 
-val akkaVersion = "2.5.19"
-val akkkHttpVersion = "10.1.7"
-val quillVersion = "2.6.0"
-val circeVersion =  "0.11.0"
+val akkaVersion = "2.5.22"
+val akkkHttpVersion = "10.1.8"
+val quillVersion = "3.1.0"
+val circeVersion =  "0.11.1"
 val scalaJsDomVersion = "0.9.6"
 
 lazy val commonSettings = Defaults.coreDefaultSettings ++ Seq(
@@ -46,7 +46,7 @@ lazy val js = (project in file("js"))
       "io.circe" %%% "circe-core" % circeVersion,
       "io.circe" %%% "circe-generic" % circeVersion,
       "io.circe" %%% "circe-parser" % circeVersion,
-      "com.lihaoyi" %%% "scalatags" % "0.6.7"
+      "com.lihaoyi" %%% "scalatags" % "0.6.8"
     )
   ) dependsOn sharedJS
 
@@ -69,7 +69,7 @@ lazy val jvm = (project in file("jvm"))
       "com.typesafe.akka" %% "akka-http" % akkkHttpVersion,
       "com.typesafe.akka" %% "akka-stream" % akkaVersion,
       "com.typesafe.akka" %% "akka-slf4j" % akkaVersion,
-      "de.heikoseeberger" %% "akka-http-circe" % "1.23.0",
+      "de.heikoseeberger" %% "akka-http-circe" % "1.25.2",
       "io.getquill" %% "quill-sql" % quillVersion,
       "io.getquill" %% "quill-async-postgres" % quillVersion,
       "com.github.cb372" %% "scalacache-caffeine" % "0.27.0",
