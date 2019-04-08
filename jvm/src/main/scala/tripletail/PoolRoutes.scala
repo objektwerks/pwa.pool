@@ -46,16 +46,16 @@ object PoolRoutes {
     }
   } ~ path("pools" / "add") {
     post {
-      entity(as[Pool]) { add =>
-        onSuccess(PoolStore.addPool(add)) { id =>
+      entity(as[Pool]) { pool =>
+        onSuccess(PoolStore.addPool(pool)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
     }
   } ~ path("pools" / "update") {
     post {
-      entity(as[Pool]) { update =>
-        onSuccess(PoolStore.updatePool(update)) {
+      entity(as[Pool]) { pool =>
+        onSuccess(PoolStore.updatePool(pool)) {
           complete(StatusCodes.OK -> Ok)
         }
       }
@@ -71,16 +71,16 @@ object PoolRoutes {
     }
   } ~ path("surfaces" / "add") {
     post {
-      entity(as[Surface]) { add =>
-        onSuccess(PoolStore.addSurface(add)) { id =>
+      entity(as[Surface]) { surface =>
+        onSuccess(PoolStore.addSurface(surface)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
     }
   } ~ path("surfaces" / "update") {
     post {
-      entity(as[Surface]) { update =>
-        onSuccess(PoolStore.updateSurface(update)) {
+      entity(as[Surface]) { surface =>
+        onSuccess(PoolStore.updateSurface(surface)) {
           complete(StatusCodes.OK -> Ok)
         }
       }
@@ -96,16 +96,16 @@ object PoolRoutes {
     }
   } ~ path("pumps" / "add") {
     post {
-      entity(as[Pump]) { add =>
-        onSuccess(PoolStore.addPump(add)) { id =>
+      entity(as[Pump]) { pump =>
+        onSuccess(PoolStore.addPump(pump)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
     }
   } ~ path("pumps" / "update") {
     post {
-      entity(as[Pump]) { update =>
-        onSuccess(PoolStore.updatePump(update)) {
+      entity(as[Pump]) { pump =>
+        onSuccess(PoolStore.updatePump(pump)) {
           complete(StatusCodes.OK -> Ok)
         }
       }
@@ -121,16 +121,16 @@ object PoolRoutes {
     }
   } ~ path("timers" / "add") {
     post {
-      entity(as[Timer]) { add =>
-        onSuccess(PoolStore.addTimer(add)) { id =>
+      entity(as[Timer]) { timer =>
+        onSuccess(PoolStore.addTimer(timer)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
     }
   } ~ path("timers" / "update") {
     post {
-      entity(as[Timer]) { update =>
-        onSuccess(PoolStore.updateTimer(update)) {
+      entity(as[Timer]) { timer =>
+        onSuccess(PoolStore.updateTimer(timer)) {
           complete(StatusCodes.OK -> Ok)
         }
       }
@@ -146,16 +146,16 @@ object PoolRoutes {
     }
   } ~ path("timersettings" / "add") {
     post {
-      entity(as[TimerSetting]) { add =>
-        onSuccess(PoolStore.addTimerSetting(add)) { id =>
+      entity(as[TimerSetting]) { timersetting =>
+        onSuccess(PoolStore.addTimerSetting(timersetting)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
     }
   } ~ path("timersettings" / "update") {
     post {
-      entity(as[TimerSetting]) { update =>
-        onSuccess(PoolStore.updateTimerSetting(update)) {
+      entity(as[TimerSetting]) { timersetting =>
+        onSuccess(PoolStore.updateTimerSetting(timersetting)) {
           complete(StatusCodes.OK -> Ok)
         }
       }
@@ -171,16 +171,16 @@ object PoolRoutes {
     }
   } ~ path("heaters" / "add") {
     post {
-      entity(as[Heater]) { add =>
-        onSuccess(PoolStore.addHeater(add)) { id =>
+      entity(as[Heater]) { heater =>
+        onSuccess(PoolStore.addHeater(heater)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
     }
   } ~ path("heaters" / "update") {
     post {
-      entity(as[Heater]) { update =>
-        onSuccess(PoolStore.updateHeater(update)) {
+      entity(as[Heater]) { heater =>
+        onSuccess(PoolStore.updateHeater(heater)) {
           complete(StatusCodes.OK -> Ok)
         }
       }
@@ -196,16 +196,16 @@ object PoolRoutes {
     }
   } ~ path("heaterons" / "add") {
     post {
-      entity(as[HeaterOn]) { add =>
-        onSuccess(PoolStore.addHeaterOn(add)) { id =>
+      entity(as[HeaterOn]) { heateron =>
+        onSuccess(PoolStore.addHeaterOn(heateron)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
     }
   } ~ path("heaterons" / "update") {
     post {
-      entity(as[HeaterOn]) { update =>
-        onSuccess(PoolStore.updateHeaterOn(update)) {
+      entity(as[HeaterOn]) { heateron =>
+        onSuccess(PoolStore.updateHeaterOn(heateron)) {
           complete(StatusCodes.OK -> Ok)
         }
       }
@@ -221,16 +221,16 @@ object PoolRoutes {
     }
   } ~ path("heateroffs" / "add") {
     post {
-      entity(as[HeaterOff]) { add =>
-        onSuccess(PoolStore.addHeaterOff(add)) { id =>
+      entity(as[HeaterOff]) { heateroff =>
+        onSuccess(PoolStore.addHeaterOff(heateroff)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
     }
   } ~ path("heateroffs" / "update") {
     post {
-      entity(as[HeaterOff]) { update =>
-        onSuccess(PoolStore.updateHeaterOff(update)) {
+      entity(as[HeaterOff]) { heateroff =>
+        onSuccess(PoolStore.updateHeaterOff(heateroff)) {
           complete(StatusCodes.OK -> Ok)
         }
       }
@@ -246,16 +246,16 @@ object PoolRoutes {
     }
   } ~ path("cleanings" / "add") {
     post {
-      entity(as[Cleaning]) { add =>
-        onSuccess(PoolStore.addCleaning(add)) { id =>
+      entity(as[Cleaning]) { cleaning =>
+        onSuccess(PoolStore.addCleaning(cleaning)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
     }
   } ~ path("cleanings" / "update") {
     post {
-      entity(as[Cleaning]) { update =>
-        onSuccess(PoolStore.updateCleaning(update)) {
+      entity(as[Cleaning]) { cleaning =>
+        onSuccess(PoolStore.updateCleaning(cleaning)) {
           complete(StatusCodes.OK -> Ok)
         }
       }
@@ -271,16 +271,16 @@ object PoolRoutes {
     }
   } ~ path("measurements" / "add") {
     post {
-      entity(as[Measurement]) { add =>
-        onSuccess(PoolStore.addMeasurement(add)) { id =>
+      entity(as[Measurement]) { measurement =>
+        onSuccess(PoolStore.addMeasurement(measurement)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
     }
   } ~ path("measurements" / "update") {
     post {
-      entity(as[Measurement]) { update =>
-        onSuccess(PoolStore.updateMeasurement(update)) {
+      entity(as[Measurement]) { measurement =>
+        onSuccess(PoolStore.updateMeasurement(measurement)) {
           complete(StatusCodes.OK -> Ok)
         }
       }
@@ -296,16 +296,16 @@ object PoolRoutes {
     }
   } ~ path("chemicals" / "add") {
     post {
-      entity(as[Chemical]) { add =>
-        onSuccess(PoolStore.addChemical(add)) { id =>
+      entity(as[Chemical]) { chemical =>
+        onSuccess(PoolStore.addChemical(chemical)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
     }
   } ~ path("chemicals" / "update") {
     post {
-      entity(as[Chemical]) { update =>
-        onSuccess(PoolStore.updateChemical(update)) {
+      entity(as[Chemical]) { chemical =>
+        onSuccess(PoolStore.updateChemical(chemical)) {
           complete(StatusCodes.OK -> Ok)
         }
       }
@@ -321,16 +321,16 @@ object PoolRoutes {
     }
   } ~ path("supplies" / "add") {
     post {
-      entity(as[Supply]) { add =>
-        onSuccess(PoolStore.addSupply(add)) { id =>
+      entity(as[Supply]) { supply =>
+        onSuccess(PoolStore.addSupply(supply)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
     }
   } ~ path("supplies" / "update") {
     post {
-      entity(as[Supply]) { update =>
-        onSuccess(PoolStore.updateSupply(update)) {
+      entity(as[Supply]) { supply =>
+        onSuccess(PoolStore.updateSupply(supply)) {
           complete(StatusCodes.OK -> Ok)
         }
       }
@@ -346,16 +346,16 @@ object PoolRoutes {
     }
   } ~ path("repairs" / "add") {
     post {
-      entity(as[Repair]) { add =>
-        onSuccess(PoolStore.addRepair(add)) { id =>
+      entity(as[Repair]) { repair =>
+        onSuccess(PoolStore.addRepair(repair)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
     }
   } ~ path("repairs" / "update") {
     post {
-      entity(as[Repair]) { update =>
-        onSuccess(PoolStore.updateRepair(update)) {
+      entity(as[Repair]) { repair =>
+        onSuccess(PoolStore.updateRepair(repair)) {
           complete(StatusCodes.OK -> Ok)
         }
       }
