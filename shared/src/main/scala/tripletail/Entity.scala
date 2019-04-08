@@ -35,3 +35,9 @@ final case class Chemical(id: Int, poolId: Int, added: Long, chemical: String, a
 final case class Supply(id: Int, poolId: Int, purchased: Long, cost: Double, item: String, amount: Double, unit: String) extends Entity
 
 final case class Repair(id: Int, poolId: Int, repaired: Long, cost: Double, repair: String) extends Entity
+
+final case class Id(id: Int) extends Entity
+
+final case class Count(value: Int) extends Entity
+
+final case class Sequence(entities: Seq[Entity]) extends Entity
