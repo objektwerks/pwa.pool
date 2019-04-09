@@ -6,6 +6,8 @@ import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport._
 import io.circe.generic.auto._
 
 object PoolRoutes {
+  import PoolStore._
+
   val index = path("") {
     getFromResource("index.html")
   }
@@ -14,8 +16,8 @@ object PoolRoutes {
   }
   val signup = path("signup") {
     post {
-      entity(as[SignUp]) { signUp =>
-        onSuccess(PoolStore.signUp(signUp.email)) { licensee =>
+      entity(as[SignUp]) { signup =>
+        onSuccess(signUp(signup.email)) { licensee =>
           LicenseeCache.put(licensee)
           complete(StatusCodes.OK -> SignedUp(licensee))
         }
@@ -24,8 +26,8 @@ object PoolRoutes {
   }
   val signin = path("signin") {
     post {
-      entity(as[SignIn]) { signIn =>
-        onSuccess(PoolStore.signIn(signIn.license, signIn.email)) {
+      entity(as[SignIn]) { signin =>
+        onSuccess(signIn(signin.license, signin.email)) {
           case Some(licensee) =>
             LicenseeCache.put(licensee)
             onSuccess(PoolStore.listPools(licensee.license)) { pools =>
@@ -39,7 +41,7 @@ object PoolRoutes {
   val pools = path("pools") {
     post {
       entity(as[Licensee]) { licensee =>
-        onSuccess(PoolStore.listPools(licensee.license)) { pools =>
+        onSuccess(listPools(licensee.license)) { pools =>
           complete(StatusCodes.OK -> Sequence(pools))
         }
       }
@@ -47,7 +49,7 @@ object PoolRoutes {
   } ~ path("pools" / "add") {
     post {
       entity(as[Pool]) { pool =>
-        onSuccess(PoolStore.addPool(pool)) { id =>
+        onSuccess(addPool(pool)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
@@ -55,7 +57,7 @@ object PoolRoutes {
   } ~ path("pools" / "update") {
     post {
       entity(as[Pool]) { pool =>
-        onSuccess(PoolStore.updatePool(pool)) { count =>
+        onSuccess(updatePool(pool)) { count =>
           complete(StatusCodes.OK -> Count(count))
         }
       }
@@ -64,7 +66,7 @@ object PoolRoutes {
   val surfaces = path("surfaces") {
     post {
       entity(as[Id]) { poolId =>
-        onSuccess(PoolStore.listSurfaces(poolId.id)) { surfaces =>
+        onSuccess(listSurfaces(poolId.id)) { surfaces =>
           complete(StatusCodes.OK -> Sequence(surfaces))
         }
       }
@@ -72,7 +74,7 @@ object PoolRoutes {
   } ~ path("surfaces" / "add") {
     post {
       entity(as[Surface]) { surface =>
-        onSuccess(PoolStore.addSurface(surface)) { id =>
+        onSuccess(addSurface(surface)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
@@ -80,7 +82,7 @@ object PoolRoutes {
   } ~ path("surfaces" / "update") {
     post {
       entity(as[Surface]) { surface =>
-        onSuccess(PoolStore.updateSurface(surface)) { count =>
+        onSuccess(updateSurface(surface)) { count =>
           complete(StatusCodes.OK -> Count(count))
         }
       }
@@ -89,7 +91,7 @@ object PoolRoutes {
   val pumps = path("pumps") {
     post {
       entity(as[Id]) { poolId =>
-        onSuccess(PoolStore.listPumps(poolId.id)) { pumps =>
+        onSuccess(listPumps(poolId.id)) { pumps =>
           complete(StatusCodes.OK -> Sequence(pumps))
         }
       }
@@ -97,7 +99,7 @@ object PoolRoutes {
   } ~ path("pumps" / "add") {
     post {
       entity(as[Pump]) { pump =>
-        onSuccess(PoolStore.addPump(pump)) { id =>
+        onSuccess(addPump(pump)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
@@ -105,7 +107,7 @@ object PoolRoutes {
   } ~ path("pumps" / "update") {
     post {
       entity(as[Pump]) { pump =>
-        onSuccess(PoolStore.updatePump(pump)) { count =>
+        onSuccess(updatePump(pump)) { count =>
           complete(StatusCodes.OK -> Count(count))
         }
       }
@@ -114,7 +116,7 @@ object PoolRoutes {
   val timers = path("timers") {
     post {
       entity(as[Id]) { poolId =>
-        onSuccess(PoolStore.listTimers(poolId.id)) { timers =>
+        onSuccess(listTimers(poolId.id)) { timers =>
           complete(StatusCodes.OK -> Sequence(timers))
         }
       }
@@ -122,7 +124,7 @@ object PoolRoutes {
   } ~ path("timers" / "add") {
     post {
       entity(as[Timer]) { timer =>
-        onSuccess(PoolStore.addTimer(timer)) { id =>
+        onSuccess(addTimer(timer)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
@@ -130,7 +132,7 @@ object PoolRoutes {
   } ~ path("timers" / "update") {
     post {
       entity(as[Timer]) { timer =>
-        onSuccess(PoolStore.updateTimer(timer)) { count =>
+        onSuccess(updateTimer(timer)) { count =>
           complete(StatusCodes.OK -> Count(count))
         }
       }
@@ -139,7 +141,7 @@ object PoolRoutes {
   val timersettings = path("timersettings") {
     post {
       entity(as[Id]) { timerId =>
-        onSuccess(PoolStore.listTimerSettings(timerId.id)) { timersettings =>
+        onSuccess(listTimerSettings(timerId.id)) { timersettings =>
           complete(StatusCodes.OK -> Sequence(timersettings))
         }
       }
@@ -147,7 +149,7 @@ object PoolRoutes {
   } ~ path("timersettings" / "add") {
     post {
       entity(as[TimerSetting]) { timersetting =>
-        onSuccess(PoolStore.addTimerSetting(timersetting)) { id =>
+        onSuccess(addTimerSetting(timersetting)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
@@ -155,7 +157,7 @@ object PoolRoutes {
   } ~ path("timersettings" / "update") {
     post {
       entity(as[TimerSetting]) { timersetting =>
-        onSuccess(PoolStore.updateTimerSetting(timersetting)) { count =>
+        onSuccess(updateTimerSetting(timersetting)) { count =>
           complete(StatusCodes.OK -> Count(count))
         }
       }
@@ -164,7 +166,7 @@ object PoolRoutes {
   val heaters = path("heaters") {
     post {
       entity(as[Id]) { poolId =>
-        onSuccess(PoolStore.listHeaters(poolId.id)) { heaters =>
+        onSuccess(listHeaters(poolId.id)) { heaters =>
           complete(StatusCodes.OK -> Sequence(heaters))
         }
       }
@@ -172,7 +174,7 @@ object PoolRoutes {
   } ~ path("heaters" / "add") {
     post {
       entity(as[Heater]) { heater =>
-        onSuccess(PoolStore.addHeater(heater)) { id =>
+        onSuccess(addHeater(heater)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
@@ -180,7 +182,7 @@ object PoolRoutes {
   } ~ path("heaters" / "update") {
     post {
       entity(as[Heater]) { heater =>
-        onSuccess(PoolStore.updateHeater(heater)) { count =>
+        onSuccess(updateHeater(heater)) { count =>
           complete(StatusCodes.OK -> Count(count))
         }
       }
@@ -189,7 +191,7 @@ object PoolRoutes {
   val heaterons = path("heaterons") {
     post {
       entity(as[Id]) { heaterId =>
-        onSuccess(PoolStore.listHeaterOns(heaterId.id)) { heaterOns =>
+        onSuccess(listHeaterOns(heaterId.id)) { heaterOns =>
           complete(StatusCodes.OK -> Sequence(heaterOns))
         }
       }
@@ -197,7 +199,7 @@ object PoolRoutes {
   } ~ path("heaterons" / "add") {
     post {
       entity(as[HeaterOn]) { heateron =>
-        onSuccess(PoolStore.addHeaterOn(heateron)) { id =>
+        onSuccess(addHeaterOn(heateron)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
@@ -205,7 +207,7 @@ object PoolRoutes {
   } ~ path("heaterons" / "update") {
     post {
       entity(as[HeaterOn]) { heateron =>
-        onSuccess(PoolStore.updateHeaterOn(heateron)) { count =>
+        onSuccess(updateHeaterOn(heateron)) { count =>
           complete(StatusCodes.OK -> Count(count))
         }
       }
@@ -214,7 +216,7 @@ object PoolRoutes {
   val heateroffs = path("heateroffs") {
     post {
       entity(as[Id]) { heaterId =>
-        onSuccess(PoolStore.listHeaterOffs(heaterId.id)) { heaterOffs =>
+        onSuccess(listHeaterOffs(heaterId.id)) { heaterOffs =>
           complete(StatusCodes.OK -> Sequence(heaterOffs))
         }
       }
@@ -222,7 +224,7 @@ object PoolRoutes {
   } ~ path("heateroffs" / "add") {
     post {
       entity(as[HeaterOff]) { heateroff =>
-        onSuccess(PoolStore.addHeaterOff(heateroff)) { id =>
+        onSuccess(addHeaterOff(heateroff)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
@@ -230,7 +232,7 @@ object PoolRoutes {
   } ~ path("heateroffs" / "update") {
     post {
       entity(as[HeaterOff]) { heateroff =>
-        onSuccess(PoolStore.updateHeaterOff(heateroff)) { count =>
+        onSuccess(updateHeaterOff(heateroff)) { count =>
           complete(StatusCodes.OK -> Count(count))
         }
       }
@@ -239,7 +241,7 @@ object PoolRoutes {
   val cleanings = path("cleanings") {
     post {
       entity(as[Id]) { poolId =>
-        onSuccess(PoolStore.listCleanings(poolId.id)) { cleanings =>
+        onSuccess(listCleanings(poolId.id)) { cleanings =>
           complete(StatusCodes.OK -> Sequence(cleanings))
         }
       }
@@ -247,7 +249,7 @@ object PoolRoutes {
   } ~ path("cleanings" / "add") {
     post {
       entity(as[Cleaning]) { cleaning =>
-        onSuccess(PoolStore.addCleaning(cleaning)) { id =>
+        onSuccess(addCleaning(cleaning)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
@@ -255,7 +257,7 @@ object PoolRoutes {
   } ~ path("cleanings" / "update") {
     post {
       entity(as[Cleaning]) { cleaning =>
-        onSuccess(PoolStore.updateCleaning(cleaning)) { count =>
+        onSuccess(updateCleaning(cleaning)) { count =>
           complete(StatusCodes.OK -> Count(count))
         }
       }
@@ -264,7 +266,7 @@ object PoolRoutes {
   val measurements = path("measurements") {
     post {
       entity(as[Id]) { poolId =>
-        onSuccess(PoolStore.listMeasurements(poolId.id)) { measurements =>
+        onSuccess(listMeasurements(poolId.id)) { measurements =>
           complete(StatusCodes.OK -> Sequence(measurements))
         }
       }
@@ -272,7 +274,7 @@ object PoolRoutes {
   } ~ path("measurements" / "add") {
     post {
       entity(as[Measurement]) { measurement =>
-        onSuccess(PoolStore.addMeasurement(measurement)) { id =>
+        onSuccess(addMeasurement(measurement)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
@@ -280,7 +282,7 @@ object PoolRoutes {
   } ~ path("measurements" / "update") {
     post {
       entity(as[Measurement]) { measurement =>
-        onSuccess(PoolStore.updateMeasurement(measurement)) { count =>
+        onSuccess(updateMeasurement(measurement)) { count =>
           complete(StatusCodes.OK -> Count(count))
         }
       }
@@ -289,7 +291,7 @@ object PoolRoutes {
   val chemicals = path("chemicals") {
     post {
       entity(as[Id]) { poolId =>
-        onSuccess(PoolStore.listChemicals(poolId.id)) { chemicals =>
+        onSuccess(listChemicals(poolId.id)) { chemicals =>
           complete(StatusCodes.OK -> Sequence(chemicals))
         }
       }
@@ -297,7 +299,7 @@ object PoolRoutes {
   } ~ path("chemicals" / "add") {
     post {
       entity(as[Chemical]) { chemical =>
-        onSuccess(PoolStore.addChemical(chemical)) { id =>
+        onSuccess(addChemical(chemical)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
@@ -305,7 +307,7 @@ object PoolRoutes {
   } ~ path("chemicals" / "update") {
     post {
       entity(as[Chemical]) { chemical =>
-        onSuccess(PoolStore.updateChemical(chemical)) { count =>
+        onSuccess(updateChemical(chemical)) { count =>
           complete(StatusCodes.OK -> Count(count))
         }
       }
@@ -314,7 +316,7 @@ object PoolRoutes {
   val supplies = path("supplies") {
     post {
       entity(as[Id]) { poolId =>
-        onSuccess(PoolStore.listSupplies(poolId.id)) { supplies =>
+        onSuccess(listSupplies(poolId.id)) { supplies =>
           complete(StatusCodes.OK -> Sequence(supplies))
         }
       }
@@ -322,7 +324,7 @@ object PoolRoutes {
   } ~ path("supplies" / "add") {
     post {
       entity(as[Supply]) { supply =>
-        onSuccess(PoolStore.addSupply(supply)) { id =>
+        onSuccess(addSupply(supply)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
@@ -330,7 +332,7 @@ object PoolRoutes {
   } ~ path("supplies" / "update") {
     post {
       entity(as[Supply]) { supply =>
-        onSuccess(PoolStore.updateSupply(supply)) { count =>
+        onSuccess(updateSupply(supply)) { count =>
           complete(StatusCodes.OK -> Count(count))
         }
       }
@@ -339,7 +341,7 @@ object PoolRoutes {
   val repairs = path("repairs") {
     post {
       entity(as[Id]) { poolId =>
-        onSuccess(PoolStore.listRepairs(poolId.id)) { repairs =>
+        onSuccess(listRepairs(poolId.id)) { repairs =>
           complete(StatusCodes.OK -> Sequence(repairs))
         }
       }
@@ -347,7 +349,7 @@ object PoolRoutes {
   } ~ path("repairs" / "add") {
     post {
       entity(as[Repair]) { repair =>
-        onSuccess(PoolStore.addRepair(repair)) { id =>
+        onSuccess(addRepair(repair)) { id =>
           complete(StatusCodes.OK -> Id(id))
         }
       }
@@ -355,7 +357,7 @@ object PoolRoutes {
   } ~ path("repairs" / "update") {
     post {
       entity(as[Repair]) { repair =>
-        onSuccess(PoolStore.updateRepair(repair)) { count =>
+        onSuccess(updateRepair(repair)) { count =>
           complete(StatusCodes.OK -> Count(count))
         }
       }
