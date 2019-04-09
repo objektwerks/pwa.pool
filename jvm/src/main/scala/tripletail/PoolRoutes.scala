@@ -2,6 +2,7 @@ package tripletail
 
 import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.Directives._
+import akka.http.scaladsl.server.Route
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport._
 import io.circe.generic.auto._
 
@@ -366,6 +367,11 @@ object PoolRoutes {
   val api = pathPrefix("api" / "v1" / "tripletail") {
       pools ~ surfaces ~ pumps ~ timers ~ timersettings ~ heaters ~ heaterons ~
         heateroffs ~ cleanings ~ measurements ~ chemicals ~ supplies ~ repairs
+  }
+  val secure = (route: Route) => headerValueByName("license") { license =>
+    onSuccess(LicenseeCache.isLicenseValid(license)) { isValid =>
+      if (isValid) route else complete(StatusCodes.Unauthorized)
+    }
   }
   val secureApi = secure { api }
   val routes = index ~ resources ~ signup ~ signin ~ secureApi

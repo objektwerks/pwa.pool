@@ -14,15 +14,13 @@ object LicenseeCache {
   private val conf = Caffeine.newBuilder.maximumSize(1000L).expireAfterWrite(24, TimeUnit.HOURS).build[String, Entry[Licensee]]
   private val cache: Cache[Licensee] = CaffeineCache[Licensee](conf)
 
-  def get(license: String): Option[Licensee] = cache.get(license).headOption
-
   def put(licensee: Licensee): String = {
     val key = licensee.license
     cache.put(key)(licensee)
     key
   }
 
-  def isValid(license: String): Future[Boolean] = {
+  def isLicenseValid(license: String): Future[Boolean] = {
     if (cache.get(license).nonEmpty) {
       Future.successful(true)
     } else {
