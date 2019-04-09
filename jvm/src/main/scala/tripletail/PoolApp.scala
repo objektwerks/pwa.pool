@@ -8,7 +8,7 @@ import com.typesafe.config.ConfigFactory
 object PoolApp {
   def main(args: Array[String]): Unit = {
     implicit val system = ActorSystem()
-    implicit val materlizer = ActorMaterializer()
+    implicit val materializer = ActorMaterializer()
 
     val conf = ConfigFactory.load()
     val host = conf.getString("app.host")
