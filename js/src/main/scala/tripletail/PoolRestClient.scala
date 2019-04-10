@@ -20,11 +20,11 @@ class PoolRestClient(serverUrl: String) {
     }.recover { case e => Left(toFault(e)) }
   }
 
-  def post(path: String, license: String, entity: Entity): Future[Either[Fault, Entity]] = {
+  def post(path: String, license: String, entity: Entity): Future[Either[Fault, State]] = {
     val headersWithLicense = headers ++: Map("license" -> license)
     Ajax.post(url = serverUrl + path, headers = headersWithLicense, data = entity.asJson.toString).map { xhr =>
       xhr.status match {
-        case 200 => decode[Entity](xhr.responseText).fold(e => Left(toFault(e)), v => Right(v))
+        case 200 => decode[State](xhr.responseText).fold(e => Left(toFault(e)), v => Right(v))
         case _ => Left(toFault(xhr.status))
       }
     }.recover { case e => Left(toFault(e)) }
