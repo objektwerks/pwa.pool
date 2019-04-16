@@ -1,16 +1,17 @@
 package tripletail
 
+import com.typesafe.config.Config
 import io.getquill._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 object PoolStore {
-  def apply(): PoolStore = new PoolStore()
+  def apply(conf: Config): PoolStore = new PoolStore(conf)
 }
 
-class PoolStore {
-  implicit val ctx = new PostgresAsyncContext(SnakeCase, "quill.ctx")
+class PoolStore(conf: Config) {
+  implicit val ctx = new PostgresAsyncContext(SnakeCase, conf.getConfig("quill.ctx"))
   import ctx._
 
   def signUp(email: String): Future[Licensee] = {
