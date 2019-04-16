@@ -16,13 +16,13 @@ class PoolStore(conf: Config) {
 
   def signUp(email: String): Future[Licensee] = {
     val licensee = Licensee(email = email)
-    run( query[Licensee].insert(lift(licensee)) ).map(_ => licensee)
+    run( query[Licensee].insert(lift(licensee))).map(_ => licensee)
   }
 
   def signIn(license: String, email: String): Future[Option[Licensee]] = {
     run(
       query[Licensee]
-        .filter( _.license == lift(license) )
+        .filter( licensee => licensee.license == lift(license) )
         .filter( licensee => licensee.email == lift(email) && licensee.deactivated.isEmpty )
     ).map(_.headOption)
   }
@@ -30,7 +30,7 @@ class PoolStore(conf: Config) {
   def getLicensee(license: String): Future[Option[Licensee]] = {
     run(
       query[Licensee]
-        .filter( _.license == lift(license) )
+        .filter( licensee => licensee.license == lift(license) )
     ).map(_.headOption)
   }
 
