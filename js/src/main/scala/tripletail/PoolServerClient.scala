@@ -8,7 +8,7 @@ import org.scalajs.dom.ext.Ajax
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-class PoolRestClient(serverUrl: String) {
+class PoolServerClient(serverUrl: String) {
   val headers = Map("Content-Type" -> "application/json; charset=utf-8", "Accept" -> "application/json")
 
   def post(path: String, command: Command): Future[Either[Fault, Event]] = {
@@ -31,6 +31,6 @@ class PoolRestClient(serverUrl: String) {
   }
 }
 
-object PoolRestClient {
-  def apply(serverUrl: String): PoolRestClient = new PoolRestClient(serverUrl)
+object PoolServerClient {
+  def apply(serverUrl: String): PoolServerClient = new PoolServerClient(serverUrl)
 }

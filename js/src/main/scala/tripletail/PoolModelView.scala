@@ -1,6 +1,6 @@
 package tripletail
 
-class PoolModelView(poolRestClient: PoolRestClient) {
+class PoolModelView(poolRestClient: PoolServerClient) {
   def init(): Unit = {
     println(poolRestClient)
     ()
@@ -8,5 +8,5 @@ class PoolModelView(poolRestClient: PoolRestClient) {
 }
 
 object PoolModelView {
-  def apply(poolRestClient: PoolRestClient): PoolModelView = new PoolModelView(poolRestClient)
+  def apply(poolRestClient: PoolServerClient): PoolModelView = new PoolModelView(poolRestClient)
 }
