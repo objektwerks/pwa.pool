@@ -10,15 +10,21 @@ final case class Licensee(license: String = UUID.randomUUID.toString.toLowerCase
 
 final case class Pool(id: Int, license: String, built: Long, lat: Long, lon: Long, volume: Int) extends Entity
 
+final case class PoolId(id: Int) extends Entity
+
 final case class Surface(id: Int, poolId: Int, installed: Long, kind: String) extends Entity
 
 final case class Pump(id: Int, poolId: Int, installed: Long, model: String) extends Entity
 
 final case class Timer(id: Int, poolId: Int, installed: Long, model: String) extends Entity
 
+final case class TimerId(id: Int) extends Entity
+
 final case class TimerSetting(id: Int, timerId: Int, set: Long, setOn: Long, setOff: Long) extends Entity
 
 final case class Heater(id: Int, poolId: Int, installed: Long, model: String) extends Entity
+
+final case class HeaterId(id: Int) extends Entity
 
 final case class HeaterOn(id: Int, heaterId: Int, temp: Int, set: Long) extends Entity
 
