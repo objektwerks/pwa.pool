@@ -8,11 +8,10 @@ import org.slf4j.LoggerFactory
 
 object PoolApp {
   def main(args: Array[String]): Unit = {
-    val conf = ConfigFactory.load("app.conf")
-
     implicit val system = ActorSystem()
     implicit val materializer = ActorMaterializer()
 
+    val conf = ConfigFactory.load("app.conf")
     val store = PoolStore(conf)
     val cache = LicenseeCache(store)
     val routes = PoolRoutes(store, cache)
