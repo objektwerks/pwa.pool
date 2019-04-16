@@ -11,10 +11,16 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 object LicenseeCache {
+  def apply(poolStore: PoolStore): LicenseeCache = new LicenseeCache(poolStore)
+}
+
+class LicenseeCache(poolStore: PoolStore) {
+  import poolStore._
+
   private val conf = Caffeine.newBuilder.maximumSize(1000L).expireAfterWrite(24, TimeUnit.HOURS).build[String, Entry[Licensee]]
   private val cache: Cache[Licensee] = CaffeineCache[Licensee](conf)
 
-  def put(licensee: Licensee): String = {
+  def cacheLicensee(licensee: Licensee): String = {
     val key = licensee.license
     cache.put(key)(licensee)
     key
@@ -24,7 +30,7 @@ object LicenseeCache {
     if (cache.get(license).nonEmpty) {
       Future.successful(true)
     } else {
-      PoolStore.getLicensee(license).flatMap { option =>
+      getLicensee(license).flatMap { option =>
         if (option.nonEmpty) {
           val licensee = option.get
           cache.put(licensee.license)(licensee)

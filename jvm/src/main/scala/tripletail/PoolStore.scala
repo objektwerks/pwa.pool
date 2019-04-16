@@ -6,6 +6,10 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 object PoolStore {
+  def apply(): PoolStore = new PoolStore()
+}
+
+class PoolStore {
   implicit val ctx = new PostgresAsyncContext(SnakeCase, "quill.ctx")
   import ctx._
 

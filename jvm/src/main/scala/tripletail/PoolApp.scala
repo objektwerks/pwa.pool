@@ -13,8 +13,11 @@ object PoolApp {
     val conf = ConfigFactory.load()
     val host = conf.getString("app.host")
     val port = conf.getInt("app.port")
+    val store = PoolStore()
+    val cache = LicenseeCache(store)
+    val routes = PoolRoutes(store, cache)
 
-    Http().bindAndHandle(PoolRoutes.routes, host, port)
+    Http().bindAndHandle(routes.routes, host, port)
     println(s"Pool app started at http://$host:$port")
   }
 }

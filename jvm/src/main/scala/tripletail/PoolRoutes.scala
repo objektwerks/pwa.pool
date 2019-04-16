@@ -7,7 +7,12 @@ import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport._
 import io.circe.generic.auto._
 
 object PoolRoutes {
-  import PoolStore._
+  def apply(poolStore: PoolStore, licenseeCache: LicenseeCache): PoolRoutes = new PoolRoutes(poolStore, licenseeCache)
+}
+
+class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
+  import poolStore._
+  import licenseeCache._
 
   val index = path("") {
     getFromResource("index.html")
@@ -19,7 +24,7 @@ object PoolRoutes {
     post {
       entity(as[SignUp]) { signup =>
         onSuccess(signUp(signup.email)) { licensee =>
-          LicenseeCache.put(licensee)
+          cacheLicensee(licensee)
           complete(StatusCodes.OK -> SignedUp(licensee))
         }
       }
@@ -30,8 +35,8 @@ object PoolRoutes {
       entity(as[SignIn]) { signin =>
         onSuccess(signIn(signin.license, signin.email)) {
           case Some(licensee) =>
-            LicenseeCache.put(licensee)
-            onSuccess(PoolStore.listPools(licensee.license)) { pools =>
+            cacheLicensee(licensee)
+            onSuccess(listPools(licensee.license)) { pools =>
               complete(StatusCodes.OK -> SignedIn(licensee, pools))
             }
           case None => complete(StatusCodes.Unauthorized)
@@ -369,7 +374,7 @@ object PoolRoutes {
         heateroffs ~ cleanings ~ measurements ~ chemicals ~ supplies ~ repairs
   }
   val secure = (route: Route) => headerValueByName("license") { license =>
-    onSuccess(LicenseeCache.isLicenseValid(license)) { isValid =>
+    onSuccess(isLicenseValid(license)) { isValid =>
       if (isValid) route else complete(StatusCodes.Unauthorized)
     }
   }
