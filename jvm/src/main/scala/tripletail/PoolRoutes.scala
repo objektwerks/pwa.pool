@@ -20,6 +20,14 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
   val resources = get {
     getFromResourceDirectory("./")
   }
+  val fault = path("fault") {
+    post {
+      entity(as[Fault]) { fault =>
+        onFault(fault)
+        complete(StatusCodes.OK)
+      }
+    }
+  }
   val signup = path("signup") {
     post {
       entity(as[SignUp]) { signup =>
@@ -379,5 +387,5 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     }
   }
   val secureApi = secure { api }
-  val routes = index ~ resources ~ signup ~ signin ~ secureApi
+  val routes = index ~ resources ~ fault ~ signup ~ signin ~ secureApi
 }

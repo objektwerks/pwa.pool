@@ -14,6 +14,11 @@ class PoolStore(conf: Config) {
   implicit val ctx = new PostgresAsyncContext(SnakeCase, conf.getConfig("quill.ctx"))
   import ctx._
 
+  def onFault(fault: Fault): Unit = {
+    run( query[Fault].insert(lift(fault)) )
+    ()
+  }
+
   def signUp(email: String): Future[Licensee] = {
     val licensee = Licensee(email = email)
     run( query[Licensee].insert(lift(licensee))).map(_ => licensee)

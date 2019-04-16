@@ -1,6 +1,13 @@
-DROP TABLE IF EXISTS licensee, pool, surface, pump,
+DROP TABLE IF EXISTS fault, licensee, pool, surface, pump,
 timer, timer_setting, heater, heater_on, heater_off,
 cleaning, measurement, chemical, supply, repair;
+
+CREATE TABLE fault (
+  id SERIAL PRIMARY KEY,
+  message VARCHAR NOT NULL,
+  code INT NOT NULL,
+  occurred TIMESTAMP NOT NULL
+);
 
 CREATE TABLE licensee (
   license VARCHAR PRIMARY KEY,

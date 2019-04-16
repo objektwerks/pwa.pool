@@ -29,6 +29,11 @@ class PoolServerClient(serverUrl: String) {
       }
     }.recover { case e => Left(Fault(e)) }
   }
+
+  def post(path: String, fault: Fault): Unit = {
+    Ajax.post(url = serverUrl + path, headers = headers, data = fault.asJson.toString)
+    ()
+  }
 }
 
 object PoolServerClient {
