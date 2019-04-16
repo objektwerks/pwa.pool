@@ -2,6 +2,16 @@ Tripletail
 ----------
 >Pool maintenance application.
 
+Postgresql
+----------
+1. brew services start postgresql | brew services stop postgresql
+
+DDL
+---
+1. psql tripletail
+2. \i ddl.sql
+3. \q
+
 Dev
 ---
 1. sbt
