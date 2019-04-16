@@ -24,14 +24,14 @@ class PoolStore(conf: Config) {
       query[Licensee]
         .filter( licensee => licensee.license == lift(license) )
         .filter( licensee => licensee.email == lift(email) && licensee.deactivated.isEmpty )
-    ).map(_.headOption)
+    ).map(result => result.headOption)
   }
 
   def getLicensee(license: String): Future[Option[Licensee]] = {
     run(
       query[Licensee]
         .filter( licensee => licensee.license == lift(license) )
-    ).map(_.headOption)
+    ).map(result => result.headOption)
   }
 
   def listPools(license: String): Future[Seq[Pool]] = run( query[Pool].filter(_.license == lift(license)) )
