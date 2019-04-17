@@ -32,9 +32,8 @@ class PoolServerClient(serverUrl: String) {
   }
 
   def post(path: String, fault: Fault): Unit = {
-    Ajax.post(url = serverUrl + path, headers = headers, data = fault.asJson.toString).map { _ =>
-      console.error(fault.toString)
-    }
+    console.error(fault.toString)
+    Ajax.post(url = serverUrl + path, headers = headers, data = fault.asJson.toString)
     ()
   }
 }
