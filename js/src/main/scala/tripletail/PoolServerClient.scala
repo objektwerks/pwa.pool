@@ -4,6 +4,7 @@ import io.circe.generic.auto._
 import io.circe.parser._
 import io.circe.syntax._
 import org.scalajs.dom.ext.Ajax
+import org.scalajs.dom.console
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -31,6 +32,7 @@ class PoolServerClient(serverUrl: String) {
   }
 
   def post(path: String, fault: Fault): Unit = {
+    console.error(fault.toString)
     Ajax.post(url = serverUrl + path, headers = headers, data = fault.asJson.toString)
     ()
   }
