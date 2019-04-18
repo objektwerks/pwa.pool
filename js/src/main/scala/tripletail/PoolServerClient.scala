@@ -16,7 +16,7 @@ class PoolServerClient(serverUrl: String) {
     Ajax.post(url = serverUrl + path, headers = headers, data = command.asJson.toString).map { xhr =>
       xhr.status match {
         case 200 => decode[Event](xhr.responseText).fold(e => Left(Fault(e)), v => Right(v))
-        case _ => Left(Fault(xhr.status))
+        case _ => Left(Fault(xhr.statusText, xhr.status))
       }
     }.recover { case e => Left(Fault(e)) }
   }
@@ -26,7 +26,7 @@ class PoolServerClient(serverUrl: String) {
     Ajax.post(url = serverUrl + path, headers = headersWithLicense, data = entity.asJson.toString).map { xhr =>
       xhr.status match {
         case 200 => decode[State](xhr.responseText).fold(e => Left(Fault(e)), v => Right(v))
-        case _ => Left(Fault(xhr.status))
+        case _ => Left(Fault(xhr.statusText, xhr.status))
       }
     }.recover { case e => Left(Fault(e)) }
   }
