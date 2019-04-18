@@ -30,8 +30,11 @@ Run
 
 Scenarios
 ---------
-1. Sign up with email
-2. Sign in with license and email
+1. If Licensee not persisted on client:
+    1. Sign up with email; or
+    2. Sign in with license and email
+2. Else If Licensee is persisted on client:
+    1. Sign in with persisted Licensee
 3. List, Add, Update pool, surface, pump, timer, timersetting heater, heater-on, heater-off, lifecycle, cleaning, measurement, chemical, supply, repair
 4. Chart measurements, chemicals, supplies and repairs
 
