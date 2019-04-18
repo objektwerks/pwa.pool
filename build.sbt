@@ -7,7 +7,6 @@ val akkaVersion = "2.5.22"
 val akkkHttpVersion = "10.1.8"
 val quillVersion = "3.1.0"
 val circeVersion =  "0.11.1"
-val scalaJsDomVersion = "0.9.6"
 
 lazy val commonSettings = Defaults.coreDefaultSettings ++ Seq(
   organization := "objektwerks",
@@ -41,12 +40,10 @@ lazy val js = (project in file("js"))
   .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
-      "org.scala-js" %%% "scalajs-dom" % scalaJsDomVersion,
-      "org.scala-js" %%% "scalajs-java-time" % "0.2.5",
+      "com.raquo" %%% "laminar" % "0.6",
       "io.circe" %%% "circe-core" % circeVersion,
       "io.circe" %%% "circe-generic" % circeVersion,
-      "io.circe" %%% "circe-parser" % circeVersion,
-      "com.lihaoyi" %%% "scalatags" % "0.6.8"
+      "io.circe" %%% "circe-parser" % circeVersion
     )
   ) dependsOn sharedJS
 
@@ -56,7 +53,7 @@ lazy val sw = (project in file("sw"))
   .settings(
     scalaJSUseMainModuleInitializer := true,
     libraryDependencies ++= Seq(
-      "org.scala-js" %%% "scalajs-dom" % scalaJsDomVersion
+      "com.raquo" %%% "domtypes" % "0.9.4"
     )
   )
 
