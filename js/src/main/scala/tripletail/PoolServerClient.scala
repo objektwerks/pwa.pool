@@ -15,7 +15,7 @@ class PoolServerClient(serverUrl: String) {
   def post(path: String, command: Command): Future[Either[Fault, Event]] = {
     Ajax.post(url = serverUrl + path, headers = headers, data = command.asJson.toString).map { xhr =>
       xhr.status match {
-        case 200 => decode[Event](xhr.responseText).fold(e => Left(Fault(e)), v => Right(v))
+        case 200 => decode[Event](xhr.responseText).fold(error => Left(Fault(error)), event => Right(event))
         case _ => Left(Fault(xhr.statusText, xhr.status))
       }
     }.recover { case e => Left(Fault(e)) }
@@ -25,7 +25,7 @@ class PoolServerClient(serverUrl: String) {
     val headersWithLicense = headers ++: Map("license" -> license)
     Ajax.post(url = serverUrl + path, headers = headersWithLicense, data = entity.asJson.toString).map { xhr =>
       xhr.status match {
-        case 200 => decode[State](xhr.responseText).fold(e => Left(Fault(e)), v => Right(v))
+        case 200 => decode[State](xhr.responseText).fold(error => Left(Fault(error)), state => Right(state))
         case _ => Left(Fault(xhr.statusText, xhr.status))
       }
     }.recover { case e => Left(Fault(e)) }
