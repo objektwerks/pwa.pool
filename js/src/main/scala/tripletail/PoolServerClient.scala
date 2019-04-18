@@ -12,15 +12,6 @@ import scala.concurrent.Future
 class PoolServerClient(serverUrl: String) {
   val headers = Map("Content-Type" -> "application/json; charset=utf-8", "Accept" -> "application/json")
 
-  def post(path: String, command: Command): Future[Either[Fault, Event]] = {
-    Ajax.post(url = serverUrl + path, headers = headers, data = command.asJson.toString).map { xhr =>
-      xhr.status match {
-        case 200 => decode[Event](xhr.responseText).fold(error => Left(Fault(error)), event => Right(event))
-        case _ => Left(Fault(xhr.statusText, xhr.status))
-      }
-    }.recover { case error => Left(Fault(error)) }
-  }
-
   def post(path: String, license: String, entity: Entity): Future[Either[Fault, State]] = {
     val headersWithLicense = headers ++: Map("license" -> license)
     Ajax.post(url = serverUrl + path, headers = headersWithLicense, data = entity.asJson.toString).map { xhr =>

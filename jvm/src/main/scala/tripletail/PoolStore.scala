@@ -19,24 +19,10 @@ class PoolStore(conf: Config) {
     ()
   }
 
-  def signUp(email: String): Future[Licensee] = {
-    val licensee = Licensee(email = email)
-    run( query[Licensee].insert(lift(licensee))).map(_ => licensee)
-  }
-
-  def signIn(license: String, email: String): Future[Option[Licensee]] = {
-    run(
-      query[Licensee]
-        .filter( licensee => licensee.license == lift(license) )
-        .filter( licensee => licensee.email == lift(email) && licensee.deactivated.isEmpty )
-    ).map(result => result.headOption)
-  }
+  def signUp(licensee: Licensee): Future[Licensee] = run( query[Licensee].insert(lift(licensee)) ).map(_ => licensee)
 
   def getLicensee(license: String): Future[Option[Licensee]] = {
-    run(
-      query[Licensee]
-        .filter( licensee => licensee.license == lift(license) )
-    ).map(result => result.headOption)
+    run( query[Licensee].filter( licensee => licensee.license == lift(license) ) ).map(result => result.headOption)
   }
 
   def listPools(license: String): Future[Seq[Pool]] = run( query[Pool].filter(_.license == lift(license)) )
