@@ -18,7 +18,7 @@ class PoolServerClient(serverUrl: String) {
         case 200 => decode[Event](xhr.responseText).fold(error => Left(Fault(error)), event => Right(event))
         case _ => Left(Fault(xhr.statusText, xhr.status))
       }
-    }.recover { case e => Left(Fault(e)) }
+    }.recover { case error => Left(Fault(error)) }
   }
 
   def post(path: String, license: String, entity: Entity): Future[Either[Fault, State]] = {
@@ -28,7 +28,7 @@ class PoolServerClient(serverUrl: String) {
         case 200 => decode[State](xhr.responseText).fold(error => Left(Fault(error)), state => Right(state))
         case _ => Left(Fault(xhr.statusText, xhr.status))
       }
-    }.recover { case e => Left(Fault(e)) }
+    }.recover { case error => Left(Fault(error)) }
   }
 
   def post(path: String, fault: Fault): Unit = {
