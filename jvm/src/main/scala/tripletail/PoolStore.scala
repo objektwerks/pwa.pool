@@ -19,7 +19,10 @@ class PoolStore(conf: Config) {
     ()
   }
 
-  def signUp(licensee: Licensee): Future[Licensee] = run( query[Licensee].insert(lift(licensee)) ).map(_ => licensee)
+  def signUp(email: String): Future[Licensee] = {
+    val licensee = Licensee(email = email)
+    run( query[Licensee].insert(lift(licensee))).map(_ => licensee)
+  }
 
   def signIn(license: String, email: String): Future[Option[Licensee]] = {
     run(

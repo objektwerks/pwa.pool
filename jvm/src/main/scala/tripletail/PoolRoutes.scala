@@ -30,22 +30,22 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
   }
   val signup = path("signup") {
     post {
-      entity(as[Licensee]) { licensee =>
-        onSuccess(signUp(licensee)) { licensee =>
+      entity(as[SignUp]) { signup =>
+        onSuccess(signUp(signup.email)) { licensee =>
           cacheLicensee(licensee)
-          complete(StatusCodes.OK -> Sequence(Seq.empty[Pool]))
+          complete(StatusCodes.OK -> SignedUp(licensee))
         }
       }
     }
   }
   val signin = path("signin") {
     post {
-      entity(as[Licensee]) { licensee =>
-        onSuccess(signIn(licensee.license, licensee.email)) {
-          case Some(validLicensee) =>
-            cacheLicensee(validLicensee)
-            onSuccess(listPools(validLicensee.license)) { pools =>
-              complete(StatusCodes.OK -> Sequence(pools))
+      entity(as[SignIn]) { signin =>
+        onSuccess(signIn(signin.license, signin.email)) {
+          case Some(licensee) =>
+            cacheLicensee(licensee)
+            onSuccess(listPools(licensee.license)) { pools =>
+              complete(StatusCodes.OK -> SignedIn(licensee, pools))
             }
           case None => complete(StatusCodes.Unauthorized)
         }
