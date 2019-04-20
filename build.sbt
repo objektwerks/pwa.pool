@@ -8,6 +8,8 @@ val akkkHttpVersion = "10.1.8"
 val quillVersion = "3.1.0"
 val circeVersion =  "0.11.1"
 
+val jsCompileMode = fastOptJS  // fullOptJS
+
 lazy val commonSettings = Defaults.coreDefaultSettings ++ Seq(
   organization := "objektwerks",
   version := "0.1-SNAPSHOT",
@@ -76,7 +78,7 @@ lazy val jvm = (project in file("jvm"))
       "com.typesafe.akka" %% "akka-http-testkit" % akkkHttpVersion % "test",
       "org.scalatest" %% "scalatest" % "3.0.5" % "test"
     ),
-    (resources in Compile) += (fullOptJS in (sharedJS, Compile)).value.data,
-    (resources in Compile) += (fullOptJS in (js, Compile)).value.data,
-    (resources in Compile) += (fullOptJS in (sw, Compile)).value.data
+    (resources in Compile) += (jsCompileMode in (sharedJS, Compile)).value.data,
+    (resources in Compile) += (jsCompileMode in (js, Compile)).value.data,
+    (resources in Compile) += (jsCompileMode in (sw, Compile)).value.data
   ) dependsOn(sharedJS, sharedJVM, js, sw)
