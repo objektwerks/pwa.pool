@@ -13,7 +13,7 @@ class PoolStore(conf: Config)(implicit ec: ExecutionContext) {
   implicit val ctx = new PostgresAsyncContext(SnakeCase, conf.getConfig("quill.ctx"))
   import ctx._
 
-  def onFault(fault: Fault): Unit = {
+  def recordFault(fault: Fault): Unit = {
     run( query[Fault].insert(lift(fault)) )
     ()
   }

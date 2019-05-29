@@ -23,7 +23,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
   val fault = path("fault") {
     post {
       entity(as[Fault]) { fault =>
-        onFault(fault)
+        recordFault(fault)
         complete(StatusCodes.OK)
       }
     }
