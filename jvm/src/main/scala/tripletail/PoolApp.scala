@@ -12,7 +12,7 @@ object PoolApp {
     implicit val materializer = ActorMaterializer()
 
     val conf = ConfigFactory.load("app.conf")
-    val store = PoolStore(conf)
+    val store = PoolStore(conf)(system.dispatcher)
     val cache = LicenseeCache(store)
     val routes = PoolRoutes(store, cache)
     val host = conf.getString("app.host")

@@ -3,14 +3,13 @@ package tripletail
 import com.typesafe.config.Config
 import io.getquill._
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 object PoolStore {
-  def apply(conf: Config): PoolStore = new PoolStore(conf)
+  def apply(conf: Config)(implicit ec: ExecutionContext): PoolStore = new PoolStore(conf)
 }
 
-class PoolStore(conf: Config) {
+class PoolStore(conf: Config)(implicit ec: ExecutionContext) {
   implicit val ctx = new PostgresAsyncContext(SnakeCase, conf.getConfig("quill.ctx"))
   import ctx._
 
