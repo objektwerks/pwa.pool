@@ -21,7 +21,7 @@ Dev
 
 Test
 ----
-1. sbt clean test
+1. sbt clean test | sbt clean it:test
 
 Run
 ---

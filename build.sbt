@@ -60,8 +60,10 @@ lazy val sw = (project in file("sw"))
   )
 
 lazy val jvm = (project in file("jvm"))
+  .configs(IntegrationTest)
   .settings(commonSettings)
   .settings(
+    Defaults.itSettings,
     mainClass in reStart := Some("tripletail.PoolApp"),
     libraryDependencies ++= Seq(
       "com.typesafe.akka" %% "akka-actor" % akkaVersion,
@@ -74,9 +76,9 @@ lazy val jvm = (project in file("jvm"))
       "com.github.cb372" %% "scalacache-caffeine" % "0.27.0",
       "com.typesafe" % "config" % "1.3.3",
       "ch.qos.logback" % "logback-classic" % "1.2.3",
-      "com.typesafe.akka" %% "akka-testkit" % akkaVersion % "test",
-      "com.typesafe.akka" %% "akka-http-testkit" % akkkHttpVersion % "test",
-      "org.scalatest" %% "scalatest" % "3.0.5" % "test"
+      "com.typesafe.akka" %% "akka-testkit" % akkaVersion % "it,test",
+      "com.typesafe.akka" %% "akka-http-testkit" % akkkHttpVersion % "it,test",
+      "org.scalatest" %% "scalatest" % "3.0.5" % "it,test"
     ),
     (resources in Compile) += (jsCompileMode in (sharedJS, Compile)).value.data,
     (resources in Compile) += (jsCompileMode in (js, Compile)).value.data,
