@@ -7,6 +7,7 @@ val akkaVersion = "2.5.22"
 val akkkHttpVersion = "10.1.8"
 val quillVersion = "3.1.0"
 val circeVersion =  "0.11.1"
+val sttpVersion = "1.5.17"
 
 val jsCompileMode = fastOptJS  // fullOptJS
 
@@ -76,6 +77,8 @@ lazy val jvm = (project in file("jvm"))
       "com.github.cb372" %% "scalacache-caffeine" % "0.27.0",
       "com.typesafe" % "config" % "1.3.3",
       "ch.qos.logback" % "logback-classic" % "1.2.3",
+      "com.softwaremill.sttp" %% "akka-http-backend" % sttpVersion % "it,test",
+      "com.softwaremill.sttp" %% "circe" % sttpVersion % "it,test",
       "org.scalatest" %% "scalatest" % "3.0.5" % "it,test"
     ),
     (resources in Compile) += (jsCompileMode in (sharedJS, Compile)).value.data,
