@@ -15,7 +15,8 @@ class PoolStore(conf: Config)(implicit ec: ExecutionContext) {
 
   def signUp(email: String): Future[Licensee] = {
     val licensee = Licensee(email = email)
-    run( query[Licensee].insert(lift(licensee))).map(_ => licensee)
+    run( query[Licensee].insert(lift(licensee)))
+    Future.successful(licensee)
   }
 
   def signIn(license: String, email: String): Future[Option[Licensee]] = {
