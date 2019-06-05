@@ -4,7 +4,9 @@ Tripletail
 
 Postgresql
 ----------
-1. brew services start postgresql | brew services stop postgresql
+1. /usr/local/var/postgres/postgresql.conf : listen_addresses = ‘*’, port = 5432
+2. brew services start postgresql | brew services stop postgresql
+3. /usr/local/var/log/postgres.log : verify database is running or is shutdown
 
 DDL
 ---
