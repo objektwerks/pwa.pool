@@ -13,7 +13,7 @@ CREATE TABLE licensee (
   license VARCHAR PRIMARY KEY,
   email VARCHAR NOT NULL,
   activated TIMESTAMP NOT NULL,
-  deactivated DATE NULL
+  deactivated TIMESTAMP NULL
 );
 
 CREATE TABLE pool (
