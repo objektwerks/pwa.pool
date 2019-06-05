@@ -5,8 +5,9 @@ Tripletail
 Postgresql
 ----------
 1. /usr/local/var/postgres/postgresql.conf : listen_addresses = ‘*’, port = 5432
-2. brew services start postgresql | brew services stop postgresql
-3. /usr/local/var/log/postgres.log : verify database is running or is shutdown
+2. in build.sbt : javaOptions in IntegrationTest += "-Dquill.binds.log=true"
+3. brew services start postgresql | brew services stop postgresql
+4. /usr/local/var/log/postgres.log : verify database is running or is shutdown
 
 DDL
 ---
