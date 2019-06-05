@@ -86,6 +86,7 @@ lazy val jvm = (project in file("jvm"))
     scalacOptions ++= Seq(
       "-Ywarn-macros:after"
     ),
+    javaOptions in IntegrationTest += "-Dquill.binds.log=true",
     (resources in Compile) += (jsCompileMode in (sharedJS, Compile)).value.data,
     (resources in Compile) += (jsCompileMode in (js, Compile)).value.data,
     (resources in Compile) += (jsCompileMode in (sw, Compile)).value.data
