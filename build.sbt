@@ -83,6 +83,9 @@ lazy val jvm = (project in file("jvm"))
       "io.circe" %% "circe-parser" % circeVersion % "it,test",
       "org.scalatest" %% "scalatest" % "3.0.5" % "it,test"
     ),
+    scalacOptions ++= Seq(
+      "-Ywarn-macros:after"
+    ),
     (resources in Compile) += (jsCompileMode in (sharedJS, Compile)).value.data,
     (resources in Compile) += (jsCompileMode in (js, Compile)).value.data,
     (resources in Compile) += (jsCompileMode in (sw, Compile)).value.data
