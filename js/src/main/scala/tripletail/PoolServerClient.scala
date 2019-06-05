@@ -31,9 +31,10 @@ class PoolServerClient(serverUrl: String) {
     }.recover { case error => Left(Fault(error)) }
   }
 
-  def post(path: String, fault: Fault): Unit = {
+  def post(path: String, license: String, fault: Fault): Unit = {
     console.error(fault.toString)
-    Ajax.post(url = serverUrl + path, headers = headers, data = fault.asJson.toString)
+    val headersWithLicense = headers ++: Map("license" -> license)
+    Ajax.post(url = serverUrl + path, headers = headersWithLicense, data = fault.asJson.toString)
     ()
   }
 }

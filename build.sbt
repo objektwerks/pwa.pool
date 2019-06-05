@@ -77,6 +77,9 @@ lazy val jvm = (project in file("jvm"))
       "com.typesafe" % "config" % "1.3.3",
       "ch.qos.logback" % "logback-classic" % "1.2.3",
       "com.typesafe.akka" %% "akka-http-testkit" % akkkHttpVersion % "it,test",
+      "io.circe" %% "circe-core" % circeVersion % "it,test",
+      "io.circe" %% "circe-generic" % circeVersion % "it,test",
+      "io.circe" %% "circe-parser" % circeVersion % "it,test",
       "org.scalatest" %% "scalatest" % "3.0.5" % "it,test"
     ),
     (resources in Compile) += (jsCompileMode in (sharedJS, Compile)).value.data,

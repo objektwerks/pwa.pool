@@ -12,7 +12,7 @@ object PoolClient {
   @JSExport
   def init(): Unit = {
     registerServiceWorker()
-    val poolRestClient = PoolServerClient("http://127.0.0.1:7979/api/v1/tripletail/")
+    val poolRestClient = PoolServerClient("http://127.0.0.1:7979/api/v1/tripletail")
     val poolModelView = PoolModelView(poolRestClient)
     poolModelView.init()
   }

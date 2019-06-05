@@ -13,21 +13,20 @@ object PoolApp extends App {
   val logger = LoggerFactory.getLogger(PoolApp.getClass)
   implicit val system = ActorSystem()
   implicit val materializer = ActorMaterializer()
+  implicit val dispatcher = system.dispatcher
 
   val conf = ConfigFactory.load("app.conf")
-  val store = PoolStore(conf)(system.dispatcher)
+  val store = PoolStore(conf)
   val cache = LicenseeCache(store)
   val routes = PoolRoutes(store, cache)
   val host = conf.getString("app.host")
   val port = conf.getInt("app.port")
-  Http().bindAndHandle(routes.routes, host, port)
-
-  logger.info(s"Pool app started at http://$host:$port")
+  Http().bindAndHandle(routes.routes, host, port).map { server => logger.info(s"*** Pool app host: ${server.localAddress.toString}") }
 
   sys.addShutdownHook {
-    logger.info("Pool app shutting down...")
+    logger.info("*** Pool app shutting down...")
     system.terminate()
     Await.result(system.whenTerminated, 30.seconds)
-    logger.info("Pool app shutdown.")
+    logger.info("*** Pool app shutdown.")
   }
 }

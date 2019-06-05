@@ -20,14 +20,6 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
   val resources = get {
     getFromResourceDirectory("./")
   }
-  val fault = path("fault") {
-    post {
-      entity(as[Fault]) { fault =>
-        recordFault(fault)
-        complete(StatusCodes.OK)
-      }
-    }
-  }
   val signup = path("signup") {
     post {
       entity(as[SignUp]) { signup =>
@@ -377,9 +369,17 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
       }
     }
   }
+  val fault = path("fault") {
+    post {
+      entity(as[Fault]) { fault =>
+        recordFault(fault)
+        complete(StatusCodes.OK)
+      }
+    }
+  }
   val api = pathPrefix("api" / "v1" / "tripletail") {
-      pools ~ surfaces ~ pumps ~ timers ~ timersettings ~ heaters ~ heaterons ~
-        heateroffs ~ cleanings ~ measurements ~ chemicals ~ supplies ~ repairs
+    signin ~ pools ~ surfaces ~ pumps ~ timers ~ timersettings ~ heaters ~ heaterons ~ heateroffs ~
+      cleanings ~ measurements ~ chemicals ~ supplies ~ repairs ~ fault
   }
   val secure = (route: Route) => headerValueByName("license") { license =>
     onSuccess(isLicenseValid(license)) { isValid =>
@@ -387,5 +387,5 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     }
   }
   val secureApi = secure { api }
-  val routes = index ~ resources ~ fault ~ signup ~ signin ~ secureApi
+  val routes = index ~ resources ~ signup ~ secureApi
 }

@@ -1,11 +1,39 @@
 package tripletail
 
-import org.scalatest.{FunSuite, Matchers}
+import akka.actor.ActorSystem
+import akka.http.scaladsl.Http
+import akka.http.scaladsl.model.StatusCodes
+import akka.http.scaladsl.model.headers.RawHeader
+import akka.http.scaladsl.testkit.ScalatestRouteTest
+import com.typesafe.config.ConfigFactory
+import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport
+import io.circe.generic.auto._
+import org.scalatest.{Matchers, WordSpec}
+import org.slf4j.LoggerFactory
 
-class IntegrationTest extends FunSuite with Matchers {
-  val url = "http://127.0.0.1:7979/api/v1/tripletail/"
-  val headers = Map("Content-Type" -> "application/json; charset=utf-8", "Accept" -> "application/json")
+class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest with FailFastCirceSupport {
+  val logger = LoggerFactory.getLogger(this.getClass)
+  val actorRefFactory = ActorSystem.create(this.getClass.getSimpleName)
+  implicit val dispatcher = system.dispatcher
 
-  test("fault") {
+  val conf = ConfigFactory.load("it.test.conf")
+  val store = PoolStore(conf)
+  val cache = LicenseeCache(store)
+  val routes = PoolRoutes(store, cache)
+  val host = conf.getString("server.host")
+  val port = conf.getInt("server.port")
+  val server = Http().bindAndHandle(routes.routes, host, port)
+  server.map { server => logger.info(s"*** Pool app integration test host: ${server.localAddress.toString}") }
+
+  val url = "/api/v1/tripletail/"
+  val contentTypeHeader = RawHeader("content-type", "application/json; charset=utf-8")
+  val acceptHeader = RawHeader("accept", "application/json")
+
+  "fault" should {
+    "post fault" in {
+      Post("/api/v1/tripletail/fault", Fault("error", 500)) ~> routes.routes ~> check {
+        status shouldBe StatusCodes.OK
+      }
+    }
   }
 }
