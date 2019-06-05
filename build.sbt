@@ -77,6 +77,7 @@ lazy val jvm = (project in file("jvm"))
       "com.typesafe" % "config" % "1.3.3",
       "ch.qos.logback" % "logback-classic" % "1.2.3",
       "com.typesafe.akka" %% "akka-http-testkit" % akkkHttpVersion % "it,test",
+      "com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion % "it,test",
       "io.circe" %% "circe-core" % circeVersion % "it,test",
       "io.circe" %% "circe-generic" % circeVersion % "it,test",
       "io.circe" %% "circe-parser" % circeVersion % "it,test",

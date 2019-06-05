@@ -29,9 +29,9 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest wit
   val contentTypeHeader = RawHeader("content-type", "application/json; charset=utf-8")
   val acceptHeader = RawHeader("accept", "application/json")
 
-  "fault" should {
-    "post fault" in {
-      Post("/api/v1/tripletail/fault", Fault("error", 500)) ~> routes.routes ~> check {
+  "signup" should {
+    "post signup" in {
+      Post(url + "signup", SignUp("objektwerks@runbox.com")) ~> routes.routes ~> check {
         status shouldBe StatusCodes.OK
       }
     }
