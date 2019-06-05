@@ -13,11 +13,6 @@ class PoolStore(conf: Config)(implicit ec: ExecutionContext) {
   implicit val ctx = new PostgresAsyncContext(SnakeCase, conf.getConfig("quill.ctx"))
   import ctx._
 
-  def recordFault(fault: Fault): Unit = {
-    run( query[Fault].insert(lift(fault)) )
-    ()
-  }
-
   def signUp(email: String): Future[Licensee] = {
     val licensee = Licensee(email = email)
     run( query[Licensee].insert(lift(licensee))).map(_ => licensee)
@@ -115,4 +110,9 @@ class PoolStore(conf: Config)(implicit ec: ExecutionContext) {
   def addRepair(repair: Repair): Future[Int] = run( query[Repair].insert(lift(repair)).returning(_.id) )
 
   def updateRepair(repair: Repair): Future[Int] = run( query[Repair].update(lift(repair)) ).mapTo[Int]
+
+  def recordFault(fault: Fault): Unit = {
+    run( query[Fault].insert(lift(fault)) )
+    ()
+  }
 }
