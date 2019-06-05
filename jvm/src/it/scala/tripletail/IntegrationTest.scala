@@ -33,6 +33,7 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest wit
     "post signup" in {
       Post("/signup", SignUp("objektwerks@runbox.com")) ~> routes.routes ~> check {
         status shouldBe StatusCodes.OK
+        responseAs[SignedUp].licensee.license.nonEmpty shouldBe true
       }
     }
   }
