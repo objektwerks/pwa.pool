@@ -378,14 +378,14 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     }
   }
   val api = pathPrefix("api" / "v1" / "tripletail") {
-    signin ~ pools ~ surfaces ~ pumps ~ timers ~ timersettings ~ heaters ~ heaterons ~ heateroffs ~
+    pools ~ surfaces ~ pumps ~ timers ~ timersettings ~ heaters ~ heaterons ~ heateroffs ~
       cleanings ~ measurements ~ chemicals ~ supplies ~ repairs ~ fault
   }
-  val secure = (route: Route) => headerValueByName("license") { license =>
+  val secure = (route: Route) => headerValueByName(Licensee.licenseHeaderKey) { license =>
     onSuccess(isLicenseValid(license)) { isValid =>
       if (isValid) route else complete(StatusCodes.Unauthorized)
     }
   }
   val secureApi = secure { api }
-  val routes = index ~ resources ~ signup ~ secureApi
+  val routes = index ~ resources ~ signup ~ signin ~ secureApi
 }

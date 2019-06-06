@@ -8,6 +8,10 @@ sealed trait Entity extends Product with Serializable
 final case class Licensee(license: String = UUID.randomUUID.toString.toLowerCase, email: String,
                           activated: Long = Instant.now.toEpochMilli, deactivated: Option[Long] = None) extends Entity
 
+object Licensee {
+  val licenseHeaderKey = "license"
+}
+
 final case class Pool(id: Int, license: String, built: Long, lat: Long, lon: Long, volume: Int) extends Entity
 
 final case class PoolId(id: Int) extends Entity

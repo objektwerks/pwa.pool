@@ -22,7 +22,7 @@ class PoolServerClient(serverUrl: String) {
   }
 
   def post(path: String, license: String, entity: Entity): Future[Either[Fault, State]] = {
-    val headersWithLicense = headers ++: Map("license" -> license)
+    val headersWithLicense = headers ++: Map(Licensee.licenseHeaderKey -> license)
     Ajax.post(url = serverUrl + path, headers = headersWithLicense, data = entity.asJson.toString).map { xhr =>
       xhr.status match {
         case 200 => decode[State](xhr.responseText).fold(error => Left(Fault(error)), state => Right(state))
@@ -33,7 +33,7 @@ class PoolServerClient(serverUrl: String) {
 
   def post(path: String, license: String, fault: Fault): Unit = {
     console.error(fault.toString)
-    val headersWithLicense = headers ++: Map("license" -> license)
+    val headersWithLicense = headers ++: Map(Licensee.licenseHeaderKey -> license)
     Ajax.post(url = serverUrl + path, headers = headersWithLicense, data = fault.asJson.toString)
     ()
   }
