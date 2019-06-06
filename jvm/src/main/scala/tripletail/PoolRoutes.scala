@@ -44,15 +44,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
       }
     }
   }
-  val pools = path("pools") {
-    post {
-      entity(as[Licensee]) { licensee =>
-        onSuccess(listPools(licensee.license)) { pools =>
-          complete(StatusCodes.OK -> Sequence(pools))
-        }
-      }
-    }
-  } ~ path("pools" / "add") {
+  val pools = path("pools" / "add") {
     post {
       entity(as[Pool]) { pool =>
         onSuccess(addPool(pool)) { id =>
