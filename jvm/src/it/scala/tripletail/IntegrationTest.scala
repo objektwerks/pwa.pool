@@ -26,17 +26,27 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest wit
   server.map { server => logger.info(s"*** Pool app integration test host: ${server.localAddress.toString}") }
 
   val url = "/api/v1/tripletail/"
+  val email = "objektwerks@runbox.com"
   var licensee: Option[Licensee] = None
   var licenseHeader: Option[RawHeader] = None
 
   "signup" should {
-    "post signup" in {
-      Post("/signup", SignUp("objektwerks@runbox.com")) ~> routes.routes ~> check {
+    "post" in {
+      Post("/signup", SignUp(email)) ~> routes.routes ~> check {
         status shouldBe StatusCodes.OK
         val signedUp = responseAs[SignedUp]
         licensee = Some(signedUp.licensee)
         licenseHeader = Some(RawHeader(Licensee.licenseHeaderKey, signedUp.licensee.license))
         signedUp.licensee.license.nonEmpty shouldBe true
+      }
+    }
+  }
+
+  "signin" should {
+    "post" in {
+      Post("/signin", SignIn(licensee.get.license, licensee.get.email)) ~> routes.routes ~> check {
+        status shouldBe StatusCodes.OK
+        responseAs[SignedUp].licensee shouldEqual licensee.get
       }
     }
   }
