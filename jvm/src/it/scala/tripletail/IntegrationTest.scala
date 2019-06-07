@@ -25,13 +25,13 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest wit
   val server = Http().bindAndHandle(routes.routes, host, port)
   server.map { server => logger.info(s"*** Pool app integration test host: ${server.localAddress.toString}") }
 
-  val url = "/api/v1/tripletail/"
-  val email = "objektwerks@runbox.com"
+  val url = "/api/v1/tripletail"
   var licensee: Option[Licensee] = None
   var licenseHeader: Option[RawHeader] = None
 
   "signup" should {
-    "post" in {
+    "post to signedup" in {
+      val email = "objektwerks@runbox.com"
       Post("/signup", SignUp(email)) ~> routes.routes ~> check {
         status shouldBe StatusCodes.OK
         val signedUp = responseAs[SignedUp]
@@ -43,10 +43,20 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest wit
   }
 
   "signin" should {
-    "post" in {
+    "post to signedin" in {
       Post("/signin", SignIn(licensee.get.license, licensee.get.email)) ~> routes.routes ~> check {
         status shouldBe StatusCodes.OK
-        responseAs[SignedUp].licensee shouldEqual licensee.get
+        responseAs[SignedIn].licensee shouldEqual licensee.get
+      }
+    }
+  }
+
+  "pools / add" should {
+    "post to id" in {
+      val pool = Pool(license = licensee.get.license, built = "1991-03-13", lat = 26.862631, lon = -82.288834, volume = 10000)
+      Post(url + "/pools/add", pool) ~> addHeader(Licensee.licenseHeaderKey, licensee.get.license) ~> routes.routes ~> check {
+        status shouldBe StatusCodes.OK
+        responseAs[Id].id should be > 0
       }
     }
   }
