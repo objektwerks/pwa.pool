@@ -22,7 +22,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
   implicit val internalExceptionHandler = ExceptionHandler {
     case NonFatal(e) =>
       extractUri { uri =>
-        logger.error(s"*** Handling $uri failed: ${e.getMessage}")
+        logger.error(s"*** Handling $uri failed: ${e.getMessage}", e)
         addFault(Fault(e))
         complete(HttpResponse(StatusCodes.InternalServerError, entity = s"${e.getMessage}"))
       }
