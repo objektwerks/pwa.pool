@@ -20,7 +20,7 @@ class LicenseeCache(poolStore: PoolStore)(implicit ec: ExecutionContext) {
   private val cache: Cache[Licensee] = CaffeineCache[Licensee](conf)
 
   def cacheLicensee(licensee: Licensee): Unit = {
-    cache.put(licensee.license)(licensee)
+    if (cache.get(licensee.license).isEmpty) cache.put(licensee.license)(licensee)
     ()
   }
 

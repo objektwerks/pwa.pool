@@ -1,18 +1,32 @@
 package tripletail
 
-import akka.http.scaladsl.model.StatusCodes
+import akka.http.scaladsl.model.{HttpResponse, StatusCodes}
 import akka.http.scaladsl.server.Directives._
-import akka.http.scaladsl.server.Route
+import akka.http.scaladsl.server.{ExceptionHandler, Route}
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport._
 import io.circe.generic.auto._
+import org.slf4j.LoggerFactory
+
+import scala.util.control.NonFatal
 
 object PoolRoutes {
   def apply(poolStore: PoolStore, licenseeCache: LicenseeCache): PoolRoutes = new PoolRoutes(poolStore, licenseeCache)
 }
 
 class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
-  import poolStore._
   import licenseeCache._
+  import poolStore._
+
+  val logger = LoggerFactory.getLogger(PoolRoutes.getClass.getSimpleName)
+
+  implicit val poolRoutesExceptionHandler = ExceptionHandler {
+    case NonFatal(e) =>
+      extractUri { uri =>
+        logger.error(s"*** Handling $uri failed: ${e.getMessage}")
+        recordFault(Fault(e))
+        complete(HttpResponse(StatusCodes.InternalServerError, entity = s"${e.getMessage}"))
+      }
+  }
 
   val index = path("") {
     getFromResource("index.html")
@@ -385,5 +399,5 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     }
   }
   val secureApi = secure { api }
-  val routes = index ~ resources ~ signup ~ signin ~ secureApi
+  val routes = Route.seal( index ~ resources ~ signup ~ signin ~ secureApi )
 }
