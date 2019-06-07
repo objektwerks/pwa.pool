@@ -68,7 +68,9 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest wit
       }
       Post(url + "/pools", licensee) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
         status shouldBe StatusCodes.OK
-        responseAs[Sequence].entities.length shouldEqual 1
+        val pools = responseAs[Sequence].entities
+        pools.length shouldEqual 1
+        pools.asInstanceOf[List[Pool]].foreach(println)
       }
     }
   }
