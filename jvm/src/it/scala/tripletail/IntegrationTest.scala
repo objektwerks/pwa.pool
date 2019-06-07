@@ -26,8 +26,9 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest wit
   server.map { server => logger.info(s"*** Pool app integration test host: ${server.localAddress.toString}") }
 
   val url = "/api/v1/tripletail"
-  var licensee: Option[Licensee] = None
-  var licenseHeader: Option[RawHeader] = None
+  var licensee: Licensee = _
+  var licenseHeader: RawHeader = _
+  var pool: Pool = _
 
   "signup" should {
     "post to signedup" in {
@@ -35,8 +36,8 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest wit
       Post("/signup", SignUp(email)) ~> routes.routes ~> check {
         status shouldBe StatusCodes.OK
         val signedUp = responseAs[SignedUp]
-        licensee = Some(signedUp.licensee)
-        licenseHeader = Some(RawHeader(Licensee.licenseHeaderKey, signedUp.licensee.license))
+        licensee = signedUp.licensee
+        licenseHeader = RawHeader(Licensee.licenseHeaderKey, signedUp.licensee.license)
         signedUp.licensee.license.nonEmpty shouldBe true
       }
     }
@@ -44,19 +45,30 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest wit
 
   "signin" should {
     "post to signedin" in {
-      Post("/signin", SignIn(licensee.get.license, licensee.get.email)) ~> routes.routes ~> check {
+      Post("/signin", SignIn(licensee.license, licensee.email)) ~> routes.routes ~> check {
         status shouldBe StatusCodes.OK
-        responseAs[SignedIn].licensee shouldEqual licensee.get
+        responseAs[SignedIn].licensee shouldEqual licensee
       }
     }
   }
 
-  "pools / add" should {
-    "post to id" in {
-      val pool = Pool(license = licensee.get.license, built = "1991-03-13", lat = 26.862631, lon = -82.288834, volume = 10000)
-      Post(url + "/pools/add", pool) ~> addHeader(Licensee.licenseHeaderKey, licensee.get.license) ~> routes.routes ~> check {
+  "pools / add / update" should {
+    "post to id, count, sequence" in {
+      pool = Pool(license = licensee.license, built = "1991-03-13", lat = 26.862631, lon = -82.288834, volume = 10000)
+      Post(url + "/pools/add", pool) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
         status shouldBe StatusCodes.OK
-        responseAs[Id].id should be > 0
+        val id = responseAs[Id].id
+        pool = pool.copy(id = id)
+        id should be > 0
+      }
+      pool = pool.copy(volume = 9000)
+      Post(url + "/pools/update", pool) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
+        status shouldBe StatusCodes.OK
+        responseAs[Count].value shouldEqual 1
+      }
+      Post(url + "/pools", licensee) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
+        status shouldBe StatusCodes.OK
+        responseAs[Sequence].entities.length shouldEqual 1
       }
     }
   }
