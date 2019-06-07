@@ -19,11 +19,11 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
 
   val logger = LoggerFactory.getLogger(PoolRoutes.getClass.getSimpleName)
 
-  implicit val poolRoutesExceptionHandler = ExceptionHandler {
+  implicit val internalExceptionHandler = ExceptionHandler {
     case NonFatal(e) =>
       extractUri { uri =>
         logger.error(s"*** Handling $uri failed: ${e.getMessage}")
-        recordFault(Fault(e))
+        addFault(Fault(e))
         complete(HttpResponse(StatusCodes.InternalServerError, entity = s"${e.getMessage}"))
       }
   }
@@ -381,17 +381,9 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
       }
     }
   }
-  val fault = path("fault") {
-    post {
-      entity(as[Fault]) { fault =>
-        recordFault(fault)
-        complete(StatusCodes.OK)
-      }
-    }
-  }
   val api = pathPrefix("api" / "v1" / "tripletail") {
     pools ~ surfaces ~ pumps ~ timers ~ timersettings ~ heaters ~ heaterons ~ heateroffs ~
-      cleanings ~ measurements ~ chemicals ~ supplies ~ repairs ~ fault
+      cleanings ~ measurements ~ chemicals ~ supplies ~ repairs
   }
   val secure = (route: Route) => headerValueByName(Licensee.licenseHeaderKey) { license =>
     onSuccess(isLicenseValid(license)) { isValid =>
