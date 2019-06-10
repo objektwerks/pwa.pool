@@ -10,5 +10,4 @@ shared/.js
 shared/.jvm
 sw/target/
 target/
-postgresql-42.2.5.jar
 .DS_Store
