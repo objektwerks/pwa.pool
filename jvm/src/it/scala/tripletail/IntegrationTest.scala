@@ -31,23 +31,22 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest wit
   var pool: Pool = _
 
   "signup" should {
-    "post to signedup" in {
+    "post to licensee" in {
       val email = "objektwerks@runbox.com"
-      Post("/signup", SignUp(email)) ~> routes.routes ~> check {
+      Post("/signup", Signup(email)) ~> routes.routes ~> check {
         status shouldBe StatusCodes.OK
-        val signedUp = responseAs[SignedUp]
-        licensee = signedUp.licensee
-        licenseHeader = RawHeader(Licensee.licenseHeaderKey, signedUp.licensee.license)
-        signedUp.licensee.license.nonEmpty shouldBe true
+        licensee = responseAs[Licensee]
+        licenseHeader = RawHeader(Licensee.licenseHeaderKey, licensee.license)
+        licensee.license.nonEmpty shouldBe true
       }
     }
   }
 
   "signin" should {
-    "post to signedin" in {
-      Post("/signin", SignIn(licensee.license, licensee.email)) ~> routes.routes ~> check {
+    "post to licensee" in {
+      Post("/signin", Signin(licensee.license, licensee.email)) ~> routes.routes ~> check {
         status shouldBe StatusCodes.OK
-        responseAs[SignedIn].licensee shouldEqual licensee
+        responseAs[Licensee] shouldEqual licensee
       }
     }
   }
@@ -68,9 +67,9 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest wit
       }
       Post(url + "/pools", licensee) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
         status shouldBe StatusCodes.OK
-        val pools = responseAs[Sequence].entities
+        val pools = responseAs[Pools].pools
         pools.length shouldEqual 1
-        pools.asInstanceOf[List[Pool]].foreach(println)
+        pools.foreach(println)
       }
     }
   }

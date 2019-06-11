@@ -36,21 +36,21 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
   }
   val signup = path("signup") {
     post {
-      entity(as[SignUp]) { signup =>
+      entity(as[Signup]) { signup =>
         onSuccess(signUp(signup.email)) { licensee =>
           cacheLicensee(licensee)
-          complete(StatusCodes.OK -> SignedUp(licensee))
+          complete(StatusCodes.OK -> licensee)
         }
       }
     }
   }
   val signin = path("signin") {
     post {
-      entity(as[SignIn]) { signin =>
+      entity(as[Signin]) { signin =>
         onSuccess(signIn(signin.license, signin.email)) {
           case Some(licensee) =>
             cacheLicensee(licensee)
-            complete(StatusCodes.OK -> SignedIn(licensee))
+            complete(StatusCodes.OK -> licensee)
           case None => complete(StatusCodes.Unauthorized)
         }
       }
@@ -60,7 +60,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[Licensee]) { licensee =>
         onSuccess(listPools(licensee.license)) { pools =>
-          complete(StatusCodes.OK -> Sequence(pools))
+          complete(StatusCodes.OK -> Pools(pools))
         }
       }
     }
@@ -85,7 +85,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[PoolId]) { poolId =>
         onSuccess(listSurfaces(poolId.id)) { surfaces =>
-          complete(StatusCodes.OK -> Sequence(surfaces))
+          complete(StatusCodes.OK -> Surfaces(surfaces))
         }
       }
     }
@@ -110,7 +110,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[PoolId]) { poolId =>
         onSuccess(listPumps(poolId.id)) { pumps =>
-          complete(StatusCodes.OK -> Sequence(pumps))
+          complete(StatusCodes.OK -> Pumps(pumps))
         }
       }
     }
@@ -135,7 +135,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[PoolId]) { poolId =>
         onSuccess(listTimers(poolId.id)) { timers =>
-          complete(StatusCodes.OK -> Sequence(timers))
+          complete(StatusCodes.OK -> Timers(timers))
         }
       }
     }
@@ -160,7 +160,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[TimerId]) { timerId =>
         onSuccess(listTimerSettings(timerId.id)) { timersettings =>
-          complete(StatusCodes.OK -> Sequence(timersettings))
+          complete(StatusCodes.OK -> TimerSettings(timersettings))
         }
       }
     }
@@ -185,7 +185,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[PoolId]) { poolId =>
         onSuccess(listHeaters(poolId.id)) { heaters =>
-          complete(StatusCodes.OK -> Sequence(heaters))
+          complete(StatusCodes.OK -> Heaters(heaters))
         }
       }
     }
@@ -210,7 +210,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[HeaterId]) { heaterId =>
         onSuccess(listHeaterOns(heaterId.id)) { heaterOns =>
-          complete(StatusCodes.OK -> Sequence(heaterOns))
+          complete(StatusCodes.OK -> HeaterOns(heaterOns))
         }
       }
     }
@@ -235,7 +235,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[HeaterId]) { heaterId =>
         onSuccess(listHeaterOffs(heaterId.id)) { heaterOffs =>
-          complete(StatusCodes.OK -> Sequence(heaterOffs))
+          complete(StatusCodes.OK -> HeaterOffs(heaterOffs))
         }
       }
     }
@@ -260,7 +260,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[PoolId]) { poolId =>
         onSuccess(listCleanings(poolId.id)) { cleanings =>
-          complete(StatusCodes.OK -> Sequence(cleanings))
+          complete(StatusCodes.OK -> Cleanings(cleanings))
         }
       }
     }
@@ -285,7 +285,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[PoolId]) { poolId =>
         onSuccess(listMeasurements(poolId.id)) { measurements =>
-          complete(StatusCodes.OK -> Sequence(measurements))
+          complete(StatusCodes.OK -> Measurements(measurements))
         }
       }
     }
@@ -310,7 +310,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[PoolId]) { poolId =>
         onSuccess(listChemicals(poolId.id)) { chemicals =>
-          complete(StatusCodes.OK -> Sequence(chemicals))
+          complete(StatusCodes.OK -> Chemicals(chemicals))
         }
       }
     }
@@ -335,7 +335,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[PoolId]) { poolId =>
         onSuccess(listSupplies(poolId.id)) { supplies =>
-          complete(StatusCodes.OK -> Sequence(supplies))
+          complete(StatusCodes.OK -> Supplies(supplies))
         }
       }
     }
@@ -360,7 +360,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[PoolId]) { poolId =>
         onSuccess(listRepairs(poolId.id)) { repairs =>
-          complete(StatusCodes.OK -> Sequence(repairs))
+          complete(StatusCodes.OK -> Repairs(repairs))
         }
       }
     }
