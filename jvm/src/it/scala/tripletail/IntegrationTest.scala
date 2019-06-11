@@ -31,11 +31,11 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest wit
   var pool: Pool = _
 
   "signup" should {
-    "post to licensee" in {
+    "post to secure" in {
       val email = "objektwerks@runbox.com"
       Post("/signup", Signup(email)) ~> routes.routes ~> check {
         status shouldBe StatusCodes.OK
-        licensee = responseAs[Licensee]
+        licensee = responseAs[Secure].licensee
         licenseHeader = RawHeader(Licensee.licenseHeaderKey, licensee.license)
         licensee.license.nonEmpty shouldBe true
       }
@@ -43,27 +43,26 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest wit
   }
 
   "signin" should {
-    "post to licensee" in {
-      Post("/signin", Signin(licensee.license, licensee.email)) ~> routes.routes ~> check {
+    "post to secure" in {
+      Post(url + "/signin", Signin(licensee.license, licensee.email)) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
         status shouldBe StatusCodes.OK
-        responseAs[Licensee] shouldEqual licensee
+        responseAs[Secure].licensee shouldEqual licensee
       }
     }
   }
 
   "pools / add / update" should {
-    "post to id, count, sequence" in {
+    "post to generated, updated, pools" in {
       pool = Pool(license = licensee.license, built = "1991-03-13", lat = 26.862631, lon = -82.288834, volume = 10000)
       Post(url + "/pools/add", pool) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
         status shouldBe StatusCodes.OK
-        val id = responseAs[Id].id
-        pool = pool.copy(id = id)
-        id should be > 0
+        pool = pool.copy(id = responseAs[Generated].id)
+        pool.id should be > 0
       }
       pool = pool.copy(volume = 9000)
       Post(url + "/pools/update", pool) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
         status shouldBe StatusCodes.OK
-        responseAs[Count].value shouldEqual 1
+        responseAs[Updated].count shouldEqual 1
       }
       Post(url + "/pools", licensee) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
         status shouldBe StatusCodes.OK
