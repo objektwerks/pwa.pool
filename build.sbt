@@ -7,6 +7,7 @@ val akkaVersion = "2.5.23"
 val akkkHttpVersion = "10.1.8"
 val quillVersion = "3.2.2"
 val circeVersion =  "0.11.1"
+val scalaTestVersion = "3.0.5"
 
 val jsCompileMode = fastOptJS  // fullOptJS
 
@@ -31,7 +32,8 @@ lazy val shared = crossProject(JSPlatform, JVMPlatform)
     libraryDependencies ++= Seq(
       "io.circe" %% "circe-core" % circeVersion,
       "io.circe" %% "circe-generic" % circeVersion,
-      "io.circe" %% "circe-parser" % circeVersion
+      "io.circe" %% "circe-parser" % circeVersion,
+      "org.scalatest" %% "scalatest" % scalaTestVersion % "test"
     )
   )
 lazy val sharedJS = shared.js
@@ -81,7 +83,7 @@ lazy val jvm = (project in file("jvm"))
       "io.circe" %% "circe-core" % circeVersion % "it,test",
       "io.circe" %% "circe-generic" % circeVersion % "it,test",
       "io.circe" %% "circe-parser" % circeVersion % "it,test",
-      "org.scalatest" %% "scalatest" % "3.0.5" % "it,test"
+      "org.scalatest" %% "scalatest" % scalaTestVersion % "it,test"
     ),
     scalacOptions ++= Seq(
       "-Ywarn-macros:after"
