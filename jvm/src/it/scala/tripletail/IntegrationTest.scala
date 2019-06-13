@@ -53,7 +53,8 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest wit
 
   "pools / add / update" should {
     "post to generated, updated, pools" in {
-      pool = Pool(license = licensee.license, built = "1991-03-13", lat = 26.862631, lon = -82.288834, volume = 10000)
+      val built = DateTime.localDateToInt(1991, 3, 13)
+      pool = Pool(license = licensee.license, built = built, lat = 26.862631, lon = -82.288834, volume = 10000)
       Post(url + "/pools/add", pool) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
         status shouldBe StatusCodes.OK
         pool = pool.copy(id = responseAs[Generated].id)
@@ -68,7 +69,6 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest wit
         status shouldBe StatusCodes.OK
         val pools = responseAs[Pools].pools
         pools.length shouldEqual 1
-        pools.foreach(println)
       }
     }
   }

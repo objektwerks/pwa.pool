@@ -10,8 +10,8 @@ final case class Signin(license: String, email: String) extends Entity
 
 final case class Licensee(license: String = UUID.randomUUID.toString.toLowerCase,
                           email: String,
-                          activated: String = DateTime.currentDate,
-                          deactivated: Option[String] = None) extends Entity
+                          activated: Int = DateTime.currentDate,
+                          deactivated: Option[Int] = None) extends Entity
 
 object Licensee {
   val licenseHeaderKey = "license"
@@ -19,7 +19,7 @@ object Licensee {
 
 final case class Pool(id: Int = 0,
                       license: String,
-                      built: String,
+                      built: Int,
                       lat: Double,
                       lon: Double,
                       volume: Int) extends Entity
@@ -28,30 +28,30 @@ final case class PoolId(id: Int = 0) extends Entity
 
 final case class Surface(id: Int = 0,
                          poolId: Int,
-                         installed: String,
+                         installed: Int,
                          kind: String) extends Entity
 
 final case class Pump(id: Int = 0,
                       poolId: Int,
-                      installed: String,
+                      installed: Int,
                       model: String) extends Entity
 
 final case class Timer(id: Int = 0,
                        poolId: Int,
-                       installed: String,
+                       installed: Int,
                        model: String) extends Entity
 
 final case class TimerId(id: Int = 0) extends Entity
 
 final case class TimerSetting(id: Int = 0,
                               timerId: Int,
-                              set: String,
-                              setOn: String,
-                              setOff: String) extends Entity
+                              set: Int,
+                              setOn: Int,
+                              setOff: Int) extends Entity
 
 final case class Heater(id: Int = 0,
                         poolId: Int,
-                        installed: String,
+                        installed: Int,
                         model: String) extends Entity
 
 final case class HeaterId(id: Int = 0) extends Entity
@@ -59,11 +59,11 @@ final case class HeaterId(id: Int = 0) extends Entity
 final case class HeaterOn(id: Int = 0,
                           heaterId: Int,
                           temp: Int,
-                          set: String) extends Entity
+                          set: Int) extends Entity
 
 final case class HeaterOff(id: Int = 0,
                            heaterId: Int,
-                           set: String) extends Entity
+                           set: Int) extends Entity
 
 final case class Cleaning(id: Int = 0,
                           poolId: Int,
@@ -89,14 +89,14 @@ final case class Measurement(id: Int = 0,
 
 final case class Chemical(id: Int = 0,
                           poolId: Int,
-                          added: String,
+                          added: Int,
                           chemical: String,
                           amount: Double,
                           unit: String) extends Entity
 
 final case class Supply(id: Int = 0,
                         poolId: Int,
-                        purchased: String,
+                        purchased: Int,
                         cost: Double,
                         item: String,
                         amount: Double,
@@ -104,6 +104,6 @@ final case class Supply(id: Int = 0,
 
 final case class Repair(id: Int = 0,
                         poolId: Int,
-                        repaired: String,
+                        repaired: Int,
                         cost: Double,
                         repair: String) extends Entity
