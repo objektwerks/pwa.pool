@@ -83,7 +83,7 @@ lazy val jvm = (project in file("jvm"))
       "io.circe" %% "circe-core" % circeVersion % "it,test",
       "io.circe" %% "circe-generic" % circeVersion % "it,test",
       "io.circe" %% "circe-parser" % circeVersion % "it,test",
-      "org.scalatest" %% "scalatest" % scalaTestVersion % "it,test"
+      "org.scalatest" %% "scalatest" % scalaTestVersion % IntegrationTest
     ),
     scalacOptions ++= Seq(
       "-Ywarn-macros:after"
