@@ -27,6 +27,7 @@ lazy val root = project.in(file("."))
 
 lazy val shared = crossProject(JSPlatform, JVMPlatform)
   .crossType(CrossType.Pure)
+  .configs(Test)
   .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
@@ -78,11 +79,11 @@ lazy val jvm = (project in file("jvm"))
       "com.github.cb372" %% "scalacache-caffeine" % "0.27.0",
       "com.typesafe" % "config" % "1.3.3",
       "ch.qos.logback" % "logback-classic" % "1.2.3",
-      "com.typesafe.akka" %% "akka-http-testkit" % akkkHttpVersion % "it,test",
-      "com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion % "it,test",
-      "io.circe" %% "circe-core" % circeVersion % "it,test",
-      "io.circe" %% "circe-generic" % circeVersion % "it,test",
-      "io.circe" %% "circe-parser" % circeVersion % "it,test",
+      "com.typesafe.akka" %% "akka-http-testkit" % akkkHttpVersion % IntegrationTest,
+      "com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion % IntegrationTest,
+      "io.circe" %% "circe-core" % circeVersion % IntegrationTest,
+      "io.circe" %% "circe-generic" % circeVersion % IntegrationTest,
+      "io.circe" %% "circe-parser" % circeVersion % IntegrationTest,
       "org.scalatest" %% "scalatest" % scalaTestVersion % IntegrationTest
     ),
     scalacOptions ++= Seq(
