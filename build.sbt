@@ -27,7 +27,6 @@ lazy val root = project.in(file("."))
 
 lazy val shared = crossProject(JSPlatform, JVMPlatform)
   .crossType(CrossType.Pure)
-  .configs(Test)
   .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
