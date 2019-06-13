@@ -33,7 +33,7 @@ lazy val shared = crossProject(JSPlatform, JVMPlatform)
       "io.circe" %% "circe-core" % circeVersion,
       "io.circe" %% "circe-generic" % circeVersion,
       "io.circe" %% "circe-parser" % circeVersion,
-      "org.scalatest" %% "scalatest" % scalaTestVersion % "test"
+      "org.scalatest" %% "scalatest" % scalaTestVersion % Test
     )
   )
 lazy val sharedJS = shared.js
