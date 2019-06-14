@@ -97,11 +97,12 @@ Object Model
 * Heater(id, poolId, installed, model)
 * HeaterOn(id, heaterId, temp, heaterOn)
 * HeaterOff(id, heaterId, heatorOff)
-* Cleaning(id, poolId, brush, net, vacuum, skimmerBasket, pumpBasket, pumpFilter, pumpChlorineTablets, deck)
-* Measurement(id, poolId, temp, totalHardness, totalChlorine, totalBromine, freeChlorine, ph, totalAlkalinity, cyanuricAcid)
+* Cleaning(id, poolId, cleaned, brush, net, vacuum, skimmerBasket, pumpBasket, pumpFilter, pumpChlorineTablets, deck)
+* Measurement(id, poolId, measured, temp, totalHardness, totalChlorine, totalBromine, freeChlorine, ph, totalAlkalinity, cyanuricAcid)
 * Chemical(id, poolId, added, chemical, amount, unit)
 * Supply(id, poolId, purchased, cost, supply, amount, unit)
 * Repair(id, poolId, repaired, cost, repair)
+* Fault(message, code, occured, at)
 
 Relational Model
 ----------------

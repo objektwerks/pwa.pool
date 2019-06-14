@@ -70,6 +70,7 @@ CREATE TABLE heater_off (
 CREATE TABLE cleaning (
   id SERIAL PRIMARY KEY,
   pool_id INT REFERENCES pool(id),
+  cleaned INTEGER NOT NULL,
   brush BOOL NOT NULL,
   net BOOL NOT NULL,
   vacuum BOOL NOT NULL,
@@ -82,6 +83,7 @@ CREATE TABLE cleaning (
 
 CREATE TABLE measurement (
   id SERIAL PRIMARY KEY,
+  measured INTEGER NOT NULL,
   pool_id INT REFERENCES pool(id),
   temp INT CHECK (temp >= 32 AND temp <= 100),
   totalHardness INT NOT NULL CHECK (totalHardness >= 0 AND totalHardness <= 1000),
