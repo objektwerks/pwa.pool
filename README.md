@@ -102,7 +102,7 @@ Object Model
 * Chemical(id, poolId, added, chemical, amount, unit)
 * Supply(id, poolId, purchased, cost, supply, amount, unit)
 * Repair(id, poolId, repaired, cost, repair)
-* Fault(message, code, occured, at)
+* Fault(id, message, code, occured, at)
 
 Relational Model
 ----------------
@@ -110,6 +110,7 @@ Relational Model
 * Pool 1 ---> * Surface | Pump | Timer | Heater | Cleaning | Measurement | Chemical | Supply | Repair
 * Timer 1 ---> * TimerSetting
 * Heater 1 ---> * HeaterOn | HeaterOff
+* Fault
 
 Measurements
 ------------
