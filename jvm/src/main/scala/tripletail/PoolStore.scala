@@ -35,7 +35,8 @@ class PoolStore(conf: Config)(implicit ec: ExecutionContext) {
     ).map(result => result.headOption)
   }
 
-  def listPools(license: String): Future[Seq[Pool]] = run( query[Pool].filter(_.license == lift(license)) )
+  def listPools(license: String): Future[Seq[Pool]] =
+    run( query[Pool].filter(_.license == lift(license)).sortBy(p => p.built)(Ord.desc) )
 
   def addPool(pool: Pool): Future[Int] = ctx.transaction { implicit ec =>
     run( query[Pool].insert(lift(pool)).returning(_.id) )
