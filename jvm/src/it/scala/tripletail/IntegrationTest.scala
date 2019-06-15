@@ -30,6 +30,9 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest wit
   var licenseHeader: RawHeader = _
   var pool: Pool = _
 
+  import StatusCodes._
+  import DateTime._
+
   "signup" should {
     "post to secure" in {
       val email = "objektwerks@runbox.com"
@@ -45,7 +48,7 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest wit
   "signin" should {
     "post to secure" in {
       Post(url + "/signin", Signin(licensee.license, licensee.email)) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
-        status shouldBe StatusCodes.OK
+        status shouldBe OK
         responseAs[Secure].licensee shouldEqual licensee
       }
     }
@@ -53,20 +56,19 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest wit
 
   "pools / add / update" should {
     "post to generated, updated, pools" in {
-      val built = DateTime.localDateToInt(1991, 3, 13)
-      pool = Pool(license = licensee.license, built = built, lat = 26.862631, lon = -82.288834, volume = 10000)
+      pool = Pool(license = licensee.license, built = localDateToInt(1991, 3, 13), lat = 26.862631, lon = -82.288834, volume = 10000)
       Post(url + "/pools/add", pool) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
-        status shouldBe StatusCodes.OK
+        status shouldBe OK
         pool = pool.copy(id = responseAs[Generated].id)
         pool.id should be > 0
       }
       pool = pool.copy(volume = 9000)
       Post(url + "/pools/update", pool) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
-        status shouldBe StatusCodes.OK
+        status shouldBe OK
         responseAs[Updated].count shouldEqual 1
       }
       Post(url + "/pools", licensee) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
-        status shouldBe StatusCodes.OK
+        status shouldBe OK
         val pools = responseAs[Pools].pools
         pools.length shouldEqual 1
       }

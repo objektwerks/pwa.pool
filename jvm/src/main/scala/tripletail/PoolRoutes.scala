@@ -14,17 +14,19 @@ object PoolRoutes {
 }
 
 class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
+  import StatusCodes._
   import licenseeCache._
   import poolStore._
 
   val logger = LoggerFactory.getLogger(PoolRoutes.getClass.getSimpleName)
 
   implicit val internalExceptionHandler = ExceptionHandler {
-    case NonFatal(e) =>
-      extractUri { uri =>
-        logger.error(s"*** Handling $uri failed: ${e.getMessage}", e)
-        addFault(Fault(e))
-        complete(HttpResponse(StatusCodes.InternalServerError, entity = s"${e.getMessage}"))
+    case NonFatal(error) =>
+      extractRequestContext { context =>
+        logger.error(s"*** Handling ${context.request.uri} failed: ${error.getMessage}", error)
+        addFault(Fault(error))
+        context.request.discardEntityBytes(context.materializer)
+        complete(HttpResponse(InternalServerError, entity = s"${error.getMessage}"))
       }
   }
 
@@ -39,7 +41,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
       entity(as[Signup]) { signup =>
         onSuccess(signUp(signup.email)) { licensee =>
           cacheLicensee(licensee)
-          complete(StatusCodes.OK -> Secure(licensee))
+          complete(OK -> Secure(licensee))
         }
       }
     }
@@ -50,8 +52,8 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
         onSuccess(signIn(signin.license, signin.email)) {
           case Some(licensee) =>
             cacheLicensee(licensee)
-            complete(StatusCodes.OK -> Secure(licensee))
-          case None => complete(StatusCodes.Unauthorized)
+            complete(OK -> Secure(licensee))
+          case None => complete(Unauthorized)
         }
       }
     }
@@ -60,7 +62,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[Licensee]) { licensee =>
         onSuccess(listPools(licensee.license)) { pools =>
-          complete(StatusCodes.OK -> Pools(pools))
+          complete(OK -> Pools(pools))
         }
       }
     }
@@ -68,7 +70,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[Pool]) { pool =>
         onSuccess(addPool(pool)) { id =>
-          complete(StatusCodes.OK -> Generated(id))
+          complete(OK -> Generated(id))
         }
       }
     }
@@ -76,7 +78,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[Pool]) { pool =>
         onSuccess(updatePool(pool)) { count =>
-          complete(StatusCodes.OK -> Updated(count))
+          complete(OK -> Updated(count))
         }
       }
     }
@@ -85,7 +87,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[PoolId]) { poolId =>
         onSuccess(listSurfaces(poolId.id)) { surfaces =>
-          complete(StatusCodes.OK -> Surfaces(surfaces))
+          complete(OK -> Surfaces(surfaces))
         }
       }
     }
@@ -93,7 +95,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[Surface]) { surface =>
         onSuccess(addSurface(surface)) { id =>
-          complete(StatusCodes.OK -> Generated(id))
+          complete(OK -> Generated(id))
         }
       }
     }
@@ -101,7 +103,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[Surface]) { surface =>
         onSuccess(updateSurface(surface)) { count =>
-          complete(StatusCodes.OK -> Updated(count))
+          complete(OK -> Updated(count))
         }
       }
     }
@@ -110,7 +112,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[PoolId]) { poolId =>
         onSuccess(listPumps(poolId.id)) { pumps =>
-          complete(StatusCodes.OK -> Pumps(pumps))
+          complete(OK -> Pumps(pumps))
         }
       }
     }
@@ -118,7 +120,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[Pump]) { pump =>
         onSuccess(addPump(pump)) { id =>
-          complete(StatusCodes.OK -> Generated(id))
+          complete(OK -> Generated(id))
         }
       }
     }
@@ -126,7 +128,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[Pump]) { pump =>
         onSuccess(updatePump(pump)) { count =>
-          complete(StatusCodes.OK -> Updated(count))
+          complete(OK -> Updated(count))
         }
       }
     }
@@ -135,7 +137,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[PoolId]) { poolId =>
         onSuccess(listTimers(poolId.id)) { timers =>
-          complete(StatusCodes.OK -> Timers(timers))
+          complete(OK -> Timers(timers))
         }
       }
     }
@@ -143,7 +145,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[Timer]) { timer =>
         onSuccess(addTimer(timer)) { id =>
-          complete(StatusCodes.OK -> Generated(id))
+          complete(OK -> Generated(id))
         }
       }
     }
@@ -151,7 +153,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[Timer]) { timer =>
         onSuccess(updateTimer(timer)) { count =>
-          complete(StatusCodes.OK -> Updated(count))
+          complete(OK -> Updated(count))
         }
       }
     }
@@ -160,7 +162,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[TimerId]) { timerId =>
         onSuccess(listTimerSettings(timerId.id)) { timersettings =>
-          complete(StatusCodes.OK -> TimerSettings(timersettings))
+          complete(OK -> TimerSettings(timersettings))
         }
       }
     }
@@ -168,7 +170,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[TimerSetting]) { timersetting =>
         onSuccess(addTimerSetting(timersetting)) { id =>
-          complete(StatusCodes.OK -> Generated(id))
+          complete(OK -> Generated(id))
         }
       }
     }
@@ -176,7 +178,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[TimerSetting]) { timersetting =>
         onSuccess(updateTimerSetting(timersetting)) { count =>
-          complete(StatusCodes.OK -> Updated(count))
+          complete(OK -> Updated(count))
         }
       }
     }
@@ -185,7 +187,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[PoolId]) { poolId =>
         onSuccess(listHeaters(poolId.id)) { heaters =>
-          complete(StatusCodes.OK -> Heaters(heaters))
+          complete(OK -> Heaters(heaters))
         }
       }
     }
@@ -193,7 +195,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[Heater]) { heater =>
         onSuccess(addHeater(heater)) { id =>
-          complete(StatusCodes.OK -> Generated(id))
+          complete(OK -> Generated(id))
         }
       }
     }
@@ -201,7 +203,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[Heater]) { heater =>
         onSuccess(updateHeater(heater)) { count =>
-          complete(StatusCodes.OK -> Updated(count))
+          complete(OK -> Updated(count))
         }
       }
     }
@@ -210,7 +212,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[HeaterId]) { heaterId =>
         onSuccess(listHeaterOns(heaterId.id)) { heaterOns =>
-          complete(StatusCodes.OK -> HeaterOns(heaterOns))
+          complete(OK -> HeaterOns(heaterOns))
         }
       }
     }
@@ -218,7 +220,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[HeaterOn]) { heateron =>
         onSuccess(addHeaterOn(heateron)) { id =>
-          complete(StatusCodes.OK -> Generated(id))
+          complete(OK -> Generated(id))
         }
       }
     }
@@ -226,7 +228,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[HeaterOn]) { heateron =>
         onSuccess(updateHeaterOn(heateron)) { count =>
-          complete(StatusCodes.OK -> Updated(count))
+          complete(OK -> Updated(count))
         }
       }
     }
@@ -235,7 +237,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[HeaterId]) { heaterId =>
         onSuccess(listHeaterOffs(heaterId.id)) { heaterOffs =>
-          complete(StatusCodes.OK -> HeaterOffs(heaterOffs))
+          complete(OK -> HeaterOffs(heaterOffs))
         }
       }
     }
@@ -243,7 +245,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[HeaterOff]) { heateroff =>
         onSuccess(addHeaterOff(heateroff)) { id =>
-          complete(StatusCodes.OK -> Generated(id))
+          complete(OK -> Generated(id))
         }
       }
     }
@@ -251,7 +253,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[HeaterOff]) { heateroff =>
         onSuccess(updateHeaterOff(heateroff)) { count =>
-          complete(StatusCodes.OK -> Updated(count))
+          complete(OK -> Updated(count))
         }
       }
     }
@@ -260,7 +262,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[PoolId]) { poolId =>
         onSuccess(listCleanings(poolId.id)) { cleanings =>
-          complete(StatusCodes.OK -> Cleanings(cleanings))
+          complete(OK -> Cleanings(cleanings))
         }
       }
     }
@@ -268,7 +270,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[Cleaning]) { cleaning =>
         onSuccess(addCleaning(cleaning)) { id =>
-          complete(StatusCodes.OK -> Generated(id))
+          complete(OK -> Generated(id))
         }
       }
     }
@@ -276,7 +278,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[Cleaning]) { cleaning =>
         onSuccess(updateCleaning(cleaning)) { count =>
-          complete(StatusCodes.OK -> Updated(count))
+          complete(OK -> Updated(count))
         }
       }
     }
@@ -285,7 +287,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[PoolId]) { poolId =>
         onSuccess(listMeasurements(poolId.id)) { measurements =>
-          complete(StatusCodes.OK -> Measurements(measurements))
+          complete(OK -> Measurements(measurements))
         }
       }
     }
@@ -293,7 +295,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[Measurement]) { measurement =>
         onSuccess(addMeasurement(measurement)) { id =>
-          complete(StatusCodes.OK -> Generated(id))
+          complete(OK -> Generated(id))
         }
       }
     }
@@ -301,7 +303,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[Measurement]) { measurement =>
         onSuccess(updateMeasurement(measurement)) { count =>
-          complete(StatusCodes.OK -> Updated(count))
+          complete(OK -> Updated(count))
         }
       }
     }
@@ -310,7 +312,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[PoolId]) { poolId =>
         onSuccess(listChemicals(poolId.id)) { chemicals =>
-          complete(StatusCodes.OK -> Chemicals(chemicals))
+          complete(OK -> Chemicals(chemicals))
         }
       }
     }
@@ -318,7 +320,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[Chemical]) { chemical =>
         onSuccess(addChemical(chemical)) { id =>
-          complete(StatusCodes.OK -> Generated(id))
+          complete(OK -> Generated(id))
         }
       }
     }
@@ -326,7 +328,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[Chemical]) { chemical =>
         onSuccess(updateChemical(chemical)) { count =>
-          complete(StatusCodes.OK -> Updated(count))
+          complete(OK -> Updated(count))
         }
       }
     }
@@ -335,7 +337,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[PoolId]) { poolId =>
         onSuccess(listSupplies(poolId.id)) { supplies =>
-          complete(StatusCodes.OK -> Supplies(supplies))
+          complete(OK -> Supplies(supplies))
         }
       }
     }
@@ -343,7 +345,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[Supply]) { supply =>
         onSuccess(addSupply(supply)) { id =>
-          complete(StatusCodes.OK -> Generated(id))
+          complete(OK -> Generated(id))
         }
       }
     }
@@ -351,7 +353,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[Supply]) { supply =>
         onSuccess(updateSupply(supply)) { count =>
-          complete(StatusCodes.OK -> Updated(count))
+          complete(OK -> Updated(count))
         }
       }
     }
@@ -360,7 +362,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[PoolId]) { poolId =>
         onSuccess(listRepairs(poolId.id)) { repairs =>
-          complete(StatusCodes.OK -> Repairs(repairs))
+          complete(OK -> Repairs(repairs))
         }
       }
     }
@@ -368,7 +370,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[Repair]) { repair =>
         onSuccess(addRepair(repair)) { id =>
-          complete(StatusCodes.OK -> Generated(id))
+          complete(OK -> Generated(id))
         }
       }
     }
@@ -376,7 +378,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[Repair]) { repair =>
         onSuccess(updateRepair(repair)) { count =>
-          complete(StatusCodes.OK -> Updated(count))
+          complete(OK -> Updated(count))
         }
       }
     }
@@ -387,7 +389,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
   }
   val secure = (route: Route) => headerValueByName(Licensee.licenseHeaderKey) { license =>
     onSuccess(isLicenseValid(license)) { isValid =>
-      if (isValid) route else complete(StatusCodes.Unauthorized)
+      if (isValid) route else complete(Unauthorized)
     }
   }
   val secureApi = secure { api }
