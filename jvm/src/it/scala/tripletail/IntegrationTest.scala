@@ -4,17 +4,22 @@ import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.model.headers.RawHeader
-import akka.http.scaladsl.testkit.ScalatestRouteTest
+import akka.http.scaladsl.testkit.{RouteTestTimeout, ScalatestRouteTest}
 import com.typesafe.config.ConfigFactory
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport
 import io.circe.generic.auto._
 import org.scalatest.{Matchers, WordSpec}
 import org.slf4j.LoggerFactory
+import akka.testkit.TestDuration
+
+import scala.language.postfixOps
+import scala.concurrent.duration._
 
 class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest with FailFastCirceSupport {
   val logger = LoggerFactory.getLogger(this.getClass)
   val actorRefFactory = ActorSystem.create(this.getClass.getSimpleName)
   implicit val dispatcher = system.dispatcher
+  implicit val timeout = RouteTestTimeout(10.seconds dilated)
 
   val conf = ConfigFactory.load("it.test.conf")
   val store = PoolStore(conf)
