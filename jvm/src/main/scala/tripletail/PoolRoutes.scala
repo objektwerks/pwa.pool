@@ -66,7 +66,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
         }
       }
     }
-  } ~ path("pools" / "add") {
+  } ~ pathSuffix("add") {
     post {
       entity(as[Pool]) { pool =>
         onSuccess(addPool(pool)) { id =>
@@ -74,7 +74,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
         }
       }
     }
-  } ~ path("pools" / "update") {
+  } ~ pathSuffix("update") {
     post {
       entity(as[Pool]) { pool =>
         onSuccess(updatePool(pool)) { count =>
@@ -91,7 +91,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
         }
       }
     }
-  } ~ path("surfaces" / "add") {
+  } ~ pathSuffix("add") {
     post {
       entity(as[Surface]) { surface =>
         onSuccess(addSurface(surface)) { id =>
@@ -99,7 +99,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
         }
       }
     }
-  } ~ path("surfaces" / "update") {
+  } ~ pathSuffix("update") {
     post {
       entity(as[Surface]) { surface =>
         onSuccess(updateSurface(surface)) { count =>
@@ -116,7 +116,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
         }
       }
     }
-  } ~ path("pumps" / "add") {
+  } ~ pathSuffix("add") {
     post {
       entity(as[Pump]) { pump =>
         onSuccess(addPump(pump)) { id =>
@@ -124,7 +124,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
         }
       }
     }
-  } ~ path("pumps" / "update") {
+  } ~ pathSuffix("update") {
     post {
       entity(as[Pump]) { pump =>
         onSuccess(updatePump(pump)) { count =>
@@ -141,7 +141,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
         }
       }
     }
-  } ~ path("timers" / "add") {
+  } ~ pathSuffix("add") {
     post {
       entity(as[Timer]) { timer =>
         onSuccess(addTimer(timer)) { id =>
@@ -149,7 +149,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
         }
       }
     }
-  } ~ path("timers" / "update") {
+  } ~ pathSuffix("update") {
     post {
       entity(as[Timer]) { timer =>
         onSuccess(updateTimer(timer)) { count =>
@@ -166,7 +166,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
         }
       }
     }
-  } ~ path("timersettings" / "add") {
+  } ~ pathSuffix("add") {
     post {
       entity(as[TimerSetting]) { timersetting =>
         onSuccess(addTimerSetting(timersetting)) { id =>
@@ -174,7 +174,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
         }
       }
     }
-  } ~ path("timersettings" / "update") {
+  } ~ pathSuffix("update") {
     post {
       entity(as[TimerSetting]) { timersetting =>
         onSuccess(updateTimerSetting(timersetting)) { count =>
@@ -191,7 +191,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
         }
       }
     }
-  } ~ path("heaters" / "add") {
+  } ~ pathSuffix("add") {
     post {
       entity(as[Heater]) { heater =>
         onSuccess(addHeater(heater)) { id =>
@@ -199,7 +199,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
         }
       }
     }
-  } ~ path("heaters" / "update") {
+  } ~ pathSuffix("update") {
     post {
       entity(as[Heater]) { heater =>
         onSuccess(updateHeater(heater)) { count =>
@@ -216,7 +216,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
         }
       }
     }
-  } ~ path("heaterons" / "add") {
+  } ~ pathSuffix("add") {
     post {
       entity(as[HeaterOn]) { heateron =>
         onSuccess(addHeaterOn(heateron)) { id =>
@@ -224,7 +224,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
         }
       }
     }
-  } ~ path("heaterons" / "update") {
+  } ~ pathSuffix("update") {
     post {
       entity(as[HeaterOn]) { heateron =>
         onSuccess(updateHeaterOn(heateron)) { count =>
@@ -241,7 +241,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
         }
       }
     }
-  } ~ path("heateroffs" / "add") {
+  } ~ pathSuffix("add") {
     post {
       entity(as[HeaterOff]) { heateroff =>
         onSuccess(addHeaterOff(heateroff)) { id =>
@@ -249,7 +249,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
         }
       }
     }
-  } ~ path("heateroffs" / "update") {
+  } ~ pathSuffix("update") {
     post {
       entity(as[HeaterOff]) { heateroff =>
         onSuccess(updateHeaterOff(heateroff)) { count =>
@@ -266,7 +266,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
         }
       }
     }
-  } ~ path("cleanings" / "add") {
+  } ~ pathSuffix("add") {
     post {
       entity(as[Cleaning]) { cleaning =>
         onSuccess(addCleaning(cleaning)) { id =>
@@ -274,7 +274,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
         }
       }
     }
-  } ~ path("cleanings" / "update") {
+  } ~ pathSuffix("update") {
     post {
       entity(as[Cleaning]) { cleaning =>
         onSuccess(updateCleaning(cleaning)) { count =>
@@ -291,7 +291,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
         }
       }
     }
-  } ~ path("measurements" / "add") {
+  } ~ pathSuffix("add") {
     post {
       entity(as[Measurement]) { measurement =>
         onSuccess(addMeasurement(measurement)) { id =>
@@ -299,7 +299,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
         }
       }
     }
-  } ~ path("measurements" / "update") {
+  } ~ pathSuffix("update") {
     post {
       entity(as[Measurement]) { measurement =>
         onSuccess(updateMeasurement(measurement)) { count =>
@@ -316,7 +316,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
         }
       }
     }
-  } ~ path("chemicals" / "add") {
+  } ~ pathSuffix("add") {
     post {
       entity(as[Chemical]) { chemical =>
         onSuccess(addChemical(chemical)) { id =>
@@ -324,7 +324,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
         }
       }
     }
-  } ~ path("chemicals" / "update") {
+  } ~ pathSuffix("update") {
     post {
       entity(as[Chemical]) { chemical =>
         onSuccess(updateChemical(chemical)) { count =>
@@ -341,7 +341,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
         }
       }
     }
-  } ~ path("supplies" / "add") {
+  } ~ pathSuffix("add") {
     post {
       entity(as[Supply]) { supply =>
         onSuccess(addSupply(supply)) { id =>
@@ -349,7 +349,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
         }
       }
     }
-  } ~ path("supplies" / "update") {
+  } ~ pathSuffix("update") {
     post {
       entity(as[Supply]) { supply =>
         onSuccess(updateSupply(supply)) { count =>
@@ -366,7 +366,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
         }
       }
     }
-  } ~ path("repairs" / "add") {
+  } ~ pathSuffix("add") {
     post {
       entity(as[Repair]) { repair =>
         onSuccess(addRepair(repair)) { id =>
@@ -374,7 +374,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
         }
       }
     }
-  } ~ path("repairs" / "update") {
+  } ~ pathSuffix("update") {
     post {
       entity(as[Repair]) { repair =>
         onSuccess(updateRepair(repair)) { count =>
