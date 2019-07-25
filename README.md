@@ -17,13 +17,14 @@ DDL
 
 Quill
 -----
->To eliminate unused ExecutionContext variable errors, this must scalac option must be set in the build.sbt:
+>To eliminate unused ExecutionContext variable errors, this scalac option must be set in the build.sbt:
 ```
 scalacOptions ++= Seq(
   "-Ywarn-macros:after"
 )
 ```
 >Quill macros use the implicit ExecutionContext. The Quill ctx.transaction code does not.
+>**WARNING** Quill 3.3.0 breaks PoolStore code!!!
 
 Dev
 ---
