@@ -6,4 +6,4 @@ addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "0.14.9")
 addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "1.3.20")
 
 addSbtPlugin("org.lyranthe.sbt" % "partial-unification" % "1.1.2")
-addSbtPlugin("io.github.davidgregory084" % "sbt-tpolecat" % "0.1.6")
+addSbtPlugin("io.github.davidgregory084" % "sbt-tpolecat" % "0.1.7")
