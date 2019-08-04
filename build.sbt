@@ -5,7 +5,7 @@ name := "tripletail"
 
 val akkaVersion = "2.5.23"
 val akkkHttpVersion = "10.1.9"
-val quillVersion = "3.2.2"
+val quillVersion = "3.4.1"
 val circeVersion =  "0.11.1"
 val scalaTestVersion = "3.0.8"
 

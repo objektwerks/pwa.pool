@@ -39,7 +39,7 @@ class PoolStore(conf: Config)(implicit ec: ExecutionContext) {
     run( query[Pool].filter(_.license == lift(license)).sortBy(_.built)(Ord.desc) )
 
   def addPool(pool: Pool): Future[Int] = ctx.transaction { implicit ec =>
-    run( query[Pool].insert(lift(pool)).returning(_.id) )
+    run( query[Pool].insert(lift(pool)).returningGenerated(_.id) )
   }
 
   def updatePool(pool: Pool): Future[Int] = ctx.transaction { implicit ec =>
@@ -50,7 +50,7 @@ class PoolStore(conf: Config)(implicit ec: ExecutionContext) {
     run( query[Surface].filter(_.poolId == lift(poolId)).sortBy(_.installed)(Ord.desc) )
 
   def addSurface(surface: Surface): Future[Int] = ctx.transaction { implicit ec =>
-    run( query[Surface].insert(lift(surface)).returning(_.id) )
+    run( query[Surface].insert(lift(surface)).returningGenerated(_.id) )
   }
 
   def updateSurface(surface: Surface): Future[Int] = ctx.transaction { implicit ec =>
@@ -61,7 +61,7 @@ class PoolStore(conf: Config)(implicit ec: ExecutionContext) {
     run( query[Pump].filter(_.id == lift(poolId)).sortBy(_.installed)(Ord.desc) )
 
   def addPump(pump: Pump): Future[Int] = ctx.transaction { implicit ec =>
-    run( query[Pump].insert(lift(pump)).returning(_.id) )
+    run( query[Pump].insert(lift(pump)).returningGenerated(_.id) )
   }
 
   def updatePump(pump: Pump): Future[Int] = ctx.transaction { implicit ec =>
@@ -72,7 +72,7 @@ class PoolStore(conf: Config)(implicit ec: ExecutionContext) {
     run( query[Timer].filter(_.id == lift(poolId)).sortBy(_.installed)(Ord.desc) )
 
   def addTimer(timer: Timer): Future[Int] = ctx.transaction { implicit ec =>
-    run( query[Timer].insert(lift(timer)).returning(_.id) )
+    run( query[Timer].insert(lift(timer)).returningGenerated(_.id) )
   }
 
   def updateTimer(timer: Timer): Future[Int] = ctx.transaction { implicit ec =>
@@ -83,7 +83,7 @@ class PoolStore(conf: Config)(implicit ec: ExecutionContext) {
     run( query[TimerSetting].filter(_.id == lift(timerId)).sortBy(_.set)(Ord.desc) )
 
   def addTimerSetting(timerSetting: TimerSetting): Future[Int] = ctx.transaction { implicit ec =>
-    run( query[TimerSetting].insert(lift(timerSetting)).returning(_.id) )
+    run( query[TimerSetting].insert(lift(timerSetting)).returningGenerated(_.id) )
   }
 
   def updateTimerSetting(timerSetting: TimerSetting): Future[Int] = ctx.transaction { implicit ec =>
@@ -94,7 +94,7 @@ class PoolStore(conf: Config)(implicit ec: ExecutionContext) {
     run( query[Heater].filter(_.id == lift(poolId)).sortBy(_.installed)(Ord.desc) )
 
   def addHeater(heater: Heater): Future[Int] = ctx.transaction { implicit ec =>
-    run( query[Heater].insert(lift(heater)).returning(_.id) )
+    run( query[Heater].insert(lift(heater)).returningGenerated(_.id) )
   }
 
   def updateHeater(heater: Heater): Future[Int] = ctx.transaction { implicit ec =>
@@ -105,7 +105,7 @@ class PoolStore(conf: Config)(implicit ec: ExecutionContext) {
     run( query[HeaterOn].filter(_.id == lift(heaterId)).sortBy(_.set)(Ord.desc) )
 
   def addHeaterOn(heaterOn: HeaterOn): Future[Int] = ctx.transaction { implicit ec =>
-    run( query[HeaterOn].insert(lift(heaterOn)).returning(_.id) )
+    run( query[HeaterOn].insert(lift(heaterOn)).returningGenerated(_.id) )
   }
 
   def updateHeaterOn(heaterOn: HeaterOn): Future[Int] = ctx.transaction { implicit ec =>
@@ -116,7 +116,7 @@ class PoolStore(conf: Config)(implicit ec: ExecutionContext) {
     run( query[HeaterOff].filter(_.id == lift(heaterId)).sortBy(_.set)(Ord.desc) )
 
   def addHeaterOff(heaterOff: HeaterOff): Future[Int] = ctx.transaction { implicit ec =>
-    run( query[HeaterOff].insert(lift(heaterOff)).returning(_.id) )
+    run( query[HeaterOff].insert(lift(heaterOff)).returningGenerated(_.id) )
   }
 
   def updateHeaterOff(heaterOff: HeaterOff): Future[Int] = ctx.transaction { implicit ec =>
@@ -127,7 +127,7 @@ class PoolStore(conf: Config)(implicit ec: ExecutionContext) {
     run( query[Cleaning].filter(_.id == lift(poolId)).sortBy(_.cleaned)(Ord.desc) )
 
   def addCleaning(cleaning: Cleaning): Future[Int] = ctx.transaction { implicit ec =>
-    run( query[Cleaning].insert(lift(cleaning)).returning(_.id) )
+    run( query[Cleaning].insert(lift(cleaning)).returningGenerated(_.id) )
   }
 
   def updateCleaning(cleaning: Cleaning): Future[Int] = ctx.transaction { implicit ec =>
@@ -138,7 +138,7 @@ class PoolStore(conf: Config)(implicit ec: ExecutionContext) {
     run( query[Measurement].filter(_.id == lift(poolId)).sortBy(_.measured)(Ord.desc) )
 
   def addMeasurement(measurement: Measurement): Future[Int] = ctx.transaction { implicit ec =>
-    run( query[Measurement].insert(lift(measurement)).returning(_.id) )
+    run( query[Measurement].insert(lift(measurement)).returningGenerated(_.id) )
   }
 
   def updateMeasurement(measurement: Measurement): Future[Int] = ctx.transaction { implicit ec =>
@@ -149,7 +149,7 @@ class PoolStore(conf: Config)(implicit ec: ExecutionContext) {
     run( query[Chemical].filter(_.id == lift(poolId)).sortBy(_.added)(Ord.desc) )
 
   def addChemical(chemical: Chemical): Future[Int] = ctx.transaction { implicit ec =>
-    run( query[Chemical].insert(lift(chemical)).returning(_.id) )
+    run( query[Chemical].insert(lift(chemical)).returningGenerated(_.id) )
   }
 
   def updateChemical(chemical: Chemical): Future[Int] = ctx.transaction { implicit ec =>
@@ -160,7 +160,7 @@ class PoolStore(conf: Config)(implicit ec: ExecutionContext) {
     run( query[Supply].filter(_.id == lift(poolId)).sortBy(_.purchased)(Ord.desc) )
 
   def addSupply(supply: Supply): Future[Int] = ctx.transaction { implicit ec =>
-    run( query[Supply].insert(lift(supply)).returning(_.id) )
+    run( query[Supply].insert(lift(supply)).returningGenerated(_.id) )
   }
 
   def updateSupply(supply: Supply): Future[Int] = ctx.transaction { implicit ec =>
@@ -171,7 +171,7 @@ class PoolStore(conf: Config)(implicit ec: ExecutionContext) {
     run( query[Repair].filter(_.id == lift(poolId)).sortBy(_.repaired)(Ord.desc) )
 
   def addRepair(repair: Repair): Future[Int] = ctx.transaction { implicit ec =>
-    run( query[Repair].insert(lift(repair)).returning(_.id) )
+    run( query[Repair].insert(lift(repair)).returningGenerated(_.id) )
   }
 
   def updateRepair(repair: Repair): Future[Int] = ctx.transaction { implicit ec =>
