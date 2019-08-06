@@ -24,7 +24,6 @@ scalacOptions ++= Seq(
 )
 ```
 >Quill macros use the implicit ExecutionContext. The Quill ctx.transaction code does not.
->**WARNING** Quill 3.3.0 breaks PoolStore code!!!
 
 Dev
 ---
