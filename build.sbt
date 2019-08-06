@@ -14,7 +14,7 @@ val jsCompileMode = fastOptJS  // fullOptJS
 lazy val commonSettings = Defaults.coreDefaultSettings ++ Seq(
   organization := "objektwerks",
   version := "0.1-SNAPSHOT",
-  scalaVersion := "2.12.8"
+  scalaVersion := "2.12.9"
 )
 
 lazy val root = project.in(file("."))
