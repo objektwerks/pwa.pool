@@ -36,6 +36,13 @@ Test
 ----
 1. sbt clean test | sbt clean it:test
 
+Bloop
+-----
+1. sbt bloopInstall
+2. bloop compile tripletail
+3. bloop test sharedJVM
+4. bloop test jvm-it
+
 Run
 ---
 1. sbt jvm/run

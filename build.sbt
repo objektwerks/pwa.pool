@@ -17,7 +17,7 @@ lazy val commonSettings = Defaults.coreDefaultSettings ++ Seq(
   scalaVersion := "2.12.9"
 )
 
-lazy val root = project.in(file("."))
+lazy val tripletail = project.in(file("."))
   .aggregate(sharedJS, sharedJVM, js, sw, jvm)
   .settings(commonSettings)
   .settings(
