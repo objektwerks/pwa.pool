@@ -39,9 +39,10 @@ Test
 Bloop
 -----
 1. sbt bloopInstall
-2. bloop compile tripletail
-3. bloop test sharedJVM
-4. bloop test jvm-it
+2. bloop clean tripletail
+3. bloop compile tripletail
+4. bloop test sharedJVM
+5. bloop test jvm-it
 
 Run
 ---
