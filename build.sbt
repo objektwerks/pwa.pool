@@ -3,7 +3,7 @@ import sbtcrossproject.CrossPlugin.autoImport.{CrossType, crossProject}
 
 name := "tripletail"
 
-val akkaVersion = "2.5.23"
+val akkaVersion = "2.5.24"
 val akkkHttpVersion = "10.1.9"
 val quillVersion = "3.4.1"
 val circeVersion =  "0.11.1"
@@ -44,7 +44,7 @@ lazy val js = (project in file("js"))
   .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
-      "com.raquo" %%% "laminar" % "0.7",
+      "com.raquo" %%% "laminar" % "0.7.1",
       "io.circe" %%% "circe-core" % circeVersion,
       "io.circe" %%% "circe-generic" % circeVersion,
       "io.circe" %%% "circe-parser" % circeVersion
