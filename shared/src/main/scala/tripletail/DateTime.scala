@@ -9,13 +9,11 @@ object DateTime {
 
   def currentDate: Int = localDateToInt(LocalDate.now)
 
-  def currentTime: Int = localTimeToInt(LocalTime.now)
-
-  def localDateToString(localDate: LocalDate): String = localDate.format(dateFormatter)
-
   def localDateToInt(localDate: LocalDate): Int = localDateToString(localDate).replace("-", "").toInt
 
   def localDateToInt(yyyy: Int, mm: Int, dd: Int): Int = localDateToInt(LocalDate.of(yyyy, mm, dd))
+
+  def localDateToString(localDate: LocalDate): String = localDate.format(dateFormatter)
 
   def localDateAsStringToInt(localDate: String): Int = localDate.replace("-", "").toInt
 
@@ -27,11 +25,13 @@ object DateTime {
     LocalDate.of(yyyy.toInt, mm.toInt, dd.toInt).format(dateFormatter)
   }
 
-  def localTimeToString(localTime: LocalTime): String = localTime.format(timeFormatter)
+  def currentTime: Int = localTimeToInt(LocalTime.now)
 
   def localTimeToInt(localTime: LocalTime): Int = localTimeToString(localTime).replace(":", "").toInt
 
   def localTimeToInt(hh: Int, mm: Int): Int = localTimeToInt(LocalTime.of(hh, mm))
+
+  def localTimeToString(localTime: LocalTime): String = localTime.format(timeFormatter)
 
   def localTimeAsStringToInt(localTime: String): Int = localTime.replace(":", "").toInt
 
