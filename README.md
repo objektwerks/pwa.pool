@@ -167,3 +167,12 @@ Time
 1. Format: HH:mm
 2. String: 03:03, 23:33
 3. Int: 303, 2333
+
+Validation
+----------
+* string - not null, non empty
+* string length - less than, equal, greater than
+* email - is valid via regex
+* number - less than, equal, greater than, range
+* date - is valid
+* time - is valid
