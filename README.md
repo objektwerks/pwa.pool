@@ -158,8 +158,12 @@ Charts
 
 Date
 ----
->Using ISO-8601 format: 2019-03-03
+1. Format: yyyy-MM-dd
+2. String: 1999-03-03, 1999-12-13
+3. Int: 19990303, 19991213
 
 Time
 ----
-> Using ISO-8601 format: 03:03
+1. Format: HH:mm
+2. String: 03:03, 23:33
+3. Int: 303, 2333
