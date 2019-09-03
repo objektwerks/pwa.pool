@@ -170,9 +170,10 @@ Time
 
 Validation
 ----------
-* string - not null, non empty
-* string length - less than, equal, greater than
+* string - not null
+* string - non empty
+* string length - lt, lte, eq, gt, gte
 * email - is valid via regex
-* number - less than, equal, greater than, range
+* number - lt, lte, eq, gt, gte, range
 * date - is valid
 * time - is valid
