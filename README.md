@@ -177,3 +177,4 @@ Validation
 * number - lt, lte, eq, gt, gte, range
 * date - is valid
 * time - is valid
+* money - is valid
