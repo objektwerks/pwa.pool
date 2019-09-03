@@ -155,3 +155,11 @@ Charts
 2. chemicals - bar chart ( x = date, y = amount, c = chemical )
 3. supplies - bar chart ( x = purchased, y = cost, c = item )
 4. repairs - line chart ( x = date, y = cost )
+
+Date
+----
+>Using ISO-8601 format: 2019-03-03
+
+Time
+----
+> Using ISO-8601 format: 03:03
