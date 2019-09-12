@@ -3,9 +3,9 @@ import sbtcrossproject.CrossPlugin.autoImport.{CrossType, crossProject}
 
 name := "tripletail"
 
-val akkaVersion = "2.5.24"
+val akkaVersion = "2.5.25"
 val akkkHttpVersion = "10.1.9"
-val quillVersion = "3.4.3"
+val quillVersion = "3.4.4"
 val circeVersion =  "0.11.1"
 val scalaTestVersion = "3.0.8"
 
@@ -14,7 +14,7 @@ val jsCompileMode = fastOptJS  // fullOptJS
 lazy val commonSettings = Defaults.coreDefaultSettings ++ Seq(
   organization := "objektwerks",
   version := "0.1-SNAPSHOT",
-  scalaVersion := "2.12.9"
+  scalaVersion := "2.12.10"
 )
 
 lazy val tripletail = project.in(file("."))
@@ -57,7 +57,7 @@ lazy val sw = (project in file("sw"))
   .settings(
     scalaJSUseMainModuleInitializer := true,
     libraryDependencies ++= Seq(
-      "com.raquo" %%% "domtypes" % "0.9.4"
+      "com.raquo" %%% "domtypes" % "0.9.5"
     )
   )
 
