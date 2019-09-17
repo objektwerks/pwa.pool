@@ -31,6 +31,7 @@ lazy val shared = crossProject(JSPlatform, JVMPlatform)
   .settings(
     libraryDependencies ++= Seq(
       "com.lihaoyi" %% "upickle" % upickleVersion,
+      "com.wix" %% "accord-core" % "0.7.4",
       "org.scalatest" %% "scalatest" % scalaTestVersion % Test
     )
   )
@@ -43,7 +44,8 @@ lazy val js = (project in file("js"))
   .settings(
     libraryDependencies ++= Seq(
       "com.raquo" %%% "laminar" % "0.7.1",
-      "com.lihaoyi" %%% "upickle" % upickleVersion
+      "com.lihaoyi" %%% "upickle" % upickleVersion,
+      "com.wix" %%% "accord-core" % "0.7.4"
     )
   ) dependsOn sharedJS
 
@@ -69,6 +71,7 @@ lazy val jvm = (project in file("jvm"))
       "com.typesafe.akka" %% "akka-stream" % akkaVersion,
       "com.typesafe.akka" %% "akka-slf4j" % akkaVersion,
       "de.heikoseeberger" %% "akka-http-upickle" % "1.27.0",
+      "org.squbs" %% "squbs-pattern" % "0.12.0",
       "io.getquill" %% "quill-sql" % quillVersion,
       "io.getquill" %% "quill-async-postgres" % quillVersion,
       "com.github.cb372" %% "scalacache-caffeine" % "0.28.0",
