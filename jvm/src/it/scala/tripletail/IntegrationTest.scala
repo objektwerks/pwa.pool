@@ -7,7 +7,6 @@ import akka.http.scaladsl.model.headers.RawHeader
 import akka.http.scaladsl.testkit.{RouteTestTimeout, ScalatestRouteTest}
 import akka.testkit.TestDuration
 import com.typesafe.config.ConfigFactory
-import de.heikoseeberger.akkahttpupickle.UpickleSupport._
 import org.scalatest.{Matchers, WordSpec}
 import org.slf4j.LoggerFactory
 
@@ -26,17 +25,21 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
   val routes = PoolRoutes(store, cache)
   val host = conf.getString("server.host")
   val port = conf.getInt("server.port")
-  val server = Http().bindAndHandle(routes.routes, host, port)
-  server.map { server => logger.info(s"*** Pool app integration test host: ${server.localAddress.toString}") }
+  Http()
+    .bindAndHandle(routes.routes, host, port)
+    .map { server =>
+      logger.info(s"*** Pool app integration test host: ${server.localAddress.toString}")
+    }
+
+  import de.heikoseeberger.akkahttpupickle.UpickleSupport._
+  import DateTime._
+  import StatusCodes._
+  import Serialization._
 
   val url = "/api/v1/tripletail"
   var licensee: Licensee = _
   var licenseHeader: RawHeader = _
   var pool: Pool = _
-
-  import DateTime._
-  import StatusCodes._
-  import Serialization._
 
   "signup" should {
     "post to secure" in {
