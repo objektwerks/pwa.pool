@@ -7,6 +7,10 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.util.Try
 
+object PoolServerClient {
+  def apply(serverUrl: String): PoolServerClient = new PoolServerClient(serverUrl)
+}
+
 class PoolServerClient(serverUrl: String) {
   val headers = Map("Content-Type" -> "application/json; charset=utf-8", "Accept" -> "application/json")
 
@@ -27,8 +31,4 @@ class PoolServerClient(serverUrl: String) {
     console.error(fault.toString)
     fault
   }
-}
-
-object PoolServerClient {
-  def apply(serverUrl: String): PoolServerClient = new PoolServerClient(serverUrl)
 }
