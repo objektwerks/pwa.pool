@@ -1,5 +1,6 @@
 package tripletail
 
+import de.heikoseeberger.akkahttpupickle.{UpickleSupport => Upickle}
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.StatusCodes
@@ -31,7 +32,7 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
       logger.info(s"*** Pool app integration test host: ${server.localAddress.toString}")
     }
 
-  import de.heikoseeberger.akkahttpupickle.UpickleSupport._
+  import Upickle._
   import DateTime._
   import StatusCodes._
   import Serialization._
