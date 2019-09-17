@@ -1,0 +1,5 @@
+package tripletail
+
+object Validation {
+
+}

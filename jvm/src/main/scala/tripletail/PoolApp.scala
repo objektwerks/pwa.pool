@@ -21,7 +21,11 @@ object PoolApp extends App {
   val routes = PoolRoutes(store, cache)
   val host = conf.getString("app.host")
   val port = conf.getInt("app.port")
-  Http().bindAndHandle(routes.routes, host, port).map { server => logger.info(s"*** Pool app host: ${server.localAddress.toString}") }
+  Http()
+    .bindAndHandle(routes.routes, host, port)
+    .map { server =>
+      logger.info(s"*** Pool app host: ${server.localAddress.toString}")
+    }
 
   sys.addShutdownHook {
     logger.info("*** Pool app shutting down...")
