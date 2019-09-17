@@ -36,7 +36,7 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
   import StatusCodes._
   import Serialization._
 
-  val url = "/api/v1/tripletail"
+  val url = routes.url
   var licensee: Licensee = _
   var licenseHeader: RawHeader = _
   var pool: Pool = _

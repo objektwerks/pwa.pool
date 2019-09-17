@@ -383,6 +383,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
       }
     }
   }
+  val url = "/api/v1/tripletail"
   val api = pathPrefix("api" / "v1" / "tripletail") {
     signin ~ pools ~ surfaces ~ pumps ~ timers ~ timersettings ~ heaters ~ heaterons ~ heateroffs ~
       cleanings ~ measurements ~ chemicals ~ supplies ~ repairs
