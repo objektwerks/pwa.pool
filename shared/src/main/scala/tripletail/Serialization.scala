@@ -1,7 +1,19 @@
 package tripletail
 
-object Validation {
+object Serialization {
   import upickle.default._
+
+  implicit val entityRW: ReadWriter[Entity] = ReadWriter.merge(
+    macroRW[Signup], macroRW[Signin], macroRW[Licensee], macroRW[Pool], macroRW[PoolId], macroRW[Surface], macroRW[Pump],
+    macroRW[Timer], macroRW[TimerId], macroRW[TimerSetting], macroRW[Heater], macroRW[HeaterId], macroRW[HeaterOn],
+    macroRW[HeaterOff], macroRW[Cleaning], macroRW[Measurement], macroRW[Chemical], macroRW[Supply], macroRW[Repair]
+  )
+
+  implicit val stateRW: ReadWriter[State] = ReadWriter.merge(
+    macroRW[Secure], macroRW[Generated], macroRW[Updated], macroRW[Pools], macroRW[Surfaces], macroRW[Pumps], macroRW[Timers],
+    macroRW[TimerSettings], macroRW[Heaters], macroRW[HeaterOns], macroRW[HeaterOffs], macroRW[Cleanings], macroRW[Measurements],
+    macroRW[Chemicals], macroRW[Supplies], macroRW[Repairs]
+  )
 
   implicit val signupRW: ReadWriter[Signup] = macroRW
   implicit val signinRW: ReadWriter[Signin] = macroRW

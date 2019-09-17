@@ -5,19 +5,18 @@ import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.model.headers.RawHeader
 import akka.http.scaladsl.testkit.{RouteTestTimeout, ScalatestRouteTest}
+import akka.testkit.TestDuration
 import com.typesafe.config.ConfigFactory
-import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport
-import io.circe.generic.auto._
+import de.heikoseeberger.akkahttpupickle.UpickleSupport._
 import org.scalatest.{Matchers, WordSpec}
 import org.slf4j.LoggerFactory
-import akka.testkit.TestDuration
 
-import scala.language.postfixOps
 import scala.concurrent.duration._
+import scala.language.postfixOps
 
-class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest with FailFastCirceSupport {
-  val logger = LoggerFactory.getLogger(this.getClass)
-  val actorRefFactory = ActorSystem.create(this.getClass.getSimpleName)
+class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
+  val logger = LoggerFactory.getLogger(getClass.getSimpleName)
+  val actorRefFactory = ActorSystem.create(getClass.getSimpleName)
   implicit val dispatcher = system.dispatcher
   implicit val timeout = RouteTestTimeout(10.seconds dilated)
 
@@ -35,8 +34,9 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest wit
   var licenseHeader: RawHeader = _
   var pool: Pool = _
 
-  import StatusCodes._
   import DateTime._
+  import StatusCodes._
+  import Serialization._
 
   "signup" should {
     "post to secure" in {

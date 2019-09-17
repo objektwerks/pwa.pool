@@ -3,8 +3,7 @@ package tripletail
 import akka.http.scaladsl.model.{HttpResponse, StatusCodes}
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.{ExceptionHandler, Route}
-import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport._
-import io.circe.generic.auto._
+import de.heikoseeberger.akkahttpupickle.UpickleSupport._
 import org.slf4j.LoggerFactory
 
 import scala.util.control.NonFatal
@@ -15,6 +14,7 @@ object PoolRoutes {
 
 class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
   import StatusCodes._
+  import Serialization._
   import licenseeCache._
   import poolStore._
 

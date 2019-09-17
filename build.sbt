@@ -6,9 +6,8 @@ name := "tripletail"
 val akkaVersion = "2.5.25"
 val akkkHttpVersion = "10.1.9"
 val quillVersion = "3.4.4"
-val circeVersion =  "0.11.1"
-val scalaTestVersion = "3.0.8"
 val upickleVersion = "0.7.5"
+val scalaTestVersion = "3.0.8"
 
 val jsCompileMode = fastOptJS  // fullOptJS
 
@@ -31,9 +30,6 @@ lazy val shared = crossProject(JSPlatform, JVMPlatform)
   .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
-      "io.circe" %% "circe-core" % circeVersion,
-      "io.circe" %% "circe-generic" % circeVersion,
-      "io.circe" %% "circe-parser" % circeVersion,
       "com.lihaoyi" %% "upickle" % upickleVersion,
       "org.scalatest" %% "scalatest" % scalaTestVersion % Test
     )
@@ -47,9 +43,7 @@ lazy val js = (project in file("js"))
   .settings(
     libraryDependencies ++= Seq(
       "com.raquo" %%% "laminar" % "0.7.1",
-      "io.circe" %%% "circe-core" % circeVersion,
-      "io.circe" %%% "circe-generic" % circeVersion,
-      "io.circe" %%% "circe-parser" % circeVersion
+      "com.lihaoyi" %%% "upickle" % upickleVersion
     )
   ) dependsOn sharedJS
 
@@ -74,7 +68,6 @@ lazy val jvm = (project in file("jvm"))
       "com.typesafe.akka" %% "akka-http" % akkkHttpVersion,
       "com.typesafe.akka" %% "akka-stream" % akkaVersion,
       "com.typesafe.akka" %% "akka-slf4j" % akkaVersion,
-      "de.heikoseeberger" %% "akka-http-circe" % "1.27.0",
       "de.heikoseeberger" %% "akka-http-upickle" % "1.27.0",
       "io.getquill" %% "quill-sql" % quillVersion,
       "io.getquill" %% "quill-async-postgres" % quillVersion,
