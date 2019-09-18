@@ -1,5 +1,10 @@
 package tripletail
 
+import java.time.{LocalDate, LocalTime}
+import java.time.format.DateTimeFormatter
+
+import scala.util.Try
+
 /**
  * string - not null
  * string - non empty
@@ -13,6 +18,9 @@ package tripletail
  */
 object Validation {
   object StringValidation {
+    val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+    val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
+
     implicit class Methods(val value: String) {
       def isNotNull: Boolean = null != value
 
@@ -29,6 +37,10 @@ object Validation {
       def isLengthGreaterThan(length: Int): Boolean = if (isNotNullEmpty) value.length > length else false
 
       def isLengthGreaterThanEqual(length: Int): Boolean = if (isNotNullEmpty) value.length >= length else false
+
+      def isDate(date: String): Boolean = Try(LocalDate.parse(date, dateFormatter)).isSuccess
+
+      def isTime(time: String): Boolean = Try(LocalTime.parse(time, timeFormatter)).isSuccess
     }
   }
 
