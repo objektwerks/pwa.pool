@@ -9,7 +9,7 @@ trait Validator[T] extends Product with Serializable {
   def isValid(entity: T): Boolean
 }
 
-object Validation {
+object Validator {
   object StringValidators {
     val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
     val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
