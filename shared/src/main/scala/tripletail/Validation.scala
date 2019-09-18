@@ -13,30 +13,37 @@ package tripletail
  * money - is valid
  */
 object Validation {
-  def isNotNull(value: String): Boolean = null != value
+  object StringValidation {
+    implicit class Methods(val value: String) {
+      def isNotNull: Boolean = null != value
 
-  def isNotEmpty(value: String): Boolean = value.nonEmpty
+      def isNotEmpty: Boolean = value.nonEmpty
 
-  def isNotNullEmpty(value: String): Boolean = isNotNull(value) && isNotEmpty(value)
+      def isNotNullEmpty: Boolean = (null != value) && value.nonEmpty
 
-  def isLengthLessThan(value: String, length: Int): Boolean = if (isNotNullEmpty(value)) value.length < length else false
+      def isLengthLessThan(length: Int): Boolean = if (isNotNullEmpty) value.length < length else false
 
-  def isLengthLessThanEqual(value: String, length: Int): Boolean = if (isNotNullEmpty(value)) value.length <= length else false
+      def isLengthLessThanEqual(length: Int): Boolean = if (isNotNullEmpty) value.length <= length else false
 
-  def isLengthEqual(value: String, length: Int): Boolean = if (isNotNullEmpty(value)) value.length == length else false
+      def isLengthEqual(length: Int): Boolean = if (isNotNullEmpty) value.length == length else false
 
-  def isLengthGreaterThan(value: String, length: Int): Boolean = if (isNotNullEmpty(value)) value.length > length else false
+      def isLengthGreaterThan(length: Int): Boolean = if (isNotNullEmpty) value.length > length else false
 
-  def isLengthGreaterThanEqual(value: String, length: Int): Boolean = if (isNotNullEmpty(value)) value.length >= length else false
+      def isLengthGreaterThanEqual(length: Int): Boolean = if (isNotNullEmpty) value.length >= length else false
+    }
+  }
 
-  def isLessThan(value: Int, integer: Int): Boolean = value < integer
+  object IntValidation {
+    implicit class Methods(val value: Int) {
+      def isLessThan(integer: Int): Boolean = value < integer
 
-  def isLessThanEqual(value: Int, integer: Int): Boolean = value <= integer
+      def isLessThanEqual(integer: Int): Boolean = value <= integer
 
-  def isEqual(value: Int, integer: Int): Boolean = value == integer
+      def isEqual(integer: Int): Boolean = value == integer
 
-  def isGreaterThan(value: Int, integer: Int): Boolean = value > integer
+      def isGreaterThan(integer: Int): Boolean = value > integer
 
-  def isGreaterThanEqual(value: Int, integer: Int): Boolean = value >= integer
-
+      def isGreaterThanEqual(integer: Int): Boolean = value >= integer
+    }
+  }
 }
