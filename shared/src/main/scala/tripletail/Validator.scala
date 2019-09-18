@@ -5,17 +5,10 @@ import java.time.format.DateTimeFormatter
 
 import scala.util.Try
 
-/**
- * string - not null
- * string - non empty
- * string - not null and non empty
- * string length - lt, lte, eq, gt, gte
- * number - lt, lte, eq, gt, gte
- * range - inclusive, exclusive
- * date - is valid
- * time - is valid
- * money - is valid
- */
+trait Validator[T] extends Product with Serializable {
+  def isValid(entity: T): Boolean
+}
+
 object Validation {
   object StringValidators {
     val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
