@@ -5,7 +5,6 @@ package tripletail
  * string - non empty
  * string - not null and non empty
  * string length - lt, lte, eq, gt, gte
- * email - is valid via regex
  * number - lt, lte, eq, gt, gte
  * range - inclusive, exclusive
  * date - is valid
@@ -35,6 +34,8 @@ object Validation {
 
   object IntValidation {
     implicit class Methods(val value: Int) {
+      def isInRange(range: Range): Boolean = range.contains(value)
+
       def isLessThan(integer: Int): Boolean = value < integer
 
       def isLessThanEqual(integer: Int): Boolean = value <= integer
