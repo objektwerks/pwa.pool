@@ -17,7 +17,7 @@ import scala.util.Try
  * money - is valid
  */
 object Validation {
-  object StringValidation {
+  object StringValidators {
     val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
     val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
 
@@ -46,7 +46,7 @@ object Validation {
     }
   }
 
-  object IntValidation {
+  object IntValidators {
     implicit class Methods(val value: Int) {
       def isInRange(range: Range): Boolean = range.contains(value)
 
