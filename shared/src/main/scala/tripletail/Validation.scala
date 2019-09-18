@@ -38,9 +38,11 @@ object Validation {
 
       def isLengthGreaterThanEqual(length: Int): Boolean = if (isNotNullEmpty) value.length >= length else false
 
-      def isDate(date: String): Boolean = Try(LocalDate.parse(date, dateFormatter)).isSuccess
+      def isDate: Boolean = Try(LocalDate.parse(value, dateFormatter)).isSuccess
 
-      def isTime(time: String): Boolean = Try(LocalTime.parse(time, timeFormatter)).isSuccess
+      def isTime: Boolean = Try(LocalTime.parse(value, timeFormatter)).isSuccess
+
+      def isMoney: Boolean = Try(value.toDouble).isSuccess
     }
   }
 
