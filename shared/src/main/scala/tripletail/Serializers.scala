@@ -1,6 +1,6 @@
 package tripletail
 
-object Serialization {
+object Serializers {
   import upickle.default._
 
   implicit val entityRW: ReadWriter[Entity] = ReadWriter.merge(

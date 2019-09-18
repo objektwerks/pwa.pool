@@ -14,7 +14,7 @@ object PoolRoutes {
 
 class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
   import StatusCodes._
-  import Serialization._
+  import Serializers._
   import licenseeCache._
   import poolStore._
 

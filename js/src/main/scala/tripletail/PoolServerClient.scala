@@ -15,7 +15,7 @@ class PoolServerClient(serverUrl: String) {
   val headers = Map("Content-Type" -> "application/json; charset=utf-8", "Accept" -> "application/json")
 
   def post(path: String, license: String, entity: Entity): Future[Either[Fault, State]] = {
-    import Serialization._
+    import Serializers._
     import upickle.default._
 
     val headersWithLicense = headers + (Licensee.licenseHeaderKey -> license)

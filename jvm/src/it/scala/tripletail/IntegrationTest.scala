@@ -35,7 +35,7 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
   import Upickle._
   import DateTime._
   import StatusCodes._
-  import Serialization._
+  import Serializers._
 
   val url = routes.url
   var licensee: Licensee = _
