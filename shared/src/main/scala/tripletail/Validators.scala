@@ -5,11 +5,11 @@ import java.time.format.DateTimeFormatter
 
 import scala.util.Try
 
-object StringValidators {
+object Validators {
   val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
   val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
 
-  implicit class Methods(val value: String) {
+  implicit class StringOps(val value: String) {
     def nonNull: Boolean = null != value
 
     def nonNullEmpty: Boolean = (null != value) && value.nonEmpty
@@ -30,10 +30,8 @@ object StringValidators {
 
     def isMoney: Boolean = Try(value.toDouble).isSuccess
   }
-}
 
-object IntValidators {
-  implicit class Methods(val value: Int) {
+  implicit class IntOps(val value: Int) {
     def inRange(range: Range): Boolean = range.contains(value)
 
     def lessThan(integer: Int): Boolean = value < integer
@@ -45,5 +43,43 @@ object IntValidators {
     def greaterThan(integer: Int): Boolean = value > integer
 
     def greaterThanEqual(integer: Int): Boolean = value >= integer
+  }
+}
+
+object SignupValidator {
+  implicit class Ops(val signup: Signup) {
+    import Validators._
+    private val validator = new Validator[Signup] {
+      override def isValid(signup: Signup): Boolean = {
+        signup.email.nonNullEmpty
+      }
+    }
+    def isValid: Boolean = validator.isValid(signup)
+  }
+}
+
+object SigninValidator {
+  implicit class Ops(val signin: Signin) {
+    import Validators._
+    private val validator = new Validator[Signin] {
+      override def isValid(signin: Signin): Boolean = {
+        signin.email.nonNullEmpty
+      }
+    }
+    def isValid: Boolean = validator.isValid(signin)
+  }
+}
+
+object LicenseeValidator {
+  implicit class Ops(val licensee: Licensee) {
+    import Validators._
+    private val validator = new Validator[Licensee] {
+      override def isValid(licensee: Licensee): Boolean = {
+        licensee.license.nonNullEmpty &&
+          licensee.email.nonNullEmpty &&
+          licensee.activated.greaterThanEqual(0)
+      }
+    }
+    def isValid: Boolean = validator.isValid(licensee)
   }
 }

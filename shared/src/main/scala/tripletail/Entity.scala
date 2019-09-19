@@ -3,38 +3,14 @@ package tripletail
 import java.util.UUID
 
 trait Validator[T] {
-  def validate(entity: T): Boolean
+  def isValid(entity: T): Boolean
 }
 
 sealed trait Entity extends Product with Serializable
 
 final case class Signup(email: String) extends Entity
 
-object Signup {
-  val validator = new Validator[Signup] {
-    override def validate(signup: Signup): Boolean = {
-      import StringValidators._
-      signup.email.nonNullEmpty
-    }
-  }
-  implicit class Methods(val signup: Signup) {
-    def isValid: Boolean = validator.validate(signup)
-  }
-}
-
 final case class Signin(license: String, email: String) extends Entity
-
-object Signin {
-  val validator = new Validator[Signin] {
-    override def validate(signin: Signin): Boolean = {
-      import StringValidators._
-      signin.email.nonNullEmpty
-    }
-  }
-  implicit class Methods(val signin: Signin) {
-    def isValid: Boolean = validator.validate(signin)
-  }
-}
 
 final case class Licensee(license: String = UUID.randomUUID.toString.toLowerCase,
                           email: String,
@@ -43,18 +19,6 @@ final case class Licensee(license: String = UUID.randomUUID.toString.toLowerCase
 
 object Licensee {
   val licenseHeaderKey = "license"
-  val validator = new Validator[Licensee] {
-    override def validate(licensee: Licensee): Boolean = {
-      import IntValidators._
-      import StringValidators._
-      licensee.license.nonNullEmpty &&
-        licensee.email.nonNullEmpty &&
-        licensee.activated.greaterThanEqual(0)
-    }
-  }
-  implicit class Methods(val licensee: Licensee) {
-    def isValid: Boolean = validator.validate(licensee)
-  }
 }
 
 final case class Pool(id: Int = 0,
