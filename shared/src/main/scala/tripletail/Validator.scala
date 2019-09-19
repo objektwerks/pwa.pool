@@ -15,21 +15,19 @@ object Validator {
     val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
 
     implicit class Methods(val value: String) {
-      def isNotNull: Boolean = null != value
+      def nonNull: Boolean = null != value
 
-      def isNotEmpty: Boolean = value.nonEmpty
+      def nonNullEmpty: Boolean = (null != value) && value.nonEmpty
 
-      def isNotNullEmpty: Boolean = (null != value) && value.nonEmpty
+      def lengthLessThan(length: Int): Boolean = if (nonNullEmpty) value.length < length else false
 
-      def isLengthLessThan(length: Int): Boolean = if (isNotNullEmpty) value.length < length else false
+      def lengthLessThanEqual(length: Int): Boolean = if (nonNullEmpty) value.length <= length else false
 
-      def isLengthLessThanEqual(length: Int): Boolean = if (isNotNullEmpty) value.length <= length else false
+      def lengthEqual(length: Int): Boolean = if (nonNullEmpty) value.length == length else false
 
-      def isLengthEqual(length: Int): Boolean = if (isNotNullEmpty) value.length == length else false
+      def lengthGreaterThan(length: Int): Boolean = if (nonNullEmpty) value.length > length else false
 
-      def isLengthGreaterThan(length: Int): Boolean = if (isNotNullEmpty) value.length > length else false
-
-      def isLengthGreaterThanEqual(length: Int): Boolean = if (isNotNullEmpty) value.length >= length else false
+      def lengthGreaterThanEqual(length: Int): Boolean = if (nonNullEmpty) value.length >= length else false
 
       def isDate: Boolean = Try(LocalDate.parse(value, dateFormatter)).isSuccess
 
@@ -41,17 +39,17 @@ object Validator {
 
   object IntValidators {
     implicit class Methods(val value: Int) {
-      def isInRange(range: Range): Boolean = range.contains(value)
+      def inRange(range: Range): Boolean = range.contains(value)
 
-      def isLessThan(integer: Int): Boolean = value < integer
+      def lessThan(integer: Int): Boolean = value < integer
 
-      def isLessThanEqual(integer: Int): Boolean = value <= integer
+      def lessThanEqual(integer: Int): Boolean = value <= integer
 
-      def isEqual(integer: Int): Boolean = value == integer
+      def equal(integer: Int): Boolean = value == integer
 
-      def isGreaterThan(integer: Int): Boolean = value > integer
+      def greaterThan(integer: Int): Boolean = value > integer
 
-      def isGreaterThanEqual(integer: Int): Boolean = value >= integer
+      def greaterThanEqual(integer: Int): Boolean = value >= integer
     }
   }
 }
