@@ -75,4 +75,18 @@ object Validators {
       def isValid: Boolean = validator.isValid(pool)
     }
   }
+
+  object SurfaceValidator {
+    implicit class Ops(val surface: Surface) {
+      private val validator = new Validator[Surface] {
+        override def isValid(surface: Surface): Boolean = {
+          surface.id >= 0 &&
+          surface.poolId > 0 &&
+          surface.installed > 0 &&
+          surface.kind.nonNullEmpty
+        }
+      }
+      def isValid: Boolean = validator.isValid(surface)
+    }
+  }
 }
