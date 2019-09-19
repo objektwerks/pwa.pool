@@ -11,11 +11,11 @@ object Validators {
     val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
 
     def nonNullEmpty: Boolean = (value != null) && value.nonEmpty
-    def lengthLessThan(length: Int): Boolean = if (nonNullEmpty) value.length < length else false
-    def lengthLessThanEqual(length: Int): Boolean = if (nonNullEmpty) value.length <= length else false
-    def lengthEqual(length: Int): Boolean = if (nonNullEmpty) value.length == length else false
-    def lengthGreaterThan(length: Int): Boolean = if (nonNullEmpty) value.length > length else false
-    def lengthGreaterThanEqual(length: Int): Boolean = if (nonNullEmpty) value.length >= length else false
+    def <(length: Int): Boolean = if (nonNullEmpty) value.length < length else false
+    def <=(length: Int): Boolean = if (nonNullEmpty) value.length <= length else false
+    def ===(length: Int): Boolean = if (nonNullEmpty) value.length == length else false
+    def >(length: Int): Boolean = if (nonNullEmpty) value.length > length else false
+    def >=(length: Int): Boolean = if (nonNullEmpty) value.length >= length else false
     def isDate: Boolean = Try(LocalDate.parse(value, dateFormatter)).isSuccess
     def isTime: Boolean = Try(LocalTime.parse(value, timeFormatter)).isSuccess
     def isMoney: Boolean = Try(value.toDouble).isSuccess
