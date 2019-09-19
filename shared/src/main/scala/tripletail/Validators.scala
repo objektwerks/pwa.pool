@@ -103,4 +103,18 @@ object Validators {
       def isValid: Boolean = validator.isValid(pump)
     }
   }
+
+  object TimerValidator {
+    implicit class Ops(val timer: Timer) {
+      private val validator = new Validator[Timer] {
+        override def isValid(timer: Timer): Boolean = {
+          timer.id >= 0 &&
+          timer.poolId > 0 &&
+          timer.installed > 0 &&
+          timer.model.nonNullEmpty
+        }
+      }
+      def isValid: Boolean = validator.isValid(timer)
+    }
+  }
 }
