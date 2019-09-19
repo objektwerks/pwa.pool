@@ -117,4 +117,19 @@ object Validators {
       def isValid: Boolean = validator.isValid(timer)
     }
   }
+
+  object TimerSettingValidator {
+    implicit class Ops(val timerSetting: TimerSetting) {
+      private val validator = new Validator[TimerSetting] {
+        override def isValid(timerSetting: TimerSetting): Boolean = {
+          timerSetting.id >= 0 &&
+          timerSetting.timerId > 0 &&
+          timerSetting.set > 0 &&
+          timerSetting.setOn > 0 &&
+          timerSetting.setOff > 0
+        }
+      }
+      def isValid: Boolean = validator.isValid(timerSetting)
+    }
+  }
 }
