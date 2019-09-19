@@ -89,4 +89,18 @@ object Validators {
       def isValid: Boolean = validator.isValid(surface)
     }
   }
+
+  object PumpValidator {
+    implicit class Ops(val pump: Pump) {
+      private val validator = new Validator[Pump] {
+        override def isValid(pump: Pump): Boolean = {
+          pump.id >= 0 &&
+          pump.poolId > 0 &&
+          pump.installed > 0 &&
+          pump.model.nonNullEmpty
+        }
+      }
+      def isValid: Boolean = validator.isValid(pump)
+    }
+  }
 }
