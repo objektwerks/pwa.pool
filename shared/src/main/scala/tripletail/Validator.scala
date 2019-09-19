@@ -1,55 +1,44 @@
 package tripletail
 
-import java.time.{LocalDate, LocalTime}
-import java.time.format.DateTimeFormatter
-
-import scala.util.Try
-
-trait Validator[T] extends Product with Serializable {
-  def isValid(entity: T): Boolean
+trait Validator[T] {
+  def validate(entity: T): Boolean
 }
 
-object Validator {
-  object StringValidators {
-    val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-    val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
-
-    implicit class Methods(val value: String) {
-      def nonNull: Boolean = null != value
-
-      def nonNullEmpty: Boolean = (null != value) && value.nonEmpty
-
-      def lengthLessThan(length: Int): Boolean = if (nonNullEmpty) value.length < length else false
-
-      def lengthLessThanEqual(length: Int): Boolean = if (nonNullEmpty) value.length <= length else false
-
-      def lengthEqual(length: Int): Boolean = if (nonNullEmpty) value.length == length else false
-
-      def lengthGreaterThan(length: Int): Boolean = if (nonNullEmpty) value.length > length else false
-
-      def lengthGreaterThanEqual(length: Int): Boolean = if (nonNullEmpty) value.length >= length else false
-
-      def isDate: Boolean = Try(LocalDate.parse(value, dateFormatter)).isSuccess
-
-      def isTime: Boolean = Try(LocalTime.parse(value, timeFormatter)).isSuccess
-
-      def isMoney: Boolean = Try(value.toDouble).isSuccess
+object SignupValidator {
+  val validator = new Validator[Signup] {
+    override def validate(signup: Signup): Boolean = {
+      import StringValidators._
+      signup.email.nonNullEmpty
     }
   }
+  implicit class Methods(val signup: Signup) {
+    def isValid: Boolean = validator.validate(signup)
+  }
+}
 
-  object IntValidators {
-    implicit class Methods(val value: Int) {
-      def inRange(range: Range): Boolean = range.contains(value)
-
-      def lessThan(integer: Int): Boolean = value < integer
-
-      def lessThanEqual(integer: Int): Boolean = value <= integer
-
-      def equal(integer: Int): Boolean = value == integer
-
-      def greaterThan(integer: Int): Boolean = value > integer
-
-      def greaterThanEqual(integer: Int): Boolean = value >= integer
+object SigninValidator {
+  val validator = new Validator[Signin] {
+    override def validate(signin: Signin): Boolean = {
+      import StringValidators._
+      signin.email.nonNullEmpty
     }
+  }
+  implicit class Methods(val signin: Signin) {
+    def isValid: Boolean = validator.validate(signin)
+  }
+}
+
+object LicenseeValidator {
+  val validator = new Validator[Licensee] {
+    override def validate(licensee: Licensee): Boolean = {
+      import IntValidators._
+      import StringValidators._
+      licensee.license.nonNullEmpty &&
+        licensee.email.nonNullEmpty &&
+        licensee.activated.greaterThanEqual(0)
+    }
+  }
+  implicit class Methods(val licensee: Licensee) {
+    def isValid: Boolean = validator.validate(licensee)
   }
 }
