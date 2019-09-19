@@ -10,8 +10,7 @@ object Validators {
     val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
     val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
 
-    def nonNull: Boolean = null != value
-    def nonNullEmpty: Boolean = (null != value) && value.nonEmpty
+    def nonNullEmpty: Boolean = (value != null) && value.nonEmpty
     def lengthLessThan(length: Int): Boolean = if (nonNullEmpty) value.length < length else false
     def lengthLessThanEqual(length: Int): Boolean = if (nonNullEmpty) value.length <= length else false
     def lengthEqual(length: Int): Boolean = if (nonNullEmpty) value.length == length else false
@@ -20,15 +19,6 @@ object Validators {
     def isDate: Boolean = Try(LocalDate.parse(value, dateFormatter)).isSuccess
     def isTime: Boolean = Try(LocalTime.parse(value, timeFormatter)).isSuccess
     def isMoney: Boolean = Try(value.toDouble).isSuccess
-  }
-
-  implicit class IntOps(val value: Int) {
-    def inRange(range: Range): Boolean = range.contains(value)
-    def lessThan(integer: Int): Boolean = value < integer
-    def lessThanEqual(integer: Int): Boolean = value <= integer
-    def equal(integer: Int): Boolean = value == integer
-    def greaterThan(integer: Int): Boolean = value > integer
-    def greaterThanEqual(integer: Int): Boolean = value >= integer
   }
 
   trait Validator[T] {
@@ -62,11 +52,27 @@ object Validators {
       private val validator = new Validator[Licensee] {
         override def isValid(licensee: Licensee): Boolean = {
           licensee.license.nonNullEmpty &&
-            licensee.email.nonNullEmpty &&
-            licensee.activated.greaterThanEqual(0)
+          licensee.email.nonNullEmpty &&
+          licensee.activated >= 0
         }
       }
       def isValid: Boolean = validator.isValid(licensee)
+    }
+  }
+
+  object PoolValidator {
+    implicit class Ops(val pool: Pool) {
+      private val validator = new Validator[Pool] {
+        override def isValid(pool: Pool): Boolean = {
+          pool.id >= 0 &&
+          pool.license.nonNullEmpty &&
+          pool.built > 0 &&
+          pool.lat >= 0 &&
+          pool.lon >= 0 &&
+          pool.volume > 1000
+        }
+      }
+      def isValid: Boolean = validator.isValid(pool)
     }
   }
 }
