@@ -132,4 +132,18 @@ object Validators {
       def isValid: Boolean = validator.isValid(timerSetting)
     }
   }
+
+  object HeaterValidator {
+    implicit class Ops(val heater: Heater) {
+      private val validator = new Validator[Heater] {
+        override def isValid(heater: Heater): Boolean = {
+          heater.id >= 0 &&
+          heater.poolId > 0 &&
+          heater.installed > 0 &&
+          heater.model.nonNullEmpty
+        }
+      }
+      def isValid: Boolean = validator.isValid(heater)
+    }
+  }
 }
