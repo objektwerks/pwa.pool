@@ -46,6 +46,10 @@ object Validators {
   }
 }
 
+trait Validator[T] {
+  def isValid(entity: T): Boolean
+}
+
 object SignupValidator {
   implicit class Ops(val signup: Signup) {
     import Validators._

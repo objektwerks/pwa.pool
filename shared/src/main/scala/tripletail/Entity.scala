@@ -2,10 +2,6 @@ package tripletail
 
 import java.util.UUID
 
-trait Validator[T] {
-  def isValid(entity: T): Boolean
-}
-
 sealed trait Entity extends Product with Serializable
 
 final case class Signup(email: String) extends Entity
