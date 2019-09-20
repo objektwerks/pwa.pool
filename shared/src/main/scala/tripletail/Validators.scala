@@ -215,4 +215,20 @@ object Validators {
       def isValid: Boolean = validator.isValid(measurement)
     }
   }
+
+  object ChemicalValidator {
+    implicit class Ops(val chemical: Chemical) {
+      private val validator = new Validator[Chemical] {
+        override def isValid(chemical: Chemical): Boolean = {
+          chemical.id >= 0 &&
+          chemical.poolId > 0 &&
+          chemical. added > 0 &&
+          chemical.chemical.nonNullEmpty &&
+          chemical.amount > 0.00 &&
+          chemical.unit.nonNullEmpty
+        }
+      }
+      def isValid: Boolean = validator.isValid(heaterOff)
+    }
+  }
 }
