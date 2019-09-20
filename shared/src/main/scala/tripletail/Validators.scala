@@ -193,20 +193,28 @@ object Validators {
   }
 
   object MeasurementValidator {
+    private val temp = 32 to 95
+    private val totalHardness = 1 to 1000
+    private val totalChlorine = 0 to 10
+    private val totalBromine = 0 to 20
+    private val freeChlorine = 0 to 10
+    private val ph = 6 to 9
+    private val totalAlkalinity = 0 to 240
+    private val cyanuricAcid = 0 to 300
     implicit class Ops(val measurement: Measurement) {
       private val validator = new Validator[Measurement] {
         override def isValid(measurement: Measurement): Boolean = {
           measurement.id >= 0 &&
           measurement.poolId > 0 &&
           measurement.measured > 0 &&
-          measurement.temp >= 32 &&
-          measurement.totalHardness > 0 &&
-          measurement.totalChlorine > 0 &&
-          measurement.totalBromine > 0 &&
-          measurement.freeChlorine > 0 &&
-          measurement.ph > 0 &&
-          measurement.totalAlkalinity > 0 &&
-          measurement.cyanuricAcid > 0
+          temp.contains(measurement.temp) &&
+          totalHardness.contains(measurement.totalHardness) &&
+          totalChlorine.contains(measurement.totalChlorine) &&
+          totalBromine.contains(measurement.totalBromine) &&
+          freeChlorine.contains(measurement.freeChlorine) &&
+          ph.contains(measurement.ph) &&
+          totalAlkalinity.contains(measurement.totalAlkalinity) &&
+          cyanuricAcid.contains(measurement.cyanuricAcid)
         }
       }
       def isValid: Boolean = validator.isValid(measurement)
