@@ -173,4 +173,25 @@ object Validators {
       def isValid: Boolean = validator.isValid(heaterOff)
     }
   }
+
+  object CleaningValidator {
+    implicit class Ops(val cleaning: Cleaning) {
+      private val validator = new Validator[Cleaning] {
+        override def isValid(cleaning: Cleaning): Boolean = {
+          cleaning.id >= 0 &&
+          cleaning.poolId > 0 &&
+          cleaning.cleaned > 0 &&
+          cleaning.brush &&
+          cleaning.net &&
+          cleaning.vacuum &&
+          cleaning.skimmerBasket &&
+          cleaning.pumpBasket &&
+          cleaning.pumpFilter &&
+          cleaning.pumpChlorineTablets >= 0 &&
+          cleaning.deck
+        }
+      }
+      def isValid: Boolean = validator.isValid(cleaning)
+    }
+  }
 }
