@@ -170,12 +170,8 @@ Time
 
 Validation
 ----------
-* string - not null
 * string - non empty
 * string length - lt, lte, eq, gt, gte
-* email - is valid via regex
-* number - lt, lte, eq, gt, gte
-* range - inclusive, exclusive
+* range - inclusive
 * date - is valid
 * time - is valid
-* money - is valid
