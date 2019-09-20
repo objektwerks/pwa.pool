@@ -228,7 +228,7 @@ object Validators {
           chemical.unit.nonNullEmpty
         }
       }
-      def isValid: Boolean = validator.isValid(heaterOff)
+      def isValid: Boolean = validator.isValid(chemical)
     }
   }
 }
