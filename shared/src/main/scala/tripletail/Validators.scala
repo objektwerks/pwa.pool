@@ -194,4 +194,25 @@ object Validators {
       def isValid: Boolean = validator.isValid(cleaning)
     }
   }
+
+  object MeasurementValidator {
+    implicit class Ops(val measurement: Measurement) {
+      private val validator = new Validator[Measurement] {
+        override def isValid(measurement: Measurement): Boolean = {
+          measurement.id >= 0 &&
+          measurement.poolId > 0 &&
+          measurement.measured > 0 &&
+          measurement.temp >= 32 &&
+          measurement.totalHardness > 0 &&
+          measurement.totalChlorine > 0 &&
+          measurement.totalBromine > 0 &&
+          measurement.freeChlorine > 0 &&
+          measurement.ph > 0 &&
+          measurement.totalAlkalinity > 0 &&
+          measurement.cyanuricAcid > 0
+        }
+      }
+      def isValid: Boolean = validator.isValid(measurement)
+    }
+  }
 }
