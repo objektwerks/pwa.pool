@@ -248,4 +248,19 @@ object Validators {
       def isValid: Boolean = validator.isValid(supply)
     }
   }
+
+  object RepairValidator {
+    implicit class Ops(val repair: Repair) {
+      private val validator = new Validator[Repair] {
+        override def isValid(repair: Repair): Boolean = {
+          repair.id >= 0 &&
+          repair.poolId > 0 &&
+          repair.repaired > 0 &&
+          repair.cost > 0.00 &&
+          repair.repair.nonNullEmpty
+        }
+      }
+      def isValid: Boolean = validator.isValid(repair)
+    }
+  }
 }
