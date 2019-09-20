@@ -231,4 +231,21 @@ object Validators {
       def isValid: Boolean = validator.isValid(chemical)
     }
   }
+
+  object SupplyValidator {
+    implicit class Ops(val supply: Supply) {
+      private val validator = new Validator[Supply] {
+        override def isValid(supply: Supply): Boolean = {
+          supply.id >= 0 &&
+          supply.poolId > 0 &&
+          supply.purchased > 0 &&
+          supply.cost > 0.00 &&
+          supply.item.nonNullEmpty &&
+          supply.amount > 0.00 &&
+          supply.unit.nonNullEmpty
+        }
+      }
+      def isValid: Boolean = validator.isValid(supply)
+    }
+  }
 }
