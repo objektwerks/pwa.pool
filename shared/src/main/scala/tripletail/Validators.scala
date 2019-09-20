@@ -1,24 +1,21 @@
 package tripletail
 
-import java.time.{LocalDate, LocalTime}
-import java.time.format.DateTimeFormatter
-
-import scala.util.Try
-
 object Validators {
   implicit class StringOps(val value: String) {
-    val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-    val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
+    import java.time.{LocalDate, LocalTime}
+    import java.time.format.DateTimeFormatter
+    import scala.util.Try
 
-    def nonNullEmpty: Boolean = (value != null) && value.nonEmpty
-    def <(length: Int): Boolean = if (nonNullEmpty) value.length < length else false
-    def <=(length: Int): Boolean = if (nonNullEmpty) value.length <= length else false
-    def ===(length: Int): Boolean = if (nonNullEmpty) value.length == length else false
-    def >(length: Int): Boolean = if (nonNullEmpty) value.length > length else false
-    def >=(length: Int): Boolean = if (nonNullEmpty) value.length >= length else false
+    private val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+    private val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
+
+    def <(length: Int): Boolean = if (value.nonEmpty) value.length < length else false
+    def <=(length: Int): Boolean = if (value.nonEmpty) value.length <= length else false
+    def ===(length: Int): Boolean = if (value.nonEmpty) value.length == length else false
+    def >(length: Int): Boolean = if (value.nonEmpty) value.length > length else false
+    def >=(length: Int): Boolean = if (value.nonEmpty) value.length >= length else false
     def isDate: Boolean = Try(LocalDate.parse(value, dateFormatter)).isSuccess
     def isTime: Boolean = Try(LocalTime.parse(value, timeFormatter)).isSuccess
-    def isMoney: Boolean = Try(value.toDouble).isSuccess
   }
 
   trait Validator[T] {
@@ -29,7 +26,7 @@ object Validators {
     implicit class Ops(val signup: Signup) {
       private val validator = new Validator[Signup] {
         override def isValid(signup: Signup): Boolean = {
-          signup.email.nonNullEmpty
+          signup.email.nonEmpty
         }
       }
       def isValid: Boolean = validator.isValid(signup)
@@ -40,7 +37,7 @@ object Validators {
     implicit class Ops(val signin: Signin) {
       private val validator = new Validator[Signin] {
         override def isValid(signin: Signin): Boolean = {
-          signin.email.nonNullEmpty
+          signin.email.nonEmpty
         }
       }
       def isValid: Boolean = validator.isValid(signin)
@@ -51,8 +48,8 @@ object Validators {
     implicit class Ops(val licensee: Licensee) {
       private val validator = new Validator[Licensee] {
         override def isValid(licensee: Licensee): Boolean = {
-          licensee.license.nonNullEmpty &&
-          licensee.email.nonNullEmpty &&
+          licensee.license.nonEmpty &&
+          licensee.email.nonEmpty &&
           licensee.activated >= 0
         }
       }
@@ -65,7 +62,7 @@ object Validators {
       private val validator = new Validator[Pool] {
         override def isValid(pool: Pool): Boolean = {
           pool.id >= 0 &&
-          pool.license.nonNullEmpty &&
+          pool.license.nonEmpty &&
           pool.built > 0 &&
           pool.lat >= 0 &&
           pool.lon >= 0 &&
@@ -83,7 +80,7 @@ object Validators {
           surface.id >= 0 &&
           surface.poolId > 0 &&
           surface.installed > 0 &&
-          surface.kind.nonNullEmpty
+          surface.kind.nonEmpty
         }
       }
       def isValid: Boolean = validator.isValid(surface)
@@ -97,7 +94,7 @@ object Validators {
           pump.id >= 0 &&
           pump.poolId > 0 &&
           pump.installed > 0 &&
-          pump.model.nonNullEmpty
+          pump.model.nonEmpty
         }
       }
       def isValid: Boolean = validator.isValid(pump)
@@ -111,7 +108,7 @@ object Validators {
           timer.id >= 0 &&
           timer.poolId > 0 &&
           timer.installed > 0 &&
-          timer.model.nonNullEmpty
+          timer.model.nonEmpty
         }
       }
       def isValid: Boolean = validator.isValid(timer)
@@ -140,7 +137,7 @@ object Validators {
           heater.id >= 0 &&
           heater.poolId > 0 &&
           heater.installed > 0 &&
-          heater.model.nonNullEmpty
+          heater.model.nonEmpty
         }
       }
       def isValid: Boolean = validator.isValid(heater)
@@ -223,9 +220,9 @@ object Validators {
           chemical.id >= 0 &&
           chemical.poolId > 0 &&
           chemical. added > 0 &&
-          chemical.chemical.nonNullEmpty &&
+          chemical.chemical.nonEmpty &&
           chemical.amount > 0.00 &&
-          chemical.unit.nonNullEmpty
+          chemical.unit.nonEmpty
         }
       }
       def isValid: Boolean = validator.isValid(chemical)
@@ -240,9 +237,9 @@ object Validators {
           supply.poolId > 0 &&
           supply.purchased > 0 &&
           supply.cost > 0.00 &&
-          supply.item.nonNullEmpty &&
+          supply.item.nonEmpty &&
           supply.amount > 0.00 &&
-          supply.unit.nonNullEmpty
+          supply.unit.nonEmpty
         }
       }
       def isValid: Boolean = validator.isValid(supply)
@@ -257,7 +254,7 @@ object Validators {
           repair.poolId > 0 &&
           repair.repaired > 0 &&
           repair.cost > 0.00 &&
-          repair.repair.nonNullEmpty
+          repair.repair.nonEmpty
         }
       }
       def isValid: Boolean = validator.isValid(repair)
