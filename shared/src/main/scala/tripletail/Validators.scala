@@ -198,7 +198,6 @@ object Validators {
     private val totalChlorine = 0 to 10
     private val totalBromine = 0 to 20
     private val freeChlorine = 0 to 10
-    private val ph = 6 to 9
     private val totalAlkalinity = 0 to 240
     private val cyanuricAcid = 0 to 300
     implicit class Ops(val measurement: Measurement) {
@@ -212,7 +211,7 @@ object Validators {
           totalChlorine.contains(measurement.totalChlorine) &&
           totalBromine.contains(measurement.totalBromine) &&
           freeChlorine.contains(measurement.freeChlorine) &&
-          ph.contains(measurement.ph) &&
+          (measurement.ph >= 6.2 && measurement.ph <= 8.4) &&
           totalAlkalinity.contains(measurement.totalAlkalinity) &&
           cyanuricAcid.contains(measurement.cyanuricAcid)
         }
