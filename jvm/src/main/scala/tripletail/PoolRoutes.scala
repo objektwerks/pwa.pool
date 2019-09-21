@@ -391,7 +391,8 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
   }
   val secure = (route: Route) => headerValueByName(Licensee.licenseHeaderKey) { license =>
     onSuccess(isLicenseValid(license)) { isValid =>
-      if (isValid) route else complete(Unauthorized)
+      if (isValid) route
+      else complete(Unauthorized -> Fault(message = "Invalid license key!", code = Unauthorized.intValue))
     }
   }
   val secureApi = secure { api }

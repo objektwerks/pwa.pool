@@ -21,8 +21,10 @@ class PoolServerClient(serverUrl: String) {
     val headersWithLicense = headers + (Licensee.licenseHeaderKey -> license)
     Ajax.post(url = serverUrl + path, headers = headersWithLicense, data = write(entity)).map { xhr =>
       xhr.status match {
-        case 200 => Try(read[State](xhr.responseText)).fold(error => Left(Fault(error)), state => Right(state))
-        case 500 => Try(read[Fault](xhr.responseText)).fold(error => Left(Fault(error)), fault => Left(fault))
+        case 200 => Try(read[State](xhr.responseText))
+          .fold(error => Left(Fault(error)), state => Right(state))
+        case 400 | 401 | 500 => Try(read[Fault](xhr.responseText))
+          .fold(error => Left(Fault(error)), fault => Left(fault))
         case _ => Left( log(Fault(xhr.statusText, xhr.status)) )
       }
     }.recover { case error => Left( log(Fault(error)) ) }
