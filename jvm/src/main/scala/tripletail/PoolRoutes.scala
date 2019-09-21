@@ -1,6 +1,6 @@
 package tripletail
 
-import akka.http.scaladsl.model.{HttpResponse, StatusCodes}
+import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.{ExceptionHandler, Route}
 import de.heikoseeberger.akkahttpupickle.UpickleSupport._
@@ -13,8 +13,8 @@ object PoolRoutes {
 }
 
 class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
-  import StatusCodes._
   import Serializers._
+  import StatusCodes._
   import licenseeCache._
   import poolStore._
 
@@ -24,9 +24,10 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     case NonFatal(error) =>
       extractRequestContext { context =>
         logger.error(s"*** Handling ${context.request.uri} failed: ${error.getMessage}", error)
-        addFault(Fault(error))
         context.request.discardEntityBytes(context.materializer)
-        complete(HttpResponse(InternalServerError, entity = s"${error.getMessage}"))
+        val fault = Fault(error)
+        addFault(fault)
+        complete(InternalServerError -> fault)
       }
   }
 
