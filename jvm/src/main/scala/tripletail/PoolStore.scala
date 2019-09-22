@@ -178,8 +178,8 @@ class PoolStore(conf: Config)(implicit ec: ExecutionContext) {
     run( query[Repair].filter(_.poolId == lift(repair.poolId)).update(lift(repair)) ).map(_ => 1)
   }
 
-  def addFault(fault: Fault): Unit = {
+  def addFault(fault: Fault): Fault = {
     ctx.transaction { implicit ec => run( query[Fault].insert(lift(fault)) ) }
-    ()
+    fault
   }
 }
