@@ -14,6 +14,7 @@ object PoolRoutes {
 
 class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
   import Serializers._
+  import Validators._
   import StatusCodes._
   import licenseeCache._
   import poolStore._
@@ -45,7 +46,6 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
   val signup = path("signup") {
     post {
       entity(as[Signup]) { signup =>
-        import Validators.SignupValidator._
         if (signup.isValid) {
           onSuccess(signUp(signup.email)) { licensee =>
             cacheLicensee(licensee)
