@@ -2,20 +2,11 @@ package tripletail
 
 object Validators {
   implicit class StringOps(val value: String) {
-    import java.time.{LocalDate, LocalTime}
-    import java.time.format.DateTimeFormatter
-    import scala.util.Try
-
-    private val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-    private val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
-
     def <(length: Int): Boolean = if (value.nonEmpty) value.length < length else false
     def <=(length: Int): Boolean = if (value.nonEmpty) value.length <= length else false
     def ===(length: Int): Boolean = if (value.nonEmpty) value.length == length else false
     def >(length: Int): Boolean = if (value.nonEmpty) value.length > length else false
     def >=(length: Int): Boolean = if (value.nonEmpty) value.length >= length else false
-    def isDate: Boolean = Try(LocalDate.parse(value, dateFormatter)).isSuccess
-    def isTime: Boolean = Try(LocalTime.parse(value, timeFormatter)).isSuccess
   }
 
   implicit class SignupOps(val signup: Signup) {

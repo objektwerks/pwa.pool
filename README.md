@@ -174,5 +174,3 @@ Validation
 * string - non empty
 * string length - lt, lte, eq, gt, gte
 * range - inclusive
-* date - is valid
-* time - is valid
