@@ -63,15 +63,22 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
   val signin = path("signin") {
     post {
       entity(as[Signin]) { signin =>
-        onSuccess(signIn(signin.license, signin.email)) {
-          case Some(licensee) =>
-            cacheLicensee(licensee)
-            complete(OK -> Secure(licensee))
-          case None =>
-            val message = s"*** Signin failed! Email: ${signin.email}  License: ${signin.license}"
-            val fault = Fault(message = message, code = Unauthorized.intValue)
-            onFault(message, fault)
-            complete(Unauthorized -> fault)
+        if (signin.isValid) {
+          onSuccess(signIn(signin.license, signin.email)) {
+            case Some(licensee) =>
+              cacheLicensee(licensee)
+              complete(OK -> Secure(licensee))
+            case None =>
+              val message = s"*** Signin failed! Email: ${signin.email}  License: ${signin.license}"
+              val fault = Fault(message = message, code = Unauthorized.intValue)
+              onFault(message, fault)
+              complete(Unauthorized -> fault)
+          }
+        } else {
+          val message = s"*** Signin is invalid : $signin"
+          val fault = Fault(message = message, code = BadRequest.intValue)
+          onFault(message, fault)
+          complete(BadRequest -> fault)
         }
       }
     }
