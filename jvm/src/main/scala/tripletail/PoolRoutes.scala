@@ -26,6 +26,12 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     addFault(fault)
   }
 
+  val onInvalid = (entity: Entity) => {
+    val message = s"*** Invalid: $entity"
+    logger.error(message)
+    Fault(message = message, code = BadRequest.intValue)
+  }
+
   implicit val internalExceptionHandler = ExceptionHandler {
     case NonFatal(error) =>
       extractRequestContext { context =>
@@ -51,12 +57,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
             cacheLicensee(licensee)
             complete(OK -> Secure(licensee))
           }
-        } else {
-          val message = s"*** Signup invalid : $signup"
-          val fault = Fault(message = message, code = BadRequest.intValue)
-          onFault(message, fault)
-          complete(BadRequest -> fault)
-        }
+        } else complete(BadRequest -> onInvalid(signup))
       }
     }
   }
@@ -74,12 +75,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
               onFault(message, fault)
               complete(Unauthorized -> fault)
           }
-        } else {
-          val message = s"*** Signin is invalid : $signin"
-          val fault = Fault(message = message, code = BadRequest.intValue)
-          onFault(message, fault)
-          complete(BadRequest -> fault)
-        }
+        } else complete(BadRequest -> onInvalid(signin))
       }
     }
   }
