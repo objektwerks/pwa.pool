@@ -48,7 +48,7 @@ object Validators {
     implicit class Ops(val licensee: Licensee) {
       private val validator = new Validator[Licensee] {
         override def isValid(licensee: Licensee): Boolean = {
-          licensee.license.nonEmpty &&
+          licensee.license.length == 36 &&
           licensee.email.nonEmpty &&
           licensee.activated >= 0
         }
@@ -70,6 +70,17 @@ object Validators {
         }
       }
       def isValid: Boolean = validator.isValid(pool)
+    }
+  }
+
+  object PoolIdValidator {
+    implicit class Ops(val poolId: PoolId) {
+      private val validator = new Validator[PoolId] {
+        override def isValid(poolId: PoolId): Boolean = {
+          poolId.id > 0
+        }
+      }
+      def isValid: Boolean = validator.isValid(poolId)
     }
   }
 
@@ -115,6 +126,17 @@ object Validators {
     }
   }
 
+  object TimerIdValidator {
+    implicit class Ops(val timerId: TimerId) {
+      private val validator = new Validator[TimerId] {
+        override def isValid(timerId: TimerId): Boolean = {
+          timerId.id > 0
+        }
+      }
+      def isValid: Boolean = validator.isValid(timerId)
+    }
+  }
+
   object TimerSettingValidator {
     implicit class Ops(val timerSetting: TimerSetting) {
       private val validator = new Validator[TimerSetting] {
@@ -141,6 +163,17 @@ object Validators {
         }
       }
       def isValid: Boolean = validator.isValid(heater)
+    }
+  }
+
+  object HeaterIdValidator {
+    implicit class Ops(val heaterId: HeaterId) {
+      private val validator = new Validator[HeaterId] {
+        override def isValid(heaterId: HeaterId): Boolean = {
+          heaterId.id > 0
+        }
+      }
+      def isValid: Boolean = validator.isValid(heaterId)
     }
   }
 
