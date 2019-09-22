@@ -20,13 +20,18 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
 
   val logger = LoggerFactory.getLogger(PoolRoutes.getClass.getSimpleName)
 
+  val onFault = (message: String, fault: Fault) => {
+    logger.error(message)
+    addFault(fault)
+  }
+
   implicit val internalExceptionHandler = ExceptionHandler {
     case NonFatal(error) =>
       extractRequestContext { context =>
-        logger.error(s"*** Handling ${context.request.uri} failed: ${error.getMessage}", error)
+        val message = s"*** Handling ${context.request.uri} failed: ${error.getMessage}"
+        val fault = Fault(message = message)
+        onFault(message, fault)
         context.request.discardEntityBytes(context.materializer)
-        val fault = Fault(error)
-        addFault(fault)
         complete(InternalServerError -> fault)
       }
   }
@@ -55,8 +60,9 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
             cacheLicensee(licensee)
             complete(OK -> Secure(licensee))
           case None =>
-            val fault = Fault(message = "Invalid licensee!", code = Unauthorized.intValue)
-            addFault(fault)
+            val message = s"*** Sigin failed! Email: ${signin.email}  License: ${signin.license}"
+            val fault = Fault(message = message, code = Unauthorized.intValue)
+            onFault(message, fault)
             complete(Unauthorized -> fault)
         }
       }
@@ -396,8 +402,9 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     onSuccess(isLicenseValid(license)) { isValid =>
       if (isValid) route
       else {
-        val fault = Fault(message = "Invalid license key!", code = Unauthorized.intValue)
-        addFault(fault)
+        val message = s"*** License [ $license ] is invalid!"
+        val fault = Fault(message = message, code = Unauthorized.intValue)
+        onFault(message, fault)
         complete(Unauthorized -> fault)
       }
     }
