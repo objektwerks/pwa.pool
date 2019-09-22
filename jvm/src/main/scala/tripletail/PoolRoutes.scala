@@ -54,7 +54,10 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
           case Some(licensee) =>
             cacheLicensee(licensee)
             complete(OK -> Secure(licensee))
-          case None => complete(Unauthorized)
+          case None =>
+            val fault = Fault(message = "Invalid licensee!", code = Unauthorized.intValue)
+            addFault(fault)
+            complete(Unauthorized -> fault)
         }
       }
     }
