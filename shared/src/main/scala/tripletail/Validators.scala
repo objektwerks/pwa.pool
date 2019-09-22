@@ -18,210 +18,151 @@ object Validators {
     def isTime: Boolean = Try(LocalTime.parse(value, timeFormatter)).isSuccess
   }
 
-  trait Validator[T] {
-    def isValid(entity: T): Boolean
-  }
-
   object SignupValidator {
     implicit class Ops(val signup: Signup) {
-      private val validator = new Validator[Signup] {
-        override def isValid(signup: Signup): Boolean = {
-          signup.email.nonEmpty
-        }
-      }
-      def isValid: Boolean = validator.isValid(signup)
+      def isValid: Boolean = signup.email.nonEmpty
     }
   }
 
   object SigninValidator {
     implicit class Ops(val signin: Signin) {
-      private val validator = new Validator[Signin] {
-        override def isValid(signin: Signin): Boolean = {
-          signin.email.nonEmpty
-        }
-      }
-      def isValid: Boolean = validator.isValid(signin)
+      def isValid: Boolean = signin.email.nonEmpty
     }
   }
 
   object LicenseeValidator {
     implicit class Ops(val licensee: Licensee) {
-      private val validator = new Validator[Licensee] {
-        override def isValid(licensee: Licensee): Boolean = {
-          licensee.license.length == 36 &&
-          licensee.email.nonEmpty &&
-          licensee.activated >= 0
-        }
+      def isValid: Boolean = {
+        licensee.license.length == 36 &&
+        licensee.email.nonEmpty &&
+        licensee.activated >= 0
       }
-      def isValid: Boolean = validator.isValid(licensee)
     }
   }
 
   object PoolValidator {
     implicit class Ops(val pool: Pool) {
-      private val validator = new Validator[Pool] {
-        override def isValid(pool: Pool): Boolean = {
-          pool.id >= 0 &&
-          pool.license.nonEmpty &&
-          pool.built > 0 &&
-          pool.lat >= 0 &&
-          pool.lon >= 0 &&
-          pool.volume > 1000
-        }
+      def isValid: Boolean = {
+        pool.id >= 0 &&
+        pool.license.nonEmpty &&
+        pool.built > 0 &&
+        pool.lat >= 0 &&
+        pool.lon >= 0 &&
+        pool.volume > 1000
       }
-      def isValid: Boolean = validator.isValid(pool)
     }
   }
 
   object PoolIdValidator {
     implicit class Ops(val poolId: PoolId) {
-      private val validator = new Validator[PoolId] {
-        override def isValid(poolId: PoolId): Boolean = {
-          poolId.id > 0
-        }
-      }
-      def isValid: Boolean = validator.isValid(poolId)
+      def isValid: Boolean = poolId.id > 0
     }
   }
 
   object SurfaceValidator {
     implicit class Ops(val surface: Surface) {
-      private val validator = new Validator[Surface] {
-        override def isValid(surface: Surface): Boolean = {
-          surface.id >= 0 &&
-          surface.poolId > 0 &&
-          surface.installed > 0 &&
-          surface.kind.nonEmpty
-        }
+      def isValid(surface: Surface): Boolean = {
+        surface.id >= 0 &&
+        surface.poolId > 0 &&
+        surface.installed > 0 &&
+        surface.kind.nonEmpty
       }
-      def isValid: Boolean = validator.isValid(surface)
     }
   }
 
   object PumpValidator {
     implicit class Ops(val pump: Pump) {
-      private val validator = new Validator[Pump] {
-        override def isValid(pump: Pump): Boolean = {
-          pump.id >= 0 &&
-          pump.poolId > 0 &&
-          pump.installed > 0 &&
-          pump.model.nonEmpty
-        }
+      def isValid: Boolean = {
+        pump.id >= 0 &&
+        pump.poolId > 0 &&
+        pump.installed > 0 &&
+        pump.model.nonEmpty
       }
-      def isValid: Boolean = validator.isValid(pump)
     }
   }
 
   object TimerValidator {
     implicit class Ops(val timer: Timer) {
-      private val validator = new Validator[Timer] {
-        override def isValid(timer: Timer): Boolean = {
-          timer.id >= 0 &&
-          timer.poolId > 0 &&
-          timer.installed > 0 &&
-          timer.model.nonEmpty
-        }
+      def isValid: Boolean = {
+        timer.id >= 0 &&
+        timer.poolId > 0 &&
+        timer.installed > 0 &&
+        timer.model.nonEmpty
       }
-      def isValid: Boolean = validator.isValid(timer)
     }
   }
 
   object TimerIdValidator {
     implicit class Ops(val timerId: TimerId) {
-      private val validator = new Validator[TimerId] {
-        override def isValid(timerId: TimerId): Boolean = {
-          timerId.id > 0
-        }
-      }
-      def isValid: Boolean = validator.isValid(timerId)
+      def isValid: Boolean = timerId.id > 0
     }
   }
 
   object TimerSettingValidator {
     implicit class Ops(val timerSetting: TimerSetting) {
-      private val validator = new Validator[TimerSetting] {
-        override def isValid(timerSetting: TimerSetting): Boolean = {
-          timerSetting.id >= 0 &&
-          timerSetting.timerId > 0 &&
-          timerSetting.set > 0 &&
-          timerSetting.setOn > 0 &&
-          timerSetting.setOff > 0
-        }
+      def isValid: Boolean = {
+        timerSetting.id >= 0 &&
+        timerSetting.timerId > 0 &&
+        timerSetting.set > 0 &&
+        timerSetting.setOn > 0 &&
+        timerSetting.setOff > 0
       }
-      def isValid: Boolean = validator.isValid(timerSetting)
     }
   }
 
   object HeaterValidator {
     implicit class Ops(val heater: Heater) {
-      private val validator = new Validator[Heater] {
-        override def isValid(heater: Heater): Boolean = {
-          heater.id >= 0 &&
-          heater.poolId > 0 &&
-          heater.installed > 0 &&
-          heater.model.nonEmpty
-        }
+      def isValid: Boolean = {
+        heater.id >= 0 &&
+        heater.poolId > 0 &&
+        heater.installed > 0 &&
+        heater.model.nonEmpty
       }
-      def isValid: Boolean = validator.isValid(heater)
     }
   }
 
   object HeaterIdValidator {
     implicit class Ops(val heaterId: HeaterId) {
-      private val validator = new Validator[HeaterId] {
-        override def isValid(heaterId: HeaterId): Boolean = {
-          heaterId.id > 0
-        }
-      }
-      def isValid: Boolean = validator.isValid(heaterId)
+      def isValid: Boolean = heaterId.id > 0
     }
   }
 
   object HeaterOnValidator {
     implicit class Ops(val heaterOn: HeaterOn) {
-      private val validator = new Validator[HeaterOn] {
-        override def isValid(heaterOn: HeaterOn): Boolean = {
-          heaterOn.id >= 0 &&
-          heaterOn.heaterId > 0 &&
-          heaterOn.temp > 0 &&
-          heaterOn.set > 0
-        }
+      def isValid: Boolean = {
+        heaterOn.id >= 0 &&
+        heaterOn.heaterId > 0 &&
+        heaterOn.temp > 0 &&
+        heaterOn.set > 0
       }
-      def isValid: Boolean = validator.isValid(heaterOn)
     }
   }
 
   object HeaterOffValidator {
     implicit class Ops(val heaterOff: HeaterOff) {
-      private val validator = new Validator[HeaterOff] {
-        override def isValid(heaterOff: HeaterOff): Boolean = {
-          heaterOff.id >= 0 &&
-          heaterOff.heaterId > 0 &&
-          heaterOff.set > 0
-        }
+      def isValid: Boolean = {
+        heaterOff.id >= 0 &&
+        heaterOff.heaterId > 0 &&
+        heaterOff.set > 0
       }
-      def isValid: Boolean = validator.isValid(heaterOff)
     }
   }
 
   object CleaningValidator {
     implicit class Ops(val cleaning: Cleaning) {
-      private val validator = new Validator[Cleaning] {
-        override def isValid(cleaning: Cleaning): Boolean = {
-          cleaning.id >= 0 &&
-          cleaning.poolId > 0 &&
-          cleaning.cleaned > 0 &&
-          cleaning.brush &&
-          cleaning.net &&
-          cleaning.vacuum &&
-          cleaning.skimmerBasket &&
-          cleaning.pumpBasket &&
-          cleaning.pumpFilter &&
-          cleaning.pumpChlorineTablets >= 0 &&
-          cleaning.deck
-        }
+      def isValid: Boolean = {
+        cleaning.id >= 0 &&
+        cleaning.poolId > 0 &&
+        cleaning.cleaned > 0 &&
+        cleaning.brush &&
+        cleaning.net &&
+        cleaning.vacuum &&
+        cleaning.skimmerBasket &&
+        cleaning.pumpBasket &&
+        cleaning.pumpFilter &&
+        cleaning.pumpChlorineTablets >= 0 &&
+        cleaning.deck
       }
-      def isValid: Boolean = validator.isValid(cleaning)
     }
   }
 
@@ -234,70 +175,58 @@ object Validators {
     private val totalAlkalinity = 0 to 240
     private val cyanuricAcid = 0 to 300
     implicit class Ops(val measurement: Measurement) {
-      private val validator = new Validator[Measurement] {
-        override def isValid(measurement: Measurement): Boolean = {
-          measurement.id >= 0 &&
-          measurement.poolId > 0 &&
-          measurement.measured > 0 &&
-          temp.contains(measurement.temp) &&
-          totalHardness.contains(measurement.totalHardness) &&
-          totalChlorine.contains(measurement.totalChlorine) &&
-          totalBromine.contains(measurement.totalBromine) &&
-          freeChlorine.contains(measurement.freeChlorine) &&
-          (measurement.ph >= 6.2 && measurement.ph <= 8.4) &&
-          totalAlkalinity.contains(measurement.totalAlkalinity) &&
-          cyanuricAcid.contains(measurement.cyanuricAcid)
-        }
+      def isValid: Boolean = {
+        measurement.id >= 0 &&
+        measurement.poolId > 0 &&
+        measurement.measured > 0 &&
+        temp.contains(measurement.temp) &&
+        totalHardness.contains(measurement.totalHardness) &&
+        totalChlorine.contains(measurement.totalChlorine) &&
+        totalBromine.contains(measurement.totalBromine) &&
+        freeChlorine.contains(measurement.freeChlorine) &&
+        (measurement.ph >= 6.2 && measurement.ph <= 8.4) &&
+        totalAlkalinity.contains(measurement.totalAlkalinity) &&
+        cyanuricAcid.contains(measurement.cyanuricAcid)
       }
-      def isValid: Boolean = validator.isValid(measurement)
     }
   }
 
   object ChemicalValidator {
     implicit class Ops(val chemical: Chemical) {
-      private val validator = new Validator[Chemical] {
-        override def isValid(chemical: Chemical): Boolean = {
-          chemical.id >= 0 &&
-          chemical.poolId > 0 &&
-          chemical. added > 0 &&
-          chemical.chemical.nonEmpty &&
-          chemical.amount > 0.00 &&
-          chemical.unit.nonEmpty
-        }
+      def isValid: Boolean = {
+        chemical.id >= 0 &&
+        chemical.poolId > 0 &&
+        chemical. added > 0 &&
+        chemical.chemical.nonEmpty &&
+        chemical.amount > 0.00 &&
+        chemical.unit.nonEmpty
       }
-      def isValid: Boolean = validator.isValid(chemical)
     }
   }
 
   object SupplyValidator {
     implicit class Ops(val supply: Supply) {
-      private val validator = new Validator[Supply] {
-        override def isValid(supply: Supply): Boolean = {
-          supply.id >= 0 &&
-          supply.poolId > 0 &&
-          supply.purchased > 0 &&
-          supply.cost > 0.00 &&
-          supply.item.nonEmpty &&
-          supply.amount > 0.00 &&
-          supply.unit.nonEmpty
-        }
+      def isValid: Boolean = {
+        supply.id >= 0 &&
+        supply.poolId > 0 &&
+        supply.purchased > 0 &&
+        supply.cost > 0.00 &&
+        supply.item.nonEmpty &&
+        supply.amount > 0.00 &&
+        supply.unit.nonEmpty
       }
-      def isValid: Boolean = validator.isValid(supply)
     }
   }
 
   object RepairValidator {
     implicit class Ops(val repair: Repair) {
-      private val validator = new Validator[Repair] {
-        override def isValid(repair: Repair): Boolean = {
-          repair.id >= 0 &&
-          repair.poolId > 0 &&
-          repair.repaired > 0 &&
-          repair.cost > 0.00 &&
-          repair.repair.nonEmpty
-        }
+      def isValid: Boolean = {
+        repair.id >= 0 &&
+        repair.poolId > 0 &&
+        repair.repaired > 0 &&
+        repair.cost > 0.00 &&
+        repair.repair.nonEmpty
       }
-      def isValid: Boolean = validator.isValid(repair)
     }
   }
 }

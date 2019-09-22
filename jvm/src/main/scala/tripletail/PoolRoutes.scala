@@ -45,9 +45,17 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
   val signup = path("signup") {
     post {
       entity(as[Signup]) { signup =>
-        onSuccess(signUp(signup.email)) { licensee =>
-          cacheLicensee(licensee)
-          complete(OK -> Secure(licensee))
+        import Validators.SignupValidator._
+        if (signup.isValid) {
+          onSuccess(signUp(signup.email)) { licensee =>
+            cacheLicensee(licensee)
+            complete(OK -> Secure(licensee))
+          }
+        } else {
+          val message = s"*** Signup invalid : $signup"
+          val fault = Fault(message = message, code = BadRequest.intValue)
+          onFault(message, fault)
+          complete(BadRequest -> fault)
         }
       }
     }
@@ -60,7 +68,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
             cacheLicensee(licensee)
             complete(OK -> Secure(licensee))
           case None =>
-            val message = s"*** Sigin failed! Email: ${signin.email}  License: ${signin.license}"
+            val message = s"*** Signin failed! Email: ${signin.email}  License: ${signin.license}"
             val fault = Fault(message = message, code = Unauthorized.intValue)
             onFault(message, fault)
             complete(Unauthorized -> fault)
