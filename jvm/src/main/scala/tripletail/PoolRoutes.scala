@@ -93,17 +93,21 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
   } ~ pathSuffix("add") {
     post {
       entity(as[Pool]) { pool =>
-        onSuccess(addPool(pool)) { id =>
-          complete(OK -> Generated(id))
-        }
+        if(pool.isValid) {
+          onSuccess(addPool(pool)) { id =>
+            complete(OK -> Generated(id))
+          }
+        } else complete(BadRequest -> onInvalid(pool))
       }
     }
   } ~ pathSuffix("update") {
     post {
       entity(as[Pool]) { pool =>
-        onSuccess(updatePool(pool)) { count =>
-          complete(OK -> Updated(count))
-        }
+        if(pool.isValid) {
+          onSuccess(updatePool(pool)) { count =>
+            complete(OK -> Updated(count))
+          }
+        } else complete(BadRequest -> onInvalid(pool))
       }
     }
   }
