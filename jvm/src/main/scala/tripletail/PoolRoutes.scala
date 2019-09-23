@@ -83,9 +83,11 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
   val pools = path("pools") {
     post {
       entity(as[Licensee]) { licensee =>
-        onSuccess(listPools(licensee.license)) { pools =>
-          complete(OK -> Pools(pools))
-        }
+        if (licensee.isValid) {
+          onSuccess(listPools(licensee.license)) { pools =>
+            complete(OK -> Pools(pools))
+          }
+        } else complete(BadRequest -> onInvalid(licensee))
       }
     }
   } ~ pathSuffix("add") {
