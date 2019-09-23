@@ -31,9 +31,9 @@ object Validators {
       pool.id >= 0 &&
       pool.license === 36 &&
       pool.built > 0 &&
-      pool.lat >= 0 &&
-      pool.lon >= 0 &&
-      pool.volume > 1000
+      (pool.lat >= -90.000000 && pool.lat <= 90.000000) &&
+      (pool.lat >= -180.000000 && pool.lat <= 180.000000) &&
+      pool.volume >= 1000
     }
   }
 
@@ -44,27 +44,27 @@ object Validators {
   implicit class SurfaceOps(val surface: Surface) {
     def isValid(surface: Surface): Boolean = {
       surface.id >= 0 &&
-        surface.poolId > 0 &&
-        surface.installed > 0 &&
-        surface.kind.nonEmpty
+      surface.poolId > 0 &&
+      surface.installed > 0 &&
+      surface.kind.nonEmpty
     }
   }
 
   implicit class PumpOps(val pump: Pump) {
     def isValid: Boolean = {
       pump.id >= 0 &&
-        pump.poolId > 0 &&
-        pump.installed > 0 &&
-        pump.model.nonEmpty
+      pump.poolId > 0 &&
+      pump.installed > 0 &&
+      pump.model.nonEmpty
     }
   }
 
   implicit class TimerOps(val timer: Timer) {
     def isValid: Boolean = {
       timer.id >= 0 &&
-        timer.poolId > 0 &&
-        timer.installed > 0 &&
-        timer.model.nonEmpty
+      timer.poolId > 0 &&
+      timer.installed > 0 &&
+      timer.model.nonEmpty
     }
   }
 
@@ -75,19 +75,20 @@ object Validators {
   implicit class TimerSettingOps(val timerSetting: TimerSetting) {
     def isValid: Boolean = {
       timerSetting.id >= 0 &&
-        timerSetting.timerId > 0 &&
-        timerSetting.set > 0 &&
-        timerSetting.setOn > 0 &&
-        timerSetting.setOff > 0
+      timerSetting.timerId > 0 &&
+      timerSetting.set > 0 &&
+      timerSetting.setOn > 0 &&
+      timerSetting.setOff > 0 &&
+      timerSetting.setOff > timerSetting.setOn
     }
   }
 
   implicit class HeaterOps(val heater: Heater) {
     def isValid: Boolean = {
       heater.id >= 0 &&
-        heater.poolId > 0 &&
-        heater.installed > 0 &&
-        heater.model.nonEmpty
+      heater.poolId > 0 &&
+      heater.installed > 0 &&
+      heater.model.nonEmpty
     }
   }
 
@@ -98,33 +99,33 @@ object Validators {
   implicit class HeaterOnOps(val heaterOn: HeaterOn) {
     def isValid: Boolean = {
       heaterOn.id >= 0 &&
-        heaterOn.heaterId > 0 &&
-        heaterOn.temp > 0 &&
-        heaterOn.set > 0
+      heaterOn.heaterId > 0 &&
+      heaterOn.temp > 0 &&
+      heaterOn.setOn > 0
     }
   }
 
   implicit class HeaterOffOps(val heaterOff: HeaterOff) {
     def isValid: Boolean = {
       heaterOff.id >= 0 &&
-        heaterOff.heaterId > 0 &&
-        heaterOff.set > 0
+      heaterOff.heaterId > 0 &&
+      heaterOff.setOff > 0
     }
   }
 
   implicit class CleaningOps(val cleaning: Cleaning) {
     def isValid: Boolean = {
       cleaning.id >= 0 &&
-        cleaning.poolId > 0 &&
-        cleaning.cleaned > 0 &&
-        cleaning.brush &&
-        cleaning.net &&
-        cleaning.vacuum &&
-        cleaning.skimmerBasket &&
-        cleaning.pumpBasket &&
-        cleaning.pumpFilter &&
-        cleaning.pumpChlorineTablets >= 0 &&
-        cleaning.deck
+      cleaning.poolId > 0 &&
+      cleaning.cleaned > 0 &&
+      cleaning.brush &&
+      cleaning.net &&
+      cleaning.vacuum &&
+      cleaning.skimmerBasket &&
+      cleaning.pumpBasket &&
+      cleaning.pumpFilter &&
+      cleaning.pumpChlorineTablets >= 0 &&
+      cleaning.deck
     }
   }
 
@@ -138,49 +139,49 @@ object Validators {
     private val cyanuricAcid = 0 to 300
     def isValid: Boolean = {
       measurement.id >= 0 &&
-        measurement.poolId > 0 &&
-        measurement.measured > 0 &&
-        temp.contains(measurement.temp) &&
-        totalHardness.contains(measurement.totalHardness) &&
-        totalChlorine.contains(measurement.totalChlorine) &&
-        totalBromine.contains(measurement.totalBromine) &&
-        freeChlorine.contains(measurement.freeChlorine) &&
-        (measurement.ph >= 6.2 && measurement.ph <= 8.4) &&
-        totalAlkalinity.contains(measurement.totalAlkalinity) &&
-        cyanuricAcid.contains(measurement.cyanuricAcid)
+      measurement.poolId > 0 &&
+      measurement.measured > 0 &&
+      temp.contains(measurement.temp) &&
+      totalHardness.contains(measurement.totalHardness) &&
+      totalChlorine.contains(measurement.totalChlorine) &&
+      totalBromine.contains(measurement.totalBromine) &&
+      freeChlorine.contains(measurement.freeChlorine) &&
+      (measurement.ph >= 6.2 && measurement.ph <= 8.4) &&
+      totalAlkalinity.contains(measurement.totalAlkalinity) &&
+      cyanuricAcid.contains(measurement.cyanuricAcid)
     }
   }
 
   implicit class ChemicalOps(val chemical: Chemical) {
     def isValid: Boolean = {
       chemical.id >= 0 &&
-        chemical.poolId > 0 &&
-        chemical.added > 0 &&
-        chemical.chemical.nonEmpty &&
-        chemical.amount > 0.00 &&
-        chemical.unit.nonEmpty
+      chemical.poolId > 0 &&
+      chemical.added > 0 &&
+      chemical.chemical.nonEmpty &&
+      chemical.amount > 0.00 &&
+      chemical.unit.nonEmpty
     }
   }
 
   implicit class SupplyOps(val supply: Supply) {
     def isValid: Boolean = {
       supply.id >= 0 &&
-        supply.poolId > 0 &&
-        supply.purchased > 0 &&
-        supply.cost > 0.00 &&
-        supply.item.nonEmpty &&
-        supply.amount > 0.00 &&
-        supply.unit.nonEmpty
+      supply.poolId > 0 &&
+      supply.purchased > 0 &&
+      supply.cost > 0.00 &&
+      supply.item.nonEmpty &&
+      supply.amount > 0.00 &&
+      supply.unit.nonEmpty
     }
   }
 
   implicit class RepairOps(val repair: Repair) {
     def isValid: Boolean = {
       repair.id >= 0 &&
-        repair.poolId > 0 &&
-        repair.repaired > 0 &&
-        repair.cost > 0.00 &&
-        repair.repair.nonEmpty
+      repair.poolId > 0 &&
+      repair.repaired > 0 &&
+      repair.cost > 0.00 &&
+      repair.repair.nonEmpty
     }
   }
 }

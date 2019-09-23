@@ -103,14 +103,14 @@ Object Model
 * Timer(id, poolId, installed, model)
 * TimerSetting(id, timerId, set, setOn, setOff)
 * Heater(id, poolId, installed, model)
-* HeaterOn(id, heaterId, temp, heaterOn)
-* HeaterOff(id, heaterId, heatorOff)
+* HeaterOn(id, heaterId, temp, setOn)
+* HeaterOff(id, heaterId, setOff)
 * Cleaning(id, poolId, cleaned, brush, net, vacuum, skimmerBasket, pumpBasket, pumpFilter, pumpChlorineTablets, deck)
 * Measurement(id, poolId, measured, temp, totalHardness, totalChlorine, totalBromine, freeChlorine, ph, totalAlkalinity, cyanuricAcid)
 * Chemical(id, poolId, added, chemical, amount, unit)
 * Supply(id, poolId, purchased, cost, supply, amount, unit)
 * Repair(id, poolId, repaired, cost, repair)
-* Fault(id, message, code, occured, at)
+* Fault(id, message, code, dateOf, timeOf, nanoOf)
 
 Relational Model
 ----------------

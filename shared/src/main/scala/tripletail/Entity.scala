@@ -59,11 +59,11 @@ final case class HeaterId(id: Int = 0) extends Entity
 final case class HeaterOn(id: Int = 0,
                           heaterId: Int,
                           temp: Int,
-                          set: Int) extends Entity
+                          setOn: Int) extends Entity
 
 final case class HeaterOff(id: Int = 0,
                            heaterId: Int,
-                           set: Int) extends Entity
+                           setOff: Int) extends Entity
 
 final case class Cleaning(id: Int = 0,
                           poolId: Int,
