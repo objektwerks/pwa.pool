@@ -4,9 +4,9 @@ import java.util.UUID
 
 sealed trait Entity extends Product with Serializable
 
-final case class Signup(email: String) extends Entity
+final case class SignUp(email: String) extends Entity
 
-final case class Signin(license: String, email: String) extends Entity
+final case class SignIn(license: String, email: String) extends Entity
 
 final case class Licensee(license: String = UUID.randomUUID.toString.toLowerCase,
                           email: String,

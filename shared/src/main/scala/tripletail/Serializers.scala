@@ -4,7 +4,7 @@ object Serializers {
   import upickle.default._
 
   implicit val entityRW: ReadWriter[Entity] = ReadWriter.merge(
-    macroRW[Signup], macroRW[Signin], macroRW[Licensee], macroRW[Pool], macroRW[PoolId], macroRW[Surface], macroRW[Pump],
+    macroRW[SignUp], macroRW[SignIn], macroRW[Licensee], macroRW[Pool], macroRW[PoolId], macroRW[Surface], macroRW[Pump],
     macroRW[Timer], macroRW[TimerId], macroRW[TimerSetting], macroRW[Heater], macroRW[HeaterId], macroRW[HeaterOn],
     macroRW[HeaterOff], macroRW[Cleaning], macroRW[Measurement], macroRW[Chemical], macroRW[Supply], macroRW[Repair]
   )
@@ -15,8 +15,8 @@ object Serializers {
     macroRW[Chemicals], macroRW[Supplies], macroRW[Repairs]
   )
 
-  implicit val signupRW: ReadWriter[Signup] = macroRW
-  implicit val signinRW: ReadWriter[Signin] = macroRW
+  implicit val signupRW: ReadWriter[SignUp] = macroRW
+  implicit val signinRW: ReadWriter[SignIn] = macroRW
   implicit val licenseeRW: ReadWriter[Licensee] = macroRW
   implicit val poolRW: ReadWriter[Pool] = macroRW
   implicit val poolIdRW: ReadWriter[PoolId] = macroRW

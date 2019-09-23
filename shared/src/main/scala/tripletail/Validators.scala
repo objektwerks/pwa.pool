@@ -9,11 +9,11 @@ object Validators {
     def >=(length: Int): Boolean = if (value.nonEmpty) value.length >= length else false
   }
 
-  implicit class SignupOps(val signup: Signup) {
+  implicit class SignUpOps(val signup: SignUp) {
     def isValid: Boolean = signup.email.nonEmpty
   }
 
-  implicit class SigninOps(val signin: Signin) {
+  implicit class SignInOps(val signin: SignIn) {
     def isValid: Boolean = signin.email.nonEmpty
   }
 

@@ -54,7 +54,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
   }
   val signup = path("signup") {
     post {
-      entity(as[Signup]) { signup =>
+      entity(as[SignUp]) { signup =>
         if (signup.isValid) {
           onSuccess(signUp(signup.email)) { licensee =>
             cacheLicensee(licensee)
@@ -66,7 +66,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
   }
   val signin = path("signin") {
     post {
-      entity(as[Signin]) { signin =>
+      entity(as[SignIn]) { signin =>
         if (signin.isValid) {
           onSuccess(signIn(signin.license, signin.email)) {
             case Some(licensee) =>
@@ -190,16 +190,16 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     }
   } ~ pathSuffix("add") {
     post {
-      entity(as[TimerSetting]) { timersetting =>
-        onSuccess(addTimerSetting(timersetting)) { id =>
+      entity(as[TimerSetting]) { timerSetting =>
+        onSuccess(addTimerSetting(timerSetting)) { id =>
           complete(OK -> Generated(id))
         }
       }
     }
   } ~ pathSuffix("update") {
     post {
-      entity(as[TimerSetting]) { timersetting =>
-        onSuccess(updateTimerSetting(timersetting)) { count =>
+      entity(as[TimerSetting]) { timerSetting =>
+        onSuccess(updateTimerSetting(timerSetting)) { count =>
           complete(OK -> Updated(count))
         }
       }
@@ -240,16 +240,16 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     }
   } ~ pathSuffix("add") {
     post {
-      entity(as[HeaterOn]) { heateron =>
-        onSuccess(addHeaterOn(heateron)) { id =>
+      entity(as[HeaterOn]) { heaterOn =>
+        onSuccess(addHeaterOn(heaterOn)) { id =>
           complete(OK -> Generated(id))
         }
       }
     }
   } ~ pathSuffix("update") {
     post {
-      entity(as[HeaterOn]) { heateron =>
-        onSuccess(updateHeaterOn(heateron)) { count =>
+      entity(as[HeaterOn]) { heaterOn =>
+        onSuccess(updateHeaterOn(heaterOn)) { count =>
           complete(OK -> Updated(count))
         }
       }
@@ -265,16 +265,16 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     }
   } ~ pathSuffix("add") {
     post {
-      entity(as[HeaterOff]) { heateroff =>
-        onSuccess(addHeaterOff(heateroff)) { id =>
+      entity(as[HeaterOff]) { heaterOff =>
+        onSuccess(addHeaterOff(heaterOff)) { id =>
           complete(OK -> Generated(id))
         }
       }
     }
   } ~ pathSuffix("update") {
     post {
-      entity(as[HeaterOff]) { heateroff =>
-        onSuccess(updateHeaterOff(heateroff)) { count =>
+      entity(as[HeaterOff]) { heaterOff =>
+        onSuccess(updateHeaterOff(heaterOff)) { count =>
           complete(OK -> Updated(count))
         }
       }
