@@ -1,6 +1,5 @@
-DROP TABLE IF EXISTS licensee, pool, surface, pump,
-timer, timer_setting, heater, heater_on, heater_off,
-cleaning, measurement, chemical, supply, repair, fault;
+DROP SCHEMA PUBLIC CASCADE;
+CREATE SCHEMA PUBLIC;
 
 CREATE TABLE licensee (
   license VARCHAR PRIMARY KEY,
@@ -20,56 +19,56 @@ CREATE TABLE pool (
 
 CREATE TABLE surface (
   id SERIAL PRIMARY KEY,
-  pool_id INT REFERENCES pool(id),
+  poolId INT REFERENCES pool(id),
   installed INTEGER NOT NULL,
   kind VARCHAR NOT NULL
 );
 
 CREATE TABLE pump (
   id SERIAL PRIMARY KEY,
-  pool_id INT REFERENCES pool(id),
+  poolId INT REFERENCES pool(id),
   installed INTEGER NOT NULL,
   model VARCHAR NOT NULL
 );
 
 CREATE TABLE timer (
   id SERIAL PRIMARY KEY,
-  pool_id INT REFERENCES pool(id),
+  poolId INT REFERENCES pool(id),
   installed INTEGER NOT NULL,
   model VARCHAR NOT NULL
 );
 
-CREATE TABLE timer_setting (
+CREATE TABLE timersetting (
   id SERIAL PRIMARY KEY,
-  timer_id INT REFERENCES timer(id),
+  timerId INT REFERENCES timer(id),
   set INTEGER NOT NULL,
-  set_on SMALLINT NOT NULL,
-  set_off SMALLINT NOT NULL CHECK (set_off > set_on)
+  setOn SMALLINT NOT NULL,
+  setOff SMALLINT NOT NULL CHECK (setOff > setOn)
 );
 
 CREATE TABLE heater (
   id SERIAL PRIMARY KEY,
-  pool_id INT REFERENCES pool(id),
+  poolId INT REFERENCES pool(id),
   installed INTEGER NOT NULL,
   model VARCHAR NOT NULL
 );
 
-CREATE TABLE heater_on (
+CREATE TABLE heateron (
   id SERIAL PRIMARY KEY,
-  heater_id INT REFERENCES heater(id),
+  heaterId INT REFERENCES heater(id),
   temp INT NOT NULL CHECK (temp > 70),
   set INTEGER NOT NULL
 );
 
-CREATE TABLE heater_off (
+CREATE TABLE heateroff (
   id SERIAL PRIMARY KEY,
-  heater_id INT REFERENCES heater(id),
+  heaterId INT REFERENCES heater(id),
   set INTEGER NOT NULL
 );
 
 CREATE TABLE cleaning (
   id SERIAL PRIMARY KEY,
-  pool_id INT REFERENCES pool(id),
+  poolId INT REFERENCES pool(id),
   cleaned INTEGER NOT NULL,
   brush BOOL NOT NULL,
   net BOOL NOT NULL,
@@ -84,7 +83,7 @@ CREATE TABLE cleaning (
 CREATE TABLE measurement (
   id SERIAL PRIMARY KEY,
   measured INTEGER NOT NULL,
-  pool_id INT REFERENCES pool(id),
+  poolId INT REFERENCES pool(id),
   temp INT CHECK (temp >= 32 AND temp <= 100),
   totalHardness INT NOT NULL CHECK (totalHardness >= 0 AND totalHardness <= 1000),
   totalChlorine INT NOT NULL CHECK (totalChlorine >= 0 AND totalChlorine <= 10),
@@ -97,7 +96,7 @@ CREATE TABLE measurement (
 
 CREATE TABLE chemical (
   id SERIAL PRIMARY KEY,
-  pool_id INT REFERENCES pool(id),
+  poolId INT REFERENCES pool(id),
   added INTEGER NOT NULL,
   chemical VARCHAR NOT NULL,
   amount NUMERIC(5, 2),
@@ -106,7 +105,7 @@ CREATE TABLE chemical (
 
 CREATE TABLE supply (
   id SERIAL PRIMARY KEY,
-  pool_id INT REFERENCES pool(id),
+  poolId INT REFERENCES pool(id),
   purchased INTEGER NOT NULL,
   cost NUMERIC(5, 2) CHECK (cost > 0.0),
   item VARCHAR NOT NULL,
@@ -116,7 +115,7 @@ CREATE TABLE supply (
 
 CREATE TABLE repair (
   id SERIAL PRIMARY KEY,
-  pool_id INT REFERENCES pool(id),
+  poolId INT REFERENCES pool(id),
   repaired INTEGER NOT NULL,
   cost NUMERIC(7, 2) CHECK (cost > 0.0),
   repair VARCHAR NOT NULL
