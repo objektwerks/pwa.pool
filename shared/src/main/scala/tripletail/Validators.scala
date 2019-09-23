@@ -14,12 +14,12 @@ object Validators {
   }
 
   implicit class SignInOps(val signin: SignIn) {
-    def isValid: Boolean = signin.email.nonEmpty
+    def isValid: Boolean = signin.license === 36 && signin.email.nonEmpty
   }
 
   implicit class LicenseeOps(val licensee: Licensee) {
     def isValid: Boolean = {
-      licensee.license.length == 36 &&
+      licensee.license === 36 &&
       licensee.email.nonEmpty &&
       licensee.activated >= 0
     }
