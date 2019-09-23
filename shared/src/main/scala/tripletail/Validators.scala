@@ -21,14 +21,15 @@ object Validators {
     def isValid: Boolean = {
       licensee.license === 36 &&
       licensee.email.nonEmpty &&
-      licensee.activated >= 0
+      licensee.activated <= DateTime.currentDate
+      licensee.deactivated.isEmpty
     }
   }
 
   implicit class PoolOps(val pool: Pool) {
     def isValid: Boolean = {
       pool.id >= 0 &&
-      pool.license.nonEmpty &&
+      pool.license === 36 &&
       pool.built > 0 &&
       pool.lat >= 0 &&
       pool.lon >= 0 &&
