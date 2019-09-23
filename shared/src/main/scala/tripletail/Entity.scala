@@ -45,9 +45,9 @@ final case class TimerId(id: Int = 0) extends Entity
 
 final case class TimerSetting(id: Int = 0,
                               timerId: Int,
-                              set: Int,
-                              setOn: Int,
-                              setOff: Int) extends Entity
+                              created: Int,
+                              timeOn: Int,
+                              timeOff: Int) extends Entity
 
 final case class Heater(id: Int = 0,
                         poolId: Int,
@@ -59,11 +59,13 @@ final case class HeaterId(id: Int = 0) extends Entity
 final case class HeaterOn(id: Int = 0,
                           heaterId: Int,
                           temp: Int,
-                          setOn: Int) extends Entity
+                          dateOn: Int,
+                          timeOn: Int) extends Entity
 
 final case class HeaterOff(id: Int = 0,
                            heaterId: Int,
-                           setOff: Int) extends Entity
+                           dateOff: Int,
+                           timeOff: Int) extends Entity
 
 final case class Cleaning(id: Int = 0,
                           poolId: Int,

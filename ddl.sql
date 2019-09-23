@@ -41,9 +41,9 @@ CREATE TABLE timer (
 CREATE TABLE timersetting (
   id SERIAL PRIMARY KEY,
   timerId INT REFERENCES timer(id),
-  set INT NOT NULL,
-  setOn SMALLINT NOT NULL,
-  setOff SMALLINT NOT NULL
+  created INT NOT NULL,
+  timeOn SMALLINT NOT NULL,
+  timeOff SMALLINT NOT NULL
 );
 
 CREATE TABLE heater (
@@ -57,13 +57,15 @@ CREATE TABLE heateron (
   id SERIAL PRIMARY KEY,
   heaterId INT REFERENCES heater(id),
   temp INT NOT NULL,
-  setOn INT NOT NULL
+  dateOn INT NOT NULL,
+  timeOn INT NOT NULL
 );
 
 CREATE TABLE heateroff (
   id SERIAL PRIMARY KEY,
   heaterId INT REFERENCES heater(id),
-  setOf INT NOT NULL
+  dateOff INT NOT NULL,
+  timeOff INT NOT NULL
 );
 
 CREATE TABLE cleaning (

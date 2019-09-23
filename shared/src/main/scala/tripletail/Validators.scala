@@ -76,10 +76,10 @@ object Validators {
     def isValid: Boolean = {
       timerSetting.id >= 0 &&
       timerSetting.timerId > 0 &&
-      timerSetting.set > 0 &&
-      timerSetting.setOn > 0 &&
-      timerSetting.setOff > 0 &&
-      timerSetting.setOff > timerSetting.setOn
+      timerSetting.created > 0 &&
+      timerSetting.timeOn > 0 &&
+      timerSetting.timeOff > 0 &&
+      timerSetting.timeOff > timerSetting.timeOn
     }
   }
 
@@ -101,7 +101,8 @@ object Validators {
       heaterOn.id >= 0 &&
       heaterOn.heaterId > 0 &&
       heaterOn.temp > 0 &&
-      heaterOn.setOn > 0
+      heaterOn.dateOn > 0 &&
+      heaterOn.timeOn > 0
     }
   }
 
@@ -109,7 +110,8 @@ object Validators {
     def isValid: Boolean = {
       heaterOff.id >= 0 &&
       heaterOff.heaterId > 0 &&
-      heaterOff.setOff > 0
+      heaterOff.dateOff > 0 &&
+      heaterOff.timeOff > 0
     }
   }
 
