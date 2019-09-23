@@ -123,9 +123,10 @@ CREATE TABLE repair (
 );
 
 CREATE TABLE fault (
-  id SERIAL PRIMARY KEY,
   message VARCHAR NOT NULL,
   code INT NOT NULL,
-  occurred INTEGER NOT NULL,
-  at SMALLINT NOT NULL
+  dateOf INTEGER NOT NULL,
+  timeOf SMALLINT NOT NULL,
+  nanoOf BIGINT NOT NULL,
+  PRIMARY KEY (dateOf, timeOf, nanoOf)
 );

@@ -1,10 +1,10 @@
 package tripletail
 
-final case class Fault(id: Int = 0,
-                       message: String,
+final case class Fault(message: String,
                        code: Int = 500,
-                       occurred: Int = DateTime.currentDate,
-                       at: Int = DateTime.currentTime)
+                       dateOf: Int = DateTime.currentDate,
+                       timeOf: Int = DateTime.currentTime,
+                       nanoOf: Long = System.nanoTime)
 
 object Fault {
   def apply(statusText: String, statusCode: Int): Fault = Fault(message = statusText, code = statusCode)
