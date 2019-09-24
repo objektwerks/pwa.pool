@@ -455,25 +455,31 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
   val repairs = path("repairs") {
     post {
       entity(as[PoolId]) { poolId =>
-        onSuccess(listRepairs(poolId.id)) { repairs =>
-          complete(OK -> Repairs(repairs))
-        }
+        if (poolId.isValid) {
+          onSuccess(listRepairs(poolId.id)) { repairs =>
+            complete(OK -> Repairs(repairs))
+          }
+        } else complete(BadRequest -> onInvalid(poolId))
       }
     }
   } ~ pathSuffix("add") {
     post {
       entity(as[Repair]) { repair =>
-        onSuccess(addRepair(repair)) { id =>
-          complete(OK -> Generated(id))
-        }
+        if (repair.isValid) {
+          onSuccess(addRepair(repair)) { id =>
+            complete(OK -> Generated(id))
+          }
+        } else complete(BadRequest -> onInvalid(repair))
       }
     }
   } ~ pathSuffix("update") {
     post {
       entity(as[Repair]) { repair =>
-        onSuccess(updateRepair(repair)) { count =>
-          complete(OK -> Updated(count))
-        }
+        if (repair.isValid) {
+          onSuccess(updateRepair(repair)) { count =>
+            complete(OK -> Updated(count))
+          }
+        } else complete(BadRequest -> onInvalid(repair))
       }
     }
   }
