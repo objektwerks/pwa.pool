@@ -21,21 +21,6 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
 
   val logger = LoggerFactory.getLogger(PoolRoutes.getClass.getSimpleName)
 
-  val onSignUpFailed = (signup: SignUp) => {
-    val email = signup.email
-    val cause = s"*** Signup failed due to invalid email: $email"
-    logger.error(cause)
-    addFault(Fault(cause, BadRequest.intValue))
-  }
-
-  val onSignInFailed = (signin: SignIn) => {
-    val license = signin.license
-    val email = signin.email
-    val cause = s"*** Signin failed due to invalid license: $license and/or email: $email"
-    logger.error(cause)
-    addFault(Fault(cause, BadRequest.intValue))
-  }
-
   val onUnauthorized = (cause: String) => {
     logger.error(cause)
     addFault(Fault(cause, Unauthorized.intValue))
@@ -75,7 +60,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
             cacheLicensee(licensee)
             complete(OK -> SignedUp(licensee))
           }
-        } else complete(BadRequest -> onSignUpFailed(signup))
+        } else complete(BadRequest -> onInvalid(signup))
       }
     }
   }
@@ -87,9 +72,11 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
             case Some(licensee) =>
               cacheLicensee(licensee)
               complete(OK -> SignedIn(licensee))
-            case None => complete(Unauthorized -> onSignInFailed(signin))
+            case None =>
+              val cause = s"*** Unauthorized license: ${signin.license} and/or email: ${signin.email}"
+              complete(Unauthorized -> onUnauthorized(cause))
           }
-        } else complete(BadRequest -> onSignInFailed(signin))
+        } else complete(BadRequest -> onInvalid(signin))
       }
     }
   }
@@ -505,8 +492,8 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     onSuccess(isLicenseValid(license)) { isValid =>
       if (isValid) route
       else {
-        val message = s"*** Invalid license: $license"
-        complete(Unauthorized -> onUnauthorized(message))
+        val cause = s"*** Unauthorized license: $license"
+        complete(Unauthorized -> onUnauthorized(cause))
       }
     }
   }

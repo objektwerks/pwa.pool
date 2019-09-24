@@ -15,17 +15,6 @@ class PoolServerClient(serverUrl: String) {
   import Serializers._
   import upickle.default._
 
-  def post(path: String, license: String, command: Command): Future[Either[Fault, Event]] = {
-    val headers = Map("Content-Type" -> "application/json; charset=utf-8", "Accept" -> "application/json", Licensee.licenseHeaderKey -> license)
-    Ajax.post(url = serverUrl + path, headers = headers, data = write(command)).map { xhr =>
-      xhr.status match {
-        case 200 => Try(read[Event](xhr.responseText)).fold(error => Left(Fault(error)), event => Right(event))
-        case 400 | 401 | 500 => Try(read[Fault](xhr.responseText)).fold(error => Left(Fault(error)), fault => Left(fault))
-        case _ => Left( log(Fault(xhr.statusText, xhr.status)) )
-      }
-    }.recover { case error => Left( log(Fault(error)) ) }
-  }
-
   def post(path: String, license: String, entity: Entity): Future[Either[Fault, State]] = {
     val headers = Map("Content-Type" -> "application/json; charset=utf-8", "Accept" -> "application/json", Licensee.licenseHeaderKey -> license)
     Ajax.post(url = serverUrl + path, headers = headers, data = write(entity)).map { xhr =>
