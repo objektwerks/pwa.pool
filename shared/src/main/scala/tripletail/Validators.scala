@@ -1,5 +1,15 @@
 package tripletail
 
+/*
+  def timer[A](codeblock: => A): (A, Double) = {
+    val startTime = System.nanoTime
+    val result = codeblock
+    val stopTime = System.nanoTime
+    val delta = stopTime - startTime
+    (result, delta/1000000d)
+  }
+  val (result, time) = timer { factorial(19) }
+ */
 object Validators {
   implicit class StringOps(val value: String) {
     def <(length: Int): Boolean = if (value.nonEmpty) value.length < length else false
