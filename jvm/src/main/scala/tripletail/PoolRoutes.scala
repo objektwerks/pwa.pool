@@ -19,7 +19,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
   import licenseeCache._
   import poolStore._
 
-  val logger = LoggerFactory.getLogger(PoolRoutes.getClass.getSimpleName)
+  val logger = LoggerFactory.getLogger(getClass.getSimpleName)
 
   val onUnauthorized = (cause: String) => {
     logger.error(cause)
