@@ -331,25 +331,31 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
   val cleanings = path("cleanings") {
     post {
       entity(as[PoolId]) { poolId =>
-        onSuccess(listCleanings(poolId.id)) { cleanings =>
-          complete(OK -> Cleanings(cleanings))
-        }
+        if (poolId.isValid) {
+          onSuccess(listCleanings(poolId.id)) { cleanings =>
+            complete(OK -> Cleanings(cleanings))
+          }
+        } else complete(BadRequest -> onInvalid(poolId))
       }
     }
   } ~ pathSuffix("add") {
     post {
       entity(as[Cleaning]) { cleaning =>
-        onSuccess(addCleaning(cleaning)) { id =>
-          complete(OK -> Generated(id))
-        }
+        if (cleaning.isValid) {
+          onSuccess(addCleaning(cleaning)) { id =>
+            complete(OK -> Generated(id))
+          }
+        } else complete(BadRequest -> onInvalid(cleaning))
       }
     }
   } ~ pathSuffix("update") {
     post {
       entity(as[Cleaning]) { cleaning =>
-        onSuccess(updateCleaning(cleaning)) { count =>
-          complete(OK -> Updated(count))
-        }
+        if (cleaning.isValid) {
+          onSuccess(updateCleaning(cleaning)) { count =>
+            complete(OK -> Updated(count))
+          }
+        } else complete(BadRequest -> onInvalid(cleaning))
       }
     }
   }
