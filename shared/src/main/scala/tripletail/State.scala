@@ -2,7 +2,9 @@ package tripletail
 
 sealed trait State extends Product with Serializable
 
-final case class Secure(licensee: Licensee) extends State
+final case class SignedUp(licensee: Licensee) extends State
+
+final case class SignedIn(licensee: Licensee) extends State
 
 final case class Generated(id: Int) extends State
 

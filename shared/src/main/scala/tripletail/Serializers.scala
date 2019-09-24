@@ -10,9 +10,9 @@ object Serializers {
   )
 
   implicit val stateRW: ReadWriter[State] = ReadWriter.merge(
-    macroRW[Secure], macroRW[Generated], macroRW[Updated], macroRW[Pools], macroRW[Surfaces], macroRW[Pumps], macroRW[Timers],
-    macroRW[TimerSettings], macroRW[Heaters], macroRW[HeaterOns], macroRW[HeaterOffs], macroRW[Cleanings], macroRW[Measurements],
-    macroRW[Chemicals], macroRW[Supplies], macroRW[Repairs]
+    macroRW[SignedUp], macroRW[SignedIn], macroRW[Generated], macroRW[Updated], macroRW[Pools], macroRW[Surfaces],
+    macroRW[Pumps], macroRW[Timers], macroRW[TimerSettings], macroRW[Heaters], macroRW[HeaterOns], macroRW[HeaterOffs],
+    macroRW[Cleanings], macroRW[Measurements], macroRW[Chemicals], macroRW[Supplies], macroRW[Repairs]
   )
 
   implicit val signupRW: ReadWriter[SignUp] = macroRW
@@ -34,7 +34,8 @@ object Serializers {
   implicit val chemicalRW: ReadWriter[Chemical] = macroRW
   implicit val supplyRW: ReadWriter[Supply] = macroRW
   implicit val repairRW: ReadWriter[Repair] = macroRW
-  implicit val secureRW: ReadWriter[Secure] = macroRW
+  implicit val authorizedRW: ReadWriter[SignedUp] = macroRW
+  implicit val unAuthorizedRW: ReadWriter[SignedIn] = macroRW
   implicit val generatedRW: ReadWriter[Generated] = macroRW
   implicit val updatedRW: ReadWriter[Updated] = macroRW
   implicit val poolsRW: ReadWriter[Pools] = macroRW

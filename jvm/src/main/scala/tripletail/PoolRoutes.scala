@@ -58,7 +58,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
         if (signup.isValid) {
           onSuccess(signUp(signup.email)) { licensee =>
             cacheLicensee(licensee)
-            complete(OK -> Secure(licensee))
+            complete(OK -> SignedUp(licensee))
           }
         } else complete(BadRequest -> onInvalid(signup))
       }
@@ -71,9 +71,9 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
           onSuccess(signIn(signin.license, signin.email)) {
             case Some(licensee) =>
               cacheLicensee(licensee)
-              complete(OK -> Secure(licensee))
+              complete(OK -> SignedIn(licensee))
             case None =>
-              val message = s"*** Signin for email: ${signin.email} and license: ${signin.license} failed!"
+              val message = s"*** Invalid license: ${signin.license} and email: ${signin.email}"
               complete(Unauthorized -> onUnauthorized(message))
           }
         } else complete(BadRequest -> onInvalid(signin))
@@ -492,7 +492,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     onSuccess(isLicenseValid(license)) { isValid =>
       if (isValid) route
       else {
-        val message = s"*** License [ $license ] is invalid!"
+        val message = s"*** Invalid license: $license"
         complete(Unauthorized -> onUnauthorized(message))
       }
     }

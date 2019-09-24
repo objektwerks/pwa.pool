@@ -47,7 +47,7 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
       val email = "objektwerks@runbox.com"
       Post("/signup", SignUp(email)) ~> routes.routes ~> check {
         status shouldBe StatusCodes.OK
-        licensee = responseAs[Secure].licensee
+        licensee = responseAs[SignedUp].licensee
         licenseHeader = RawHeader(Licensee.licenseHeaderKey, licensee.license)
         licensee.license.nonEmpty shouldBe true
       }
@@ -58,7 +58,7 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
     "post to secure" in {
       Post(url + "/signin", SignIn(licensee.license, licensee.email)) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
         status shouldBe OK
-        responseAs[Secure].licensee shouldEqual licensee
+        responseAs[SignedUp].licensee shouldEqual licensee
       }
     }
   }
