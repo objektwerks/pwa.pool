@@ -21,28 +21,43 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
 
   val logger = LoggerFactory.getLogger(PoolRoutes.getClass.getSimpleName)
 
-  val onUnauthorized = (message: String) => {
-    logger.error(message)
-    addFault(Fault(message = message, code = Unauthorized.intValue))
+  val onSignUpFailed = (signup: SignUp) => {
+    val email = signup.email
+    val cause = s"*** Signup failed due to invalid email: $email"
+    logger.error(cause)
+    addFault(Fault(cause, BadRequest.intValue))
+  }
+
+  val onSignInFailed = (signin: SignIn) => {
+    val license = signin.license
+    val email = signin.email
+    val cause = s"*** Signin failed due to invalid license: $license and/or email: $email"
+    logger.error(cause)
+    addFault(Fault(cause, BadRequest.intValue))
+  }
+
+  val onUnauthorized = (cause: String) => {
+    logger.error(cause)
+    addFault(Fault(cause, Unauthorized.intValue))
   }
 
   val onInvalid = (entity: Entity) => {
-    val message = s"*** Invalid: $entity"
-    logger.error(message)
-    addFault(Fault(message = message, code = BadRequest.intValue))
+    val cause = s"*** Invalid: $entity"
+    logger.error(cause)
+    addFault(Fault(cause, BadRequest.intValue))
   }
 
-  val onFault = (message: String) => {
-    logger.error(message)
-    addFault(Fault(message = message))
+  val onFault = (cause: String) => {
+    logger.error(cause)
+    addFault(Fault(cause))
   }
 
   implicit val onException = ExceptionHandler {
     case NonFatal(error) =>
       extractRequestContext { context =>
-        val message = s"*** Handling ${context.request.uri} failed: ${error.getMessage}"
+        val cause = s"*** Handling ${context.request.uri} failed: ${error.getMessage}"
         context.request.discardEntityBytes(context.materializer)
-        complete(InternalServerError -> onFault(message))
+        complete(InternalServerError -> onFault(cause))
       }
   }
 
@@ -60,7 +75,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
             cacheLicensee(licensee)
             complete(OK -> SignedUp(licensee))
           }
-        } else complete(BadRequest -> onInvalid(signup))
+        } else complete(BadRequest -> onSignUpFailed(signup))
       }
     }
   }
@@ -72,11 +87,9 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
             case Some(licensee) =>
               cacheLicensee(licensee)
               complete(OK -> SignedIn(licensee))
-            case None =>
-              val message = s"*** Invalid license: ${signin.license} and email: ${signin.email}"
-              complete(Unauthorized -> onUnauthorized(message))
+            case None => complete(Unauthorized -> onSignInFailed(signin))
           }
-        } else complete(BadRequest -> onInvalid(signin))
+        } else complete(BadRequest -> onSignInFailed(signin))
       }
     }
   }
@@ -95,7 +108,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
       entity(as[Pool]) { pool =>
         if(pool.isValid) {
           onSuccess(addPool(pool)) { id =>
-            complete(OK -> Generated(id))
+            complete(OK -> Id(id))
           }
         } else complete(BadRequest -> onInvalid(pool))
       }
@@ -105,7 +118,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
       entity(as[Pool]) { pool =>
         if(pool.isValid) {
           onSuccess(updatePool(pool)) { count =>
-            complete(OK -> Updated(count))
+            complete(OK -> Count(count))
           }
         } else complete(BadRequest -> onInvalid(pool))
       }
@@ -126,7 +139,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
       entity(as[Surface]) { surface =>
         if (surface.isValid) {
           onSuccess(addSurface(surface)) { id =>
-            complete(OK -> Generated(id))
+            complete(OK -> Id(id))
           }
         } else complete(BadRequest -> onInvalid(surface))
       }
@@ -136,7 +149,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
       entity(as[Surface]) { surface =>
         if (surface.isValid) {
           onSuccess(updateSurface(surface)) { count =>
-            complete(OK -> Updated(count))
+            complete(OK -> Count(count))
           }
         } else complete(BadRequest -> onInvalid(surface))
       }
@@ -157,7 +170,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
       entity(as[Pump]) { pump =>
         if (pump.isValid) {
           onSuccess(addPump(pump)) { id =>
-            complete(OK -> Generated(id))
+            complete(OK -> Id(id))
           }
         } else complete(BadRequest -> onInvalid(pump))
       }
@@ -167,7 +180,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
       entity(as[Pump]) { pump =>
         if (pump.isValid) {
           onSuccess(updatePump(pump)) { count =>
-            complete(OK -> Updated(count))
+            complete(OK -> Count(count))
           }
         } else complete(BadRequest -> onInvalid(pump))
       }
@@ -188,7 +201,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
       entity(as[Timer]) { timer =>
         if (timer.isValid) {
           onSuccess(addTimer(timer)) { id =>
-            complete(OK -> Generated(id))
+            complete(OK -> Id(id))
           }
         } else complete(BadRequest -> onInvalid(timer))
       }
@@ -198,7 +211,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
       entity(as[Timer]) { timer =>
         if (timer.isValid) {
           onSuccess(updateTimer(timer)) { count =>
-            complete(OK -> Updated(count))
+            complete(OK -> Count(count))
           }
         } else complete(BadRequest -> onInvalid(timer))
       }
@@ -219,7 +232,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
       entity(as[TimerSetting]) { timerSetting =>
         if (timerSetting.isValid) {
           onSuccess(addTimerSetting(timerSetting)) { id =>
-            complete(OK -> Generated(id))
+            complete(OK -> Id(id))
           }
         } else complete(BadRequest -> onInvalid(timerSetting))
       }
@@ -229,7 +242,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
       entity(as[TimerSetting]) { timerSetting =>
         if (timerSetting.isValid) {
           onSuccess(updateTimerSetting(timerSetting)) { count =>
-            complete(OK -> Updated(count))
+            complete(OK -> Count(count))
           }
         } else complete(BadRequest -> onInvalid(timerSetting))
       }
@@ -250,7 +263,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
       entity(as[Heater]) { heater =>
         if (heater.isValid) {
           onSuccess(addHeater(heater)) { id =>
-            complete(OK -> Generated(id))
+            complete(OK -> Id(id))
           }
         } else complete(BadRequest -> onInvalid(heater))
       }
@@ -260,7 +273,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
       entity(as[Heater]) { heater =>
         if (heater.isValid) {
           onSuccess(updateHeater(heater)) { count =>
-            complete(OK -> Updated(count))
+            complete(OK -> Count(count))
           }
         } else complete(BadRequest -> onInvalid(heater))
       }
@@ -281,7 +294,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
       entity(as[HeaterOn]) { heaterOn =>
         if (heaterOn.isValid) {
           onSuccess(addHeaterOn(heaterOn)) { id =>
-            complete(OK -> Generated(id))
+            complete(OK -> Id(id))
           }
         } else complete(BadRequest -> onInvalid(heaterOn))
       }
@@ -291,7 +304,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
       entity(as[HeaterOn]) { heaterOn =>
         if (heaterOn.isValid) {
           onSuccess(updateHeaterOn(heaterOn)) { count =>
-            complete(OK -> Updated(count))
+            complete(OK -> Count(count))
           }
         } else complete(BadRequest -> onInvalid(heaterOn))
       }
@@ -312,7 +325,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
       entity(as[HeaterOff]) { heaterOff =>
         if (heaterOff.isValid) {
           onSuccess(addHeaterOff(heaterOff)) { id =>
-            complete(OK -> Generated(id))
+            complete(OK -> Id(id))
           }
         } else complete(BadRequest -> onInvalid(heaterOff))
       }
@@ -322,7 +335,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
       entity(as[HeaterOff]) { heaterOff =>
         if (heaterOff.isValid) {
           onSuccess(updateHeaterOff(heaterOff)) { count =>
-            complete(OK -> Updated(count))
+            complete(OK -> Count(count))
           }
         } else complete(BadRequest -> onInvalid(heaterOff))
       }
@@ -343,7 +356,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
       entity(as[Cleaning]) { cleaning =>
         if (cleaning.isValid) {
           onSuccess(addCleaning(cleaning)) { id =>
-            complete(OK -> Generated(id))
+            complete(OK -> Id(id))
           }
         } else complete(BadRequest -> onInvalid(cleaning))
       }
@@ -353,7 +366,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
       entity(as[Cleaning]) { cleaning =>
         if (cleaning.isValid) {
           onSuccess(updateCleaning(cleaning)) { count =>
-            complete(OK -> Updated(count))
+            complete(OK -> Count(count))
           }
         } else complete(BadRequest -> onInvalid(cleaning))
       }
@@ -374,7 +387,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
       entity(as[Measurement]) { measurement =>
         if (measurement.isValid) {
           onSuccess(addMeasurement(measurement)) { id =>
-            complete(OK -> Generated(id))
+            complete(OK -> Id(id))
           }
         } else complete(BadRequest -> onInvalid(measurement))
       }
@@ -384,7 +397,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
       entity(as[Measurement]) { measurement =>
         if (measurement.isValid) {
           onSuccess(updateMeasurement(measurement)) { count =>
-            complete(OK -> Updated(count))
+            complete(OK -> Count(count))
           }
         } else complete(BadRequest -> onInvalid(measurement))
       }
@@ -405,7 +418,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
       entity(as[Chemical]) { chemical =>
         if (chemical.isValid) {
           onSuccess(addChemical(chemical)) { id =>
-            complete(OK -> Generated(id))
+            complete(OK -> Id(id))
           }
         } else complete(BadRequest -> onInvalid(chemical))
       }
@@ -415,7 +428,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
       entity(as[Chemical]) { chemical =>
         if (chemical.isValid) {
           onSuccess(updateChemical(chemical)) { count =>
-            complete(OK -> Updated(count))
+            complete(OK -> Count(count))
           }
         } else complete(BadRequest -> onInvalid(chemical))
       }
@@ -436,7 +449,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
       entity(as[Supply]) { supply =>
         if (supply.isValid) {
           onSuccess(addSupply(supply)) { id =>
-            complete(OK -> Generated(id))
+            complete(OK -> Id(id))
           }
         } else complete(BadRequest -> onInvalid(supply))
       }
@@ -446,7 +459,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
       entity(as[Supply]) { supply =>
         if (supply.isValid) {
           onSuccess(updateSupply(supply)) { count =>
-            complete(OK -> Updated(count))
+            complete(OK -> Count(count))
           }
         } else complete(BadRequest -> onInvalid(supply))
       }
@@ -467,7 +480,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
       entity(as[Repair]) { repair =>
         if (repair.isValid) {
           onSuccess(addRepair(repair)) { id =>
-            complete(OK -> Generated(id))
+            complete(OK -> Id(id))
           }
         } else complete(BadRequest -> onInvalid(repair))
       }
@@ -477,7 +490,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
       entity(as[Repair]) { repair =>
         if (repair.isValid) {
           onSuccess(updateRepair(repair)) { count =>
-            complete(OK -> Updated(count))
+            complete(OK -> Count(count))
           }
         } else complete(BadRequest -> onInvalid(repair))
       }

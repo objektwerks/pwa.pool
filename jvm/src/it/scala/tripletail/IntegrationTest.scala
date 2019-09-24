@@ -58,7 +58,7 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
     "post to signedin" in {
       Post(url + "/signin", SignIn(licensee.license, licensee.email)) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
         status shouldBe OK
-        responseAs[SignedUp].licensee shouldEqual licensee
+        responseAs[SignedIn].licensee shouldEqual licensee
       }
     }
   }
@@ -68,13 +68,13 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
       pool = Pool(license = licensee.license, built = localDateToInt(1991, 3, 13), lat = 26.862631, lon = -82.288834, volume = 10000)
       Post(url + "/pools/add", pool) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
         status shouldBe OK
-        pool = pool.copy(id = responseAs[Generated].id)
+        pool = pool.copy(id = responseAs[Id].number)
         pool.id should be > 0
       }
       pool = pool.copy(volume = 9000)
       Post(url + "/pools/update", pool) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
         status shouldBe OK
-        responseAs[Updated].count shouldEqual 1
+        responseAs[Count].number shouldEqual 1
       }
       Post(url + "/pools", licensee) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
         status shouldBe OK
