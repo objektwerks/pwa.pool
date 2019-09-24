@@ -145,25 +145,31 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
   val pumps = path("pumps") {
     post {
       entity(as[PoolId]) { poolId =>
-        onSuccess(listPumps(poolId.id)) { pumps =>
-          complete(OK -> Pumps(pumps))
-        }
+        if (poolId.isValid) {
+          onSuccess(listPumps(poolId.id)) { pumps =>
+            complete(OK -> Pumps(pumps))
+          }
+        } else complete(BadRequest -> onInvalid(poolId))
       }
     }
   } ~ pathSuffix("add") {
     post {
       entity(as[Pump]) { pump =>
-        onSuccess(addPump(pump)) { id =>
-          complete(OK -> Generated(id))
-        }
+        if (pump.isValid) {
+          onSuccess(addPump(pump)) { id =>
+            complete(OK -> Generated(id))
+          }
+        } else complete(BadRequest -> onInvalid(pump))
       }
     }
   } ~ pathSuffix("update") {
     post {
       entity(as[Pump]) { pump =>
-        onSuccess(updatePump(pump)) { count =>
-          complete(OK -> Updated(count))
-        }
+        if (pump.isValid) {
+          onSuccess(updatePump(pump)) { count =>
+            complete(OK -> Updated(count))
+          }
+        } else complete(BadRequest -> onInvalid(pump))
       }
     }
   }
