@@ -362,25 +362,31 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
   val measurements = path("measurements") {
     post {
       entity(as[PoolId]) { poolId =>
-        onSuccess(listMeasurements(poolId.id)) { measurements =>
-          complete(OK -> Measurements(measurements))
-        }
+        if (poolId.isValid) {
+          onSuccess(listMeasurements(poolId.id)) { measurements =>
+            complete(OK -> Measurements(measurements))
+          }
+        } else complete(BadRequest -> onInvalid(poolId))
       }
     }
   } ~ pathSuffix("add") {
     post {
       entity(as[Measurement]) { measurement =>
-        onSuccess(addMeasurement(measurement)) { id =>
-          complete(OK -> Generated(id))
-        }
+        if (measurement.isValid) {
+          onSuccess(addMeasurement(measurement)) { id =>
+            complete(OK -> Generated(id))
+          }
+        } else complete(BadRequest -> onInvalid(measurement))
       }
     }
   } ~ pathSuffix("update") {
     post {
       entity(as[Measurement]) { measurement =>
-        onSuccess(updateMeasurement(measurement)) { count =>
-          complete(OK -> Updated(count))
-        }
+        if (measurement.isValid) {
+          onSuccess(updateMeasurement(measurement)) { count =>
+            complete(OK -> Updated(count))
+          }
+        } else complete(BadRequest -> onInvalid(measurement))
       }
     }
   }
