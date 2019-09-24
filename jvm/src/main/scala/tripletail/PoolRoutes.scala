@@ -393,25 +393,31 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
   val chemicals = path("chemicals") {
     post {
       entity(as[PoolId]) { poolId =>
-        onSuccess(listChemicals(poolId.id)) { chemicals =>
-          complete(OK -> Chemicals(chemicals))
-        }
+        if (poolId.isValid) {
+          onSuccess(listChemicals(poolId.id)) { chemicals =>
+            complete(OK -> Chemicals(chemicals))
+          }
+        } else complete(BadRequest -> onInvalid(poolId))
       }
     }
   } ~ pathSuffix("add") {
     post {
       entity(as[Chemical]) { chemical =>
-        onSuccess(addChemical(chemical)) { id =>
-          complete(OK -> Generated(id))
-        }
+        if (chemical.isValid) {
+          onSuccess(addChemical(chemical)) { id =>
+            complete(OK -> Generated(id))
+          }
+        } else complete(BadRequest -> onInvalid(chemical))
       }
     }
   } ~ pathSuffix("update") {
     post {
       entity(as[Chemical]) { chemical =>
-        onSuccess(updateChemical(chemical)) { count =>
-          complete(OK -> Updated(count))
-        }
+        if (chemical.isValid) {
+          onSuccess(updateChemical(chemical)) { count =>
+            complete(OK -> Updated(count))
+          }
+        } else complete(BadRequest -> onInvalid(chemical))
       }
     }
   }
