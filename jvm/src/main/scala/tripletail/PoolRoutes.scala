@@ -114,25 +114,31 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
   val surfaces = path("surfaces") {
     post {
       entity(as[PoolId]) { poolId =>
-        onSuccess(listSurfaces(poolId.id)) { surfaces =>
-          complete(OK -> Surfaces(surfaces))
-        }
+        if (poolId.isValid) {
+          onSuccess(listSurfaces(poolId.id)) { surfaces =>
+            complete(OK -> Surfaces(surfaces))
+          }
+        } else complete(BadRequest -> onInvalid(poolId))
       }
     }
   } ~ pathSuffix("add") {
     post {
       entity(as[Surface]) { surface =>
-        onSuccess(addSurface(surface)) { id =>
-          complete(OK -> Generated(id))
-        }
+        if (surface.isValid) {
+          onSuccess(addSurface(surface)) { id =>
+            complete(OK -> Generated(id))
+          }
+        } else complete(BadRequest -> onInvalid(surface))
       }
     }
   } ~ pathSuffix("update") {
     post {
       entity(as[Surface]) { surface =>
-        onSuccess(updateSurface(surface)) { count =>
-          complete(OK -> Updated(count))
-        }
+        if (surface.isValid) {
+          onSuccess(updateSurface(surface)) { count =>
+            complete(OK -> Updated(count))
+          }
+        } else complete(BadRequest -> onInvalid(surface))
       }
     }
   }

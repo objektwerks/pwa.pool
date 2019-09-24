@@ -42,7 +42,7 @@ object Validators {
   }
 
   implicit class SurfaceOps(val surface: Surface) {
-    def isValid(surface: Surface): Boolean = {
+    def isValid: Boolean = {
       surface.id >= 0 &&
       surface.poolId > 0 &&
       surface.installed > 0 &&
