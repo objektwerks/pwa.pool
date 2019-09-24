@@ -238,25 +238,31 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
   val heaters = path("heaters") {
     post {
       entity(as[PoolId]) { poolId =>
-        onSuccess(listHeaters(poolId.id)) { heaters =>
-          complete(OK -> Heaters(heaters))
-        }
+        if (poolId.isValid) {
+          onSuccess(listHeaters(poolId.id)) { heaters =>
+            complete(OK -> Heaters(heaters))
+          }
+        } else complete(BadRequest -> onInvalid(poolId))
       }
     }
   } ~ pathSuffix("add") {
     post {
       entity(as[Heater]) { heater =>
-        onSuccess(addHeater(heater)) { id =>
-          complete(OK -> Generated(id))
-        }
+        if (heater.isValid) {
+          onSuccess(addHeater(heater)) { id =>
+            complete(OK -> Generated(id))
+          }
+        } else complete(BadRequest -> onInvalid(heater))
       }
     }
   } ~ pathSuffix("update") {
     post {
       entity(as[Heater]) { heater =>
-        onSuccess(updateHeater(heater)) { count =>
-          complete(OK -> Updated(count))
-        }
+        if (heater.isValid) {
+          onSuccess(updateHeater(heater)) { count =>
+            complete(OK -> Updated(count))
+          }
+        } else complete(BadRequest -> onInvalid(heater))
       }
     }
   }
