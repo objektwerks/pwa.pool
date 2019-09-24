@@ -43,7 +43,7 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
   var pool: Pool = _
 
   "signup" should {
-    "post to secure" in {
+    "post to signedup" in {
       val email = "objektwerks@runbox.com"
       Post("/signup", SignUp(email)) ~> routes.routes ~> check {
         status shouldBe StatusCodes.OK
@@ -55,7 +55,7 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
   }
 
   "signin" should {
-    "post to secure" in {
+    "post to signedin" in {
       Post(url + "/signin", SignIn(licensee.license, licensee.email)) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
         status shouldBe OK
         responseAs[SignedUp].licensee shouldEqual licensee
@@ -63,7 +63,7 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
     }
   }
 
-  "pools / add / update" should {
+  "pools" should {
     "post to generated, updated, pools" in {
       pool = Pool(license = licensee.license, built = localDateToInt(1991, 3, 13), lat = 26.862631, lon = -82.288834, volume = 10000)
       Post(url + "/pools/add", pool) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
