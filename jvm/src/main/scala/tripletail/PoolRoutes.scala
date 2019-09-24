@@ -207,25 +207,31 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
   val timersettings = path("timersettings") {
     post {
       entity(as[TimerId]) { timerId =>
-        onSuccess(listTimerSettings(timerId.id)) { timersettings =>
-          complete(OK -> TimerSettings(timersettings))
-        }
+        if (timerId.isValid) {
+          onSuccess(listTimerSettings(timerId.id)) { timersettings =>
+            complete(OK -> TimerSettings(timersettings))
+          }
+        } else complete(BadRequest -> onInvalid(timerId))
       }
     }
   } ~ pathSuffix("add") {
     post {
       entity(as[TimerSetting]) { timerSetting =>
-        onSuccess(addTimerSetting(timerSetting)) { id =>
-          complete(OK -> Generated(id))
-        }
+        if (timerSetting.isValid) {
+          onSuccess(addTimerSetting(timerSetting)) { id =>
+            complete(OK -> Generated(id))
+          }
+        } else complete(BadRequest -> onInvalid(timerSetting))
       }
     }
   } ~ pathSuffix("update") {
     post {
       entity(as[TimerSetting]) { timerSetting =>
-        onSuccess(updateTimerSetting(timerSetting)) { count =>
-          complete(OK -> Updated(count))
-        }
+        if (timerSetting.isValid) {
+          onSuccess(updateTimerSetting(timerSetting)) { count =>
+            complete(OK -> Updated(count))
+          }
+        } else complete(BadRequest -> onInvalid(timerSetting))
       }
     }
   }
