@@ -6,9 +6,9 @@ final case class SignedUp(licensee: Licensee) extends State
 
 final case class SignedIn(licensee: Licensee) extends State
 
-final case class Id(number: Int) extends State
+final case class Id(id: Int) extends State
 
-final case class Count(number: Int) extends State
+final case class Count(count: Int) extends State
 
 final case class Pools(pools: Seq[Pool]) extends State
 
