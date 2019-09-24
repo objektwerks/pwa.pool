@@ -176,25 +176,31 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
   val timers = path("timers") {
     post {
       entity(as[PoolId]) { poolId =>
-        onSuccess(listTimers(poolId.id)) { timers =>
-          complete(OK -> Timers(timers))
-        }
+        if (poolId.isValid) {
+          onSuccess(listTimers(poolId.id)) { timers =>
+            complete(OK -> Timers(timers))
+          }
+        } else complete(BadRequest -> onInvalid(poolId))
       }
     }
   } ~ pathSuffix("add") {
     post {
       entity(as[Timer]) { timer =>
-        onSuccess(addTimer(timer)) { id =>
-          complete(OK -> Generated(id))
-        }
+        if (timer.isValid) {
+          onSuccess(addTimer(timer)) { id =>
+            complete(OK -> Generated(id))
+          }
+        } else complete(BadRequest -> onInvalid(timer))
       }
     }
   } ~ pathSuffix("update") {
     post {
       entity(as[Timer]) { timer =>
-        onSuccess(updateTimer(timer)) { count =>
-          complete(OK -> Updated(count))
-        }
+        if (timer.isValid) {
+          onSuccess(updateTimer(timer)) { count =>
+            complete(OK -> Updated(count))
+          }
+        } else complete(BadRequest -> onInvalid(timer))
       }
     }
   }
