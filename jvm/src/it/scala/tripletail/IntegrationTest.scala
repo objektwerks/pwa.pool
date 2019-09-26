@@ -64,7 +64,7 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
   }
 
   "pools" should {
-    "post to generated, updated, pools" in {
+    "post to id, count, pools" in {
       pool = Pool(license = licensee.license, built = localDateToInt(1991, 3, 13), lat = 26.862631, lon = -82.288834, volume = 10000)
       Post(url + "/pools/add", pool) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
         status shouldBe OK
