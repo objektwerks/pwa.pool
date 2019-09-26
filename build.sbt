@@ -4,9 +4,9 @@ import sbtcrossproject.CrossPlugin.autoImport.{CrossType, crossProject}
 name := "tripletail"
 
 val akkaVersion = "2.5.25"
-val akkkHttpVersion = "10.1.9"
-val quillVersion = "3.4.4"
-val upickleVersion = "0.7.5"
+val akkkHttpVersion = "10.1.10"
+val quillVersion = "3.4.9"
+val upickleVersion = "0.8.0"
 val scalaTestVersion = "3.0.8"
 
 val jsCompileMode = fastOptJS  // fullOptJS
