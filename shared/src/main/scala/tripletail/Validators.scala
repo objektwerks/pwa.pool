@@ -38,11 +38,11 @@ object Validators {
   }
 
   implicit class PoolIdOps(val poolId: PoolId) {
-    def isValid: Boolean = poolId.id > 0
+    def isInvalid: Boolean = !{ poolId.id > 0 }
   }
 
   implicit class SurfaceOps(val surface: Surface) {
-    def isValid: Boolean = {
+    def isInvalid: Boolean = !{
       surface.id >= 0 &&
       surface.poolId > 0 &&
       surface.installed > 0 &&
@@ -51,7 +51,7 @@ object Validators {
   }
 
   implicit class PumpOps(val pump: Pump) {
-    def isValid: Boolean = {
+    def isInvalid: Boolean = !{
       pump.id >= 0 &&
       pump.poolId > 0 &&
       pump.installed > 0 &&
@@ -60,7 +60,7 @@ object Validators {
   }
 
   implicit class TimerOps(val timer: Timer) {
-    def isValid: Boolean = {
+    def isInvalid: Boolean = !{
       timer.id >= 0 &&
       timer.poolId > 0 &&
       timer.installed > 0 &&
@@ -69,11 +69,11 @@ object Validators {
   }
 
   implicit class TimerIdOps(val timerId: TimerId) {
-    def isValid: Boolean = timerId.id > 0
+    def isInvalid: Boolean = !{ timerId.id > 0 }
   }
 
   implicit class TimerSettingOps(val timerSetting: TimerSetting) {
-    def isValid: Boolean = {
+    def isInvalid: Boolean = !{
       timerSetting.id >= 0 &&
       timerSetting.timerId > 0 &&
       timerSetting.created > 0 &&
@@ -84,7 +84,7 @@ object Validators {
   }
 
   implicit class HeaterOps(val heater: Heater) {
-    def isValid: Boolean = {
+    def isInvalid: Boolean = !{
       heater.id >= 0 &&
       heater.poolId > 0 &&
       heater.installed > 0 &&
@@ -93,11 +93,11 @@ object Validators {
   }
 
   implicit class HeaterIdOps(val heaterId: HeaterId) {
-    def isValid: Boolean = heaterId.id > 0
+    def isInvalid: Boolean = !{ heaterId.id > 0 }
   }
 
   implicit class HeaterOnOps(val heaterOn: HeaterOn) {
-    def isValid: Boolean = {
+    def isInvalid: Boolean = !{
       heaterOn.id >= 0 &&
       heaterOn.heaterId > 0 &&
       heaterOn.temp > 0 &&
@@ -107,7 +107,7 @@ object Validators {
   }
 
   implicit class HeaterOffOps(val heaterOff: HeaterOff) {
-    def isValid: Boolean = {
+    def isInvalid: Boolean = !{
       heaterOff.id >= 0 &&
       heaterOff.heaterId > 0 &&
       heaterOff.dateOff > 0 &&
@@ -116,7 +116,7 @@ object Validators {
   }
 
   implicit class CleaningOps(val cleaning: Cleaning) {
-    def isValid: Boolean = {
+    def isInvalid: Boolean = !{
       cleaning.id >= 0 &&
       cleaning.poolId > 0 &&
       cleaning.cleaned > 0 &&
@@ -139,7 +139,7 @@ object Validators {
     private val freeChlorine = 0 to 10
     private val totalAlkalinity = 0 to 240
     private val cyanuricAcid = 0 to 300
-    def isValid: Boolean = {
+    def isInvalid: Boolean = !{
       measurement.id >= 0 &&
       measurement.poolId > 0 &&
       measurement.measured > 0 &&
@@ -155,7 +155,7 @@ object Validators {
   }
 
   implicit class ChemicalOps(val chemical: Chemical) {
-    def isValid: Boolean = {
+    def isInvalid: Boolean = !{
       chemical.id >= 0 &&
       chemical.poolId > 0 &&
       chemical.added > 0 &&
@@ -166,7 +166,7 @@ object Validators {
   }
 
   implicit class SupplyOps(val supply: Supply) {
-    def isValid: Boolean = {
+    def isInvalid: Boolean = !{
       supply.id >= 0 &&
       supply.poolId > 0 &&
       supply.purchased > 0 &&
@@ -178,7 +178,7 @@ object Validators {
   }
 
   implicit class RepairOps(val repair: Repair) {
-    def isValid: Boolean = {
+    def isInvalid: Boolean = !{
       repair.id >= 0 &&
       repair.poolId > 0 &&
       repair.repaired > 0 &&
