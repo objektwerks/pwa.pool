@@ -1,15 +1,5 @@
 package tripletail
 
-/*
-  def timer[A](codeblock: => A): (A, Double) = {
-    val startTime = System.nanoTime
-    val result = codeblock
-    val stopTime = System.nanoTime
-    val delta = stopTime - startTime
-    (result, delta/1000000d)
-  }
-  val (result, time) = timer { factorial(19) }
- */
 object Validators {
   implicit class StringOps(val value: String) {
     def <(length: Int): Boolean = if (value.nonEmpty) value.length < length else false
@@ -20,15 +10,15 @@ object Validators {
   }
 
   implicit class SignUpOps(val signup: SignUp) {
-    def isValid: Boolean = signup.email.nonEmpty
+    def isInvalid: Boolean = signup.email.isEmpty
   }
 
   implicit class SignInOps(val signin: SignIn) {
-    def isValid: Boolean = signin.license === 36 && signin.email.nonEmpty
+    def isInvalid: Boolean = !(signin.license === 36 && signin.email.nonEmpty)
   }
 
   implicit class LicenseeOps(val licensee: Licensee) {
-    def isValid: Boolean = {
+    def isInvalid: Boolean = !{
       licensee.license === 36 &&
       licensee.email.nonEmpty &&
       licensee.activated <= DateTime.currentDate
@@ -37,7 +27,7 @@ object Validators {
   }
 
   implicit class PoolOps(val pool: Pool) {
-    def isValid: Boolean = {
+    def isInvalid: Boolean = !{
       pool.id >= 0 &&
       pool.license === 36 &&
       pool.built > 0 &&

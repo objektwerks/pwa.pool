@@ -55,59 +55,48 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
   val signup = path("signup") {
     post {
       entity(as[SignUp]) { signup =>
-        if (signup.isValid) {
-          onSuccess(signUp(signup.email)) { licensee =>
-            cacheLicensee(licensee)
-            complete(OK -> SignedUp(licensee))
-          }
-        } else complete(BadRequest -> onInvalid(signup))
+        if (signup.isInvalid) complete(BadRequest -> onInvalid(signup))
+        onSuccess(signUp(signup.email)) { licensee =>
+          cacheLicensee(licensee)
+          complete(OK -> SignedUp(licensee))
+        }
       }
     }
   }
   val signin = path("signin") {
     post {
       entity(as[SignIn]) { signin =>
-        if (signin.isValid) {
-          onSuccess(signIn(signin.license, signin.email)) {
-            case Some(licensee) =>
-              cacheLicensee(licensee)
-              complete(OK -> SignedIn(licensee))
-            case None =>
-              val cause = s"*** Unauthorized license: ${signin.license} and/or email: ${signin.email}"
-              complete(Unauthorized -> onUnauthorized(cause))
-          }
-        } else complete(BadRequest -> onInvalid(signin))
+        if (signin.isInvalid) complete(BadRequest -> onInvalid(signin))
+        onSuccess(signIn(signin.license, signin.email)) {
+          case Some(licensee) =>
+            cacheLicensee(licensee)
+            complete(OK -> SignedIn(licensee))
+          case None =>
+            val cause = s"*** Unauthorized license: ${signin.license} and/or email: ${signin.email}"
+            complete(Unauthorized -> onUnauthorized(cause))
+        }
       }
     }
   }
   val pools = path("pools") {
     post {
       entity(as[Licensee]) { licensee =>
-        if (licensee.isValid) {
-          onSuccess(listPools(licensee.license)) { pools =>
-            complete(OK -> Pools(pools))
-          }
-        } else complete(BadRequest -> onInvalid(licensee))
+        if (licensee.isInvalid) complete(BadRequest -> onInvalid(licensee))
+        onSuccess(listPools(licensee.license)) { pools => complete(OK -> Pools(pools)) }
       }
     }
   } ~ pathSuffix("add") {
     post {
       entity(as[Pool]) { pool =>
-        if(pool.isValid) {
-          onSuccess(addPool(pool)) { id =>
-            complete(OK -> Id(id))
-          }
-        } else complete(BadRequest -> onInvalid(pool))
+        if (pool.isInvalid) complete(BadRequest -> onInvalid(pool))
+        onSuccess(addPool(pool)) { id => complete(OK -> Id(id)) }
       }
     }
   } ~ pathSuffix("update") {
     post {
       entity(as[Pool]) { pool =>
-        if(pool.isValid) {
-          onSuccess(updatePool(pool)) { count =>
-            complete(OK -> Count(count))
-          }
-        } else complete(BadRequest -> onInvalid(pool))
+        if (pool.isInvalid) complete(BadRequest -> onInvalid(pool))
+        onSuccess(updatePool(pool)) { count => complete(OK -> Count(count)) }
       }
     }
   }
