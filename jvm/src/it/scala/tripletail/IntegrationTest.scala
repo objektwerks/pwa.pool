@@ -114,7 +114,7 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
         pump = pump.copy(id = responseAs[Id].id)
         pump.id should be > 0
       }
-      pump = pump.copy(model = "steady")
+      pump = pump.copy(model = "iron")
       Post(url + "/pumps/update", pump) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
         status shouldBe OK
         responseAs[Count].count shouldEqual 1
@@ -122,6 +122,26 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
       Post(url + "/pumps", poolId) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
         status shouldBe OK
         responseAs[Pumps].pumps.length shouldEqual 1
+      }
+    }
+  }
+
+  "timers" should {
+    "post to id, count, timers" in {
+      var timer = Timer(poolId = poolId.id, installed = localDateToInt(1991, 3, 13), model = "timex")
+      Post(url + "/timers/add", timer) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
+        status shouldBe OK
+        timer = timer.copy(id = responseAs[Id].id)
+        timer.id should be > 0
+      }
+      timer = timer.copy(model = "rolex")
+      Post(url + "/timers/update", timer) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
+        status shouldBe OK
+        responseAs[Count].count shouldEqual 1
+      }
+      Post(url + "/timers", poolId) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
+        status shouldBe OK
+        responseAs[Timers].timers.length shouldEqual 1
       }
     }
   }
