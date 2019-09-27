@@ -36,6 +36,7 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
   import DateTime._
   import StatusCodes._
   import Serializers._
+  import Validators._
 
   val url = routes.url
   var licensee: Licensee = _
@@ -50,8 +51,7 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
         status shouldBe StatusCodes.OK
         licensee = responseAs[SignedUp].licensee
         licenseHeader = RawHeader(Licensee.licenseHeaderKey, licensee.license)
-        licensee.license.nonEmpty shouldBe true
-        licensee.email.nonEmpty shouldBe true
+        licensee.isValid shouldBe true
       }
     }
   }
