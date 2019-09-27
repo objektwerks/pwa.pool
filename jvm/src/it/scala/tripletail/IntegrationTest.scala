@@ -41,6 +41,7 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
   var licensee: Licensee = _
   var licenseHeader: RawHeader = _
   var pool: Pool = _
+  var poolId: PoolId = _
 
   "signup" should {
     "post to signedup" in {
@@ -69,6 +70,7 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
       Post(url + "/pools/add", pool) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
         status shouldBe OK
         pool = pool.copy(id = responseAs[Id].id)
+        poolId = PoolId(pool.id)
         pool.id should be > 0
       }
       pool = pool.copy(volume = 9000)
@@ -80,6 +82,25 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
         status shouldBe OK
         val pools = responseAs[Pools].pools
         pools.length shouldEqual 1
+      }
+    }
+  }
+
+  "surfaces" should {
+    "post to id, count, surfaces" in {
+      var surface = Surface(poolId = poolId.id, installed = localDateToInt(1991, 3, 13), kind = "concrete")
+      Post(url + "/surfaces/add", surface) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
+        status shouldBe OK
+        responseAs[Id].id should be > 0
+      }
+      surface = surface.copy(kind = "pebble")
+      Post(url + "/surface/update", surface) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
+        status shouldBe OK
+        responseAs[Count].count shouldEqual 1
+      }
+      Post(url + "/surfaces", poolId) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
+        status shouldBe OK
+        responseAs[Surfaces].surfaces.length shouldEqual 1
       }
     }
   }

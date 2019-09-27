@@ -19,86 +19,86 @@ CREATE TABLE pool (
 
 CREATE TABLE surface (
   id SERIAL PRIMARY KEY,
-  poolId INT REFERENCES pool(id),
+  pool_id INT REFERENCES pool(id),
   installed INT NOT NULL,
   kind VARCHAR NOT NULL
 );
 
 CREATE TABLE pump (
   id SERIAL PRIMARY KEY,
-  poolId INT REFERENCES pool(id),
+  pool_id INT REFERENCES pool(id),
   installed INT NOT NULL,
   model VARCHAR NOT NULL
 );
 
 CREATE TABLE timer (
   id SERIAL PRIMARY KEY,
-  poolId INT REFERENCES pool(id),
+  pool_id INT REFERENCES pool(id),
   installed INT NOT NULL,
   model VARCHAR NOT NULL
 );
 
 CREATE TABLE timersetting (
   id SERIAL PRIMARY KEY,
-  timerId INT REFERENCES timer(id),
+  timer_id INT REFERENCES timer(id),
   created INT NOT NULL,
-  timeOn SMALLINT NOT NULL,
-  timeOff SMALLINT NOT NULL
+  time_on SMALLINT NOT NULL,
+  time_off SMALLINT NOT NULL
 );
 
 CREATE TABLE heater (
   id SERIAL PRIMARY KEY,
-  poolId INT REFERENCES pool(id),
+  pool_id INT REFERENCES pool(id),
   installed INT NOT NULL,
   model VARCHAR NOT NULL
 );
 
 CREATE TABLE heateron (
   id SERIAL PRIMARY KEY,
-  heaterId INT REFERENCES heater(id),
+  heater_id INT REFERENCES heater(id),
   temp INT NOT NULL,
-  dateOn INT NOT NULL,
-  timeOn INT NOT NULL
+  date_on INT NOT NULL,
+  time_on INT NOT NULL
 );
 
 CREATE TABLE heateroff (
   id SERIAL PRIMARY KEY,
-  heaterId INT REFERENCES heater(id),
-  dateOff INT NOT NULL,
-  timeOff INT NOT NULL
+  heater_id INT REFERENCES heater(id),
+  date_off INT NOT NULL,
+  time_off INT NOT NULL
 );
 
 CREATE TABLE cleaning (
   id SERIAL PRIMARY KEY,
-  poolId INT REFERENCES pool(id),
+  pool_id INT REFERENCES pool(id),
   cleaned INT NOT NULL,
   brush BOOL NOT NULL,
   net BOOL NOT NULL,
   vacuum BOOL NOT NULL,
-  skimmerBasket BOOL NOT NULL,
-  pumpBasket BOOL NOT NULL,
-  pumpFilter BOOL NOT NULL,
-  pumpChlorineTablets INT NOT NULL,
+  skimmer_basket BOOL NOT NULL,
+  pump_basket BOOL NOT NULL,
+  pump_filter BOOL NOT NULL,
+  pump_chlorine_tablets INT NOT NULL,
   deck BOOL NOT NULL
 );
 
 CREATE TABLE measurement (
   id SERIAL PRIMARY KEY,
+  pool_id INT REFERENCES pool(id),
   measured INT NOT NULL,
-  poolId INT REFERENCES pool(id),
   temp INT NOT NULL,
-  totalHardness INT NOT NULL,
-  totalChlorine INT NOT NULL,
-  totalBromine INT NOT NULL,
-  freeChlorine INT NOT NULL,
+  total_hardness INT NOT NULL,
+  total_chlorine INT NOT NULL,
+  total_bromine INT NOT NULL,
+  free_chlorine INT NOT NULL,
   ph NUMERIC(2, 1) NOT NULL,
-  totalAlkalinity INT NOT NULL,
-  cyanuricAcid INT NOT NULL
+  total_alkalinity INT NOT NULL,
+  cyanuric_acid INT NOT NULL
 );
 
 CREATE TABLE chemical (
   id SERIAL PRIMARY KEY,
-  poolId INT REFERENCES pool(id),
+  pool_id INT REFERENCES pool(id),
   added INT NOT NULL,
   chemical VARCHAR NOT NULL,
   amount NUMERIC(5, 2),
@@ -107,7 +107,7 @@ CREATE TABLE chemical (
 
 CREATE TABLE supply (
   id SERIAL PRIMARY KEY,
-  poolId INT REFERENCES pool(id),
+  pool_id INT REFERENCES pool(id),
   purchased INT NOT NULL,
   cost NUMERIC(5, 2) NOT NULL,
   item VARCHAR NOT NULL,
@@ -117,17 +117,17 @@ CREATE TABLE supply (
 
 CREATE TABLE repair (
   id SERIAL PRIMARY KEY,
-  poolId INT REFERENCES pool(id),
+  pool_id INT REFERENCES pool(id),
   repaired INT NOT NULL,
   cost NUMERIC(7, 2) NOT NULL,
   repair VARCHAR NOT NULL
 );
 
 CREATE TABLE fault (
-  message VARCHAR NOT NULL,
+  cause VARCHAR NOT NULL,
   code INT NOT NULL,
-  dateOf INT NOT NULL,
-  timeOf SMALLINT NOT NULL,
-  nanoOf BIGINT NOT NULL,
-  PRIMARY KEY (dateOf, timeOf, nanoOf)
+  date_of INT NOT NULL,
+  time_of SMALLINT NOT NULL,
+  nano_of BIGINT NOT NULL,
+  PRIMARY KEY (date_of, time_of, nano_of)
 );
