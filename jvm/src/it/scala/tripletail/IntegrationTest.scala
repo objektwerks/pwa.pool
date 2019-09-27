@@ -40,17 +40,18 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
   val url = routes.url
   var licensee: Licensee = _
   var licenseHeader: RawHeader = _
-  var pool: Pool = _
   var poolId: PoolId = _
+  var timerId: TimerId = _
+  var heaterId: HeaterId = _
 
   "signup" should {
     "post to signedup" in {
-      val email = "objektwerks@runbox.com"
-      Post("/signup", SignUp(email)) ~> routes.routes ~> check {
+      Post("/signup", SignUp(email = "test@test.com")) ~> routes.routes ~> check {
         status shouldBe StatusCodes.OK
         licensee = responseAs[SignedUp].licensee
         licenseHeader = RawHeader(Licensee.licenseHeaderKey, licensee.license)
         licensee.license.nonEmpty shouldBe true
+        licensee.email.nonEmpty shouldBe true
       }
     }
   }
@@ -66,7 +67,7 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
 
   "pools" should {
     "post to id, count, pools" in {
-      pool = Pool(license = licensee.license, built = localDateToInt(1991, 3, 13), lat = 26.862631, lon = -82.288834, volume = 10000)
+      var pool = Pool(license = licensee.license, built = localDateToInt(1991, 3, 13), lat = 26.862631, lon = -82.288834, volume = 10000)
       Post(url + "/pools/add", pool) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
         status shouldBe OK
         pool = pool.copy(id = responseAs[Id].id)
@@ -80,8 +81,7 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
       }
       Post(url + "/pools", licensee) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
         status shouldBe OK
-        val pools = responseAs[Pools].pools
-        pools.length shouldEqual 1
+        responseAs[Pools].pools.length shouldEqual 1
       }
     }
   }
@@ -91,7 +91,8 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
       var surface = Surface(poolId = poolId.id, installed = localDateToInt(1991, 3, 13), kind = "concrete")
       Post(url + "/surfaces/add", surface) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
         status shouldBe OK
-        responseAs[Id].id should be > 0
+        surface = surface.copy(id = responseAs[Id].id)
+        surface.id should be > 0
       }
       surface = surface.copy(kind = "pebble")
       Post(url + "/surface/update", surface) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
