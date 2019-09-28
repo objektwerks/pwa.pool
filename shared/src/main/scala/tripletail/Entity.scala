@@ -60,12 +60,12 @@ final case class HeaterOn(id: Int = 0,
                           heaterId: Int,
                           temp: Int,
                           dateOn: Int,
-                          timeOn: Int) extends Entity
+                          timeOn: Int,
+                          timeOff: Int) extends Entity
 
 final case class HeaterOff(id: Int = 0,
                            heaterId: Int,
-                           dateOff: Int,
-                           timeOff: Int) extends Entity
+                           dateOff: Int) extends Entity
 
 final case class Cleaning(id: Int = 0,
                           poolId: Int,

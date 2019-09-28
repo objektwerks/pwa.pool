@@ -58,14 +58,14 @@ CREATE TABLE heater_on (
   heater_id INT REFERENCES heater(id),
   temp INT NOT NULL,
   date_on INT NOT NULL,
-  time_on INT NOT NULL
+  time_on INT NOT NULL,
+  time_off INT NOT NULL
 );
 
 CREATE TABLE heater_off (
   id SERIAL PRIMARY KEY,
   heater_id INT REFERENCES heater(id),
-  date_off INT NOT NULL,
-  time_off INT NOT NULL
+  date_off INT NOT NULL
 );
 
 CREATE TABLE cleaning (

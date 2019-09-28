@@ -246,13 +246,6 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
         onSuccess(addHeaterOff(heaterOff)) { id => complete(OK -> Id(id)) }
       }
     }
-  } ~ pathSuffix("update") {
-    post {
-      entity(as[HeaterOff]) { heaterOff =>
-        if (heaterOff.isInvalid) complete(BadRequest -> onInvalid(heaterOff))
-        onSuccess(updateHeaterOff(heaterOff)) { count => complete(OK -> Count(count)) }
-      }
-    }
   }
   val cleanings = path("cleanings") {
     post {

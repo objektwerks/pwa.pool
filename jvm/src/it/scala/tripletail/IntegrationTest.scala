@@ -196,7 +196,8 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
       var heaterOn = HeaterOn(heaterId = heaterid.id,
         temp = 80,
         dateOn = localDateToInt(1991, 3, 13),
-        timeOn = localTimeToInt(8, 15))
+        timeOn = localTimeToInt(8, 15),
+        timeOff = localTimeToInt(17, 15))
       Post(url + "/heaterons/add", heaterOn) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
         status shouldBe OK
         heaterOn = heaterOn.copy(id = responseAs[Id].id)
@@ -210,6 +211,21 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
       Post(url + "/heaterons", heaterid) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
         status shouldBe OK
         responseAs[HeaterOns].heaterOns.length shouldEqual 1
+      }
+    }
+  }
+
+  "heateroffs" should {
+    "post to id, heateroffs" in {
+      var heaterOff = HeaterOff(heaterId = heaterid.id, dateOff = localDateToInt(1991, 3, 13))
+      Post(url + "/heateroffs/add", heaterOff) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
+        status shouldBe OK
+        heaterOff = heaterOff.copy(id = responseAs[Id].id)
+        heaterOff.id should be > 0
+      }
+      Post(url + "/heateroffs", heaterid) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
+        status shouldBe OK
+        responseAs[HeaterOffs].heaterOffs.length shouldEqual 1
       }
     }
   }

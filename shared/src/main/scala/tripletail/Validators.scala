@@ -104,7 +104,8 @@ object Validators {
       heaterOn.heaterId > 0 &&
       heaterOn.temp > 0 &&
       heaterOn.dateOn > 0 &&
-      heaterOn.timeOn > 0
+      heaterOn.timeOn > 0 &&
+      heaterOn.timeOff > 0
     }
   }
 
@@ -112,8 +113,7 @@ object Validators {
     def isInvalid: Boolean = !{
       heaterOff.id >= 0 &&
       heaterOff.heaterId > 0 &&
-      heaterOff.dateOff > 0 &&
-      heaterOff.timeOff > 0
+      heaterOff.dateOff > 0
     }
   }
 
