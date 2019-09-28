@@ -119,10 +119,6 @@ class PoolStore(conf: Config)(implicit ec: ExecutionContext) {
     run( query[HeaterOff].insert(lift(heaterOff)).returningGenerated(_.id) )
   }
 
-  def updateHeaterOff(heaterOff: HeaterOff): Future[Int] = ctx.transaction { implicit ec =>
-    run( query[HeaterOff].filter(_.heaterId == lift(heaterOff.heaterId)).update(lift(heaterOff)) ).map(_ => 1)
-  }
-
   def listCleanings(poolId: Int): Future[Seq[Cleaning]] =
     run( query[Cleaning].filter(_.poolId == lift(poolId)).sortBy(_.cleaned)(Ord.desc) )
 
