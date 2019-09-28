@@ -101,22 +101,15 @@ class PoolStore(conf: Config)(implicit ec: ExecutionContext) {
     run( query[Heater].filter(_.poolId == lift(heater.poolId)).update(lift(heater)) ).map(_ => 1)
   }
 
-  def listHeaterOns(heaterId: Int): Future[Seq[HeaterOn]] =
-    run( query[HeaterOn].filter(_.heaterId == lift(heaterId)).sortBy(_.timeOn)(Ord.desc) )
+  def listHeaterSettings(heaterId: Int): Future[Seq[HeaterSetting]] =
+    run( query[HeaterSetting].filter(_.heaterId == lift(heaterId)).sortBy(_.timeOn)(Ord.desc) )
 
-  def addHeaterOn(heaterOn: HeaterOn): Future[Int] = ctx.transaction { implicit ec =>
-    run( query[HeaterOn].insert(lift(heaterOn)).returningGenerated(_.id) )
+  def addHeaterSetting(heaterSetting: HeaterSetting): Future[Int] = ctx.transaction { implicit ec =>
+    run( query[HeaterSetting].insert(lift(heaterSetting)).returningGenerated(_.id) )
   }
 
-  def updateHeaterOn(heaterOn: HeaterOn): Future[Int] = ctx.transaction { implicit ec =>
-    run( query[HeaterOn].filter(_.heaterId == lift(heaterOn.heaterId)).update(lift(heaterOn)) ).map(_ => 1)
-  }
-
-  def listHeaterOffs(heaterId: Int): Future[Seq[HeaterOff]] =
-    run( query[HeaterOff].filter(_.heaterId == lift(heaterId)).sortBy(_.dateOff)(Ord.desc) )
-
-  def addHeaterOff(heaterOff: HeaterOff): Future[Int] = ctx.transaction { implicit ec =>
-    run( query[HeaterOff].insert(lift(heaterOff)).returningGenerated(_.id) )
+  def updateHeaterSetting(heaterSetting: HeaterSetting): Future[Int] = ctx.transaction { implicit ec =>
+    run( query[HeaterSetting].filter(_.heaterId == lift(heaterSetting.heaterId)).update(lift(heaterSetting)) ).map(_ => 1)
   }
 
   def listCleanings(poolId: Int): Future[Seq[Cleaning]] =

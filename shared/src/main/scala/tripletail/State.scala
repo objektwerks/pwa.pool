@@ -22,9 +22,7 @@ final case class TimerSettings(timerSettings: Seq[TimerSetting]) extends State
 
 final case class Heaters(heaters: Seq[Heater]) extends State
 
-final case class HeaterOns(heaterOns: Seq[HeaterOn]) extends State
-
-final case class HeaterOffs(heaterOffs: Seq[HeaterOff]) extends State
+final case class HeaterSettings(heaterSettings: Seq[HeaterSetting]) extends State
 
 final case class Cleanings(cleanins: Seq[Cleaning]) extends State
 

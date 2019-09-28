@@ -210,40 +210,25 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
       }
     }
   }
-  val heaterons = path("heaterons") {
+  val heatersettings = path("heatersettings") {
     post {
       entity(as[HeaterId]) { heaterId =>
         if (heaterId.isInvalid) complete(BadRequest -> onInvalid(heaterId))
-        onSuccess(listHeaterOns(heaterId.id)) { heaterOns => complete(OK -> HeaterOns(heaterOns)) }
+        onSuccess(listHeaterSettings(heaterId.id)) { heaterSettings => complete(OK -> HeaterSettings(heaterSettings)) }
       }
     }
   } ~ pathSuffix("add") {
     post {
-      entity(as[HeaterOn]) { heaterOn =>
-        if (heaterOn.isInvalid) complete(BadRequest -> onInvalid(heaterOn))
-        onSuccess(addHeaterOn(heaterOn)) { id => complete(OK -> Id(id)) }
+      entity(as[HeaterSetting]) { heaterSetting =>
+        if (heaterSetting.isInvalid) complete(BadRequest -> onInvalid(heaterSetting))
+        onSuccess(addHeaterSetting(heaterSetting)) { id => complete(OK -> Id(id)) }
       }
     }
   } ~ pathSuffix("update") {
     post {
-      entity(as[HeaterOn]) { heaterOn =>
-        if (heaterOn.isInvalid) complete(BadRequest -> onInvalid(heaterOn))
-        onSuccess(updateHeaterOn(heaterOn)) { count => complete(OK -> Count(count)) }
-      }
-    }
-  }
-  val heateroffs = path("heateroffs") {
-    post {
-      entity(as[HeaterId]) { heaterId =>
-        if (heaterId.isInvalid) complete(BadRequest -> onInvalid(heaterId))
-        onSuccess(listHeaterOffs(heaterId.id)) { heaterOffs => complete(OK -> HeaterOffs(heaterOffs)) }
-      }
-    }
-  } ~ pathSuffix("add") {
-    post {
-      entity(as[HeaterOff]) { heaterOff =>
-        if (heaterOff.isInvalid) complete(BadRequest -> onInvalid(heaterOff))
-        onSuccess(addHeaterOff(heaterOff)) { id => complete(OK -> Id(id)) }
+      entity(as[HeaterSetting]) { heaterSetting =>
+        if (heaterSetting.isInvalid) complete(BadRequest -> onInvalid(heaterSetting))
+        onSuccess(updateHeaterSetting(heaterSetting)) { count => complete(OK -> Count(count)) }
       }
     }
   }
@@ -359,7 +344,7 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
   }
   val url = "/api/v1/tripletail"
   val api = pathPrefix("api" / "v1" / "tripletail") {
-    signin ~ pools ~ surfaces ~ pumps ~ timers ~ timersettings ~ heaters ~ heaterons ~ heateroffs ~
+    signin ~ pools ~ surfaces ~ pumps ~ timers ~ timersettings ~ heaters ~ heatersettings ~
       cleanings ~ measurements ~ chemicals ~ supplies ~ repairs
   }
   val secure = (route: Route) => headerValueByName(Licensee.licenseHeaderKey) { license =>

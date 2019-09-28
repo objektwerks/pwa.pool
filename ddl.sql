@@ -53,19 +53,14 @@ CREATE TABLE heater (
   model VARCHAR NOT NULL
 );
 
-CREATE TABLE heater_on (
+CREATE TABLE heater_setting (
   id SERIAL PRIMARY KEY,
   heater_id INT REFERENCES heater(id),
   temp INT NOT NULL,
   date_on INT NOT NULL,
   time_on INT NOT NULL,
-  time_off INT NOT NULL
-);
-
-CREATE TABLE heater_off (
-  id SERIAL PRIMARY KEY,
-  heater_id INT REFERENCES heater(id),
-  date_off INT NOT NULL
+  time_off INT NOT NULL,
+  date_off INT NULL
 );
 
 CREATE TABLE cleaning (

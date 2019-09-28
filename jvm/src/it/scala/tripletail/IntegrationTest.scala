@@ -191,41 +191,26 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
     }
   }
 
-  "heaterons" should {
-    "post to id, count, heaterons" in {
-      var heaterOn = HeaterOn(heaterId = heaterid.id,
+  "heatersettings" should {
+    "post to id, count, heatersettings" in {
+      var heaterOn = HeaterSetting(heaterId = heaterid.id,
         temp = 80,
         dateOn = localDateToInt(1991, 3, 13),
         timeOn = localTimeToInt(8, 15),
         timeOff = localTimeToInt(17, 15))
-      Post(url + "/heaterons/add", heaterOn) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
+      Post(url + "/heatersettings/add", heaterOn) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
         status shouldBe OK
         heaterOn = heaterOn.copy(id = responseAs[Id].id)
         heaterOn.id should be > 0
       }
-      heaterOn = heaterOn.copy(timeOn = localTimeToInt(8, 30))
-      Post(url + "/heaterons/update", heaterOn) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
+      heaterOn = heaterOn.copy(timeOn = localTimeToInt(8, 30), timeOff = localTimeToInt(17, 30))
+      Post(url + "/heatersettings/update", heaterOn) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
         status shouldBe OK
         responseAs[Count].count shouldEqual 1
       }
-      Post(url + "/heaterons", heaterid) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
+      Post(url + "/heatersettings", heaterid) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
         status shouldBe OK
-        responseAs[HeaterOns].heaterOns.length shouldEqual 1
-      }
-    }
-  }
-
-  "heateroffs" should {
-    "post to id, heateroffs" in {
-      var heaterOff = HeaterOff(heaterId = heaterid.id, dateOff = localDateToInt(1991, 3, 13))
-      Post(url + "/heateroffs/add", heaterOff) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
-        status shouldBe OK
-        heaterOff = heaterOff.copy(id = responseAs[Id].id)
-        heaterOff.id should be > 0
-      }
-      Post(url + "/heateroffs", heaterid) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
-        status shouldBe OK
-        responseAs[HeaterOffs].heaterOffs.length shouldEqual 1
+        responseAs[HeaterSettings].heaterSettings.length shouldEqual 1
       }
     }
   }

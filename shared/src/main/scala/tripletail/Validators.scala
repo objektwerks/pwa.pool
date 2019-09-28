@@ -22,7 +22,6 @@ object Validators {
       licensee.license === 36 &&
       licensee.email.nonEmpty &&
       licensee.activated <= DateTime.currentDate
-      licensee.deactivated.isEmpty
     }
     def isValid = predicate
     def isInvalid: Boolean = !predicate
@@ -98,22 +97,14 @@ object Validators {
     def isInvalid: Boolean = !{ heaterId.id > 0 }
   }
 
-  implicit class HeaterOnOps(val heaterOn: HeaterOn) {
+  implicit class HeaterSettingOps(val heaterSetting: HeaterSetting) {
     def isInvalid: Boolean = !{
-      heaterOn.id >= 0 &&
-      heaterOn.heaterId > 0 &&
-      heaterOn.temp > 0 &&
-      heaterOn.dateOn > 0 &&
-      heaterOn.timeOn > 0 &&
-      heaterOn.timeOff > 0
-    }
-  }
-
-  implicit class HeaterOffOps(val heaterOff: HeaterOff) {
-    def isInvalid: Boolean = !{
-      heaterOff.id >= 0 &&
-      heaterOff.heaterId > 0 &&
-      heaterOff.dateOff > 0
+      heaterSetting.id >= 0 &&
+      heaterSetting.heaterId > 0 &&
+      heaterSetting.temp > 0 &&
+      heaterSetting.dateOn > 0 &&
+      heaterSetting.timeOn > 0 &&
+      heaterSetting.timeOff > 0
     }
   }
 
@@ -128,8 +119,7 @@ object Validators {
       cleaning.skimmerBasket &&
       cleaning.pumpBasket &&
       cleaning.pumpFilter &&
-      cleaning.pumpChlorineTablets >= 0 &&
-      cleaning.deck
+      cleaning.pumpChlorineTablets >= 0
     }
   }
 

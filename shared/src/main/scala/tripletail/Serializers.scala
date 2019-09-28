@@ -7,8 +7,8 @@ object Serializers {
 
   implicit val entityRW: ReadWriter[Entity] = ReadWriter.merge(
     macroRW[SignUp], macroRW[SignIn], macroRW[Licensee], macroRW[Pool], macroRW[PoolId], macroRW[Surface], macroRW[Pump],
-    macroRW[Timer], macroRW[TimerId], macroRW[TimerSetting], macroRW[Heater], macroRW[HeaterId], macroRW[HeaterOn],
-    macroRW[HeaterOff], macroRW[Cleaning], macroRW[Measurement], macroRW[Chemical], macroRW[Supply], macroRW[Repair]
+    macroRW[Timer], macroRW[TimerId], macroRW[TimerSetting], macroRW[Heater], macroRW[HeaterId], macroRW[HeaterSetting],
+    macroRW[Cleaning], macroRW[Measurement], macroRW[Chemical], macroRW[Supply], macroRW[Repair]
   )
 
   implicit val signupRW: ReadWriter[SignUp] = macroRW
@@ -23,8 +23,7 @@ object Serializers {
   implicit val timerSettingRW: ReadWriter[TimerSetting] = macroRW
   implicit val heaterRW: ReadWriter[Heater] = macroRW
   implicit val heaterIdRW: ReadWriter[HeaterId] = macroRW
-  implicit val heaterOnRW: ReadWriter[HeaterOn] = macroRW
-  implicit val heaterOffRW: ReadWriter[HeaterOff] = macroRW
+  implicit val heaterSettingRW: ReadWriter[HeaterSetting] = macroRW
   implicit val cleaningRW: ReadWriter[Cleaning] = macroRW
   implicit val measurementRW: ReadWriter[Measurement] = macroRW
   implicit val chemicalRW: ReadWriter[Chemical] = macroRW
@@ -33,8 +32,8 @@ object Serializers {
 
   implicit val stateRW: ReadWriter[State] = ReadWriter.merge(
     macroRW[SignedUp], macroRW[SignedIn], macroRW[Id], macroRW[Count], macroRW[Pools], macroRW[Surfaces], macroRW[Pumps],
-    macroRW[Timers], macroRW[TimerSettings], macroRW[Heaters], macroRW[HeaterOns], macroRW[HeaterOffs], macroRW[Cleanings],
-    macroRW[Measurements], macroRW[Chemicals], macroRW[Supplies], macroRW[Repairs]
+    macroRW[Timers], macroRW[TimerSettings], macroRW[Heaters], macroRW[HeaterSettings], macroRW[Cleanings], macroRW[Measurements],
+    macroRW[Chemicals], macroRW[Supplies], macroRW[Repairs]
   )
 
   implicit val signedUpRW: ReadWriter[SignedUp] = macroRW
@@ -47,8 +46,7 @@ object Serializers {
   implicit val timersRW: ReadWriter[Timers] = macroRW
   implicit val timerSettingsRW: ReadWriter[TimerSettings] = macroRW
   implicit val heatersRW: ReadWriter[Heaters] = macroRW
-  implicit val heaterOnsRW: ReadWriter[HeaterOns] = macroRW
-  implicit val heaterOffsRW: ReadWriter[HeaterOffs] = macroRW
+  implicit val heaterSettingsRW: ReadWriter[HeaterSettings] = macroRW
   implicit val cleaningsRW: ReadWriter[Cleanings] = macroRW
   implicit val measurementsRW: ReadWriter[Measurements] = macroRW
   implicit val chemicalsRW: ReadWriter[Chemicals] = macroRW
