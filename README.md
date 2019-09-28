@@ -66,7 +66,7 @@ Panes
 * Surfaces -> Surface
 * Pumps -> Pump
 * Timers -> Timer -> TimerSettings
-* Heaters -> Heater -> HeaterOn | HeaterOff
+* Heaters -> Heater -> HeaterSettings -> HeaterSetting
 * Cleanings -> Cleaning
 * Measurments -> Measurement **
 * Chemicals -> Chemical **
@@ -86,8 +86,7 @@ Rest
 * /timers          /add   /update
 * /timersettings   /add   /update
 * /heaters         /add   /update
-* /heater-ons      /add   /update
-* /heater-offs     /add   /update
+* /heatersettings  /add   /update
 * /cleanings       /add   /update
 * /measurements    /add   /update
 * /chemicals       /add   /update
@@ -103,8 +102,7 @@ Object Model
 * Timer(id, poolId, installed, model)
 * TimerSetting(id, timerId, created, timeOn, timeOff)
 * Heater(id, poolId, installed, model)
-* HeaterOn(id, heaterId, temp, dateOn, timeOn)
-* HeaterOff(id, heaterId, dateOff, timeOff)
+* HeaterSetting(id, heaterId, temp, dateOn, timeOn, timeOff, dateOff)
 * Cleaning(id, poolId, cleaned, brush, net, vacuum, skimmerBasket, pumpBasket, pumpFilter, pumpChlorineTablets, deck)
 * Measurement(id, poolId, measured, temp, totalHardness, totalChlorine, totalBromine, freeChlorine, ph, totalAlkalinity, cyanuricAcid)
 * Chemical(id, poolId, added, chemical, amount, unit)
@@ -117,7 +115,7 @@ Relational Model
 * Licensee 1 ---> * Pool
 * Pool 1 ---> * Surface | Pump | Timer | Heater | Cleaning | Measurement | Chemical | Supply | Repair
 * Timer 1 ---> * TimerSetting
-* Heater 1 ---> * HeaterOn | HeaterOff
+* Heater 1 ---> * HeaterSetting
 * Fault
 
 Measurements
