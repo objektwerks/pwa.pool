@@ -71,8 +71,8 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
       Post(url + "/pools/add", pool) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
         status shouldBe OK
         pool = pool.copy(id = responseAs[Id].id)
-        poolId = PoolId(pool.id)
         pool.id should be > 0
+        poolId = PoolId(pool.id)
       }
       pool = pool.copy(volume = 9000)
       Post(url + "/pools/update", pool) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
@@ -133,6 +133,7 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
         status shouldBe OK
         timer = timer.copy(id = responseAs[Id].id)
         timer.id should be > 0
+        timerId = TimerId(timer.id)
       }
       timer = timer.copy(model = "rolex")
       Post(url + "/timers/update", timer) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
