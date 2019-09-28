@@ -169,4 +169,25 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
       }
     }
   }
+
+  "heaters" should {
+    "post to id, count, heaters" in {
+      var heater = Heater(poolId = poolid.id, installed = localDateToInt(1991, 3, 13), model = "hotty")
+      Post(url + "/heaters/add", heater) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
+        status shouldBe OK
+        heater = heater.copy(id = responseAs[Id].id)
+        heater.id should be > 0
+        heaterid = HeaterId(heater.id)
+      }
+      heater = heater.copy(model = "burner")
+      Post(url + "/heaters/update", heater) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
+        status shouldBe OK
+        responseAs[Count].count shouldEqual 1
+      }
+      Post(url + "/heaters", poolid) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
+        status shouldBe OK
+        responseAs[Heaters].heaters.length shouldEqual 1
+      }
+    }
+  }
 }
