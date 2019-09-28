@@ -127,7 +127,7 @@ Measurements
 5. ph 6.2 - 8.4                 ok = 7.2 - 7.6      ideal = 7.4
 6. total alkalinity 0 - 240     ok = 80 - 120       ideal = 100
 7. cyanuric acid 0 - 300        ok = 30 - 100       ideal = 50
-8. temp 32 - 99
+8. temp 0 - 100
 
 ** Units of Measure - oz, gl, lb
 

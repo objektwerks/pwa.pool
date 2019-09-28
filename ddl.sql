@@ -5,7 +5,7 @@ CREATE TABLE licensee (
   license VARCHAR PRIMARY KEY,
   email VARCHAR NOT NULL,
   activated INT NOT NULL,
-  deactivated INT NULL
+  deactivated INT NOT NULL
 );
 
 CREATE TABLE pool (
@@ -60,7 +60,7 @@ CREATE TABLE heater_setting (
   date_on INT NOT NULL,
   time_on INT NOT NULL,
   time_off INT NOT NULL,
-  date_off INT NULL
+  date_off INT NOT NULL
 );
 
 CREATE TABLE cleaning (

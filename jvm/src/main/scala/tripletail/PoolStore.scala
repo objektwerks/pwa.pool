@@ -24,7 +24,7 @@ class PoolStore(conf: Config)(implicit ec: ExecutionContext) {
     run(
       query[Licensee]
         .filter( licensee => licensee.license == lift(license) )
-        .filter( licensee => licensee.email == lift(email) && licensee.deactivated.isEmpty )
+        .filter( licensee => licensee.email == lift(email) && licensee.deactivated == 0 )
     ).map(result => result.headOption)
   }
 

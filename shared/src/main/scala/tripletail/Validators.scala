@@ -21,7 +21,8 @@ object Validators {
     private def predicate: Boolean = {
       licensee.license === 36 &&
       licensee.email.nonEmpty &&
-      licensee.activated <= DateTime.currentDate
+      licensee.activated <= DateTime.currentDate &&
+      licensee.deactivated >= 0
     }
     def isValid = predicate
     def isInvalid: Boolean = !predicate
@@ -104,7 +105,8 @@ object Validators {
       heaterSetting.temp > 0 &&
       heaterSetting.dateOn > 0 &&
       heaterSetting.timeOn > 0 &&
-      heaterSetting.timeOff > 0
+      heaterSetting.timeOff > 0 &&
+      heaterSetting.dateOff >= 0
     }
   }
 
@@ -112,19 +114,12 @@ object Validators {
     def isInvalid: Boolean = !{
       cleaning.id >= 0 &&
       cleaning.poolId > 0 &&
-      cleaning.cleaned > 0 &&
-      cleaning.brush &&
-      cleaning.net &&
-      cleaning.vacuum &&
-      cleaning.skimmerBasket &&
-      cleaning.pumpBasket &&
-      cleaning.pumpFilter &&
-      cleaning.pumpChlorineTablets >= 0
+      cleaning.cleaned > 0
     }
   }
 
   implicit class MeasurementOps(val measurement: Measurement) {
-    private val temp = 32 to 95
+    private val temp = 0 to 100
     private val totalHardness = 1 to 1000
     private val totalChlorine = 0 to 10
     private val totalBromine = 0 to 20

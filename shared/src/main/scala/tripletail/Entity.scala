@@ -11,7 +11,7 @@ final case class SignIn(license: String, email: String) extends Entity
 final case class Licensee(license: String = UUID.randomUUID.toString.toLowerCase,
                           email: String,
                           activated: Int = DateTime.currentDate,
-                          deactivated: Option[Int] = None) extends Entity
+                          deactivated: Int = 0) extends Entity
 
 object Licensee {
   val licenseHeaderKey = "license"
@@ -62,31 +62,31 @@ final case class HeaterSetting(id: Int = 0,
                                dateOn: Int,
                                timeOn: Int,
                                timeOff: Int,
-                               dateOff: Option[Int] = None) extends Entity
+                               dateOff: Int = 0) extends Entity
 
 final case class Cleaning(id: Int = 0,
                           poolId: Int,
                           cleaned: Int,
-                          brush: Boolean,
-                          net: Boolean,
-                          vacuum: Boolean,
-                          skimmerBasket: Boolean,
-                          pumpBasket: Boolean,
-                          pumpFilter: Boolean,
-                          pumpChlorineTablets: Int,
-                          deck: Boolean) extends Entity
+                          brush: Boolean = true,
+                          net: Boolean = true,
+                          vacuum: Boolean = false,
+                          skimmerBasket: Boolean = true,
+                          pumpBasket: Boolean = false,
+                          pumpFilter: Boolean = false,
+                          pumpChlorineTablets: Int = 0,
+                          deck: Boolean = false) extends Entity
 
 final case class Measurement(id: Int = 0,
                              poolId: Int,
                              measured: Int,
-                             temp: Int,
-                             totalHardness: Int,
-                             totalChlorine: Int,
-                             totalBromine: Int,
-                             freeChlorine: Int,
-                             ph: Double,
-                             totalAlkalinity: Int,
-                             cyanuricAcid: Int) extends Entity
+                             temp: Int = 85,
+                             totalHardness: Int = 375,
+                             totalChlorine: Int = 3,
+                             totalBromine: Int = 5,
+                             freeChlorine: Int = 3,
+                             ph: Double = 7.4,
+                             totalAlkalinity: Int = 100,
+                             cyanuricAcid: Int = 50) extends Entity
 
 final case class Chemical(id: Int = 0,
                           poolId: Int,
