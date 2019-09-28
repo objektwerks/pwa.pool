@@ -38,7 +38,7 @@ CREATE TABLE timer (
   model VARCHAR NOT NULL
 );
 
-CREATE TABLE timersetting (
+CREATE TABLE timer_setting (
   id SERIAL PRIMARY KEY,
   timer_id INT REFERENCES timer(id),
   created INT NOT NULL,
@@ -53,7 +53,7 @@ CREATE TABLE heater (
   model VARCHAR NOT NULL
 );
 
-CREATE TABLE heateron (
+CREATE TABLE heater_on (
   id SERIAL PRIMARY KEY,
   heater_id INT REFERENCES heater(id),
   temp INT NOT NULL,
@@ -61,7 +61,7 @@ CREATE TABLE heateron (
   time_on INT NOT NULL
 );
 
-CREATE TABLE heateroff (
+CREATE TABLE heater_off (
   id SERIAL PRIMARY KEY,
   heater_id INT REFERENCES heater(id),
   date_off INT NOT NULL,

@@ -41,9 +41,9 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
   val url = routes.url
   var licensee: Licensee = _
   var licenseHeader: RawHeader = _
-  var poolId: PoolId = _
-  var timerId: TimerId = _
-  var heaterId: HeaterId = _
+  var poolid: PoolId = _
+  var timerid: TimerId = _
+  var heaterid: HeaterId = _
 
   "signup" should {
     "post to signedup" in {
@@ -72,7 +72,7 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
         status shouldBe OK
         pool = pool.copy(id = responseAs[Id].id)
         pool.id should be > 0
-        poolId = PoolId(pool.id)
+        poolid = PoolId(pool.id)
       }
       pool = pool.copy(volume = 9000)
       Post(url + "/pools/update", pool) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
@@ -88,7 +88,7 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
 
   "surfaces" should {
     "post to id, count, surfaces" in {
-      var surface = Surface(poolId = poolId.id, installed = localDateToInt(1991, 3, 13), kind = "concrete")
+      var surface = Surface(poolId = poolid.id, installed = localDateToInt(1991, 3, 13), kind = "concrete")
       Post(url + "/surfaces/add", surface) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
         status shouldBe OK
         surface = surface.copy(id = responseAs[Id].id)
@@ -99,7 +99,7 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
         status shouldBe OK
         responseAs[Count].count shouldEqual 1
       }
-      Post(url + "/surfaces", poolId) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
+      Post(url + "/surfaces", poolid) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
         status shouldBe OK
         responseAs[Surfaces].surfaces.length shouldEqual 1
       }
@@ -108,7 +108,7 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
 
   "pumps" should {
     "post to id, count, pumps" in {
-      var pump = Pump(poolId = poolId.id, installed = localDateToInt(1991, 3, 13), model = "rocket")
+      var pump = Pump(poolId = poolid.id, installed = localDateToInt(1991, 3, 13), model = "rocket")
       Post(url + "/pumps/add", pump) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
         status shouldBe OK
         pump = pump.copy(id = responseAs[Id].id)
@@ -119,7 +119,7 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
         status shouldBe OK
         responseAs[Count].count shouldEqual 1
       }
-      Post(url + "/pumps", poolId) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
+      Post(url + "/pumps", poolid) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
         status shouldBe OK
         responseAs[Pumps].pumps.length shouldEqual 1
       }
@@ -128,21 +128,44 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
 
   "timers" should {
     "post to id, count, timers" in {
-      var timer = Timer(poolId = poolId.id, installed = localDateToInt(1991, 3, 13), model = "timex")
+      var timer = Timer(poolId = poolid.id, installed = localDateToInt(1991, 3, 13), model = "timex")
       Post(url + "/timers/add", timer) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
         status shouldBe OK
         timer = timer.copy(id = responseAs[Id].id)
         timer.id should be > 0
-        timerId = TimerId(timer.id)
+        timerid = TimerId(timer.id)
       }
       timer = timer.copy(model = "rolex")
       Post(url + "/timers/update", timer) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
         status shouldBe OK
         responseAs[Count].count shouldEqual 1
       }
-      Post(url + "/timers", poolId) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
+      Post(url + "/timers", poolid) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
         status shouldBe OK
         responseAs[Timers].timers.length shouldEqual 1
+      }
+    }
+  }
+
+  "timersettings" should {
+    "post to id, count, timersettings" in {
+      var timerSetting = TimerSetting(timerId = timerid.id,
+        created = localDateToInt(1991, 3, 13),
+        timeOn = localTimeToInt(8, 15),
+        timeOff = localTimeToInt(17, 15))
+      Post(url + "/timersettings/add", timerSetting) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
+        status shouldBe OK
+        timerSetting = timerSetting.copy(id = responseAs[Id].id)
+        timerSetting.id should be > 0
+      }
+      timerSetting = timerSetting.copy(timeOff = localTimeToInt(17, 30))
+      Post(url + "/timersettings/update", timerSetting) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
+        status shouldBe OK
+        responseAs[Count].count shouldEqual 1
+      }
+      Post(url + "/timersettings", timerid) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
+        status shouldBe OK
+        responseAs[TimerSettings].timerSettings.length shouldEqual 1
       }
     }
   }
