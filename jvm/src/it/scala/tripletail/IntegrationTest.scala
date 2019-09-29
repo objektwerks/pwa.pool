@@ -230,4 +230,24 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
       }
     }
   }
+
+  "measurements" should {
+    "post to id, count, measurements" in {
+      var measurement = Measurement(poolId = poolid.id, measured = localDateToInt(1991, 3, 13))
+      Post(url + "/measurements/add", measurement) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
+        status shouldBe OK
+        measurement = measurement.copy(id = responseAs[Id].id)
+        measurement.id should be > 0
+      }
+      measurement = measurement.copy(temp = 90)
+      Post(url + "/measurements/update", measurement) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
+        status shouldBe OK
+        responseAs[Count].count shouldEqual 1
+      }
+      Post(url + "/measurements", poolid) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
+        status shouldBe OK
+        responseAs[Measurements].measurements.length shouldEqual 1
+      }
+    }
+  }
 }
