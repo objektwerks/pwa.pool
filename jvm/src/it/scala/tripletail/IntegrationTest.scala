@@ -305,13 +305,13 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
       var _repair = Repair(poolId = poolid.id,
         repaired = localDateToInt(1991, 3, 13),
         cost = 50.50,
-        repair = "repaint pool deck")
+        repair = "paint pool deck")
       Post(url + "/repairs/add", _repair) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
         status shouldBe OK
         _repair = _repair.copy(id = responseAs[Id].id)
         _repair.id should be > 0
       }
-      _repair = _repair.copy(repair = "repainted pool deck")
+      _repair = _repair.copy(repair = "repaint pool deck")
       Post(url + "/repairs/update", _repair) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
         status shouldBe OK
         responseAs[Count].count shouldEqual 1
