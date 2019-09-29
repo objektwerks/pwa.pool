@@ -24,7 +24,7 @@ final case class Heaters(heaters: Seq[Heater]) extends State
 
 final case class HeaterSettings(heaterSettings: Seq[HeaterSetting]) extends State
 
-final case class Cleanings(cleanins: Seq[Cleaning]) extends State
+final case class Cleanings(cleanings: Seq[Cleaning]) extends State
 
 final case class Measurements(measurements: Seq[Measurement]) extends State
 
