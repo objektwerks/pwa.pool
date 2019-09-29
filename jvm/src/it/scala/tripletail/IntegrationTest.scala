@@ -274,4 +274,29 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
       }
     }
   }
+
+  "supplies" should {
+    "post to id, count, supplies" in {
+      var supply = Supply(poolId = poolid.id,
+        purchased = localDateToInt(1991, 3, 13),
+        cost = 5.00,
+        item = "chlorine",
+        amount = 1.25,
+        unit = "gallon")
+      Post(url + "/supplies/add", supply) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
+        status shouldBe OK
+        supply = supply.copy(id = responseAs[Id].id)
+        supply.id should be > 0
+      }
+      supply = supply.copy(amount = 1.50)
+      Post(url + "/supplies/update", supply) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
+        status shouldBe OK
+        responseAs[Count].count shouldEqual 1
+      }
+      Post(url + "/supplies", poolid) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
+        status shouldBe OK
+        responseAs[Supplies].supplies.length shouldEqual 1
+      }
+    }
+  }
 }
