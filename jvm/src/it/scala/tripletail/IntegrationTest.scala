@@ -253,18 +253,18 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
 
   "chemicals" should {
     "post to id, count, chemicals" in {
-      var chem = Chemical(poolId = poolid.id,
+      var _chemical = Chemical(poolId = poolid.id,
         added = localDateToInt(1991, 3, 13),
         chemical = "chlorine",
         amount = 1.25,
         unit = "gallon")
-      Post(url + "/chemicals/add", chem) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
+      Post(url + "/chemicals/add", _chemical) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
         status shouldBe OK
-        chem = chem.copy(id = responseAs[Id].id)
-        chem.id should be > 0
+        _chemical = _chemical.copy(id = responseAs[Id].id)
+        _chemical.id should be > 0
       }
-      chem = chem.copy(amount = 1.50)
-      Post(url + "/chemicals/update", chem) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
+      _chemical = _chemical.copy(amount = 1.50)
+      Post(url + "/chemicals/update", _chemical) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
         status shouldBe OK
         responseAs[Count].count shouldEqual 1
       }
@@ -296,6 +296,29 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
       Post(url + "/supplies", poolid) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
         status shouldBe OK
         responseAs[Supplies].supplies.length shouldEqual 1
+      }
+    }
+  }
+
+  "repairs" should {
+    "post to id, count, repairs" in {
+      var _repair = Repair(poolId = poolid.id,
+        repaired = localDateToInt(1991, 3, 13),
+        cost = 50.50,
+        repair = "repaint pool deck")
+      Post(url + "/repairs/add", _repair) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
+        status shouldBe OK
+        _repair = _repair.copy(id = responseAs[Id].id)
+        _repair.id should be > 0
+      }
+      _repair = _repair.copy(repair = "repainted pool deck")
+      Post(url + "/repairs/update", _repair) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
+        status shouldBe OK
+        responseAs[Count].count shouldEqual 1
+      }
+      Post(url + "/repairs", poolid) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
+        status shouldBe OK
+        responseAs[Repairs].repairs.length shouldEqual 1
       }
     }
   }
