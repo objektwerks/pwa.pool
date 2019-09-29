@@ -60,8 +60,6 @@ final case class HeaterSetting(id: Int = 0,
                                heaterId: Int,
                                temp: Int,
                                dateOn: Int,
-                               timeOn: Int,
-                               timeOff: Int,
                                dateOff: Int = 0) extends Entity
 
 final case class Cleaning(id: Int = 0,

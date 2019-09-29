@@ -58,8 +58,6 @@ CREATE TABLE heater_setting (
   heater_id INT REFERENCES heater(id),
   temp INT NOT NULL,
   date_on INT NOT NULL,
-  time_on INT NOT NULL,
-  time_off INT NOT NULL,
   date_off INT NOT NULL
 );
 

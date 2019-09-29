@@ -56,7 +56,7 @@ Scenarios
     2. Sign in with license and email
 2. Else If Licensee is persisted on client:
     1. Sign in with persisted Licensee(license and emails)
-3. List | Add | Update pool, surface, pump, timer, timersetting heater, heater-on, heater-off, lifecycle, cleaning, measurement, chemical, supply, repair
+3. List | Add | Update pool, surface, pump, timer, timersetting heater, heatersetting, lifecycle, cleaning, measurement, chemical, supply, repair
 4. Chart measurements, chemicals, supplies and repairs
 
 Panes
@@ -102,7 +102,7 @@ Object Model
 * Timer(id, poolId, installed, model)
 * TimerSetting(id, timerId, created, timeOn, timeOff)
 * Heater(id, poolId, installed, model)
-* HeaterSetting(id, heaterId, temp, dateOn, timeOn, timeOff, dateOff)
+* HeaterSetting(id, heaterId, temp, dateOn, dateOff)
 * Cleaning(id, poolId, cleaned, brush, net, vacuum, skimmerBasket, pumpBasket, pumpFilter, pumpChlorineTablets, deck)
 * Measurement(id, poolId, measured, temp, totalHardness, totalChlorine, totalBromine, freeChlorine, ph, totalAlkalinity, cyanuricAcid)
 * Chemical(id, poolId, added, chemical, amount, unit)

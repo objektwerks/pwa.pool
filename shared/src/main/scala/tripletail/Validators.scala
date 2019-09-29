@@ -104,8 +104,6 @@ object Validators {
       heaterSetting.heaterId > 0 &&
       heaterSetting.temp > 0 &&
       heaterSetting.dateOn > 0 &&
-      heaterSetting.timeOn > 0 &&
-      heaterSetting.timeOff > 0 &&
       heaterSetting.dateOff >= 0
     }
   }
