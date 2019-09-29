@@ -193,9 +193,7 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
 
   "heatersettings" should {
     "post to id, count, heatersettings" in {
-      var heaterOn = HeaterSetting(heaterId = heaterid.id,
-        temp = 80,
-        dateOn = localDateToInt(1991, 3, 13))
+      var heaterOn = HeaterSetting(heaterId = heaterid.id, temp = 85, dateOn = localDateToInt(1991, 3, 13))
       Post(url + "/heatersettings/add", heaterOn) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
         status shouldBe OK
         heaterOn = heaterOn.copy(id = responseAs[Id].id)
