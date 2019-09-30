@@ -32,17 +32,13 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     addFault(Fault(cause, BadRequest.intValue))
   }
 
-  def onFault(cause: String): Fault = {
-    logger.error(cause)
-    addFault(Fault(cause))
-  }
-
   implicit val onException = ExceptionHandler {
     case NonFatal(error) =>
       extractRequestContext { context =>
         val cause = s"*** Handling ${context.request.uri} failed: ${error.getMessage}"
+        logger.error(cause)
         context.request.discardEntityBytes(context.materializer)
-        complete(InternalServerError -> onFault(cause))
+        complete(InternalServerError -> addFault(Fault(cause)))
       }
   }
 
