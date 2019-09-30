@@ -15,7 +15,7 @@ import scala.concurrent.duration._
 import scala.language.postfixOps
 
 class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
-  val logger = LoggerFactory.getLogger(getClass.getSimpleName)
+  val logger = LoggerFactory.getLogger(getClass)
   val actorRefFactory = ActorSystem.create(getClass.getSimpleName)
   implicit val dispatcher = system.dispatcher
   implicit val timeout = RouteTestTimeout(10.seconds dilated)
