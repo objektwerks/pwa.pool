@@ -58,26 +58,28 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
   val signup = path("signup") {
     post {
       entity(as[SignUp]) { signup =>
-        if (signup.isInvalid) complete(BadRequest -> onInvalid(signup))
-        onSuccess(signUp(signup.email)) { licensee =>
-          cacheLicensee(licensee)
-          complete(OK -> SignedUp(licensee))
-        }
+        if (signup.isValid) {
+          onSuccess(signUp(signup.email)) { licensee =>
+            cacheLicensee(licensee)
+            complete(OK -> SignedUp(licensee))
+          }
+        } else complete(BadRequest -> onInvalid(signup))
       }
     }
   }
   val signin = path("signin") {
     post {
       entity(as[SignIn]) { signin =>
-        if (signin.isInvalid) complete(BadRequest -> onInvalid(signin))
-        onSuccess(signIn(signin.license, signin.email)) {
-          case Some(licensee) =>
-            cacheLicensee(licensee)
-            complete(OK -> SignedIn(licensee))
-          case None =>
-            val cause = s"*** Unauthorized license: ${signin.license} and/or email: ${signin.email}"
-            complete(Unauthorized -> onUnauthorized(cause))
-        }
+        if (signin.isValid) {
+          onSuccess(signIn(signin.license, signin.email)) {
+            case Some(licensee) =>
+              cacheLicensee(licensee)
+              complete(OK -> SignedIn(licensee))
+            case None =>
+              val cause = s"*** Unauthorized license: ${signin.license} and/or email: ${signin.email}"
+              complete(Unauthorized -> onUnauthorized(cause))
+          }
+        } else complete(BadRequest -> onInvalid(signin))
       }
     }
   }
@@ -91,257 +93,257 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
   } ~ pathSuffix("add") {
     post {
       entity(as[Pool]) { pool =>
-        if (pool.isInvalid) complete(BadRequest -> onInvalid(pool))
-        onSuccess(addPool(pool)) { id => complete(OK -> Id(id)) }
+        if (pool.isValid) onSuccess(addPool(pool)) { id => complete(OK -> Id(id)) }
+        else complete(BadRequest -> onInvalid(pool))
       }
     }
   } ~ pathSuffix("update") {
     post {
       entity(as[Pool]) { pool =>
-        if (pool.isInvalid) complete(BadRequest -> onInvalid(pool))
-        onSuccess(updatePool(pool)) { count => complete(OK -> Count(count)) }
+        if (pool.isValid) onSuccess(updatePool(pool)) { count => complete(OK -> Count(count)) }
+        else complete(BadRequest -> onInvalid(pool))
       }
     }
   }
   val surfaces = path("surfaces") {
     post {
       entity(as[PoolId]) { poolId =>
-        if (poolId.isInvalid) complete(BadRequest -> onInvalid(poolId))
-        onSuccess(listSurfaces(poolId.id)) { surfaces => complete(OK -> Surfaces(surfaces)) }
+        if (poolId.isValid) onSuccess(listSurfaces(poolId.id)) { surfaces => complete(OK -> Surfaces(surfaces)) }
+        else complete(BadRequest -> onInvalid(poolId))
       }
     }
   } ~ pathSuffix("add") {
     post {
       entity(as[Surface]) { surface =>
-        if (surface.isInvalid) complete(BadRequest -> onInvalid(surface))
-        onSuccess(addSurface(surface)) { id => complete(OK -> Id(id)) }
+        if (surface.isValid) onSuccess(addSurface(surface)) { id => complete(OK -> Id(id)) }
+        else complete(BadRequest -> onInvalid(surface))
       }
     }
   } ~ pathSuffix("update") {
     post {
       entity(as[Surface]) { surface =>
-        if (surface.isInvalid) complete(BadRequest -> onInvalid(surface))
-        onSuccess(updateSurface(surface)) { count => complete(OK -> Count(count)) }
+        if (surface.isValid) onSuccess(updateSurface(surface)) { count => complete(OK -> Count(count)) }
+        else complete(BadRequest -> onInvalid(surface))
       }
     }
   }
   val pumps = path("pumps") {
     post {
       entity(as[PoolId]) { poolId =>
-        if (poolId.isInvalid) complete(BadRequest -> onInvalid(poolId))
-        onSuccess(listPumps(poolId.id)) { pumps => complete(OK -> Pumps(pumps)) }
+        if (poolId.isValid) onSuccess(listPumps(poolId.id)) { pumps => complete(OK -> Pumps(pumps)) }
+        else complete(BadRequest -> onInvalid(poolId))
       }
     }
   } ~ pathSuffix("add") {
     post {
       entity(as[Pump]) { pump =>
-        if (pump.isInvalid) complete(BadRequest -> onInvalid(pump))
-        onSuccess(addPump(pump)) { id => complete(OK -> Id(id)) }
+        if (pump.isValid) onSuccess(addPump(pump)) { id => complete(OK -> Id(id)) }
+        else complete(BadRequest -> onInvalid(pump))
       }
     }
   } ~ pathSuffix("update") {
     post {
       entity(as[Pump]) { pump =>
-        if (pump.isInvalid) complete(BadRequest -> onInvalid(pump))
-        onSuccess(updatePump(pump)) { count => complete(OK -> Count(count)) }
+        if (pump.isValid) onSuccess(updatePump(pump)) { count => complete(OK -> Count(count)) }
+        else complete(BadRequest -> onInvalid(pump))
       }
     }
   }
   val timers = path("timers") {
     post {
       entity(as[PoolId]) { poolId =>
-        if (poolId.isInvalid) complete(BadRequest -> onInvalid(poolId))
-        onSuccess(listTimers(poolId.id)) { timers => complete(OK -> Timers(timers)) }
+        if (poolId.isValid) onSuccess(listTimers(poolId.id)) { timers => complete(OK -> Timers(timers)) }
+        else complete(BadRequest -> onInvalid(poolId))
       }
     }
   } ~ pathSuffix("add") {
     post {
       entity(as[Timer]) { timer =>
-        if (timer.isInvalid) complete(BadRequest -> onInvalid(timer))
-        onSuccess(addTimer(timer)) { id => complete(OK -> Id(id)) }
+        if (timer.isValid) onSuccess(addTimer(timer)) { id => complete(OK -> Id(id)) }
+        else complete(BadRequest -> onInvalid(timer))
       }
     }
   } ~ pathSuffix("update") {
     post {
       entity(as[Timer]) { timer =>
-        if (timer.isInvalid) complete(BadRequest -> onInvalid(timer))
-        onSuccess(updateTimer(timer)) { count => complete(OK -> Count(count)) }
+        if (timer.isValid) onSuccess(updateTimer(timer)) { count => complete(OK -> Count(count)) }
+        else complete(BadRequest -> onInvalid(timer))
       }
     }
   }
   val timersettings = path("timersettings") {
     post {
       entity(as[TimerId]) { timerId =>
-        if (timerId.isInvalid) complete(BadRequest -> onInvalid(timerId))
-        onSuccess(listTimerSettings(timerId.id)) { timersettings => complete(OK -> TimerSettings(timersettings)) }
+        if (timerId.isValid) onSuccess(listTimerSettings(timerId.id)) { timersettings => complete(OK -> TimerSettings(timersettings)) }
+        else complete(BadRequest -> onInvalid(timerId))
       }
     }
   } ~ pathSuffix("add") {
     post {
       entity(as[TimerSetting]) { timerSetting =>
-        if (timerSetting.isInvalid) complete(BadRequest -> onInvalid(timerSetting))
-        onSuccess(addTimerSetting(timerSetting)) { id => complete(OK -> Id(id)) }
+        if (timerSetting.isValid) onSuccess(addTimerSetting(timerSetting)) { id => complete(OK -> Id(id)) }
+        else complete(BadRequest -> onInvalid(timerSetting))
       }
     }
   } ~ pathSuffix("update") {
     post {
       entity(as[TimerSetting]) { timerSetting =>
-        if (timerSetting.isInvalid) complete(BadRequest -> onInvalid(timerSetting))
-        onSuccess(updateTimerSetting(timerSetting)) { count => complete(OK -> Count(count)) }
+        if (timerSetting.isValid) onSuccess(updateTimerSetting(timerSetting)) { count => complete(OK -> Count(count)) }
+        else complete(BadRequest -> onInvalid(timerSetting))
       }
     }
   }
   val heaters = path("heaters") {
     post {
       entity(as[PoolId]) { poolId =>
-        if (poolId.isInvalid) complete(BadRequest -> onInvalid(poolId))
-        onSuccess(listHeaters(poolId.id)) { heaters => complete(OK -> Heaters(heaters)) }
+        if (poolId.isValid) onSuccess(listHeaters(poolId.id)) { heaters => complete(OK -> Heaters(heaters)) }
+        else complete(BadRequest -> onInvalid(poolId))
       }
     }
   } ~ pathSuffix("add") {
     post {
       entity(as[Heater]) { heater =>
-        if (heater.isInvalid) complete(BadRequest -> onInvalid(heater))
-        onSuccess(addHeater(heater)) { id => complete(OK -> Id(id)) }
+        if (heater.isValid) onSuccess(addHeater(heater)) { id => complete(OK -> Id(id)) }
+        else complete(BadRequest -> onInvalid(heater))
       }
     }
   } ~ pathSuffix("update") {
     post {
       entity(as[Heater]) { heater =>
-        if (heater.isInvalid) complete(BadRequest -> onInvalid(heater))
-        onSuccess(updateHeater(heater)) { count => complete(OK -> Count(count)) }
+        if (heater.isValid) onSuccess(updateHeater(heater)) { count => complete(OK -> Count(count)) }
+        else complete(BadRequest -> onInvalid(heater))
       }
     }
   }
   val heatersettings = path("heatersettings") {
     post {
       entity(as[HeaterId]) { heaterId =>
-        if (heaterId.isInvalid) complete(BadRequest -> onInvalid(heaterId))
-        onSuccess(listHeaterSettings(heaterId.id)) { heaterSettings => complete(OK -> HeaterSettings(heaterSettings)) }
+        if (heaterId.isValid) onSuccess(listHeaterSettings(heaterId.id)) { heaterSettings => complete(OK -> HeaterSettings(heaterSettings)) }
+        else complete(BadRequest -> onInvalid(heaterId))
       }
     }
   } ~ pathSuffix("add") {
     post {
       entity(as[HeaterSetting]) { heaterSetting =>
-        if (heaterSetting.isInvalid) complete(BadRequest -> onInvalid(heaterSetting))
-        onSuccess(addHeaterSetting(heaterSetting)) { id => complete(OK -> Id(id)) }
+        if (heaterSetting.isValid) onSuccess(addHeaterSetting(heaterSetting)) { id => complete(OK -> Id(id)) }
+        else complete(BadRequest -> onInvalid(heaterSetting))
       }
     }
   } ~ pathSuffix("update") {
     post {
       entity(as[HeaterSetting]) { heaterSetting =>
-        if (heaterSetting.isInvalid) complete(BadRequest -> onInvalid(heaterSetting))
-        onSuccess(updateHeaterSetting(heaterSetting)) { count => complete(OK -> Count(count)) }
+        if (heaterSetting.isValid) onSuccess(updateHeaterSetting(heaterSetting)) { count => complete(OK -> Count(count)) }
+        else complete(BadRequest -> onInvalid(heaterSetting))
       }
     }
   }
   val cleanings = path("cleanings") {
     post {
       entity(as[PoolId]) { poolId =>
-        if (poolId.isInvalid) complete(BadRequest -> onInvalid(poolId))
-        onSuccess(listCleanings(poolId.id)) { cleanings => complete(OK -> Cleanings(cleanings)) }
+        if (poolId.isValid) onSuccess(listCleanings(poolId.id)) { cleanings => complete(OK -> Cleanings(cleanings)) }
+        else complete(BadRequest -> onInvalid(poolId))
       }
     }
   } ~ pathSuffix("add") {
     post {
       entity(as[Cleaning]) { cleaning =>
-        if (cleaning.isInvalid) complete(BadRequest -> onInvalid(cleaning))
-        onSuccess(addCleaning(cleaning)) { id => complete(OK -> Id(id)) }
+        if (cleaning.isValid) onSuccess(addCleaning(cleaning)) { id => complete(OK -> Id(id)) }
+        else complete(BadRequest -> onInvalid(cleaning))
       }
     }
   } ~ pathSuffix("update") {
     post {
       entity(as[Cleaning]) { cleaning =>
-        if (cleaning.isInvalid) complete(BadRequest -> onInvalid(cleaning))
-        onSuccess(updateCleaning(cleaning)) { count => complete(OK -> Count(count)) }
+        if (cleaning.isValid) onSuccess(updateCleaning(cleaning)) { count => complete(OK -> Count(count)) }
+        else complete(BadRequest -> onInvalid(cleaning))
       }
     }
   }
   val measurements = path("measurements") {
     post {
       entity(as[PoolId]) { poolId =>
-        if (poolId.isInvalid) complete(BadRequest -> onInvalid(poolId))
-        onSuccess(listMeasurements(poolId.id)) { measurements => complete(OK -> Measurements(measurements)) }
+        if (poolId.isValid) onSuccess(listMeasurements(poolId.id)) { measurements => complete(OK -> Measurements(measurements)) }
+        else complete(BadRequest -> onInvalid(poolId))
       }
     }
   } ~ pathSuffix("add") {
     post {
       entity(as[Measurement]) { measurement =>
-        if (measurement.isInvalid) complete(BadRequest -> onInvalid(measurement))
-        onSuccess(addMeasurement(measurement)) { id => complete(OK -> Id(id)) }
+        if (measurement.isValid) onSuccess(addMeasurement(measurement)) { id => complete(OK -> Id(id)) }
+        else complete(BadRequest -> onInvalid(measurement))
       }
     }
   } ~ pathSuffix("update") {
     post {
       entity(as[Measurement]) { measurement =>
-        if (measurement.isInvalid) complete(BadRequest -> onInvalid(measurement))
-        onSuccess(updateMeasurement(measurement)) { count => complete(OK -> Count(count)) }
+        if (measurement.isValid) onSuccess(updateMeasurement(measurement)) { count => complete(OK -> Count(count)) }
+        else complete(BadRequest -> onInvalid(measurement))
       }
     }
   }
   val chemicals = path("chemicals") {
     post {
       entity(as[PoolId]) { poolId =>
-        if (poolId.isInvalid) complete(BadRequest -> onInvalid(poolId))
-        onSuccess(listChemicals(poolId.id)) { chemicals => complete(OK -> Chemicals(chemicals)) }
+        if (poolId.isValid) onSuccess(listChemicals(poolId.id)) { chemicals => complete(OK -> Chemicals(chemicals)) }
+        else complete(BadRequest -> onInvalid(poolId))
       }
     }
   } ~ pathSuffix("add") {
     post {
       entity(as[Chemical]) { chemical =>
-        if (chemical.isInvalid) complete(BadRequest -> onInvalid(chemical))
-        onSuccess(addChemical(chemical)) { id => complete(OK -> Id(id)) }
+        if (chemical.isValid) onSuccess(addChemical(chemical)) { id => complete(OK -> Id(id)) }
+        else complete(BadRequest -> onInvalid(chemical))
       }
     }
   } ~ pathSuffix("update") {
     post {
       entity(as[Chemical]) { chemical =>
-        if (chemical.isInvalid) complete(BadRequest -> onInvalid(chemical))
-        onSuccess(updateChemical(chemical)) { count => complete(OK -> Count(count)) }
+        if (chemical.isValid) onSuccess(updateChemical(chemical)) { count => complete(OK -> Count(count)) }
+        else complete(BadRequest -> onInvalid(chemical))
       }
     }
   }
   val supplies = path("supplies") {
     post {
       entity(as[PoolId]) { poolId =>
-        if (poolId.isInvalid) complete(BadRequest -> onInvalid(poolId))
-        onSuccess(listSupplies(poolId.id)) { supplies => complete(OK -> Supplies(supplies)) }
+        if (poolId.isValid) onSuccess(listSupplies(poolId.id)) { supplies => complete(OK -> Supplies(supplies)) }
+        else complete(BadRequest -> onInvalid(poolId))
       }
     }
   } ~ pathSuffix("add") {
     post {
       entity(as[Supply]) { supply =>
-        if (supply.isInvalid) complete(BadRequest -> onInvalid(supply))
-        onSuccess(addSupply(supply)) { id => complete(OK -> Id(id)) }
+        if (supply.isValid) onSuccess(addSupply(supply)) { id => complete(OK -> Id(id)) }
+        else complete(BadRequest -> onInvalid(supply))
       }
     }
   } ~ pathSuffix("update") {
     post {
       entity(as[Supply]) { supply =>
-        if (supply.isInvalid) complete(BadRequest -> onInvalid(supply))
-        onSuccess(updateSupply(supply)) { count => complete(OK -> Count(count)) }
+        if (supply.isValid) onSuccess(updateSupply(supply)) { count => complete(OK -> Count(count)) }
+        else complete(BadRequest -> onInvalid(supply))
       }
     }
   }
   val repairs = path("repairs") {
     post {
       entity(as[PoolId]) { poolId =>
-        if (poolId.isInvalid) complete(BadRequest -> onInvalid(poolId))
-        onSuccess(listRepairs(poolId.id)) { repairs => complete(OK -> Repairs(repairs)) }
+        if (poolId.isValid) onSuccess(listRepairs(poolId.id)) { repairs => complete(OK -> Repairs(repairs)) }
+        else complete(BadRequest -> onInvalid(poolId))
       }
     }
   } ~ pathSuffix("add") {
     post {
       entity(as[Repair]) { repair =>
-        if (repair.isInvalid) complete(BadRequest -> onInvalid(repair))
-        onSuccess(addRepair(repair)) { id => complete(OK -> Id(id)) }
+        if (repair.isValid) onSuccess(addRepair(repair)) { id => complete(OK -> Id(id)) }
+        else complete(BadRequest -> onInvalid(repair))
       }
     }
   } ~ pathSuffix("update") {
     post {
       entity(as[Repair]) { repair =>
-        if (repair.isInvalid) complete(BadRequest -> onInvalid(repair))
-        onSuccess(updateRepair(repair)) { count => complete(OK -> Count(count)) }
+        if (repair.isValid) onSuccess(updateRepair(repair)) { count => complete(OK -> Count(count)) }
+        else complete(BadRequest -> onInvalid(repair))
       }
     }
   }
