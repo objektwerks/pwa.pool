@@ -322,4 +322,14 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
       }
     }
   }
+
+  "fault" should {
+    "post to pools" in {
+      Post(url + "/pools", licensee.copy(license = "")) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
+        val fault = responseAs[Fault]
+        fault.cause.nonEmpty shouldBe true
+        fault.code shouldBe 401
+      }
+    }
+  }
 }
