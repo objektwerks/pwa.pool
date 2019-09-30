@@ -28,7 +28,6 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
 
   def onInvalid(entity: Entity): Fault = {
     val cause = s"*** Invalid: $entity"
-    println(s"*** onInvalid: cause: $cause  entity: $entity")
     logger.error(cause)
     addFault(Fault(cause, BadRequest.intValue))
   }

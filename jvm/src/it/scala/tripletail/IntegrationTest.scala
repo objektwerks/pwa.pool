@@ -48,7 +48,7 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
   "signup" should {
     "post to signedup" in {
       Post("/signup", SignUp(email = "test@test.com")) ~> routes.routes ~> check {
-        status shouldBe StatusCodes.OK
+        status shouldBe OK
         licensee = responseAs[SignedUp].licensee
         licenseHeader = RawHeader(Licensee.licenseHeaderKey, licensee.license)
         licensee.isValid shouldBe true
@@ -319,6 +319,17 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
       Post(url + "/repairs", poolid) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
         status shouldBe OK
         responseAs[Repairs].repairs.length shouldEqual 1
+      }
+    }
+  }
+
+  "invalid" should {
+    "post to signedup, fault" in {
+      Post("/signup", SignUp(email = "")) ~> routes.routes ~> check {
+        status shouldBe BadRequest
+        val fault = responseAs[Fault]
+        fault.cause.nonEmpty shouldBe true
+        fault.code shouldBe 400
       }
     }
   }
