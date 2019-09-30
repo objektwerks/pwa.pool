@@ -33,7 +33,6 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
   }
 
   def onFault(cause: String): Fault = {
-    println(s"*** onFault: cause: $cause")
     logger.error(cause)
     addFault(Fault(cause))
   }
