@@ -22,7 +22,6 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
   val logger = LoggerFactory.getLogger(PoolRoutes.getClass)
 
   def onUnauthorized(cause: String): Fault = {
-    println(s"*** onUnauthorized: cause: $cause")
     logger.error(cause)
     addFault(Fault(cause, Unauthorized.intValue))
   }
@@ -87,7 +86,10 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
     post {
       entity(as[Licensee]) { licensee =>
         if (licensee.isValid) onSuccess(listPools(licensee.license)) { pools => complete(OK -> Pools(pools)) }
-        else complete(BadRequest -> onInvalid(licensee))
+        else {
+          val cause = s"*** Unauthorized licensee: $licensee"
+          complete(Unauthorized -> onUnauthorized(cause))
+        }
       }
     }
   } ~ pathSuffix("add") {

@@ -323,13 +323,19 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
     }
   }
 
-  "fault" should {
-    "post to pools" in {
-      Post(url + "/pools", licensee.copy(license = "")) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
-        status shouldBe BadRequest
+  "unauthorized" should {
+    "post to pools, fault" in {
+      Post(url + "/pools", licensee) ~> addHeader(licenseHeader.copy(value = "")) ~> routes.routes ~> check {
+        status shouldBe Unauthorized
         val fault = responseAs[Fault]
         fault.cause.nonEmpty shouldBe true
-        fault.code shouldBe 400
+        fault.code shouldBe 401
+      }
+      Post(url + "/pools", licensee.copy(license = "")) ~> addHeader(licenseHeader) ~> routes.routes ~> check {
+        status shouldBe Unauthorized
+        val fault = responseAs[Fault]
+        fault.cause.nonEmpty shouldBe true
+        fault.code shouldBe 401
       }
     }
   }
