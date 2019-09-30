@@ -21,12 +21,12 @@ class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
 
   val logger = LoggerFactory.getLogger(PoolRoutes.getClass)
 
-  def onUnauthorized(cause: String): Fault = {
+  val onUnauthorized = (cause: String) => {
     logger.error(cause)
     addFault(Fault(cause, Unauthorized.intValue))
   }
 
-  def onInvalid(entity: Entity): Fault = {
+  val onInvalid = (entity: Entity) => {
     val cause = s"*** Invalid: $entity"
     logger.error(cause)
     addFault(Fault(cause, BadRequest.intValue))
