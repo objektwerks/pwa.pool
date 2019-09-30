@@ -18,14 +18,12 @@ object Validators {
   }
 
   implicit class LicenseeOps(val licensee: Licensee) {
-    private def predicate: Boolean = {
+    def isValid: Boolean = {
       licensee.license === 36 &&
       licensee.email.nonEmpty &&
       licensee.activated <= DateTime.currentDate &&
       licensee.deactivated >= 0
     }
-    def isValid = predicate
-    def isInvalid: Boolean = !predicate
   }
 
   implicit class PoolOps(val pool: Pool) {
