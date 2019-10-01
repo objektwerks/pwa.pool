@@ -8,18 +8,18 @@ import org.slf4j.LoggerFactory
 
 import scala.util.control.NonFatal
 
-object PoolRoutes {
-  def apply(poolStore: PoolStore, licenseeCache: LicenseeCache): PoolRoutes = new PoolRoutes(poolStore, licenseeCache)
+object Router {
+  def apply(store: Store, licenseeCache: LicenseeCache): Router = new Router(store, licenseeCache)
 }
 
-class PoolRoutes(poolStore: PoolStore, licenseeCache: LicenseeCache) {
+class Router(store: Store, licenseeCache: LicenseeCache) {
   import Serializers._
   import Validators._
   import StatusCodes._
   import licenseeCache._
-  import poolStore._
+  import store._
 
-  val logger = LoggerFactory.getLogger(PoolRoutes.getClass)
+  val logger = LoggerFactory.getLogger(Router.getClass)
 
   val onUnauthorized = (cause: String) => {
     logger.error(cause)

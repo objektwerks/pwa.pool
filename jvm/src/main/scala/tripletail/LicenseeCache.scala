@@ -10,11 +10,11 @@ import scalacache.{Cache, Entry}
 import scala.concurrent.{ExecutionContext, Future}
 
 object LicenseeCache {
-  def apply(poolStore: PoolStore)(implicit ec: ExecutionContext): LicenseeCache = new LicenseeCache(poolStore)
+  def apply(store: Store)(implicit ec: ExecutionContext): LicenseeCache = new LicenseeCache(store)
 }
 
-class LicenseeCache(poolStore: PoolStore)(implicit ec: ExecutionContext) {
-  import poolStore._
+class LicenseeCache(store: Store)(implicit ec: ExecutionContext) {
+  import store._
 
   private val conf = Caffeine.newBuilder.maximumSize(1000L).expireAfterWrite(24, TimeUnit.HOURS).build[String, Entry[Licensee]]
   private val cache: Cache[Licensee] = CaffeineCache[Licensee](conf)

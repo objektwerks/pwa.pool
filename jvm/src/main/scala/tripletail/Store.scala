@@ -5,11 +5,11 @@ import io.getquill._
 
 import scala.concurrent.{ExecutionContext, Future}
 
-object PoolStore {
-  def apply(conf: Config)(implicit ec: ExecutionContext): PoolStore = new PoolStore(conf)
+object Store {
+  def apply(conf: Config)(implicit ec: ExecutionContext): Store = new Store(conf)
 }
 
-class PoolStore(conf: Config)(implicit ec: ExecutionContext) {
+class Store(conf: Config)(implicit ec: ExecutionContext) {
   implicit val ctx = new PostgresAsyncContext(SnakeCase, conf.getConfig("quill.ctx"))
   import ctx._
 
