@@ -16,7 +16,11 @@ object LicenseeCache {
 class LicenseeCache(store: Store)(implicit ec: ExecutionContext) {
   import store._
 
-  private val conf = Caffeine.newBuilder.maximumSize(1000L).expireAfterWrite(24, TimeUnit.HOURS).build[String, Entry[Licensee]]
+  private val conf = Caffeine
+    .newBuilder
+    .maximumSize(1000L)
+    .expireAfterWrite(24, TimeUnit.HOURS)
+    .build[String, Entry[Licensee]]
   private val cache: Cache[Licensee] = CaffeineCache[Licensee](conf)
 
   def cacheLicensee(licensee: Licensee): Unit = {
