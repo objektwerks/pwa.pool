@@ -7,11 +7,11 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.util.Try
 
-object PoolServerClient {
-  def apply(serverUrl: String): PoolServerClient = new PoolServerClient(serverUrl)
+object ServerProxy {
+  def apply(serverUrl: String): ServerProxy = new ServerProxy(serverUrl)
 }
 
-class PoolServerClient(serverUrl: String) {
+class ServerProxy(serverUrl: String) {
   import Serializers._
   import upickle.default._
 

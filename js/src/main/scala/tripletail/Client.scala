@@ -7,14 +7,14 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
 import scala.util.{Failure, Success}
 
-@JSExportTopLevel("PoolClient")
-object PoolClient {
+@JSExportTopLevel("Client")
+object Client {
   @JSExport
   def init(): Unit = {
     registerServiceWorker()
-    val poolRestClient = PoolServerClient("http://127.0.0.1:7979/api/v1/tripletail")
-    val poolModelView = PoolModelView(poolRestClient)
-    poolModelView.init()
+    val serverProxy = ServerProxy("http://127.0.0.1:7979/api/v1/tripletail")
+    val canvas = Canvas(serverProxy)
+    canvas.init()
   }
 
   def registerServiceWorker(): Unit = {
