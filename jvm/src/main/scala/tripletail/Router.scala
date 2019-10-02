@@ -54,6 +54,7 @@ class Router(store: Store, licenseeCache: LicenseeCache, emailer: Emailer) {
         if (signup.isValid) {
           onSuccess(signUp(signup.email)) { licensee =>
             cacheLicensee(licensee)
+            emailer.ping()
             complete(OK -> SignedUp(licensee))
           }
         } else complete(BadRequest -> onInvalid(signup))
