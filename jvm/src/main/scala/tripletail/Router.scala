@@ -9,10 +9,10 @@ import org.slf4j.LoggerFactory
 import scala.util.control.NonFatal
 
 object Router {
-  def apply(store: Store, licenseeCache: LicenseeCache): Router = new Router(store, licenseeCache)
+  def apply(store: Store, licenseeCache: LicenseeCache, emailer: Emailer): Router = new Router(store, licenseeCache, emailer)
 }
 
-class Router(store: Store, licenseeCache: LicenseeCache) {
+class Router(store: Store, licenseeCache: LicenseeCache, emailer: Emailer) {
   import Serializers._
   import Validators._
   import StatusCodes._
