@@ -1,7 +1,7 @@
 package tripletail
 
 import de.heikoseeberger.akkahttpupickle.{UpickleSupport => Upickle}
-import akka.actor.ActorSystem
+import akka.actor.{ActorSystem, Props}
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.model.headers.RawHeader
@@ -23,8 +23,8 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
   val conf = ConfigFactory.load("it.test.conf")
   val store = Store(conf)
   val cache = LicenseeCache(store)
-  val emailer = Emailer(conf)
-  val router = Router(store, cache, emailer)
+  val emailSender = system.actorOf(Props(classOf[EmailSender], conf), name = "emailSender")
+  val router = Router(store, cache, emailSender)
   val host = conf.getString("server.host")
   val port = conf.getInt("server.port")
   Http()
@@ -32,6 +32,9 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
     .map { server =>
       logger.info(s"*** Pool app integration test host: ${server.localAddress.toString}")
     }
+
+  val emailReceiver = system.actorOf(Props(classOf[EmailReceiver], conf), name = "emailReceiver")
+  emailReceiver ! ReceiveEmail
 
   import Upickle._
   import DateTime._
