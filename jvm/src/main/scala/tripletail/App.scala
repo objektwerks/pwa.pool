@@ -19,8 +19,8 @@ object App {
     val conf = ConfigFactory.load("app.conf")
     val store = Store(conf)
     val cache = LicenseeCache(store)
-    val emailSender = system.actorOf(Props(classOf[EmailSender], conf), name = "emailSender")
-    val router = Router(store, cache, emailSender)
+    val emailer = system.actorOf(Props(classOf[Emailer], conf), name = "emailer")
+    val router = Router(store, cache, emailer)
     val host = conf.getString("app.host")
     val port = conf.getInt("app.port")
     Http()
@@ -28,9 +28,6 @@ object App {
       .map { server =>
         logger.info(s"*** App host: ${server.localAddress.toString}")
       }
-
-    val emailReceiver = system.actorOf(Props(classOf[EmailReceiver], conf), name = "emailReceiver")
-    emailReceiver ! ReceiveEmail
 
     sys.addShutdownHook {
       logger.info("*** App shutting down...")

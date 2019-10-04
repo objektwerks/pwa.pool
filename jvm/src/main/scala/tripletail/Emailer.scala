@@ -4,7 +4,7 @@ import akka.actor.{Actor, ActorLogging}
 import com.typesafe.config.Config
 import jodd.mail.{Email, MailServer, SmtpServer}
 
-class EmailSender(conf: Config) extends Actor with ActorLogging {
+class Emailer(conf: Config) extends Actor with ActorLogging {
   private val smtpServer: SmtpServer = MailServer.create()
     .ssl(true)
     .host(conf.getString("email.smtp.host"))
