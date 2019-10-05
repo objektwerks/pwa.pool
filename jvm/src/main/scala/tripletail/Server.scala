@@ -9,10 +9,10 @@ import org.slf4j.LoggerFactory
 import scala.concurrent.Await
 import scala.concurrent.duration._
 
-object App {
+object Server {
   def main(args: Array[String]): Unit = {
-    val logger = LoggerFactory.getLogger(App.getClass)
-    val conf = ConfigFactory.load("app.conf")
+    val logger = LoggerFactory.getLogger(Server.getClass)
+    val conf = ConfigFactory.load("server.conf")
     implicit val system = ActorSystem.create(conf.getString("server.name"), conf.getConfig("akka"))
     implicit val materializer = ActorMaterializer()
     implicit val dispatcher = system.dispatcher
