@@ -16,11 +16,11 @@ import scala.language.postfixOps
 
 class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
   val logger = LoggerFactory.getLogger(getClass)
-  val actorRefFactory = ActorSystem.create(getClass.getSimpleName)
+  val conf = ConfigFactory.load("it.test.conf")
+  val actorRefFactory = ActorSystem.create(conf.getString("server.name"), conf.getConfig("akka"))
   implicit val dispatcher = system.dispatcher
   implicit val timeout = RouteTestTimeout(10.seconds dilated)
 
-  val conf = ConfigFactory.load("it.test.conf")
   val store = Store(conf)
   val cache = LicenseeCache(store)
   val emailer = system.actorOf(Props(classOf[Emailer], conf), name = "emailer")

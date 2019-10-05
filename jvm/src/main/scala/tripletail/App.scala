@@ -12,17 +12,17 @@ import scala.concurrent.duration._
 object App {
   def main(args: Array[String]): Unit = {
     val logger = LoggerFactory.getLogger(App.getClass)
-    implicit val system = ActorSystem()
+    val conf = ConfigFactory.load("app.conf")
+    implicit val system = ActorSystem.create(conf.getString("server.name"), conf.getConfig("akka"))
     implicit val materializer = ActorMaterializer()
     implicit val dispatcher = system.dispatcher
 
-    val conf = ConfigFactory.load("app.conf")
     val store = Store(conf)
     val cache = LicenseeCache(store)
     val emailer = system.actorOf(Props(classOf[Emailer], conf), name = "emailer")
     val router = Router(store, cache, emailer)
-    val host = conf.getString("app.host")
-    val port = conf.getInt("app.port")
+    val host = conf.getString("server.host")
+    val port = conf.getInt("server.port")
     Http()
       .bindAndHandle(router.routes, host, port)
       .map { server =>
