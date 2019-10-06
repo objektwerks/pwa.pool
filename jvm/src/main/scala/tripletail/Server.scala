@@ -26,14 +26,14 @@ object Server {
     Http()
       .bindAndHandle(router.routes, host, port)
       .map { server =>
-        logger.info(s"*** App host: ${server.localAddress.toString}")
+        logger.info(s"*** Server host: ${server.localAddress.toString}")
       }
 
     sys.addShutdownHook {
-      logger.info("*** App shutting down...")
+      logger.info("*** Server shutting down...")
       system.terminate()
       Await.result(system.whenTerminated, 30.seconds)
-      logger.info("*** App shutdown.")
+      logger.info("*** Server shutdown.")
     }
     ()
   }

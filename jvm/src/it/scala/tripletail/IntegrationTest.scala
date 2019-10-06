@@ -30,7 +30,7 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
   Http()
     .bindAndHandle(router.routes, host, port)
     .map { server =>
-      logger.info(s"*** Pool app integration test host: ${server.localAddress.toString}")
+      logger.info(s"*** Server integration test host: ${server.localAddress.toString}")
     }
 
   import Upickle._
