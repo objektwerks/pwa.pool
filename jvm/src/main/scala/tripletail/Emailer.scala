@@ -4,6 +4,8 @@ import akka.actor.{Actor, ActorLogging}
 import com.typesafe.config.Config
 import jodd.mail.{Email, MailServer, SendMailSession, SmtpServer}
 
+import scala.util.control.NonFatal
+
 class Emailer(conf: Config) extends Actor with ActorLogging {
   private val smtpServer: SmtpServer = MailServer.create()
     .ssl(true)
@@ -30,7 +32,7 @@ class Emailer(conf: Config) extends Actor with ActorLogging {
       session.open()
       messageId = Some( session.sendMail(buildEmail(to, license)) )
     } catch {
-      case t: Throwable => log.error(s"*** Emailer send to: $to failed: ${t.getMessage}")
+      case NonFatal(error) => log.error(s"*** Emailer send to: $to failed: ${error.getMessage}")
     } finally {
       session.close()
     }
