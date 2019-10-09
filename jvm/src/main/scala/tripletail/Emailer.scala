@@ -18,19 +18,19 @@ class Emailer(conf: Config) extends Actor with ActorLogging {
   private val message = conf.getString("email.message")
   private val retries = conf.getInt("email.retries")
 
-  private def buildEmail(to: String, license: String): Email = Email.create()
+  private def buildEmail(to: String, license: String, uri: String): Email = Email.create()
     .from(from)
     .to(to)
     .subject(subject)
-    .textMessage(s"$message: $license")
+    .textMessage(s"$message: $uri?license=$license")
 
-  private def sendEmail(to: String, license: String): Option[String] = {
+  private def sendEmail(to: String, license: String, uri: String): Option[String] = {
     var session: SendMailSession = null
     var messageId: Option[String] = None
     try {
       session = smtpServer.createSession
       session.open()
-      messageId = Some( session.sendMail(buildEmail(to, license)) )
+      messageId = Some( session.sendMail(buildEmail(to, license, uri)) )
     } catch {
       case NonFatal(error) => log.error(s"*** Emailer send to: $to failed: ${error.getMessage}")
     } finally {
@@ -44,7 +44,7 @@ class Emailer(conf: Config) extends Actor with ActorLogging {
       var attempts = 0
       var messageId: Option[String] = None
       while ( attempts < retries && messageId.isEmpty ) {
-        messageId = sendEmail(send.to, send.license)
+        messageId = sendEmail(send.to, send.license, send.uri)
         attempts = attempts + 1
       }
   }

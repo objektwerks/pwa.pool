@@ -55,8 +55,10 @@ class Router(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef) {
         if (signup.isValid) {
           onSuccess(signUp(signup.email)) { licensee =>
             cacheLicensee(licensee)
-            emailer ! SendEmail(to = signup.email, license = licensee.license)
-            complete(OK -> SignedUp(licensee))
+            extractRequestContext { context =>
+              emailer ! SendEmail(to = signup.email, license = licensee.license, uri = context.request.uri.toString)
+              complete(OK -> SignedUp(licensee))
+            }
           }
         } else complete(BadRequest -> onInvalid(signup))
       }
