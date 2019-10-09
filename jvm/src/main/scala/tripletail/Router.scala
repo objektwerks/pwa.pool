@@ -62,6 +62,11 @@ class Router(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef) {
       }
     }
   }
+  val activate = path("activate" / Segment) { license: String =>
+    get {
+      complete(OK -> license)
+    }
+  }
   val signin = path("signin") {
     post {
       entity(as[SignIn]) { signin =>
@@ -360,5 +365,5 @@ class Router(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef) {
     }
   }
   val secureApi = secure { api }
-  val routes = Route.seal( index ~ resources ~ signup ~ secureApi )
+  val routes = Route.seal( index ~ resources ~ signup ~ activate ~ secureApi )
 }
