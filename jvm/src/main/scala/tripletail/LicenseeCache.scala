@@ -14,6 +14,7 @@ object LicenseeCache {
 }
 
 class LicenseeCache(store: Store)(implicit ec: ExecutionContext) {
+  import Validators._
   import store._
 
   private val conf = Caffeine
@@ -24,7 +25,7 @@ class LicenseeCache(store: Store)(implicit ec: ExecutionContext) {
 
   private val cache: Cache[Licensee] = CaffeineCache[Licensee](conf)
 
-  private def isActive(licensee: Licensee): Boolean = licensee.license.nonEmpty && licensee.activated > 0 && licensee.deactivated == 0
+  private def isActive(licensee: Licensee): Boolean = licensee.isValid
 
   def cacheLicensee(licensee: Licensee): Unit = {
     if (cache.get(licensee.license).isEmpty) cache.put(licensee.license)(licensee)
