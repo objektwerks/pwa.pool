@@ -64,9 +64,10 @@ class Router(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef) {
       }
     }
   }
-  val activate = path("activate" / Segment) { license: String =>
+  val activatelicense = path("activatelicense" / Segment) { license: String =>
     get {
-      complete(OK -> license)
+      activateLicense(license)
+      complete(OK)
     }
   }
   val signin = path("signin") {
@@ -367,5 +368,5 @@ class Router(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef) {
     }
   }
   val secureApi = secure { api }
-  val routes = Route.seal( index ~ resources ~ signup ~ activate ~ secureApi )
+  val routes = Route.seal( index ~ resources ~ signup ~ activatelicense ~ secureApi )
 }

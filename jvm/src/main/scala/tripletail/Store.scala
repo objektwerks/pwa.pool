@@ -20,6 +20,10 @@ class Store(conf: Config)(implicit ec: ExecutionContext) {
     }
   }
 
+  def activateLicense(license: String): Future[Int] = ctx.transaction { implicit ec =>
+    run( query[Licensee].filter(_.license == lift(license)).update(_.activated -> lift(DateTime.currentDate))).map(_ => 1)
+  }
+
   def signIn(license: String, email: String): Future[Option[Licensee]] = {
     run(
       query[Licensee]
