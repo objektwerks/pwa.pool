@@ -57,6 +57,14 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
     }
   }
 
+  "activatelicense" should {
+    "get license" in {
+      Get(url + s"/activatelicense?license=${licensee.license}") ~> router.routes ~> check {
+        status shouldBe OK
+      }
+    }
+  }
+
   "signin" should {
     "post to signedin" in {
       Post(url + "/signin", SignIn(licensee.license, licensee.email)) ~> addHeader(licenseHeader) ~> router.routes ~> check {
