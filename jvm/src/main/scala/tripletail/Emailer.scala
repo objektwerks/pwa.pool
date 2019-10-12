@@ -22,7 +22,14 @@ class Emailer(conf: Config) extends Actor with ActorLogging {
     .from(from)
     .to(to)
     .subject(subject)
-    .textMessage(s"$message: $uri?license=$license")
+    .htmlMessage(
+      s"""
+         |<body>
+         |<h3>$subject</h3>
+         |<p>$message <a href="$uri/activatelicense?license=$license"></a></p>
+         |</body>
+         |""".stripMargin,
+      "UTF-8")
 
   private def sendEmail(to: String, license: String, uri: String): Option[String] = {
     var session: SendMailSession = null

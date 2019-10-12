@@ -25,22 +25,22 @@ class LicenseeCache(store: Store)(implicit ec: ExecutionContext) {
 
   private val cache: Cache[Licensee] = CaffeineCache[Licensee](conf)
 
-  private def isActive(licensee: Licensee): Boolean = licensee.isValid
+  private def isActivated(licensee: Licensee): Boolean = licensee.isValid
 
   def cacheLicensee(licensee: Licensee): Unit = {
     if (cache.get(licensee.license).isEmpty) cache.put(licensee.license)(licensee)
     ()
   }
 
-  def isLicenseActive(license: String): Future[Boolean] = {
+  def isLicenseActivated(license: String): Future[Boolean] = {
     if (cache.get(license).nonEmpty) {
-      Future.successful(isActive(cache.get(license).get))
+      Future.successful(isActivated(cache.get(license).get))
     } else {
       getLicensee(license).flatMap { option =>
         if (option.nonEmpty) {
           val licensee = option.get
           cacheLicensee(licensee)
-          Future.successful(isActive(cache.get(license).get))
+          Future.successful(isActivated(cache.get(license).get))
         } else {
           Future.successful(false)
         }

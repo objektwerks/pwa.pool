@@ -359,10 +359,10 @@ class Router(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef) {
       cleanings ~ measurements ~ chemicals ~ supplies ~ repairs
   }
   val secure = (route: Route) => headerValueByName(Licensee.licenseHeaderKey) { license =>
-    onSuccess(isLicenseActive(license)) { isActive =>
-      if (isActive) route
+    onSuccess(isLicenseActivated(license)) { isActivated =>
+      if (isActivated) route
       else {
-        val cause = s"*** Unauthorized license: $license"
+        val cause = s"*** License is not activated: $license"
         complete(Unauthorized -> onUnauthorized(cause))
       }
     }
