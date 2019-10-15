@@ -27,8 +27,8 @@ class Store(conf: Config)(implicit ec: ExecutionContext) {
       .filter(_.license == lift(license))
       .filter(_.activated == 0)
       .filter(_.deactivated == 0)
-      .update(_.activated -> lift(DateTime.currentDate)))
-      .map(_ => 1)
+      .update(_.activated -> lift(DateTime.currentDate))
+    ).map(_ => 1)
   }
 
   def signIn(license: String, email: String): Future[Option[Licensee]] =
@@ -60,8 +60,8 @@ class Store(conf: Config)(implicit ec: ExecutionContext) {
   def updatePool(pool: Pool): Future[Int] = ctx.transaction { implicit ec =>
     run( query[Pool]
       .filter(_.id == lift(pool.id))
-      .update(lift(pool)))
-      .map(_ => 1)
+      .update(lift(pool))
+    ).map(_ => 1)
   }
 
   def listSurfaces(poolId: Int): Future[Seq[Surface]] =
@@ -78,8 +78,8 @@ class Store(conf: Config)(implicit ec: ExecutionContext) {
   def updateSurface(surface: Surface): Future[Int] = ctx.transaction { implicit ec =>
     run( query[Surface]
       .filter(_.poolId == lift(surface.poolId))
-      .update(lift(surface)))
-      .map(_ => 1)
+      .update(lift(surface))
+    ).map(_ => 1)
   }
 
   def listPumps(poolId: Int): Future[Seq[Pump]] =
@@ -96,7 +96,8 @@ class Store(conf: Config)(implicit ec: ExecutionContext) {
   def updatePump(pump: Pump): Future[Int] = ctx.transaction { implicit ec =>
     run( query[Pump]
       .filter(_.poolId == lift(pump.poolId))
-      .update(lift(pump)) ).map(_ => 1)
+      .update(lift(pump))
+    ).map(_ => 1)
   }
 
   def listTimers(poolId: Int): Future[Seq[Timer]] =
