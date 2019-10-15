@@ -34,7 +34,7 @@ class Store(conf: Config)(implicit ec: ExecutionContext) {
   def signIn(license: String, email: String): Future[Option[Licensee]] =
     run(
       query[Licensee]
-        .filter(_.license == lift(license) )
+        .filter(_.license == lift(license))
         .filter(_.email == lift(email))
         .filter(_.activated > 0)
         .filter(_.deactivated == 0)
@@ -43,7 +43,7 @@ class Store(conf: Config)(implicit ec: ExecutionContext) {
   def getLicensee(license: String): Future[Option[Licensee]] =
     run(
       query[Licensee]
-        .filter(_.license == lift(license) )
+        .filter(_.license == lift(license))
     ).map(result => result.headOption)
 
   def listPools(license: String): Future[Seq[Pool]] =
@@ -60,7 +60,7 @@ class Store(conf: Config)(implicit ec: ExecutionContext) {
   def updatePool(pool: Pool): Future[Int] = ctx.transaction { implicit ec =>
     run( query[Pool]
       .filter(_.id == lift(pool.id))
-      .update(lift(pool)) )
+      .update(lift(pool)))
       .map(_ => 1)
   }
 
@@ -78,19 +78,25 @@ class Store(conf: Config)(implicit ec: ExecutionContext) {
   def updateSurface(surface: Surface): Future[Int] = ctx.transaction { implicit ec =>
     run( query[Surface]
       .filter(_.poolId == lift(surface.poolId))
-      .update(lift(surface)) )
+      .update(lift(surface)))
       .map(_ => 1)
   }
 
   def listPumps(poolId: Int): Future[Seq[Pump]] =
-    run( query[Pump].filter(_.poolId == lift(poolId)).sortBy(_.installed)(Ord.desc) )
+    run( query[Pump]
+      .filter(_.poolId == lift(poolId))
+      .sortBy(_.installed)(Ord.desc) )
 
   def addPump(pump: Pump): Future[Int] = ctx.transaction { implicit ec =>
-    run( query[Pump].insert(lift(pump)).returningGenerated(_.id) )
+    run( query[Pump]
+      .insert(lift(pump))
+      .returningGenerated(_.id) )
   }
 
   def updatePump(pump: Pump): Future[Int] = ctx.transaction { implicit ec =>
-    run( query[Pump].filter(_.poolId == lift(pump.poolId)).update(lift(pump)) ).map(_ => 1)
+    run( query[Pump]
+      .filter(_.poolId == lift(pump.poolId))
+      .update(lift(pump)) ).map(_ => 1)
   }
 
   def listTimers(poolId: Int): Future[Seq[Timer]] =
