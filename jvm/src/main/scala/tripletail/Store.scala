@@ -65,14 +65,21 @@ class Store(conf: Config)(implicit ec: ExecutionContext) {
   }
 
   def listSurfaces(poolId: Int): Future[Seq[Surface]] =
-    run( query[Surface].filter(_.poolId == lift(poolId)).sortBy(_.installed)(Ord.desc) )
+    run( query[Surface]
+      .filter(_.poolId == lift(poolId))
+      .sortBy(_.installed)(Ord.desc) )
 
   def addSurface(surface: Surface): Future[Int] = ctx.transaction { implicit ec =>
-    run( query[Surface].insert(lift(surface)).returningGenerated(_.id) )
+    run( query[Surface]
+      .insert(lift(surface))
+      .returningGenerated(_.id) )
   }
 
   def updateSurface(surface: Surface): Future[Int] = ctx.transaction { implicit ec =>
-    run( query[Surface].filter(_.poolId == lift(surface.poolId)).update(lift(surface)) ).map(_ => 1)
+    run( query[Surface]
+      .filter(_.poolId == lift(surface.poolId))
+      .update(lift(surface)) )
+      .map(_ => 1)
   }
 
   def listPumps(poolId: Int): Future[Seq[Pump]] =
