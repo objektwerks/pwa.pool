@@ -24,25 +24,27 @@ class Store(conf: Config)(implicit ec: ExecutionContext) {
 
   def activateLicense(license: String): Future[Int] = ctx.transaction { implicit ec =>
     run( query[Licensee]
-      .filter(l => l.license == lift(license) && l.activated == lift(0) && l.deactivated == lift(0))
+      .filter(_.license == lift(license))
+      .filter(_.activated == 0)
+      .filter(_.deactivated == 0)
       .update(_.activated -> lift(DateTime.currentDate)))
       .map(_ => 1)
   }
 
-  def signIn(license: String, email: String): Future[Option[Licensee]] = {
+  def signIn(license: String, email: String): Future[Option[Licensee]] =
     run(
       query[Licensee]
-        .filter( licensee => licensee.license == lift(license) )
-        .filter( licensee => licensee.email == lift(email) && licensee.deactivated == 0 )
+        .filter(_.license == lift(license) )
+        .filter(_.email == lift(email))
+        .filter(_.activated > 0)
+        .filter(_.deactivated == 0)
     ).map(result => result.headOption)
-  }
 
-  def getLicensee(license: String): Future[Option[Licensee]] = {
+  def getLicensee(license: String): Future[Option[Licensee]] =
     run(
       query[Licensee]
-        .filter( licensee => licensee.license == lift(license) )
+        .filter(_.license == lift(license) )
     ).map(result => result.headOption)
-  }
 
   def listPools(license: String): Future[Seq[Pool]] =
     run( query[Pool]
