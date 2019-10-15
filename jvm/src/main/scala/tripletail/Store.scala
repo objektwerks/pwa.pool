@@ -16,12 +16,17 @@ class Store(conf: Config)(implicit ec: ExecutionContext) {
   def signUp(email: String): Future[Licensee] = {
     val licensee = Licensee(email = email)
     ctx.transaction { implicit ec =>
-      run(query[Licensee].insert(lift(licensee))).map(_ => licensee)
+      run(query[Licensee]
+        .insert(lift(licensee)))
+        .map(_ => licensee)
     }
   }
 
   def activateLicense(license: String): Future[Int] = ctx.transaction { implicit ec =>
-    run( query[Licensee].filter(_.license == lift(license)).update(_.activated -> lift(DateTime.currentDate))).map(_ => 1)
+    run( query[Licensee]
+      .filter(l => l.license == lift(license) && l.activated == lift(0) && l.deactivated == lift(0))
+      .update(_.activated -> lift(DateTime.currentDate)))
+      .map(_ => 1)
   }
 
   def signIn(license: String, email: String): Future[Option[Licensee]] = {
