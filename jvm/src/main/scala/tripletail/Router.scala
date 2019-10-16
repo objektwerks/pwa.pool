@@ -63,12 +63,10 @@ class Router(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef) {
       }
     }
   }
-  val activatelicense = path("activatelicense") {
-    post {
-      entity(as[String]) { license =>
-        onSuccess(activateLicense(license, DateTime.currentDate)) { activatedDate =>
-          complete(OK -> activatedDate)
-        }
+  val activatelicense = path("activatelicense" / Segment) { license: String =>
+    get {
+      onSuccess(activateLicense(license, DateTime.currentDate)) { activatedDate =>
+        complete(OK -> activatedDate)
       }
     }
   }

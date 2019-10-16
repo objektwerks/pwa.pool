@@ -18,18 +18,20 @@ class Emailer(conf: Config) extends Actor with ActorLogging {
   private val message = conf.getString("email.message")
   private val retries = conf.getInt("email.retries")
 
-  private def buildEmail(to: String, license: String, uri: String): Email = Email.create()
-    .from(from)
-    .to(to)
-    .subject(subject)
-    .htmlMessage(
-      s"""
-         |<body>
-         |<h3>$subject</h3>
-         |<p>$message <a href="$uri/activatelicense?license=$license"></a></p>
-         |</body>
-         |""".stripMargin,
-      "UTF-8")
+  private def buildEmail(to: String, license: String, uri: String): Email = {
+    val html = s"""
+                |<body>
+                |<h3>$subject</h3>
+                |<p>$message <a href="$uri/activatelicense/$license"></a></p>
+                |</body>
+                |""".stripMargin
+    println(s"*** Html: $html")
+    Email.create()
+      .from(from)
+      .to(to)
+      .subject(subject)
+      .htmlMessage(html, "UTF-8")
+  }
 
   private def sendEmail(to: String, license: String, uri: String): Option[String] = {
     var session: SendMailSession = null

@@ -57,8 +57,8 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
     }
   }
   "activatelicense" should {
-    "get license" in {
-      Post("/activatelicense", licensee.license) ~> router.routes ~> check {
+    "get to activated date" in {
+      Get("/activatelicense/" + licensee.license) ~> router.routes ~> check {
         status shouldBe OK
         val activatedDate = responseAs[Int]
         licensee = licensee.copy(activated = activatedDate)
