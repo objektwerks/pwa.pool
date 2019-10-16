@@ -16,14 +16,43 @@ class Emailer(conf: Config) extends Actor with ActorLogging {
   private val from = conf.getString("email.from")
   private val subject = conf.getString("email.subject")
   private val message = conf.getString("email.message")
+  private val activated = conf.getString("email.activated")
+  private val activationFailed = conf.getString("email.activationFailed")
   private val retries = conf.getInt("email.retries")
 
   private def buildEmail(to: String, license: String, uri: String): Email = {
     val html = s"""
-                |<body>
-                |<h3>$message <a href="$uri/activatelicense/$license">$subject</a></h3>
-                |</body>
-                |""".stripMargin
+                  |<!DOCTYPE html>
+                  |<html lang="en">
+                  |<head>
+                  |<meta charset="utf-8">
+                  |<title>$subject</title>
+                  |</head>
+                  |<body>
+                  |<h3>$subject</h3>
+                  |<div>
+                  |<p>Email: $to</p>
+                  |<p>License: $license</p>
+                  |<p id="onActivated"></p>
+                  |<p>$message<button type="button" onclick="activateLicense()">$subject</button></p>
+                  |</div>
+                  |<script>
+                  |function activateLicense() {
+                  |  var xhr = new XMLHttpRequest();
+                  |  xhr.onreadystatechange = function() {
+                  |    document.getElementById("onActivated").innerHTML = $activationFailed
+                  |    if (this.readyState == 4 && this.status == 200) {
+                  |      document.getElementById("onActivated").innerHTML = $activated + " on " + xhr.responseText;
+                  |    } else if (this.readyState == 4 && this.status != 200) {
+                  |      document.getElementById("onActivated").innerHTML = $activationFailed
+                  |    }
+                  |  };
+                  |  xhr.open("GET", https://$uri/activatelicense/$license, false);
+                  |}
+                  |</script>
+                  |</body>
+                  |</html>
+                  |""".stripMargin
     Email.create()
       .from(from)
       .to(to)
