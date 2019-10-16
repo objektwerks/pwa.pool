@@ -21,6 +21,7 @@ class Router(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef) {
   import store._
 
   val logger = LoggerFactory.getLogger(Router.getClass)
+  val url = "/api/v1/tripletail"
 
   val onUnauthorized = (cause: String) => {
     logger.error(cause)
@@ -54,10 +55,8 @@ class Router(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef) {
       entity(as[SignUp]) { signup =>
         if (signup.isValid) {
           onSuccess(signUp(signup.email)) { licensee =>
-            extractRequestContext { context =>
-              emailer ! SendEmail(to = signup.email, license = licensee.license, uri = context.request.uri.toString)
-              complete(OK -> SignedUp(licensee))
-            }
+            emailer ! SendEmail(to = signup.email, license = licensee.license, uri = url)
+            complete(OK -> SignedUp(licensee))
           }
         } else complete(BadRequest -> onInvalid(signup))
       }
@@ -353,7 +352,6 @@ class Router(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef) {
       }
     }
   }
-  val url = "/api/v1/tripletail"
   val api = pathPrefix("api" / "v1" / "tripletail") {
     signin ~ pools ~ surfaces ~ pumps ~ timers ~ timersettings ~ heaters ~ heatersettings ~
       cleanings ~ measurements ~ chemicals ~ supplies ~ repairs

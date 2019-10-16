@@ -21,11 +21,9 @@ class Emailer(conf: Config) extends Actor with ActorLogging {
   private def buildEmail(to: String, license: String, uri: String): Email = {
     val html = s"""
                 |<body>
-                |<h3>$subject</h3>
-                |<p>$message <a href="$uri/activatelicense/$license"></a></p>
+                |<h3>$message <a href="$uri/activatelicense/$license">$subject</a></h3>
                 |</body>
                 |""".stripMargin
-    println(s"*** Html: $html")
     Email.create()
       .from(from)
       .to(to)
