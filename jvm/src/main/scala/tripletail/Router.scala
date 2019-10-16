@@ -54,7 +54,6 @@ class Router(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef) {
       entity(as[SignUp]) { signup =>
         if (signup.isValid) {
           onSuccess(signUp(signup.email)) { licensee =>
-            cacheLicensee(licensee)
             extractRequestContext { context =>
               emailer ! SendEmail(to = signup.email, license = licensee.license, uri = context.request.uri.toString)
               complete(OK -> SignedUp(licensee))
@@ -64,10 +63,13 @@ class Router(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef) {
       }
     }
   }
-  val activatelicense = path("activatelicense" / Segment) { license: String =>
-    get {
-      activateLicense(license)
-      complete(OK)
+  val activatelicense = path("activatelicense") {
+    post {
+      entity(as[String]) { license =>
+        onSuccess(activateLicense(license, DateTime.currentDate)) { activatedDate =>
+          complete(OK -> activatedDate)
+        }
+      }
     }
   }
   val signin = path("signin") {

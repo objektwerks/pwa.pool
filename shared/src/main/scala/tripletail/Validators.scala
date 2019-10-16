@@ -21,7 +21,7 @@ object Validators {
     def isValid: Boolean =
       licensee.license === 36 &&
       licensee.email.nonEmpty &&
-      licensee.activated > 0 &&
+      licensee.activated >= 0 &&
       licensee.deactivated == 0
   }
 

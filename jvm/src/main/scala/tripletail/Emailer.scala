@@ -10,7 +10,7 @@ class Emailer(conf: Config) extends Actor with ActorLogging {
   private val smtpServer: SmtpServer = MailServer.create()
     .ssl(true)
     .host(conf.getString("email.smtp.host"))
-    .auth(conf.getString("email.smtp.user"), conf.getString("email.smtp.user"))
+    .auth(conf.getString("email.smtp.user"), conf.getString("email.smtp.password"))
     .buildSmtpMailServer()
 
   private val from = conf.getString("email.from")
