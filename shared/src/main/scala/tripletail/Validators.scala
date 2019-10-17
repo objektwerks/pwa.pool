@@ -25,6 +25,10 @@ object Validators {
       licensee.deactivated == 0
   }
 
+  implicit class LicenseOps(val license: License) {
+    def isValid: Boolean = license.value === 36
+  }
+
   implicit class PoolOps(val pool: Pool) {
     def isValid: Boolean =
       pool.id >= 0 &&

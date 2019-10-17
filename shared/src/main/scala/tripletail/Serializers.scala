@@ -6,14 +6,15 @@ object Serializers {
   implicit val faultRW: ReadWriter[Fault] = macroRW
 
   implicit val entityRW: ReadWriter[Entity] = ReadWriter.merge(
-    macroRW[SignUp], macroRW[SignIn], macroRW[Licensee], macroRW[Pool], macroRW[PoolId], macroRW[Surface], macroRW[Pump],
-    macroRW[Timer], macroRW[TimerId], macroRW[TimerSetting], macroRW[Heater], macroRW[HeaterId], macroRW[HeaterSetting],
+    macroRW[SignUp], macroRW[SignIn], macroRW[Licensee], macroRW[License], macroRW[Pool], macroRW[PoolId], macroRW[Surface],
+    macroRW[Pump], macroRW[Timer], macroRW[TimerId], macroRW[TimerSetting], macroRW[Heater], macroRW[HeaterId], macroRW[HeaterSetting],
     macroRW[Cleaning], macroRW[Measurement], macroRW[Chemical], macroRW[Supply], macroRW[Repair]
   )
 
   implicit val signupRW: ReadWriter[SignUp] = macroRW
   implicit val signinRW: ReadWriter[SignIn] = macroRW
   implicit val licenseeRW: ReadWriter[Licensee] = macroRW
+  implicit val licenseRW: ReadWriter[License] = macroRW
   implicit val poolRW: ReadWriter[Pool] = macroRW
   implicit val poolIdRW: ReadWriter[PoolId] = macroRW
   implicit val surfaceRW: ReadWriter[Surface] = macroRW

@@ -88,10 +88,10 @@ class Router(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef) {
   }
   val pools = path("pools") {
     post {
-      entity(as[Licensee]) { licensee =>
-        if (licensee.isValid) onSuccess(listPools(licensee.license)) { pools => complete(OK -> Pools(pools)) }
+      entity(as[License]) { license =>
+        if (license.isValid) onSuccess(listPools(license.value)) { pools => complete(OK -> Pools(pools)) }
         else {
-          val cause = s"*** Unauthorized licensee: $licensee"
+          val cause = s"*** Unauthorized license: $license"
           complete(Unauthorized -> onUnauthorized(cause))
         }
       }

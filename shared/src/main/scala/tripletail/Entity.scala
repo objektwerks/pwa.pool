@@ -11,11 +11,15 @@ final case class SignIn(license: String, email: String) extends Entity
 final case class Licensee(license: String = UUID.randomUUID.toString.toLowerCase,
                           email: String,
                           activated: Int = 0,
-                          deactivated: Int = 0) extends Entity
+                          deactivated: Int = 0) extends Entity {
+  def toLicense: License = License(license)
+}
 
 object Licensee {
   val licenseHeaderKey = "license"
 }
+
+final case class License(value: String) extends Entity
 
 final case class Pool(id: Int = 0,
                       license: String,
