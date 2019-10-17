@@ -50,7 +50,7 @@ class Emailer(conf: Config) extends Actor with ActorLogging {
                   |      document.getElementById("onActivated").innerHTML = $activationFailed
                   |    }
                   |  };
-                  |  xhr.open("GET", https://$uri/activatelicense/$license, false);
+                  |  xhr.open("GET", $uri/$license, false);
                   |}
                   |</script>
                   |</body>

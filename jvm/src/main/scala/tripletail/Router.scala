@@ -22,6 +22,7 @@ class Router(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef) {
 
   val logger = LoggerFactory.getLogger(Router.getClass)
   val url = "/api/v1/tripletail"
+  val emailUrl = "http://api/v1/tripletail"
 
   val onUnauthorized = (cause: String) => {
     logger.error(cause)
@@ -55,7 +56,7 @@ class Router(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef) {
       entity(as[SignUp]) { signup =>
         if (signup.isValid) {
           onSuccess(signUp(signup.email)) { licensee =>
-            emailer ! SendEmail(to = signup.email, license = licensee.license, uri = url)
+            emailer ! SendEmail(to = signup.email, license = licensee.license, uri = emailUrl)
             complete(OK -> SignedUp(licensee))
           }
         } else complete(BadRequest -> onInvalid(signup))
