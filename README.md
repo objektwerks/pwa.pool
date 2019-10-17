@@ -44,20 +44,24 @@ Bloop
 4. bloop test sharedJVM
 5. bloop test jvm-it
 
+Build
+-----
+>View js-fastopt.js in js/target. View sharedjs-fastopt.js in shared/target.
+1. sbt clean compile package
+
 Run
 ---
 1. sbt jvm/run
-2. open browser to http://127.0.0.1:7979
+2. open index.html and click target browser in right top corner
+3. open developer tools in target brower; select console tab
 
 Scenarios
 ---------
 1. If Licensee not persisted on client:
     1. Sign up with email; or
     2. Sign in with license and email
-2. Else If Licensee is persisted on client:
-    1. Sign in with persisted Licensee(license and emails)
-3. List | Add | Update pool, surface, pump, timer, timersetting heater, heatersetting, lifecycle, cleaning, measurement, chemical, supply, repair
-4. Chart measurements, chemicals, supplies and repairs
+2. List | Add | Update pool, surface, pump, timer, timersetting heater, heatersetting, lifecycle, cleaning, measurement, chemical, supply, repair
+3. Chart measurements, chemicals, supplies and repairs
 
 Panes
 -----
