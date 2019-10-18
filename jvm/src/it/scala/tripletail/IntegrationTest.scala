@@ -52,7 +52,7 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
         status shouldBe OK
         licensee = responseAs[SignedUp].licensee
         licenseHeader = RawHeader(Licensee.licenseHeaderKey, licensee.license)
-        licensee.isValid shouldBe false // Not activated yet!!!
+        licensee.isActivated shouldBe false
       }
     }
   }
@@ -62,6 +62,7 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
         status shouldBe OK
         val activatedDate = responseAs[Int]
         licensee = licensee.copy(activated = activatedDate)
+        licensee.isActivated shouldBe true
       }
     }
   }
@@ -71,6 +72,7 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
       Post(url + "/signin", SignIn(licensee.license, licensee.email)) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         responseAs[SignedIn].licensee shouldEqual licensee
+        licensee.isActivated shouldBe true
       }
     }
   }
