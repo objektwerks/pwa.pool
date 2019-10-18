@@ -23,6 +23,7 @@ object Validators {
       licensee.email.nonEmpty &&
       licensee.activated > 0 &&
       licensee.deactivated == 0
+    def isActivated: Boolean = isValid
   }
 
   implicit class LicenseOps(val license: License) {
