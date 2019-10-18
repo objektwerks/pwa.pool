@@ -28,9 +28,15 @@ scalacOptions ++= Seq(
 Dev
 ---
 1. sbt
-2. project jvm
-3. ~reStart
-4. open browser to http://127.0.0.1:7979
+2. clean
+3. compile
+4. project jvm
+5. ~reStart
+6. open browser to http://127.0.0.1:7979
+7. open developer tools
+
+>View js-fastopt.js in js/target. View sharedjs-fastopt.js in shared/target.
+>For step 5, see the build.sbt > mainClass in reStart := Some("tripletail.Server")
 
 Test
 ----
