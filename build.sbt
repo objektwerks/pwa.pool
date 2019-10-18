@@ -63,7 +63,7 @@ lazy val jvm = (project in file("jvm"))
   .settings(commonSettings)
   .settings(
     Defaults.itSettings,
-    mainClass in reStart := Some("tripletail.PoolApp"),
+    mainClass in reStart := Some("tripletail.Server"),
     libraryDependencies ++= Seq(
       "com.typesafe.akka" %% "akka-actor" % akkaVersion,
       "com.typesafe.akka" %% "akka-http" % akkkHttpVersion,
