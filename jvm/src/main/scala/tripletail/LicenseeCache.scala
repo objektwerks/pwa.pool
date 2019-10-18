@@ -33,17 +33,16 @@ class LicenseeCache(store: Store)(implicit ec: ExecutionContext) {
   }
 
   def isLicenseActivated(license: String): Future[Boolean] = {
-    if (cache.get(license).nonEmpty) {
-      Future.successful(isActivated(cache.get(license).get))
-    } else {
+    if (cache.get(license).nonEmpty) Future.successful(isActivated(cache.get(license).get))
+    else {
       getLicensee(license).flatMap { option =>
         if (option.nonEmpty) {
           val licensee = option.get
-          cacheLicensee(licensee)
-          Future.successful(isActivated(cache.get(license).get))
-        } else {
-          Future.successful(false)
-        }
+          if (isActivated(licensee)) {
+            cacheLicensee(licensee)
+            Future.successful(true)
+          } else Future.successful(false)
+        } else Future.successful(false)
       }
     }
   }
