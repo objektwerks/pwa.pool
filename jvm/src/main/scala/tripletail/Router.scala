@@ -62,10 +62,19 @@ class Router(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef) {
       }
     }
   }
-  val activatelicense = path("activatelicense" / Segment) { license: String =>
-    get {
-      onSuccess(activateLicense(license, DateTime.currentDate)) { activatedDate =>
-        complete(OK -> activatedDate)
+  val activatelicensee = path("activatelicensee") {
+    post {
+      entity(as[ActivateLicensee]) { activatelicensee =>
+        if (activatelicensee.isValid) {
+          onSuccess(activateLicensee(activatelicensee.license, activatelicensee.email, DateTime.currentDate)) {
+            case Some(licensee) =>
+              cacheLicensee(licensee)
+              complete(OK -> LicenseeActivated(licensee))
+            case None =>
+              val cause = s"*** Unauthorized license: ${activatelicensee.license} and/or email: ${activatelicensee.email}"
+              complete(Unauthorized -> onUnauthorized(cause))
+          }
+        } else complete(BadRequest -> onInvalid(activatelicensee))
       }
     }
   }
@@ -366,5 +375,5 @@ class Router(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef) {
     }
   }
   val secureApi = secure { api }
-  val routes = Route.seal( index ~ resources ~ signup ~ activatelicense ~ secureApi )
+  val routes = Route.seal( index ~ resources ~ signup ~ activatelicensee ~ secureApi )
 }
