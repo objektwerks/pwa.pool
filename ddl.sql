@@ -4,6 +4,7 @@ CREATE SCHEMA PUBLIC;
 CREATE TABLE licensee (
   license VARCHAR PRIMARY KEY,
   email VARCHAR NOT NULL,
+  created INT NOT NULL,
   activated INT NOT NULL,
   deactivated INT NOT NULL
 );

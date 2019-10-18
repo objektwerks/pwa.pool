@@ -10,6 +10,7 @@ final case class SignIn(license: String, email: String) extends Entity
 
 final case class Licensee(license: String = UUID.randomUUID.toString.toLowerCase,
                           email: String,
+                          created: Int = DateTime.currentDate,
                           activated: Int = 0,
                           deactivated: Int = 0) extends Entity {
   def toLicense: License = License(license)
