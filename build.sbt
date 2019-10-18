@@ -43,6 +43,7 @@ lazy val js = (project in file("js"))
   .settings(
     libraryDependencies ++= Seq(
       "com.raquo" %%% "laminar" % "0.7.1",
+      "com.raquo" %%% "domtypes" % "0.9.5",
       "com.lihaoyi" %%% "upickle" % upickleVersion
     )
   ) dependsOn sharedJS

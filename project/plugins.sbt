@@ -1,6 +1,6 @@
 addSbtPlugin("ch.epfl.scala" % "sbt-bloop" % "1.3.4")
 
-addSbtPlugin("org.scala-js" % "sbt-scalajs" % "0.6.28")
+addSbtPlugin("org.scala-js" % "sbt-scalajs" % "0.6.29")
 addSbtPlugin("org.portable-scala" % "sbt-scalajs-crossproject" % "0.6.1")
 
 addSbtPlugin("io.spray" % "sbt-revolver" % "0.9.1")
