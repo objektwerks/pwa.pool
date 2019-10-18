@@ -20,7 +20,7 @@ object Licensee {
   val licenseHeaderKey = "license"
 }
 
-final case class License(value: String) extends Entity
+final case class License(key: String) extends Entity
 
 final case class Pool(id: Int = 0,
                       license: String,

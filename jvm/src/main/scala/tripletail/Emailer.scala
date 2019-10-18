@@ -6,6 +6,8 @@ import jodd.mail.{Email, MailServer, SendMailSession, SmtpServer}
 
 import scala.util.control.NonFatal
 
+case class SendEmail(to: String, license: String) extends Product with Serializable
+
 class Emailer(conf: Config) extends Actor with ActorLogging {
   private val smtpServer: SmtpServer = MailServer.create()
     .ssl(true)
@@ -18,9 +20,10 @@ class Emailer(conf: Config) extends Actor with ActorLogging {
   private val message = conf.getString("email.message")
   private val email = conf.getString("email.email")
   private val lic = conf.getString("email.lic")
+  private val instructions = conf.getString("email.instructions")
   private val retries = conf.getInt("email.retries")
 
-  private def buildEmail(to: String, license: String, uri: String): Email = {
+  private def buildEmail(to: String, license: String): Email = {
     val html = s"""
                   |<!DOCTYPE html>
                   |<html lang="en">
@@ -29,11 +32,10 @@ class Emailer(conf: Config) extends Actor with ActorLogging {
                   |<title>$subject</title>
                   |</head>
                   |<body>
-                  |<h3>$subject</h3>
-                  |<div>
+                  |<p>$message</p>
                   |<p>$email $to</p>
                   |<p>$lic $license</p>
-                  |<p>$message <a href="$uri/$license">$subject</a></p>
+                  |<p>$instructions</p>
                   |</body>
                   |</html>
                   |""".stripMargin
@@ -44,13 +46,13 @@ class Emailer(conf: Config) extends Actor with ActorLogging {
       .htmlMessage(html, "UTF-8")
   }
 
-  private def sendEmail(to: String, license: String, uri: String): Option[String] = {
+  private def sendEmail(to: String, license: String): Option[String] = {
     var session: SendMailSession = null
     var messageId: Option[String] = None
     try {
       session = smtpServer.createSession
       session.open()
-      messageId = Some( session.sendMail(buildEmail(to, license, uri)) )
+      messageId = Some( session.sendMail(buildEmail(to, license)) )
     } catch {
       case NonFatal(error) => log.error(s"*** Emailer send to: $to failed: ${error.getMessage}")
     } finally {
@@ -64,7 +66,7 @@ class Emailer(conf: Config) extends Actor with ActorLogging {
       var attempts = 0
       var messageId: Option[String] = None
       while ( attempts < retries && messageId.isEmpty ) {
-        messageId = sendEmail(send.to, send.license, send.uri)
+        messageId = sendEmail(send.to, send.license)
         attempts = attempts + 1
       }
   }

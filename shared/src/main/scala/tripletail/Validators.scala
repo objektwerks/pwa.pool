@@ -27,7 +27,7 @@ object Validators {
   }
 
   implicit class LicenseOps(val license: License) {
-    def isValid: Boolean = license.value === 36
+    def isValid: Boolean = license.key === 36
   }
 
   implicit class PoolOps(val pool: Pool) {
