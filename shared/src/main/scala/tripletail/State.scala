@@ -4,6 +4,8 @@ sealed trait State extends Product with Serializable
 
 final case class SignedUp(licensee: Licensee) extends State
 
+final case class LicenseeActivated(licensee: Licensee) extends State
+
 final case class SignedIn(licensee: Licensee) extends State
 
 final case class Id(id: Int) extends State

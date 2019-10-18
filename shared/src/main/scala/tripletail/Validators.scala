@@ -13,6 +13,10 @@ object Validators {
     def isValid: Boolean = signup.email.nonEmpty
   }
 
+  implicit class ActivateLicenseeOps(val activateLicensee: ActivateLicensee) {
+    def isValid: Boolean = activateLicensee.license === 36 && activateLicensee.email.nonEmpty
+  }
+
   implicit class SignInOps(val signin: SignIn) {
     def isValid: Boolean = signin.license === 36 && signin.email.nonEmpty
   }

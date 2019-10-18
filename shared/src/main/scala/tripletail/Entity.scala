@@ -6,6 +6,8 @@ sealed trait Entity extends Product with Serializable
 
 final case class SignUp(email: String) extends Entity
 
+final case class ActivateLicensee(license: String, email: String) extends Entity
+
 final case class SignIn(license: String, email: String) extends Entity
 
 final case class Licensee(license: String = UUID.randomUUID.toString.toLowerCase,
