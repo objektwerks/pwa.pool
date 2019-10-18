@@ -52,7 +52,7 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
         status shouldBe OK
         licensee = responseAs[SignedUp].licensee
         licenseHeader = RawHeader(Licensee.licenseHeaderKey, licensee.license)
-        licensee.isValid shouldBe true
+        licensee.isValid shouldBe false // Not activated yet!!!
       }
     }
   }

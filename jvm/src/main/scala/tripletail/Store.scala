@@ -34,6 +34,8 @@ class Store(conf: Config)(implicit ec: ExecutionContext) {
       query[Licensee]
         .filter(_.license == lift(license))
         .filter(_.email == lift(email))
+        .filter(_.activated > 0)
+        .filter(_.deactivated == 0)
     ).map(result => result.headOption)
 
   def getLicensee(license: String): Future[Option[Licensee]] =
