@@ -2,6 +2,10 @@ Tripletail
 ----------
 >Pool maintenance application.
 
+TODO
+----
+1. Laminar table prototype.
+
 Postgresql
 ----------
 1. /usr/local/var/postgres/postgresql.conf : listen_addresses = ‘*’, port = 5432
