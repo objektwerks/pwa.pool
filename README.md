@@ -61,14 +61,6 @@ Run
 2. open index.html and click target browser in right top corner
 3. open developer tools in target brower; select console tab
 
-Scenarios
----------
-1. If Licensee not persisted on client:
-    1. Sign up with email; or
-    2. Sign in with license and email
-2. List | Add | Update pool, surface, pump, timer, timersetting, heater, heatersetting, cleaning, measurement, chemical, supply, repair
-3. Chart measurements, chemicals, supplies and repairs
-
 Panes
 -----
 * Sign Up ( email )
@@ -85,8 +77,20 @@ Panes
 * Supplies -> Supply **
 * Repairs -> Repair **
 * Deactivate Licensee ( license, email )
+* Chart -> measurements, chemicals, supplies and repairs
 
-** Chart included.
+Scenarios
+---------
+1. If Licensee not saved on client:
+    1. Sign In with license and email; or
+    2. Sign Up with email
+2. If Licensee saved on client, yet not activated:
+    1. Activate Licensee with saved license and email
+3. If Licensee saved on client and activated:
+    1. auto Sign In with license and email
+4. List | Add | Update pool, surface, pump, timer, timersetting, heater, heatersetting, cleaning, measurement, chemical, supply, repair
+5. If Licensee saved on client and licensee deactivation requested:
+    1. Deactivate License with license and email
 
 Rest
 ----
