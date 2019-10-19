@@ -117,13 +117,6 @@ object Validators {
       heaterSetting.dateOff >= 0
   }
 
-  implicit class CleaningOps(val cleaning: Cleaning) {
-    def isValid: Boolean =
-      cleaning.id >= 0 &&
-      cleaning.poolId > 0 &&
-      cleaning.cleaned > 0
-  }
-
   implicit class MeasurementOps(val measurement: Measurement) {
     private val temp = 0 to 100
     private val totalHardness = 1 to 1000
@@ -144,6 +137,13 @@ object Validators {
       (measurement.ph >= 6.2 && measurement.ph <= 8.4) &&
       totalAlkalinity.contains(measurement.totalAlkalinity) &&
       cyanuricAcid.contains(measurement.cyanuricAcid)
+  }
+
+  implicit class CleaningOps(val cleaning: Cleaning) {
+    def isValid: Boolean =
+      cleaning.id >= 0 &&
+        cleaning.poolId > 0 &&
+        cleaning.cleaned > 0
   }
 
   implicit class ChemicalOps(val chemical: Chemical) {

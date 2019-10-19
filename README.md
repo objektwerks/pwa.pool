@@ -63,21 +63,26 @@ Run
 
 Panes
 -----
-* Sign Up ( email )
-* Activate Licensee ( license, email )
-* Sign In ( license, email )
-* Pools -> Pool
-* Surfaces -> Surface
-* Pumps -> Pump
-* Timers -> Timer -> TimerSettings
-* Heaters -> Heater -> HeaterSettings -> HeaterSetting
-* Cleanings -> Cleaning
-* Measurments -> Measurement **
-* Chemicals -> Chemical **
-* Supplies -> Supply **
-* Repairs -> Repair **
-* Deactivate Licensee ( license, email )
-* Chart -> measurements, chemicals, supplies and repairs
+1. Account
+    * Sign Up ( email )
+    * Activate Licensee ( license, email )
+    * Sign In ( license, email )
+    * Deactivate Licensee ( license, email )
+2. Hardware
+    * Pools -> Pool
+    * Surfaces -> Surface
+    * Pumps -> Pump
+    * Timers -> Timer -> TimerSettings
+    * Heaters -> Heater -> HeaterSettings -> HeaterSetting
+3. Maintenance
+    * Measurments -> Measurement **
+    * Cleanings -> Cleaning
+    * Chemicals -> Chemical **
+4. Costs
+    * Supplies -> Supply **
+    * Repairs -> Repair **
+    
+** Charts -> measurements, chemicals, supplies and repairs
 
 Scenarios
 ---------
@@ -106,8 +111,8 @@ Rest
 * /timersettings   /add   /update
 * /heaters         /add   /update
 * /heatersettings  /add   /update
-* /cleanings       /add   /update
 * /measurements    /add   /update
+* /cleanings       /add   /update
 * /chemicals       /add   /update
 * /supplies        /add   /update
 * /repairs         /add   /update
@@ -127,8 +132,8 @@ Object Model
 * TimerSetting(id, timerId, created, timeOn, timeOff)
 * Heater(id, poolId, installed, model)
 * HeaterSetting(id, heaterId, temp, dateOn, dateOff)
-* Cleaning(id, poolId, cleaned, brush, net, vacuum, skimmerBasket, pumpBasket, pumpFilter, pumpChlorineTablets, deck)
 * Measurement(id, poolId, measured, temp, totalHardness, totalChlorine, totalBromine, freeChlorine, ph, totalAlkalinity, cyanuricAcid)
+* Cleaning(id, poolId, cleaned, brush, net, vacuum, skimmerBasket, pumpBasket, pumpFilter, deck)
 * Chemical(id, poolId, added, chemical, amount, unit)
 * Supply(id, poolId, purchased, cost, supply, amount, unit)
 * Repair(id, poolId, repaired, cost, repair)
@@ -137,7 +142,7 @@ Object Model
 Relational Model
 ----------------
 * Licensee 1 ---> * Pool
-* Pool 1 ---> * Surface | Pump | Timer | Heater | Cleaning | Measurement | Chemical | Supply | Repair
+* Pool 1 ---> * Surface | Pump | Timer | Heater | Measurement | Cleaning | Chemical | Supply | Repair
 * Timer 1 ---> * TimerSetting
 * Heater 1 ---> * HeaterSetting
 * Fault

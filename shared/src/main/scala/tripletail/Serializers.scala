@@ -8,8 +8,8 @@ object Serializers {
   implicit val entityRW: ReadWriter[Entity] = ReadWriter.merge(
     macroRW[SignUp], macroRW[ActivateLicensee], macroRW[SignIn], macroRW[DeactivateLicensee], macroRW[Licensee],
     macroRW[License], macroRW[Pool], macroRW[PoolId], macroRW[Surface], macroRW[Pump], macroRW[Timer], macroRW[TimerId],
-    macroRW[TimerSetting], macroRW[Heater], macroRW[HeaterId], macroRW[HeaterSetting], macroRW[Cleaning],
-    macroRW[Measurement], macroRW[Chemical], macroRW[Supply], macroRW[Repair]
+    macroRW[TimerSetting], macroRW[Heater], macroRW[HeaterId], macroRW[HeaterSetting], macroRW[Measurement],
+    macroRW[Cleaning], macroRW[Chemical], macroRW[Supply], macroRW[Repair]
   )
 
   implicit val signupRW: ReadWriter[SignUp] = macroRW
@@ -28,8 +28,8 @@ object Serializers {
   implicit val heaterRW: ReadWriter[Heater] = macroRW
   implicit val heaterIdRW: ReadWriter[HeaterId] = macroRW
   implicit val heaterSettingRW: ReadWriter[HeaterSetting] = macroRW
-  implicit val cleaningRW: ReadWriter[Cleaning] = macroRW
   implicit val measurementRW: ReadWriter[Measurement] = macroRW
+  implicit val cleaningRW: ReadWriter[Cleaning] = macroRW
   implicit val chemicalRW: ReadWriter[Chemical] = macroRW
   implicit val supplyRW: ReadWriter[Supply] = macroRW
   implicit val repairRW: ReadWriter[Repair] = macroRW
@@ -37,7 +37,7 @@ object Serializers {
   implicit val stateRW: ReadWriter[State] = ReadWriter.merge(
     macroRW[SignedUp], macroRW[LicenseeActivated], macroRW[SignedIn], macroRW[LicenseeDeactivated], macroRW[Id],
     macroRW[Count], macroRW[Pools], macroRW[Surfaces], macroRW[Pumps], macroRW[Timers], macroRW[TimerSettings],
-    macroRW[Heaters], macroRW[HeaterSettings], macroRW[Cleanings], macroRW[Measurements], macroRW[Chemicals],
+    macroRW[Heaters], macroRW[HeaterSettings], macroRW[Measurements], macroRW[Cleanings], macroRW[Chemicals],
     macroRW[Supplies], macroRW[Repairs]
   )
 
@@ -54,8 +54,8 @@ object Serializers {
   implicit val timerSettingsRW: ReadWriter[TimerSettings] = macroRW
   implicit val heatersRW: ReadWriter[Heaters] = macroRW
   implicit val heaterSettingsRW: ReadWriter[HeaterSettings] = macroRW
-  implicit val cleaningsRW: ReadWriter[Cleanings] = macroRW
   implicit val measurementsRW: ReadWriter[Measurements] = macroRW
+  implicit val cleaningsRW: ReadWriter[Cleanings] = macroRW
   implicit val chemicalsRW: ReadWriter[Chemicals] = macroRW
   implicit val suppliesRW: ReadWriter[Supplies] = macroRW
   implicit val repairsRW: ReadWriter[Repairs] = macroRW

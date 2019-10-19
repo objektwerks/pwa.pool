@@ -62,20 +62,6 @@ CREATE TABLE heater_setting (
   date_off INT NOT NULL
 );
 
-CREATE TABLE cleaning (
-  id SERIAL PRIMARY KEY,
-  pool_id INT REFERENCES pool(id),
-  cleaned INT NOT NULL,
-  brush BOOL NOT NULL,
-  net BOOL NOT NULL,
-  vacuum BOOL NOT NULL,
-  skimmer_basket BOOL NOT NULL,
-  pump_basket BOOL NOT NULL,
-  pump_filter BOOL NOT NULL,
-  pump_chlorine_tablets INT NOT NULL,
-  deck BOOL NOT NULL
-);
-
 CREATE TABLE measurement (
   id SERIAL PRIMARY KEY,
   pool_id INT REFERENCES pool(id),
@@ -88,6 +74,19 @@ CREATE TABLE measurement (
   ph NUMERIC(2, 1) NOT NULL,
   total_alkalinity INT NOT NULL,
   cyanuric_acid INT NOT NULL
+);
+
+CREATE TABLE cleaning (
+  id SERIAL PRIMARY KEY,
+  pool_id INT REFERENCES pool(id),
+  cleaned INT NOT NULL,
+  brush BOOL NOT NULL,
+  net BOOL NOT NULL,
+  vacuum BOOL NOT NULL,
+  skimmer_basket BOOL NOT NULL,
+  pump_basket BOOL NOT NULL,
+  pump_filter BOOL NOT NULL,
+  deck BOOL NOT NULL
 );
 
 CREATE TABLE chemical (

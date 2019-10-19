@@ -250,28 +250,6 @@ class Router(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef) {
       }
     }
   }
-  val cleanings = path("cleanings") {
-    post {
-      entity(as[PoolId]) { poolId =>
-        if (poolId.isValid) onSuccess(listCleanings(poolId.id)) { cleanings => complete(OK -> Cleanings(cleanings)) }
-        else complete(BadRequest -> onInvalid(poolId))
-      }
-    }
-  } ~ pathSuffix("add") {
-    post {
-      entity(as[Cleaning]) { cleaning =>
-        if (cleaning.isValid) onSuccess(addCleaning(cleaning)) { id => complete(OK -> Id(id)) }
-        else complete(BadRequest -> onInvalid(cleaning))
-      }
-    }
-  } ~ pathSuffix("update") {
-    post {
-      entity(as[Cleaning]) { cleaning =>
-        if (cleaning.isValid) onSuccess(updateCleaning(cleaning)) { count => complete(OK -> Count(count)) }
-        else complete(BadRequest -> onInvalid(cleaning))
-      }
-    }
-  }
   val measurements = path("measurements") {
     post {
       entity(as[PoolId]) { poolId =>
@@ -291,6 +269,28 @@ class Router(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef) {
       entity(as[Measurement]) { measurement =>
         if (measurement.isValid) onSuccess(updateMeasurement(measurement)) { count => complete(OK -> Count(count)) }
         else complete(BadRequest -> onInvalid(measurement))
+      }
+    }
+  }
+  val cleanings = path("cleanings") {
+    post {
+      entity(as[PoolId]) { poolId =>
+        if (poolId.isValid) onSuccess(listCleanings(poolId.id)) { cleanings => complete(OK -> Cleanings(cleanings)) }
+        else complete(BadRequest -> onInvalid(poolId))
+      }
+    }
+  } ~ pathSuffix("add") {
+    post {
+      entity(as[Cleaning]) { cleaning =>
+        if (cleaning.isValid) onSuccess(addCleaning(cleaning)) { id => complete(OK -> Id(id)) }
+        else complete(BadRequest -> onInvalid(cleaning))
+      }
+    }
+  } ~ pathSuffix("update") {
+    post {
+      entity(as[Cleaning]) { cleaning =>
+        if (cleaning.isValid) onSuccess(updateCleaning(cleaning)) { count => complete(OK -> Count(count)) }
+        else complete(BadRequest -> onInvalid(cleaning))
       }
     }
   }
@@ -379,7 +379,7 @@ class Router(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef) {
   val url = "/api/v1/tripletail"
   val api = pathPrefix("api" / "v1" / "tripletail") {
     signin ~ pools ~ surfaces ~ pumps ~ timers ~ timersettings ~ heaters ~ heatersettings ~
-      cleanings ~ measurements ~ chemicals ~ supplies ~ repairs ~ deactivatelicensee
+      measurements ~ cleanings ~ chemicals ~ supplies ~ repairs ~ deactivatelicensee
   }
   val secure = (route: Route) => headerValueByName(Licensee.headerLicenseKey) { license =>
     onSuccess(isLicenseActivated(license)) { isActivated =>

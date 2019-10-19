@@ -222,26 +222,6 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
     }
   }
 
-  "cleanings" should {
-    "post to id, count, cleanings" in {
-      var cleaning = Cleaning(poolId = poolid.id, cleaned = localDateToInt(1991, 3, 13))
-      Post(url + "/cleanings/add", cleaning) ~> addHeader(licenseHeader) ~> router.routes ~> check {
-        status shouldBe OK
-        cleaning = cleaning.copy(id = responseAs[Id].id)
-        cleaning.id should be > 0
-      }
-      cleaning = cleaning.copy(deck = true)
-      Post(url + "/cleanings/update", cleaning) ~> addHeader(licenseHeader) ~> router.routes ~> check {
-        status shouldBe OK
-        responseAs[Count].count shouldEqual 1
-      }
-      Post(url + "/cleanings", poolid) ~> addHeader(licenseHeader) ~> router.routes ~> check {
-        status shouldBe OK
-        responseAs[Cleanings].cleanings.length shouldEqual 1
-      }
-    }
-  }
-
   "measurements" should {
     "post to id, count, measurements" in {
       var measurement = Measurement(poolId = poolid.id, measured = localDateToInt(1991, 3, 13))
@@ -258,6 +238,26 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
       Post(url + "/measurements", poolid) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         responseAs[Measurements].measurements.length shouldEqual 1
+      }
+    }
+  }
+
+  "cleanings" should {
+    "post to id, count, cleanings" in {
+      var cleaning = Cleaning(poolId = poolid.id, cleaned = localDateToInt(1991, 3, 13))
+      Post(url + "/cleanings/add", cleaning) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+        status shouldBe OK
+        cleaning = cleaning.copy(id = responseAs[Id].id)
+        cleaning.id should be > 0
+      }
+      cleaning = cleaning.copy(deck = true)
+      Post(url + "/cleanings/update", cleaning) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+        status shouldBe OK
+        responseAs[Count].count shouldEqual 1
+      }
+      Post(url + "/cleanings", poolid) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+        status shouldBe OK
+        responseAs[Cleanings].cleanings.length shouldEqual 1
       }
     }
   }

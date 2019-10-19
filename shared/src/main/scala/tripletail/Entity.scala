@@ -71,18 +71,6 @@ final case class HeaterSetting(id: Int = 0,
                                dateOn: Int,
                                dateOff: Int = 0) extends Entity
 
-final case class Cleaning(id: Int = 0,
-                          poolId: Int,
-                          cleaned: Int,
-                          brush: Boolean = true,
-                          net: Boolean = true,
-                          vacuum: Boolean = false,
-                          skimmerBasket: Boolean = true,
-                          pumpBasket: Boolean = false,
-                          pumpFilter: Boolean = false,
-                          pumpChlorineTablets: Int = 0,
-                          deck: Boolean = false) extends Entity
-
 final case class Measurement(id: Int = 0,
                              poolId: Int,
                              measured: Int,
@@ -94,6 +82,17 @@ final case class Measurement(id: Int = 0,
                              ph: Double = 7.4,
                              totalAlkalinity: Int = 100,
                              cyanuricAcid: Int = 50) extends Entity
+
+final case class Cleaning(id: Int = 0,
+                          poolId: Int,
+                          cleaned: Int,
+                          brush: Boolean = true,
+                          net: Boolean = true,
+                          vacuum: Boolean = false,
+                          skimmerBasket: Boolean = true,
+                          pumpBasket: Boolean = false,
+                          pumpFilter: Boolean = false,
+                          deck: Boolean = false) extends Entity
 
 final case class Chemical(id: Int = 0,
                           poolId: Int,
