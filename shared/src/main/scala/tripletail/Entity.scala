@@ -21,7 +21,7 @@ final case class Licensee(license: String = UUID.randomUUID.toString.toLowerCase
 }
 
 object Licensee {
-  val licenseHeaderKey = "license"
+  val headerLicenseKey = "license"
 }
 
 final case class License(key: String) extends Entity

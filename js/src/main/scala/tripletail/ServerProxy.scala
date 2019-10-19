@@ -16,7 +16,7 @@ class ServerProxy() {
   import upickle.default._
 
   def post(url: String, license: String, entity: Entity): Future[Either[Fault, State]] = {
-    val headers = Map("Content-Type" -> "application/json; charset=utf-8", "Accept" -> "application/json", Licensee.licenseHeaderKey -> license)
+    val headers = Map("Content-Type" -> "application/json; charset=utf-8", "Accept" -> "application/json", Licensee.headerLicenseKey -> license)
     Ajax.post(url = url, headers = headers, data = write(entity)).map { xhr =>
       xhr.status match {
         case 200 => Try(read[State](xhr.responseText)).fold(error => Left(log(error)), state => Right(state))

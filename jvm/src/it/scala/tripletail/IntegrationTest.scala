@@ -60,7 +60,7 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
       Post("/activatelicensee", ActivateLicensee(licensee.license, licensee.email)) ~> router.routes ~> check {
         status shouldBe OK
         licensee = responseAs[LicenseeActivated].licensee
-        licenseHeader = RawHeader(Licensee.licenseHeaderKey, licensee.license)
+        licenseHeader = RawHeader(Licensee.headerLicenseKey, licensee.license)
         licensee.isActivated shouldBe true
       }
     }

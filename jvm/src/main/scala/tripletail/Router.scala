@@ -381,7 +381,7 @@ class Router(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef) {
     signin ~ pools ~ surfaces ~ pumps ~ timers ~ timersettings ~ heaters ~ heatersettings ~
       cleanings ~ measurements ~ chemicals ~ supplies ~ repairs ~ deactivatelicensee
   }
-  val secure = (route: Route) => headerValueByName(Licensee.licenseHeaderKey) { license =>
+  val secure = (route: Route) => headerValueByName(Licensee.headerLicenseKey) { license =>
     onSuccess(isLicenseActivated(license)) { isActivated =>
       if (isActivated) route
       else {
