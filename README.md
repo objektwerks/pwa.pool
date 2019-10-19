@@ -76,13 +76,13 @@ Panes
     * Heaters -> Heater -> HeaterSettings -> HeaterSetting
 3. Maintenance
     * Measurments -> Measurement **
-    * Cleanings -> Cleaning
+    * Cleanings -> Cleaning **
     * Chemicals -> Chemical **
 4. Costs
     * Supplies -> Supply **
     * Repairs -> Repair **
     
-** Charts -> measurements, chemicals, supplies and repairs
+** Charts -> measurements, cleanings, chemicals, supplies and repairs
 
 Scenarios
 ---------
@@ -179,10 +179,11 @@ Resources
 
 Charts
 ------
-1. measurements - line chart ( x = date, y = chemical ** )
-2. chemicals - bar chart ( x = date, y = amount, c = chemical )
-3. supplies - bar chart ( x = purchased, y = cost, c = item )
-4. repairs - line chart ( x = date, y = cost )
+1. measurements - line chart ( x = date, y = chemical )
+2. cleanings - line chart ( x = date, y = month )
+3. chemicals - bar chart ( x = date, y = amount, c = chemical )
+4. supplies - bar chart ( x = date, y = cost, c = item )
+5. repairs - line chart ( x = date, y = cost )
 
 Date
 ----
