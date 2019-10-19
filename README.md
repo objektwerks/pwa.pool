@@ -94,7 +94,8 @@ Scenarios
 
 Rest
 ----
-* /api/v1/..
+>Root server url: ""
+>Root api url: /api/v1/tripletail
 * /signup
 * /activatelicensee
 * /signin
