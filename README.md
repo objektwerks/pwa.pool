@@ -66,12 +66,14 @@ Scenarios
 1. If Licensee not persisted on client:
     1. Sign up with email; or
     2. Sign in with license and email
-2. List | Add | Update pool, surface, pump, timer, timersetting heater, heatersetting, lifecycle, cleaning, measurement, chemical, supply, repair
+2. List | Add | Update pool, surface, pump, timer, timersetting, heater, heatersetting, cleaning, measurement, chemical, supply, repair
 3. Chart measurements, chemicals, supplies and repairs
 
 Panes
 -----
-* Sign Up ( email ) | Sign In ( license, email )
+* Sign Up ( email )
+* Activate Licensee ( license, email )
+* Sign In ( license, email )
 * Pools -> Pool
 * Surfaces -> Surface
 * Pumps -> Pump
@@ -82,6 +84,7 @@ Panes
 * Chemicals -> Chemical **
 * Supplies -> Supply **
 * Repairs -> Repair **
+* Deactivate Licensee ( license, email )
 
 ** Chart included.
 
@@ -89,6 +92,7 @@ Rest
 ----
 * /api/v1/..
 * /signup
+* /activatelicensee
 * /signin
 * /pools           /add   /update
 * /surfaces        /add   /update
@@ -102,10 +106,15 @@ Rest
 * /chemicals       /add   /update
 * /supplies        /add   /update
 * /repairs         /add   /update
+* /deactivatelicensee
+
+Client
+------
+* Entity => Fault | State
 
 Object Model
 ------------
-* Licensee(license, email, activated, deactivated)
+* Licensee(license, email, created, activated, deactivated)
 * Pool(id, license, built, lat, lon, volume)
 * Surface(id, poolId, installed, kind)
 * Pump(id, poolId, installed, model)
