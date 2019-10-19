@@ -27,7 +27,22 @@ class Store(conf: Config)(implicit ec: ExecutionContext) {
       run( query[Licensee]
         .filter(_.license == lift(license))
         .filter(_.email == lift(email))
+        .filter(_.activated == 0)
+        .filter(_.deactivated == 0)
         .update(_.activated -> lift(activatedDate))
+      ).map(_ => Unit)
+    }
+    getLicensee(license)
+  }
+
+  def deactivateLicensee(license: String, email: String, deactivatedDate: Int): Future[Option[Licensee]] = {
+    ctx.transaction { implicit ec =>
+      run( query[Licensee]
+        .filter(_.license == lift(license))
+        .filter(_.email == lift(email))
+        .filter(_.activated > 0)
+        .filter(_.deactivated == 0)
+        .update(_.deactivated -> lift(deactivatedDate))
       ).map(_ => Unit)
     }
     getLicensee(license)
