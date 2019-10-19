@@ -56,7 +56,7 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
     }
   }
   "activatelicensee" should {
-    "get to activated licensee" in {
+    "post to activated licensee" in {
       Post("/activatelicensee", ActivateLicensee(licensee.license, licensee.email)) ~> router.routes ~> check {
         status shouldBe OK
         licensee = responseAs[LicenseeActivated].licensee
@@ -352,6 +352,16 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
         val fault = responseAs[Fault]
         fault.cause.nonEmpty shouldBe true
         fault.code shouldBe 401
+      }
+    }
+  }
+
+  "deactivatelicensee" should {
+    "post to deactivated licensee" in {
+      Post(url + "/deactivatelicensee", DeactivateLicensee(licensee.license, licensee.email)) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+        status shouldBe OK
+        licensee = responseAs[LicenseeDeactivated].licensee
+        licensee.isDeactivated shouldBe true
       }
     }
   }

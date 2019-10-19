@@ -9,11 +9,14 @@ import scala.util.{Failure, Success}
 
 @JSExportTopLevel("Client")
 object Client {
+  private val serverUrl = "http://127.0.0.1:7979"
+  private val apiUrl = "http://127.0.0.1:7979/api/v1/tripletail"
+
   @JSExport
   def init(): Unit = {
     registerServiceWorker()
-    val serverProxy = ServerProxy("http://127.0.0.1:7979/api/v1/tripletail")
-    val canvas = Canvas(serverProxy)
+    val serverProxy = ServerProxy()
+    val canvas = Canvas(serverProxy, serverUrl, apiUrl)
     canvas.init()
   }
 

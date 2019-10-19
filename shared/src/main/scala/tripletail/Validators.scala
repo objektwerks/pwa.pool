@@ -34,10 +34,10 @@ object Validators {
       licensee.deactivated == 0
     def isDeactivated: Boolean =
       licensee.license === 36 &&
-        licensee.email.nonEmpty &&
-        licensee.created > 0 &&
-        licensee.activated > 0 &&
-        licensee.deactivated > 0
+      licensee.email.nonEmpty &&
+      licensee.created > 0 &&
+      licensee.activated > 0 &&
+      licensee.deactivated > 0
   }
 
   implicit class LicenseOps(val license: License) {

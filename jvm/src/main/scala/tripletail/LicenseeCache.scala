@@ -30,8 +30,13 @@ class LicenseeCache(store: Store)(implicit ec: ExecutionContext) {
     ()
   }
 
+  def decacheLicensee(licensee: Licensee): Unit = {
+    if (licensee.isDeactivated && cache.get(licensee.license).nonEmpty) cache.remove(licensee.license)
+    ()
+  }
+
   def isLicenseActivated(license: String): Future[Boolean] = {
-    if (cache.get(license).nonEmpty) Future.successful(true)
+    if (cache.get(license).nonEmpty) Future.successful(cache.get(license).get.isActivated)
     else getLicensee(license).map {
       case Some(licensee) =>
         if (licensee.isActivated) {

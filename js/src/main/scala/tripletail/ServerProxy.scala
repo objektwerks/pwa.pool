@@ -8,16 +8,16 @@ import scala.concurrent.Future
 import scala.util.Try
 
 object ServerProxy {
-  def apply(serverUrl: String): ServerProxy = new ServerProxy(serverUrl)
+  def apply(): ServerProxy = new ServerProxy()
 }
 
-class ServerProxy(serverUrl: String) {
+class ServerProxy() {
   import Serializers._
   import upickle.default._
 
-  def post(path: String, license: String, entity: Entity): Future[Either[Fault, State]] = {
+  def post(url: String, license: String, entity: Entity): Future[Either[Fault, State]] = {
     val headers = Map("Content-Type" -> "application/json; charset=utf-8", "Accept" -> "application/json", Licensee.licenseHeaderKey -> license)
-    Ajax.post(url = serverUrl + path, headers = headers, data = write(entity)).map { xhr =>
+    Ajax.post(url = url, headers = headers, data = write(entity)).map { xhr =>
       xhr.status match {
         case 200 => Try(read[State](xhr.responseText)).fold(error => Left(log(error)), state => Right(state))
         case 400 | 401 | 500 => Try(read[Fault](xhr.responseText)).fold(error => Left(log(error)), fault => Left(fault))

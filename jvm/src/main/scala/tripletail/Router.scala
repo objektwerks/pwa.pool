@@ -360,10 +360,26 @@ class Router(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef) {
       }
     }
   }
+  val deactivatelicensee = path("deactivatelicensee") {
+    post {
+      entity(as[DeactivateLicensee]) { deactivatelicensee =>
+        if (deactivatelicensee.isValid) {
+          onSuccess(deactivateLicensee(deactivatelicensee.license, deactivatelicensee.email, DateTime.currentDate)) {
+            case Some(licensee) =>
+              decacheLicensee(licensee)
+              complete(OK -> LicenseeDeactivated(licensee))
+            case None =>
+              val cause = s"*** Unauthorized license: ${deactivatelicensee.license} and/or email: ${deactivatelicensee.email}"
+              complete(Unauthorized -> onUnauthorized(cause))
+          }
+        } else complete(BadRequest -> onInvalid(deactivatelicensee))
+      }
+    }
+  }
   val url = "/api/v1/tripletail"
   val api = pathPrefix("api" / "v1" / "tripletail") {
     signin ~ pools ~ surfaces ~ pumps ~ timers ~ timersettings ~ heaters ~ heatersettings ~
-      cleanings ~ measurements ~ chemicals ~ supplies ~ repairs
+      cleanings ~ measurements ~ chemicals ~ supplies ~ repairs ~ deactivatelicensee
   }
   val secure = (route: Route) => headerValueByName(Licensee.licenseHeaderKey) { license =>
     onSuccess(isLicenseActivated(license)) { isActivated =>
