@@ -21,13 +21,23 @@ object Validators {
     def isValid: Boolean = signin.license === 36 && signin.email.nonEmpty
   }
 
+  implicit class DeactivateLicenseeOps(val deactivateLicensee: DeactivateLicensee) {
+    def isValid: Boolean = deactivateLicensee.license === 36 && deactivateLicensee.email.nonEmpty
+  }
+
   implicit class LicenseeOps(val licensee: Licensee) {
-    def isValid: Boolean =
+    def isActivated: Boolean =
       licensee.license === 36 &&
       licensee.email.nonEmpty &&
+      licensee.created > 0 &&
       licensee.activated > 0 &&
       licensee.deactivated == 0
-    def isActivated: Boolean = isValid
+    def isDeactivated: Boolean =
+      licensee.license === 36 &&
+        licensee.email.nonEmpty &&
+        licensee.created > 0 &&
+        licensee.activated > 0 &&
+        licensee.deactivated > 0
   }
 
   implicit class LicenseOps(val license: License) {

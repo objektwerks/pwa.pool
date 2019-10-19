@@ -6,15 +6,16 @@ object Serializers {
   implicit val faultRW: ReadWriter[Fault] = macroRW
 
   implicit val entityRW: ReadWriter[Entity] = ReadWriter.merge(
-    macroRW[SignUp], macroRW[ActivateLicensee], macroRW[SignIn], macroRW[Licensee], macroRW[License], macroRW[Pool],
-    macroRW[PoolId], macroRW[Surface], macroRW[Pump], macroRW[Timer], macroRW[TimerId], macroRW[TimerSetting],
-    macroRW[Heater], macroRW[HeaterId], macroRW[HeaterSetting], macroRW[Cleaning], macroRW[Measurement],
-    macroRW[Chemical], macroRW[Supply], macroRW[Repair]
+    macroRW[SignUp], macroRW[ActivateLicensee], macroRW[SignIn], macroRW[DeactivateLicensee], macroRW[Licensee],
+    macroRW[License], macroRW[Pool], macroRW[PoolId], macroRW[Surface], macroRW[Pump], macroRW[Timer], macroRW[TimerId],
+    macroRW[TimerSetting], macroRW[Heater], macroRW[HeaterId], macroRW[HeaterSetting], macroRW[Cleaning],
+    macroRW[Measurement], macroRW[Chemical], macroRW[Supply], macroRW[Repair]
   )
 
   implicit val signupRW: ReadWriter[SignUp] = macroRW
   implicit val activateLicenseeRW: ReadWriter[ActivateLicensee] = macroRW
   implicit val signinRW: ReadWriter[SignIn] = macroRW
+  implicit val deactivateLicenseeRW: ReadWriter[DeactivateLicensee] = macroRW
   implicit val licenseeRW: ReadWriter[Licensee] = macroRW
   implicit val licenseRW: ReadWriter[License] = macroRW
   implicit val poolRW: ReadWriter[Pool] = macroRW
@@ -34,14 +35,16 @@ object Serializers {
   implicit val repairRW: ReadWriter[Repair] = macroRW
 
   implicit val stateRW: ReadWriter[State] = ReadWriter.merge(
-    macroRW[SignedUp], macroRW[LicenseeActivated], macroRW[SignedIn], macroRW[Id], macroRW[Count], macroRW[Pools],
-    macroRW[Surfaces], macroRW[Pumps], macroRW[Timers], macroRW[TimerSettings], macroRW[Heaters], macroRW[HeaterSettings],
-    macroRW[Cleanings], macroRW[Measurements], macroRW[Chemicals], macroRW[Supplies], macroRW[Repairs]
+    macroRW[SignedUp], macroRW[LicenseeActivated], macroRW[SignedIn], macroRW[LicenseeDeactivated], macroRW[Id],
+    macroRW[Count], macroRW[Pools], macroRW[Surfaces], macroRW[Pumps], macroRW[Timers], macroRW[TimerSettings],
+    macroRW[Heaters], macroRW[HeaterSettings], macroRW[Cleanings], macroRW[Measurements], macroRW[Chemicals],
+    macroRW[Supplies], macroRW[Repairs]
   )
 
   implicit val signedUpRW: ReadWriter[SignedUp] = macroRW
   implicit val licenseeActivatedRW: ReadWriter[LicenseeActivated] = macroRW
   implicit val signedInRW: ReadWriter[SignedIn] = macroRW
+  implicit val licenseeDeactivatedRW: ReadWriter[LicenseeDeactivated] = macroRW
   implicit val idRW: ReadWriter[Id] = macroRW
   implicit val countRW: ReadWriter[Count] = macroRW
   implicit val poolsRW: ReadWriter[Pools] = macroRW

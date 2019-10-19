@@ -8,6 +8,8 @@ final case class LicenseeActivated(licensee: Licensee) extends State
 
 final case class SignedIn(licensee: Licensee) extends State
 
+final case class LicenseeDeactivated(licensee: Licensee) extends State
+
 final case class Id(id: Int) extends State
 
 final case class Count(count: Int) extends State

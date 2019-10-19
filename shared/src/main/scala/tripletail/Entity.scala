@@ -10,6 +10,8 @@ final case class ActivateLicensee(license: String, email: String) extends Entity
 
 final case class SignIn(license: String, email: String) extends Entity
 
+final case class DeactivateLicensee(license: String, email: String) extends Entity
+
 final case class Licensee(license: String = UUID.randomUUID.toString.toLowerCase,
                           email: String,
                           created: Int = DateTime.currentDate,
