@@ -6,29 +6,6 @@ TODO
 ----
 1. Laminar table prototype.
 
-Postgresql
-----------
-1. /usr/local/var/postgres/postgresql.conf : listen_addresses = ‘*’, port = 5432
-2. in build.sbt : javaOptions in IntegrationTest += "-Dquill.binds.log=true"
-3. brew services start postgresql | brew services stop postgresql
-4. /usr/local/var/log/postgres.log : verify database is running or is shutdown
-
-DDL
----
-1. psql tripletail
-2. \i ddl.sql
-3. \q
-
-Quill
------
->To eliminate unused ExecutionContext variable errors, this scalac option must be set in the build.sbt:
-```
-scalacOptions ++= Seq(
-  "-Ywarn-macros:after"
-)
-```
->Quill macros use the implicit ExecutionContext. The Quill ctx.transaction code does not.
-
 Dev
 ---
 1. sbt
@@ -164,6 +141,11 @@ Measurements
 
 ** Units of Measure - oz, gl, lb
 
+Chemicals
+---------
+1. Chlorine for pool.
+2. Chlorine tablets for pool filtration system.
+
 Solutions
 ---------
 >Suggested solutions to chemical imbalances.
@@ -206,3 +188,26 @@ Validation
 * string - non empty
 * string length - lt, lte, eq, gt, gte
 * range - inclusive
+
+Postgresql
+----------
+1. /usr/local/var/postgres/postgresql.conf : listen_addresses = ‘*’, port = 5432
+2. in build.sbt : javaOptions in IntegrationTest += "-Dquill.binds.log=true"
+3. brew services start postgresql | brew services stop postgresql
+4. /usr/local/var/log/postgres.log : verify database is running or is shutdown
+
+DDL
+---
+1. psql tripletail
+2. \i ddl.sql
+3. \q
+
+Quill
+-----
+>To eliminate unused ExecutionContext variable errors, this scalac option must be set in the build.sbt:
+```
+scalacOptions ++= Seq(
+  "-Ywarn-macros:after"
+)
+```
+>Quill macros use the implicit ExecutionContext. The Quill ctx.transaction code does not.
