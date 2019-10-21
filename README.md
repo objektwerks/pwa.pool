@@ -67,16 +67,16 @@ Panes
 
 Scenarios
 ---------
-1. If Licensee not saved on client:
+1. If Licensee not saved on client, user must:
     1. Sign In with license and email; or
-    2. Sign Up with email
-2. If Licensee saved on client, yet not activated:
-    1. Activate Licensee with saved license and email
-3. If Licensee saved on client and activated:
-    1. auto Sign In with license and email
-4. List | Add | Update pool, surface, pump, timer, timersetting, heater, heatersetting, cleaning, measurement, chemical, supply, repair
-5. If Licensee saved on client and licensee deactivation requested:
-    1. Deactivate License with license and email
+    2. Sign Up with email.
+2. If Licensee saved on client, yet not activated, user must:
+    1. Activate Licensee with license and email.
+3. If Licensee saved on client and activated, client must:
+    1. Sign In with license and email.
+4. If Licensee saved on client and licensee deactivation requested, user must:
+    1. Deactivate License with license and email.
+5. User will list, add and update entities.
 
 Rest
 ----
