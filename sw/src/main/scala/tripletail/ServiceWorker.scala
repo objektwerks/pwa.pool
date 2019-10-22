@@ -21,7 +21,8 @@ object ServiceWorker {
     "logo-192.png",
     "logo-512.png",
     "js-opt.js",
-    "sharedjs-opt.js"
+    "sharedjs-opt.js",
+    "sw-opt.js"
   ).toJSArray
 
   def main(args: Array[String]): Unit = {
