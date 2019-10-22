@@ -101,6 +101,7 @@ Rest
 
 Client
 ------
+* Command => Fault | Event
 * Entity => Fault | State
 
 Object Model
