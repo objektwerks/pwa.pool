@@ -37,7 +37,7 @@ class Router(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef) {
     case NonFatal(error) =>
       extractRequestContext { context =>
         val cause = s"*** Handling ${context.request.uri} failed: ${error.getMessage}"
-        logger.error(cause)
+        logger.error(cause, error)
         context.request.discardEntityBytes(context.materializer)
         complete(InternalServerError -> addFault(Fault(cause)))
       }
