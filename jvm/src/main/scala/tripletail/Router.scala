@@ -93,6 +93,22 @@ class Router(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef) {
       }
     }
   }
+  val deactivatelicensee = path("deactivatelicensee") {
+    post {
+      entity(as[DeactivateLicensee]) { deactivatelicensee =>
+        if (deactivatelicensee.isValid) {
+          onSuccess(deactivateLicensee(deactivatelicensee.license, deactivatelicensee.email, DateTime.currentDate)) {
+            case Some(licensee) =>
+              decacheLicensee(licensee)
+              complete(OK -> LicenseeDeactivated(licensee))
+            case None =>
+              val cause = s"*** Unauthorized license: ${deactivatelicensee.license} and/or email: ${deactivatelicensee.email}"
+              complete(Unauthorized -> onUnauthorized(cause))
+          }
+        } else complete(BadRequest -> onInvalid(deactivatelicensee))
+      }
+    }
+  }
   val pools = path("pools") {
     post {
       entity(as[License]) { license =>
@@ -357,22 +373,6 @@ class Router(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef) {
       entity(as[Repair]) { repair =>
         if (repair.isValid) onSuccess(updateRepair(repair)) { count => complete(OK -> Count(count)) }
         else complete(BadRequest -> onInvalid(repair))
-      }
-    }
-  }
-  val deactivatelicensee = path("deactivatelicensee") {
-    post {
-      entity(as[DeactivateLicensee]) { deactivatelicensee =>
-        if (deactivatelicensee.isValid) {
-          onSuccess(deactivateLicensee(deactivatelicensee.license, deactivatelicensee.email, DateTime.currentDate)) {
-            case Some(licensee) =>
-              decacheLicensee(licensee)
-              complete(OK -> LicenseeDeactivated(licensee))
-            case None =>
-              val cause = s"*** Unauthorized license: ${deactivatelicensee.license} and/or email: ${deactivatelicensee.email}"
-              complete(Unauthorized -> onUnauthorized(cause))
-          }
-        } else complete(BadRequest -> onInvalid(deactivatelicensee))
       }
     }
   }
