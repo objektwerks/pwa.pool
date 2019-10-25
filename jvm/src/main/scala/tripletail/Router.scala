@@ -27,8 +27,8 @@ class Router(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef) {
     addFault(Fault(cause, Unauthorized.intValue))
   }
 
-  val onInvalid = (entity: Entity) => {
-    val cause = s"*** Invalid: $entity"
+  val onInvalid = (serializable: Serializable) => {
+    val cause = s"*** Invalid: $serializable"
     logger.error(cause)
     addFault(Fault(cause, BadRequest.intValue))
   }
