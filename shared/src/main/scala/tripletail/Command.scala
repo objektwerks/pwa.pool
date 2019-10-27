@@ -1,6 +1,6 @@
 package tripletail
 
-trait Command extends Product with Serializable
+sealed trait Command extends Product with Serializable
 
 final case class SignUp(email: String) extends Command
 
