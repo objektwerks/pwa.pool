@@ -78,6 +78,13 @@ Scenarios
     1. Deactivate License with license and email.
 5. User will list, add and update entities.
 
+Licensee
+--------
+* SignUp(email) => SignedUp(Licensee)
+* ActivateLicensee(license, email) => LicenseeActivated(Licensee)
+* SignIn(license, email) => SignedIn(Licensee)
+* DeativateLicensee(license, email) => LicenseeDeactivated(Licensee)
+
 Rest
 ----
 >Root server url: ""
