@@ -4,7 +4,7 @@ import java.util.UUID
 
 sealed trait Entity extends Product with Serializable
 
-final case class Licensee(license: String = UUID.randomUUID.toString.toLowerCase,
+final case class Licensee(license: String = Licensee.generateLicense,
                           email: String,
                           created: Int = DateTime.currentDate,
                           activated: Int = 0,
@@ -14,6 +14,7 @@ final case class Licensee(license: String = UUID.randomUUID.toString.toLowerCase
 
 object Licensee {
   val headerLicenseKey = "license"
+  def generateLicense: String = UUID.randomUUID.toString.toLowerCase
 }
 
 final case class License(key: String) extends Entity

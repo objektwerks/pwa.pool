@@ -1,9 +1,13 @@
 package tripletail
 
+import java.util.concurrent.TimeUnit
+
 import akka.actor.ActorRef
+import akka.pattern._
 import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.{ExceptionHandler, Route}
+import akka.util.Timeout
 import de.heikoseeberger.akkahttpupickle.UpickleSupport._
 import org.slf4j.LoggerFactory
 
@@ -53,9 +57,12 @@ class Router(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef) {
     post {
       entity(as[SignUp]) { signup =>
         if (signup.isValid) {
-          onSuccess(signUp(signup.email)) { licensee =>
-            emailer ! SendEmail(to = signup.email, license = licensee.license)
-            complete(OK -> SignedUp(licensee))
+          implicit val timeout = new Timeout(10, TimeUnit.SECONDS)
+          val sendEmail = SendEmail(signup.email, Licensee.generateLicense)
+          onSuccess( ( emailer ? sendEmail ).mapTo[Boolean] ) { isEmailValid: Boolean =>
+            if (isEmailValid)
+              onSuccess(signUp(sendEmail.license, signup.email)) { licensee => complete(OK -> SignedUp(licensee)) }
+            else complete(BadRequest -> onInvalid(signup))
           }
         } else complete(BadRequest -> onInvalid(signup))
       }
