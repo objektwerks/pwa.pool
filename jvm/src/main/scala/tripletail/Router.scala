@@ -59,10 +59,11 @@ class Router(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef) {
         if (signup.isValid) {
           implicit val timeout = new Timeout(10, TimeUnit.SECONDS)
           val sendEmail = SendEmail(signup.email, Licensee.generateLicense)
-          onSuccess( ( emailer ? sendEmail ).mapTo[Boolean] ) { isEmailValid: Boolean =>
-            if (isEmailValid)
-              onSuccess(signUp(sendEmail.license, signup.email)) { licensee => complete(OK -> SignedUp(licensee)) }
-            else complete(BadRequest -> onInvalid(signup))
+          onSuccess( emailer ? sendEmail ) {
+            case Some(_) => onSuccess(signUp(sendEmail.license, signup.email)) {
+              licensee => complete(OK -> SignedUp(licensee))
+            }
+            case None => complete(BadRequest -> onInvalid(signup))
           }
         } else complete(BadRequest -> onInvalid(signup))
       }
