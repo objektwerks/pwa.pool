@@ -85,6 +85,13 @@ Licensee
 * SignIn(license, email) => SignedIn(Licensee)
 * DeativateLicensee(license, email) => LicenseeDeactivated(Licensee)
 
+Alternate Licensee
+------------------
+* SignUp(Licensee) => SignedUp(Licensee)
+* ActivateLicensee(Licensee) => LicenseeActivated(Licensee)
+* SignIn(Licensee) => SignedIn(Licensee)
+* DeativateLicensee(Licensee) => LicenseeDeactivated(Licensee)
+
 Rest
 ----
 >Root server url: ""
