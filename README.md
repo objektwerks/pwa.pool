@@ -63,28 +63,20 @@ Panes
 4. Costs
     * Supplies -> Supply **
     * Repairs -> Repair **
-    
-** Charts -> measurements, cleanings, chemicals, supplies and repairs
 
-Scenarios
----------
-1. If Licensee not saved on client, user must:
-    1. SignIn(license, email); or
-    2. SignUp(email).
-2. If Licensee saved on client, yet not activated, user must:
-    1. ActivateLicensee(license, email).
-3. If Licensee saved on client and activated, user must:
-    1. SignIn(license, email).
-4. If Licensee saved on client and licensee deactivation selected, user must:
-    1. DeactivateLicense(license, email).
-5. User will list, add and update entities.
+*  Panes -> list, add, update    
+** Charts -> measurements, cleanings, chemicals, supplies and repairs
 
 Licensee Scenarios
 ------------------
-* SignUp(email) => SignedUp(Licensee)
-* ActivateLicensee(license, email) => LicenseeActivated(Licensee)
-* SignIn(license, email) => SignedIn(Licensee)
-* DeativateLicensee(license, email) => LicenseeDeactivated(Licensee)
+1. If Licensee not saved on client, user must:
+    * SignIn(license, email) => SignedUp(Licensee) | SignUp(email) => SignedIn(Licensee)
+2. If Licensee saved on client, yet not activated, user must:
+    * ActivateLicensee(license, email) => LicenseeActivated(Licensee)
+3. If Licensee saved on client and activated, user must:
+    * SignIn(license, email) => SignedIn(Licensee)
+4. If Licensee saved on client and licensee deactivation selected, user must:
+    * DeactivateLicense(license, email) => LicenseeDeactivated(Licensee)
 
 Alternate Licensee Scenarios
 ----------------------------
