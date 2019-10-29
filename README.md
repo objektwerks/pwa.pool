@@ -4,7 +4,8 @@ Tripletail
 
 TODO
 ----
-1. Laminar table prototype.
+1. License/e recovery scenario.
+2. Laminar table prototype.
 
 Dev
 ---
