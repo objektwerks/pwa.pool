@@ -45,6 +45,7 @@ Run
 
 Panes
 -----
+>All panes, less Account panes, will include list, add and update features.
 1. Account
     * Sign Up ( email )
     * Activate Licensee ( license, email )
@@ -64,7 +65,6 @@ Panes
     * Supplies -> Supply **
     * Repairs -> Repair **
 
-*  Panes -> list, add, update    
 ** Charts -> measurements, cleanings, chemicals, supplies and repairs
 
 Licensee Scenarios
