@@ -69,7 +69,8 @@ Panes
 Scenarios
 ---------
 1. If Licensee not saved on client, user must:
-    1. SignIn(license, email); or 2. SignUp(email).
+    1. SignIn(license, email); or
+    2. SignUp(email).
 2. If Licensee saved on client, yet not activated, user must:
     1. ActivateLicensee(license, email).
 3. If Licensee saved on client and activated, user must:
