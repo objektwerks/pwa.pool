@@ -71,9 +71,9 @@ Scenarios
     1. SignIn(license, email); or 2. SignUp(email).
 2. If Licensee saved on client, yet not activated, user must:
     1. ActivateLicensee(license, email).
-3. If Licensee saved on client and activated, client must:
+3. If Licensee saved on client and activated, user must:
     1. SignIn(license, email).
-4. If Licensee saved on client and licensee deactivation requested, user must:
+4. If Licensee saved on client and licensee deactivation selected, user must:
     1. DeactivateLicense(license, email).
 5. User will list, add and update entities.
 
