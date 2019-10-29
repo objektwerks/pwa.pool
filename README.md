@@ -77,15 +77,15 @@ Scenarios
     1. DeactivateLicense(license, email).
 5. User will list, add and update entities.
 
-Licensee
---------
+Licensee Scenarios
+------------------
 * SignUp(email) => SignedUp(Licensee)
 * ActivateLicensee(license, email) => LicenseeActivated(Licensee)
 * SignIn(license, email) => SignedIn(Licensee)
 * DeativateLicensee(license, email) => LicenseeDeactivated(Licensee)
 
-Alternate Licensee
-------------------
+Alternate Licensee Scenarios
+----------------------------
 * SignUp(Licensee) => SignedUp(Licensee)
 * ActivateLicensee(Licensee) => LicenseeActivated(Licensee)
 * SignIn(Licensee) => SignedIn(Licensee)
