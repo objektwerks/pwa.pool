@@ -4,8 +4,10 @@ Tripletail
 
 TODO
 ----
-1. License/e recovery scenario.
+1. Licensee recovery scenario.
 2. Laminar table prototype.
+3. IndexedDB encryption.
+4. Postgresql column encryption.
 
 Dev
 ---
