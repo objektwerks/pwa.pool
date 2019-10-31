@@ -6,8 +6,8 @@ TODO
 ----
 1. Licensee recovery scenario.
 2. Laminar table prototype.
-3. IndexedDB encryption.
-4. Postgresql column encryption.
+3. IndexedDB and WebCrypto, SubtleCrypto, CryptoKey encryption.
+4. Scala-Java encryption.
 
 Dev
 ---
