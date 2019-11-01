@@ -4,10 +4,9 @@ Tripletail
 
 TODO
 ----
-1. Licensee recovery scenario.
-2. Laminar table prototype.
-3. IndexedDB and WebCrypto, SubtleCrypto, CryptoKey encryption.
-4. Scala-Java encryption.
+1. IndexedDB and WebCrypto, SubtleCrypto, CryptoKey encryption.
+2. Licensee recovery scenario.
+3. Laminar table prototype.
 
 Dev
 ---
