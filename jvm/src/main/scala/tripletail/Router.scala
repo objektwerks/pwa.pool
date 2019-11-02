@@ -58,9 +58,9 @@ class Router(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef) {
       entity(as[SignUp]) { signup =>
         if (signup.isValid) {
           implicit val timeout = new Timeout(10, TimeUnit.SECONDS)
-          val sendEmail = SendEmail(signup.email, Licensee.generateLicense)
+          val sendEmail = SendEmail(signup.emailAddress, Licensee.generateLicense)
           onSuccess( emailer ? sendEmail ) {
-            case Some(_) => onSuccess(signUp(sendEmail.license, signup.email)) {
+            case Some(_) => onSuccess(signUp(sendEmail.license, signup.emailAddress)) {
               licensee => complete(OK -> SignedUp(licensee))
             }
             case None => complete(BadRequest -> onInvalid(signup))
@@ -73,12 +73,12 @@ class Router(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef) {
     post {
       entity(as[ActivateLicensee]) { activatelicensee =>
         if (activatelicensee.isValid) {
-          onSuccess(activateLicensee(activatelicensee.license, activatelicensee.email, DateTime.currentDate)) {
+          onSuccess(activateLicensee(activatelicensee.license, activatelicensee.emailAddress, DateTime.currentDate)) {
             case Some(licensee) =>
               cacheLicensee(licensee)
               complete(OK -> LicenseeActivated(licensee))
             case None =>
-              val cause = s"*** Unauthorized license: ${activatelicensee.license} and/or email: ${activatelicensee.email}"
+              val cause = s"*** Unauthorized license: ${activatelicensee.license} and/or email: ${activatelicensee.emailAddress}"
               complete(Unauthorized -> onUnauthorized(cause))
           }
         } else complete(BadRequest -> onInvalid(activatelicensee))
@@ -89,12 +89,12 @@ class Router(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef) {
     post {
       entity(as[SignIn]) { signin =>
         if (signin.isValid) {
-          onSuccess(signIn(signin.license, signin.email)) {
+          onSuccess(signIn(signin.license, signin.emailAddress)) {
             case Some(licensee) =>
               cacheLicensee(licensee)
               complete(OK -> SignedIn(licensee))
             case None =>
-              val cause = s"*** Unauthorized license: ${signin.license} and/or email: ${signin.email}"
+              val cause = s"*** Unauthorized license: ${signin.license} and/or email: ${signin.emailAddress}"
               complete(Unauthorized -> onUnauthorized(cause))
           }
         } else complete(BadRequest -> onInvalid(signin))
@@ -105,12 +105,12 @@ class Router(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef) {
     post {
       entity(as[DeactivateLicensee]) { deactivatelicensee =>
         if (deactivatelicensee.isValid) {
-          onSuccess(deactivateLicensee(deactivatelicensee.license, deactivatelicensee.email, DateTime.currentDate)) {
+          onSuccess(deactivateLicensee(deactivatelicensee.license, deactivatelicensee.emailAddress, DateTime.currentDate)) {
             case Some(licensee) =>
               decacheLicensee(licensee)
               complete(OK -> LicenseeDeactivated(licensee))
             case None =>
-              val cause = s"*** Unauthorized license: ${deactivatelicensee.license} and/or email: ${deactivatelicensee.email}"
+              val cause = s"*** Unauthorized license: ${deactivatelicensee.license} and/or email: ${deactivatelicensee.emailAddress}"
               complete(Unauthorized -> onUnauthorized(cause))
           }
         } else complete(BadRequest -> onInvalid(deactivatelicensee))

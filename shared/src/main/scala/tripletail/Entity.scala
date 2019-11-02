@@ -5,7 +5,7 @@ import java.util.UUID
 sealed trait Entity extends Product with Serializable
 
 final case class Licensee(license: String = Licensee.generateLicense,
-                          email: String,
+                          emailAddress: String,
                           created: Int = DateTime.currentDate,
                           activated: Int = 0,
                           deactivated: Int = 0) extends Entity {

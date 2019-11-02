@@ -48,7 +48,7 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
 
   "signup" should {
     "post to signedup" in {
-      Post("/signup", SignUp(email = conf.getString("email.testUser"))) ~> router.routes ~> check {
+      Post("/signup", SignUp(emailAddress = conf.getString("email.testUser"))) ~> router.routes ~> check {
         status shouldBe OK
         licensee = responseAs[SignedUp].licensee
         licensee.isActivated shouldBe false
@@ -57,7 +57,7 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
   }
   "activatelicensee" should {
     "post to activated licensee" in {
-      Post("/activatelicensee", ActivateLicensee(licensee.license, licensee.email)) ~> router.routes ~> check {
+      Post("/activatelicensee", ActivateLicensee(licensee.license, licensee.emailAddress)) ~> router.routes ~> check {
         status shouldBe OK
         licensee = responseAs[LicenseeActivated].licensee
         licenseHeader = RawHeader(Licensee.headerLicenseKey, licensee.license)
@@ -68,7 +68,7 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
 
   "signin" should {
     "post to signedin" in {
-      Post(url + "/signin", SignIn(licensee.license, licensee.email)) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post(url + "/signin", SignIn(licensee.license, licensee.emailAddress)) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         responseAs[SignedIn].licensee shouldEqual licensee
         licensee.isActivated shouldBe true
@@ -336,7 +336,7 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
 
   "invalid" should {
     "post to signedup, fault" in {
-      Post("/signup", SignUp(email = "")) ~> router.routes ~> check {
+      Post("/signup", SignUp(emailAddress = "")) ~> router.routes ~> check {
         status shouldBe BadRequest
         val fault = responseAs[Fault]
         fault.cause.nonEmpty shouldBe true
@@ -358,7 +358,7 @@ class IntegrationTest extends WordSpec with Matchers with ScalatestRouteTest {
 
   "deactivatelicensee" should {
     "post to deactivated licensee" in {
-      Post(url + "/deactivatelicensee", DeactivateLicensee(licensee.license, licensee.email)) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post(url + "/deactivatelicensee", DeactivateLicensee(licensee.license, licensee.emailAddress)) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         licensee = responseAs[LicenseeDeactivated].licensee
         licensee.isDeactivated shouldBe true

@@ -13,8 +13,8 @@ class Store(conf: Config)(implicit ec: ExecutionContext) {
   implicit val ctx = new PostgresAsyncContext(SnakeCase, conf.getConfig("quill.ctx"))
   import ctx._
 
-  def signUp(license: String, email: String): Future[Licensee] = {
-    val licensee = Licensee(license = license, email = email)
+  def signUp(license: String, emailAddress: String): Future[Licensee] = {
+    val licensee = Licensee(license = license, emailAddress = emailAddress)
     ctx.transaction { implicit ec =>
       run(query[Licensee]
         .insert(lift(licensee)))
@@ -22,11 +22,11 @@ class Store(conf: Config)(implicit ec: ExecutionContext) {
     }
   }
 
-  def activateLicensee(license: String, email: String, activatedDate: Int): Future[Option[Licensee]] = {
+  def activateLicensee(license: String, emailAddress: String, activatedDate: Int): Future[Option[Licensee]] = {
     ctx.transaction { implicit ec =>
       run( query[Licensee]
         .filter(_.license == lift(license))
-        .filter(_.email == lift(email))
+        .filter(_.emailAddress == lift(emailAddress))
         .filter(_.activated == 0)
         .filter(_.deactivated == 0)
         .update(_.activated -> lift(activatedDate))
@@ -35,11 +35,11 @@ class Store(conf: Config)(implicit ec: ExecutionContext) {
     getLicensee(license)
   }
 
-  def deactivateLicensee(license: String, email: String, deactivatedDate: Int): Future[Option[Licensee]] = {
+  def deactivateLicensee(license: String, emailAddress: String, deactivatedDate: Int): Future[Option[Licensee]] = {
     ctx.transaction { implicit ec =>
       run( query[Licensee]
         .filter(_.license == lift(license))
-        .filter(_.email == lift(email))
+        .filter(_.emailAddress == lift(emailAddress))
         .filter(_.activated > 0)
         .filter(_.deactivated == 0)
         .update(_.deactivated -> lift(deactivatedDate))
@@ -48,11 +48,11 @@ class Store(conf: Config)(implicit ec: ExecutionContext) {
     getLicensee(license)
   }
 
-  def signIn(license: String, email: String): Future[Option[Licensee]] =
+  def signIn(license: String, emailAddress: String): Future[Option[Licensee]] =
     run(
       query[Licensee]
         .filter(_.license == lift(license))
-        .filter(_.email == lift(email))
+        .filter(_.emailAddress == lift(emailAddress))
         .filter(_.activated > 0)
         .filter(_.deactivated == 0)
     ).map(result => result.headOption)

@@ -10,31 +10,31 @@ object Validators {
   }
 
   implicit class SignUpOps(val signup: SignUp) {
-    def isValid: Boolean = signup.email.nonEmpty
+    def isValid: Boolean = signup.emailAddress.nonEmpty
   }
 
   implicit class ActivateLicenseeOps(val activateLicensee: ActivateLicensee) {
-    def isValid: Boolean = activateLicensee.license === 36 && activateLicensee.email.nonEmpty
+    def isValid: Boolean = activateLicensee.license === 36 && activateLicensee.emailAddress.nonEmpty
   }
 
   implicit class SignInOps(val signin: SignIn) {
-    def isValid: Boolean = signin.license === 36 && signin.email.nonEmpty
+    def isValid: Boolean = signin.license === 36 && signin.emailAddress.nonEmpty
   }
 
   implicit class DeactivateLicenseeOps(val deactivateLicensee: DeactivateLicensee) {
-    def isValid: Boolean = deactivateLicensee.license === 36 && deactivateLicensee.email.nonEmpty
+    def isValid: Boolean = deactivateLicensee.license === 36 && deactivateLicensee.emailAddress.nonEmpty
   }
 
   implicit class LicenseeOps(val licensee: Licensee) {
     def isActivated: Boolean =
       licensee.license === 36 &&
-      licensee.email.nonEmpty &&
+      licensee.emailAddress.nonEmpty &&
       licensee.created > 0 &&
       licensee.activated > 0 &&
       licensee.deactivated == 0
     def isDeactivated: Boolean =
       licensee.license === 36 &&
-      licensee.email.nonEmpty &&
+      licensee.emailAddress.nonEmpty &&
       licensee.created > 0 &&
       licensee.activated > 0 &&
       licensee.deactivated > 0
