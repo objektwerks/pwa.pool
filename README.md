@@ -49,10 +49,10 @@ Panes
 -----
 >All panes, less Account panes, will include list, add and update features.
 1. Account
-    * Sign Up ( email )
-    * Activate Licensee ( license, email )
-    * Sign In ( license, email )
-    * Deactivate Licensee ( license, email )
+    * Sign Up ( emailAddress )
+    * Activate Licensee ( license, emailAddress )
+    * Sign In ( license, emailAddress )
+    * Deactivate Licensee ( license, emailAddress )
 2. Hardware
     * Pools -> Pool
     * Surfaces -> Surface
@@ -72,14 +72,14 @@ Panes
 Licensee Scenarios
 ------------------
 1. If Licensee not saved on client, user must:
-    * SignIn(license, email) => SignedIn(Licensee) |
-    * SignUp(email) => SignedUp(Licensee)
+    * SignIn(license, emailAddress) => SignedIn(Licensee) |
+    * SignUp(emailAddress) => SignedUp(Licensee)
 2. If Licensee saved on client, yet not activated, user must:
-    * ActivateLicensee(license, email) => LicenseeActivated(Licensee)
+    * ActivateLicensee(license, emailAddress) => LicenseeActivated(Licensee)
 3. If Licensee saved on client and activated, user must:
-    * SignIn(license, email) => SignedIn(Licensee)
+    * SignIn(license, emailAddress) => SignedIn(Licensee)
 4. If Licensee saved on client and licensee deactivation selected, user must:
-    * DeactivateLicense(license, email) => LicenseeDeactivated(Licensee)
+    * DeactivateLicense(license, emailAddress) => LicenseeDeactivated(Licensee)
 
 Alternate Licensee Scenarios
 ----------------------------
@@ -116,7 +116,7 @@ Client
 
 Object Model
 ------------
-* Licensee(license, email, created, activated, deactivated)
+* Licensee(license, emailAddress, created, activated, deactivated)
 * Pool(id, license, built, lat, lon, volume)
 * Surface(id, poolId, installed, kind)
 * Pump(id, poolId, installed, model)
