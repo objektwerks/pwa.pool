@@ -78,7 +78,7 @@ class Router(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef) {
               cacheLicensee(licensee)
               complete(OK -> LicenseeActivated(licensee))
             case None =>
-              val cause = s"*** Unauthorized license: ${activatelicensee.license} and/or email: ${activatelicensee.emailAddress}"
+              val cause = s"*** Unauthorized license: ${activatelicensee.license} and/or email address: ${activatelicensee.emailAddress}"
               complete(Unauthorized -> onUnauthorized(cause))
           }
         } else complete(BadRequest -> onInvalid(activatelicensee))
@@ -94,7 +94,7 @@ class Router(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef) {
               cacheLicensee(licensee)
               complete(OK -> SignedIn(licensee))
             case None =>
-              val cause = s"*** Unauthorized license: ${signin.license} and/or email: ${signin.emailAddress}"
+              val cause = s"*** Unauthorized license: ${signin.license} and/or email address: ${signin.emailAddress}"
               complete(Unauthorized -> onUnauthorized(cause))
           }
         } else complete(BadRequest -> onInvalid(signin))
@@ -110,7 +110,7 @@ class Router(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef) {
               decacheLicensee(licensee)
               complete(OK -> LicenseeDeactivated(licensee))
             case None =>
-              val cause = s"*** Unauthorized license: ${deactivatelicensee.license} and/or email: ${deactivatelicensee.emailAddress}"
+              val cause = s"*** Unauthorized license: ${deactivatelicensee.license} and/or email address: ${deactivatelicensee.emailAddress}"
               complete(Unauthorized -> onUnauthorized(cause))
           }
         } else complete(BadRequest -> onInvalid(deactivatelicensee))
