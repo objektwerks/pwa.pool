@@ -1,9 +1,14 @@
 package tripletail
 
 object IndexedStore {
-  def apply(): IndexedStore = new IndexedStore()
-}
+  private var licenseeCache: Option[Licensee] = None
 
-class IndexedStore() {
-  def getLicensee: Licensee = Licensee(emailAddress = "tripletail@gmail.com")
+  def getLicensee: Licensee =
+    if (licenseeCache.nonEmpty) licenseeCache.get
+    else putLicensee(Licensee(emailAddress = "tripletail@gmail.com"))
+
+  def putLicensee(licensee: Licensee): Licensee = {
+    licenseeCache = Some(licensee)
+    licenseeCache.get
+  }
 }
