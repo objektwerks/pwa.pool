@@ -2,8 +2,11 @@ package tripletail
 
 import org.scalajs.dom
 import org.scalajs.dom._
-import org.scalajs.dom.crypto.CryptoKey
+import org.scalajs.dom.crypto.GlobalCrypto.crypto.subtle._
+import org.scalajs.dom.crypto.{CryptoKey, KeyUsage}
 import org.scalajs.dom.raw.{IDBDatabase, IDBVersionChangeEvent}
+
+import scala.scalajs.js
 
 object LicenseeStore {
   private val dbName = "db"
@@ -24,7 +27,8 @@ object LicenseeStore {
     val db = openDBRequest.result.asInstanceOf[IDBDatabase]
     db.createObjectStore(cryptoStore, storeKeyPath)
     db.createObjectStore(licenseeStore, storeKeyPath)
-    // Create CryptoKey and put in store.
+    val cryptoKey = generateCryptoKey()
+    putCryptoKey(db, cryptoKey)
     console.log("openDBRequest.onupgradeneeded", event)
   }
 
@@ -35,6 +39,18 @@ object LicenseeStore {
     cacheCryptoKey(db)
     cacheLicensee(db)
     console.log("openDBRequest.onsuccess", event)
+  }
+
+  private def generateCryptoKey(): CryptoKey = {
+    val keyAlgoId = "RSA-OAEP"
+    val extractable = false
+    val keyUsages = js.Array(KeyUsage.encrypt, KeyUsage.decrypt)
+    generateKey(keyAlgoId, extractable, keyUsages).valueOf().asInstanceOf[CryptoKey]
+  }
+
+  private def putCryptoKey(db: IDBDatabase, cryptoKey: CryptoKey): Unit = {
+    val store = db.transaction(cryptoStore, "readwrite").objectStore(cryptoStore)
+    store.put(cryptoKey, storeKey)
   }
 
   private def cacheCryptoKey(db: IDBDatabase): Unit = {
