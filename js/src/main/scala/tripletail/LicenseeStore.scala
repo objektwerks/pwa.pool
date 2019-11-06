@@ -21,15 +21,15 @@ object LicenseeRecord {
     js.Dynamic.literal(key = key, keys = keys, encrypted = encrypted).asInstanceOf[LicenseeRecord]
 }
 
-object LicenseeStore {
+class LicenseeStore {
   private val dbName = "db"
   private val dbVersion = 1
 
-  private val cryptoKeyAlgoId = "RSA-OAEP"
+  private val cryptoKeyAlgo = "RSA-OAEP"
 
   private val licenseeStore = "licensee"
   private val licenseeStoreKeyPath = "{ keyPath: 'key' }"
-  private val licenseeStoreKey = 1
+  private val licenseeKey = 1
   private var licenseeCache: Option[Licensee] = None
 
   private val openDBRequest = window.indexedDB.open(dbName, dbVersion)
@@ -42,30 +42,27 @@ object LicenseeStore {
 
   openDBRequest.onerror = (event: ErrorEvent) => console.error("openDBRequest.onerror", event)
 
-  openDBRequest.onsuccess = (event: dom.Event) => {
-    val db = openDBRequest.result.asInstanceOf[IDBDatabase]
-    cacheLicensee(db)
-    console.log("openDBRequest.onsuccess", event)
-  }
+  openDBRequest.onsuccess = (event: dom.Event) => console.log("openDBRequest.onsuccess", event)
 
   private def generateCryptoKey(): CryptoKey = {
     val extractable = false
     val keyUsages = js.Array(KeyUsage.encrypt, KeyUsage.decrypt)
-    generateKey(cryptoKeyAlgoId, extractable, keyUsages).valueOf().asInstanceOf[CryptoKey]
+    generateKey(cryptoKeyAlgo, extractable, keyUsages).valueOf().asInstanceOf[CryptoKey]
   }
 
   private def encryptLicensee(licensee: String, cryptoKey: CryptoKey): BufferSource = {
     val blob = new Blob(js.Array(licensee), BlobPropertyBag("application/json"))
-    encrypt(cryptoKeyAlgoId, cryptoKey, blob.valueOf()).valueOf().asInstanceOf[BufferSource]
+    encrypt(cryptoKeyAlgo, cryptoKey, blob.valueOf()).valueOf().asInstanceOf[BufferSource]
   }
 
   private def decryptLicensee(licensee: BufferSource, cryptoKey: CryptoKey): String = {
-    decrypt(cryptoKeyAlgoId, cryptoKey, licensee).valueOf().asInstanceOf[String]
+    decrypt(cryptoKeyAlgo, cryptoKey, licensee).valueOf().asInstanceOf[String]
   }
 
-  private def cacheLicensee(db: IDBDatabase): Unit = {
+  private def cacheLicensee(): Unit = {
+    val db = openDBRequest.result.asInstanceOf[IDBDatabase]
     val store = db.transaction(licenseeStore, "readonly").objectStore(licenseeStore)
-    val dbRequest = store.get(licenseeStoreKey)
+    val dbRequest = store.get(licenseeKey)
     dbRequest.onerror = (event: ErrorEvent) => console.error("cacheLicensee.onerror", event)
     dbRequest.onsuccess = (event: dom.Event) => {
       if (!js.isUndefined(dbRequest.result)) {
@@ -76,13 +73,12 @@ object LicenseeStore {
         val decrypted = decryptLicensee(encrypted, keys)
         licenseeCache = Some(read(decrypted))
         console.log(s"cacheLicensee.onsuccess : key = $key  keys = $keys  encrypted = $encrypted", event)
-      } else console.log("cacheLicensee: undefined result", event)
+      } else console.log("cacheLicensee: no Licensee in db", event)
     }
   }
 
   def getLicensee: Option[Licensee] = {
-    val db = openDBRequest.result.asInstanceOf[IDBDatabase]
-    if (licenseeCache.isEmpty) cacheLicensee(db)
+    if (licenseeCache.isEmpty) cacheLicensee()
     licenseeCache
   }
 
@@ -91,7 +87,7 @@ object LicenseeStore {
     val store = db.transaction(licenseeStore, "readwrite").objectStore(licenseeStore)
     val cryptoKey = generateCryptoKey()
     val encryptedLicensee = encryptLicensee(write(licensee), cryptoKey)
-    val data = LicenseeRecord(key = licenseeStoreKey, keys = cryptoKey, encrypted = encryptedLicensee)
-    store.put(data, licenseeStoreKey)
+    val data = LicenseeRecord(key = licenseeKey, keys = cryptoKey, encrypted = encryptedLicensee)
+    store.put(data, licenseeKey)
   }
 }
