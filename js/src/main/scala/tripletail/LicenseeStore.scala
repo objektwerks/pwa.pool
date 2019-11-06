@@ -87,7 +87,7 @@ class LicenseeStore {
     val store = db.transaction(licenseeStore, "readwrite").objectStore(licenseeStore)
     val cryptoKey = generateCryptoKey()
     val encryptedLicensee = encryptLicensee(write(licensee), cryptoKey)
-    val data = LicenseeRecord(key = licenseeKey, keys = cryptoKey, encrypted = encryptedLicensee)
-    store.put(data, licenseeKey)
+    val licenseeRecord = LicenseeRecord(key = licenseeKey, keys = cryptoKey, encrypted = encryptedLicensee)
+    store.put(licenseeRecord, licenseeKey)
   }
 }
