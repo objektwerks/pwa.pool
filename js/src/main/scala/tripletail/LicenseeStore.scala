@@ -12,13 +12,13 @@ import scala.scalajs.js
 
 trait LicenseeRecord extends js.Object {
   val key: Int = js.native
-  val keys: CryptoKey = js.native
-  val encrypted: BufferSource = js.native
+  val cryptoKey: CryptoKey = js.native
+  val encryptedLicensee: BufferSource = js.native
 }
 
 object LicenseeRecord {
-  def apply(key: Int, keys: CryptoKey, encrypted: BufferSource): LicenseeRecord =
-    js.Dynamic.literal(key = key, keys = keys, encrypted = encrypted).asInstanceOf[LicenseeRecord]
+  def apply(key: Int, cryptoKey: CryptoKey, encryptedLicensee: BufferSource): LicenseeRecord =
+    js.Dynamic.literal(key = key, cryptoKey = cryptoKey, encryptedLicensee = encryptedLicensee).asInstanceOf[LicenseeRecord]
 }
 
 class LicenseeStore {
@@ -68,11 +68,11 @@ class LicenseeStore {
       if (!js.isUndefined(dbRequest.result)) {
         val licenseeRecord = dbRequest.result.asInstanceOf[LicenseeRecord]
         val key = licenseeRecord.key
-        val keys = licenseeRecord.keys
-        val encrypted = licenseeRecord.encrypted
-        val decrypted = decryptLicensee(encrypted, keys)
-        licenseeCache = Some(read(decrypted))
-        console.log(s"cacheLicensee.onsuccess : key = $key  keys = $keys  encrypted = $encrypted", event)
+        val cryptoKey = licenseeRecord.cryptoKey
+        val encryptedLicensee = licenseeRecord.encryptedLicensee
+        val decryptedLicensee = decryptLicensee(encryptedLicensee, cryptoKey)
+        licenseeCache = Some(read(decryptedLicensee))
+        console.log(s"cacheLicensee.onsuccess : key = $key  keys = $cryptoKey  encrypted = $encryptedLicensee", event)
       } else console.log("cacheLicensee: no Licensee in db", event)
     }
   }
@@ -87,7 +87,7 @@ class LicenseeStore {
     val store = db.transaction(licenseeStore, "readwrite").objectStore(licenseeStore)
     val cryptoKey = generateCryptoKey()
     val encryptedLicensee = encryptLicensee(write(licensee), cryptoKey)
-    val licenseeRecord = LicenseeRecord(key = licenseeKey, keys = cryptoKey, encrypted = encryptedLicensee)
+    val licenseeRecord = LicenseeRecord(key = licenseeKey, cryptoKey = cryptoKey, encryptedLicensee = encryptedLicensee)
     store.put(licenseeRecord, licenseeKey)
   }
 }
