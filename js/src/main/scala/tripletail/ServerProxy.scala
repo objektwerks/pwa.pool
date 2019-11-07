@@ -17,7 +17,7 @@ class ServerProxy() {
 
   def post(url: String, license: String, command: Command): Future[Either[Fault, Event]] = {
     val headers = Map("Content-Type" -> "application/json; charset=utf-8", "Accept" -> "application/json", Licensee.headerLicenseKey -> license)
-    Ajax.post(url = url, headers = headers, data = write(command)).map { xhr =>
+    Ajax.post(url = url, headers = headers, data = write[Command](command)).map { xhr =>
       xhr.status match {
         case 200 => Try(read[Event](xhr.responseText)).fold(error => Left(log(error)), event => Right(event))
         case 400 | 401 | 500 => Try(read[Fault](xhr.responseText)).fold(error => Left(log(error)), fault => Left(fault))

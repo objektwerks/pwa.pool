@@ -1,5 +1,7 @@
 package tripletail
 
+import java.nio.charset.StandardCharsets
+
 import org.scalajs.dom
 import org.scalajs.dom._
 import org.scalajs.dom.crypto.GlobalCrypto.crypto.subtle._
@@ -8,12 +10,17 @@ import org.scalajs.dom.raw.{IDBDatabase, IDBVersionChangeEvent}
 import tripletail.Serializers._
 import upickle.default._
 
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 import scala.scalajs.js
+import scala.scalajs.js.typedarray.Uint8Array
+import scala.util.{Failure, Success}
 
+@js.native
 trait LicenseeRecord extends js.Object {
-  val key: Int = js.native
-  val cryptoKey: CryptoKey = js.native
-  val encryptedLicensee: BufferSource = js.native
+  val key: Int
+  val cryptoKey: CryptoKey
+  val encryptedLicensee: BufferSource
 }
 
 object LicenseeRecord {
@@ -44,19 +51,19 @@ class LicenseeStore {
 
   openDBRequest.onsuccess = (event: dom.Event) => console.log("openDBRequest.onsuccess", event)
 
-  private def generateCryptoKey(): CryptoKey = {
+  private def generateCryptoKey(): Future[Any] = {
     val extractable = false
     val keyUsages = js.Array(KeyUsage.encrypt, KeyUsage.decrypt)
-    generateKey(cryptoKeyAlgo, extractable, keyUsages).valueOf().asInstanceOf[CryptoKey]
+    generateKey(cryptoKeyAlgo, extractable, keyUsages).toFuture
   }
 
-  private def encryptLicensee(licensee: String, cryptoKey: CryptoKey): BufferSource = {
-    val blob = new Blob(js.Array(licensee), BlobPropertyBag("application/json"))
-    encrypt(cryptoKeyAlgo, cryptoKey, blob.valueOf()).valueOf().asInstanceOf[BufferSource]
+  private def encryptLicensee(licensee: String, cryptoKey: CryptoKey): Future[Any] = {
+    val array = new Uint8Array(js.Array(licensee.getBytes(StandardCharsets.UTF_8).toIterable))
+    encrypt(cryptoKeyAlgo, cryptoKey, array.buffer.asInstanceOf[BufferSource]).toFuture
   }
 
-  private def decryptLicensee(licensee: BufferSource, cryptoKey: CryptoKey): String = {
-    decrypt(cryptoKeyAlgo, cryptoKey, licensee).valueOf().asInstanceOf[String]
+  private def decryptLicensee(licensee: BufferSource, cryptoKey: CryptoKey): Future[Any] = {
+    decrypt(cryptoKeyAlgo, cryptoKey, licensee).toFuture
   }
 
   private def cacheLicensee(): Unit = {
@@ -67,13 +74,17 @@ class LicenseeStore {
     dbRequest.onsuccess = (event: dom.Event) => {
       if (!js.isUndefined(dbRequest.result)) {
         val licenseeRecord = dbRequest.result.asInstanceOf[LicenseeRecord]
-        val key = licenseeRecord.key
-        val cryptoKey = licenseeRecord.cryptoKey
-        val encryptedLicensee = licenseeRecord.encryptedLicensee
-        val decryptedLicensee = decryptLicensee(encryptedLicensee, cryptoKey)
-        licenseeCache = Some(read(decryptedLicensee))
-        console.log(s"cacheLicensee.onsuccess : key = $key  keys = $cryptoKey  encrypted = $encryptedLicensee", event)
-      } else console.log("cacheLicensee: no Licensee in db", event)
+        decryptLicensee(licenseeRecord.encryptedLicensee, licenseeRecord.cryptoKey) onComplete {
+          case Success(opaqueLicensee) =>
+            val decryptedLicensee = opaqueLicensee.asInstanceOf[String]
+            licenseeCache = Some( read[Licensee](decryptedLicensee) )
+            console.log(s"cacheLicensee.onsuccess : $licenseeRecord", event)
+          case Failure(error) => console.error("cacheLicensee.onerror", error.getMessage)
+        }
+      } else {
+        licenseeCache = None
+        console.log("cacheLicensee: no Licensee in db", event)
+      }
     }
   }
 
@@ -85,9 +96,17 @@ class LicenseeStore {
   def putLicensee(licensee: Licensee): Unit = {
     val db = openDBRequest.result.asInstanceOf[IDBDatabase]
     val store = db.transaction(licenseeStore, "readwrite").objectStore(licenseeStore)
-    val cryptoKey = generateCryptoKey()
-    val encryptedLicensee = encryptLicensee(write(licensee), cryptoKey)
-    val licenseeRecord = LicenseeRecord(key = licenseeKey, cryptoKey = cryptoKey, encryptedLicensee = encryptedLicensee)
-    store.put(licenseeRecord, licenseeKey)
+    generateCryptoKey() onComplete {
+      case Success(opaqueCryptoKey) =>
+        val cryptoKey = opaqueCryptoKey.asInstanceOf[CryptoKey]
+        encryptLicensee(write[Licensee](licensee), cryptoKey) onComplete {
+          case Success(opaqueLicensee) =>
+            val encryptedLicensee = opaqueLicensee.asInstanceOf[BufferSource]
+            val licenseeRecord = LicenseeRecord(licenseeKey, cryptoKey, encryptedLicensee)
+            store.put(licenseeRecord, licenseeKey)
+          case Failure(error) => console.error("putLicensee.onerror", error.getMessage)
+        }
+      case Failure(error) => console.error("putLicensee.onerror", error.getMessage)
+    }
   }
 }
