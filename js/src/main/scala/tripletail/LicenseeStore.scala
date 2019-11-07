@@ -89,25 +89,27 @@ class LicenseeStore {
     }
   }
 
-  def getLicensee: Option[Licensee] = {
+  def getLicensee: Future[Option[Licensee]] = {
     if (licenseeCache.isEmpty) cacheLicensee()
-    licenseeCache
+    Future.successful(licenseeCache)
   }
 
-  def putLicensee(licensee: Licensee): Unit = {
+  def putLicensee(licensee: Licensee): Future[Unit] = {
     val db = openDBRequest.result.asInstanceOf[IDBDatabase]
     val store = db.transaction(licenseeStore, "readwrite").objectStore(licenseeStore)
-    generateCryptoKey() onComplete {
-      case Success(opaqueCryptoKey) =>
-        val cryptoKey = opaqueCryptoKey.asInstanceOf[CryptoKey]
-        encryptLicensee(write[Licensee](licensee), cryptoKey) onComplete {
-          case Success(opaqueLicensee) =>
-            val encryptedLicensee = opaqueLicensee.asInstanceOf[BufferSource]
-            val licenseeRecord = LicenseeRecord(licenseeKey, cryptoKey, encryptedLicensee)
-            store.put(licenseeRecord, licenseeKey)
-          case Failure(error) => console.error("putLicensee.onerror", error.getMessage)
-        }
-      case Failure(error) => console.error("putLicensee.onerror", error.getMessage)
+    for {
+      opaqueCryptoKey   <- generateCryptoKey()
+      cryptoKey         = opaqueCryptoKey.asInstanceOf[CryptoKey]
+      opaqueLicensee    <- encryptLicensee(write[Licensee](licensee), cryptoKey)
+      encryptedLicensee = opaqueLicensee.asInstanceOf[BufferSource]
+      licenseeRecord    = LicenseeRecord(licenseeKey, cryptoKey, encryptedLicensee)
+      dbRequest         = store.put(licenseeRecord, licenseeKey)
+    } yield {
+      dbRequest.onerror = (event: ErrorEvent) => console.error("putLicensee.onerror", event)
+      dbRequest.onsuccess = (event: dom.Event) => {
+        licenseeCache = Some(licensee)
+        console.log(s"putLicensee.onsuccess : $licenseeRecord", event)
+      }
     }
   }
 }
