@@ -89,9 +89,13 @@ class LicenseeStore {
     }
   }
 
+  private def copyLicenseeCache: Option[Licensee] = {
+    if (licenseeCache.nonEmpty) Some(licenseeCache.get) else None
+  }
+
   def getLicensee: Future[Option[Licensee]] = {
     if (licenseeCache.isEmpty) cacheLicensee()
-    Future.successful(licenseeCache)
+    Future.successful(copyLicenseeCache)
   }
 
   def putLicensee(licensee: Licensee): Future[Unit] = {
