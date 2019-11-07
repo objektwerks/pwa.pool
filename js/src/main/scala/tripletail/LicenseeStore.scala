@@ -59,7 +59,8 @@ class LicenseeStore {
 
   private def encryptLicensee(licensee: String, cryptoKey: CryptoKey): Future[Any] = {
     val array = new Uint8Array(js.Array(licensee.getBytes(StandardCharsets.UTF_8).toIterable))
-    encrypt(cryptoKeyAlgo, cryptoKey, array.buffer.asInstanceOf[BufferSource]).toFuture
+    val buffer = array.buffer.asInstanceOf[BufferSource]
+    encrypt(cryptoKeyAlgo, cryptoKey, buffer).toFuture
   }
 
   private def decryptLicensee(licensee: BufferSource, cryptoKey: CryptoKey): Future[Any] = {
