@@ -107,14 +107,13 @@ class LicenseeStore {
       encryptedLicensee = opaqueLicensee.asInstanceOf[BufferSource]
       licenseeRecord    = LicenseeRecord(licenseeKey, cryptoKey, encryptedLicensee)
       dbRequest         = store.put(licenseeRecord, licenseeKey)
-      licenseeOption    <- Future {
+      _                 <- Future {
                              dbRequest.onerror = (event: ErrorEvent) => console.error("putLicensee.onerror", event)
                              dbRequest.onsuccess = (event: dom.Event) => {
                                licenseeCache = Some(licensee)
                                console.log(s"putLicensee.onsuccess : $licenseeRecord", event)
                              }
-                             copyLicenseeCache
                            }
-    } yield licenseeOption
+    } yield copyLicenseeCache
   }
 }
