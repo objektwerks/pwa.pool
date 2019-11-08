@@ -31,8 +31,9 @@ Bloop
 1. sbt bloopInstall
 2. bloop clean tripletail
 3. bloop compile tripletail
-4. bloop test sharedJVM
-5. bloop test jvm-it
+4. bloop test sharedJVM : sbt sharedJVM/test
+5. bloop test jvm-it : sbt jvm/it:test
+6. bloop test js : sbt js/tests
 
 Build
 -----

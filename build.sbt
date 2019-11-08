@@ -44,7 +44,8 @@ lazy val js = (project in file("js"))
     libraryDependencies ++= Seq(
       "com.raquo" %%% "laminar" % "0.7.1",
       "com.raquo" %%% "domtypes" % "0.9.5",
-      "com.lihaoyi" %%% "upickle" % upickleVersion
+      "com.lihaoyi" %%% "upickle" % upickleVersion,
+      "org.scalatest" %%% "scalatest" % scalaTestVersion % Test
     )
   ) dependsOn sharedJS
 
