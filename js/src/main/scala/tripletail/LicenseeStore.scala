@@ -67,36 +67,33 @@ class LicenseeStore {
     decrypt(cryptoKeyAlgo, cryptoKey, licensee).toFuture
   }
 
-  private def cacheLicensee(): Unit = {
-    val db = openDBRequest.result.asInstanceOf[IDBDatabase]
-    val store = db.transaction(licenseeStore, "readonly").objectStore(licenseeStore)
-    val dbRequest = store.get(licenseeKey)
-    dbRequest.onerror = (event: ErrorEvent) => console.error("cacheLicensee.onerror", event)
-    dbRequest.onsuccess = (event: dom.Event) => {
-      if (!js.isUndefined(dbRequest.result)) {
-        val licenseeRecord = dbRequest.result.asInstanceOf[LicenseeRecord]
-        decryptLicensee(licenseeRecord.encryptedLicensee, licenseeRecord.cryptoKey) onComplete {
-          case Success(opaqueLicensee) =>
-            val decryptedLicensee = opaqueLicensee.asInstanceOf[String]
-            licenseeCache = Some( read[Licensee](decryptedLicensee) )
-            console.log(s"cacheLicensee.onsuccess : $licenseeRecord", event)
-          case Failure(error) => console.error("cacheLicensee.onerror", error.getMessage)
-        }
-      } else {
-        licenseeCache = None
-        console.log("cacheLicensee: no Licensee in db", event)
+  private def cacheLicensee(): Future[Option[Licensee]] = Future {
+    if (licenseeCache.isEmpty) {
+      val db = openDBRequest.result.asInstanceOf[IDBDatabase]
+      val store = db.transaction(licenseeStore, "readonly").objectStore(licenseeStore)
+      val dbRequest = store.get(licenseeKey)
+      dbRequest.onerror = (event: ErrorEvent) => console.error("cacheLicensee.onerror", event)
+      dbRequest.onsuccess = (event: dom.Event) => {
+        if (!js.isUndefined(dbRequest.result)) {
+          val licenseeRecord = dbRequest.result.asInstanceOf[LicenseeRecord]
+          decryptLicensee(licenseeRecord.encryptedLicensee, licenseeRecord.cryptoKey) onComplete {
+            case Success(opaqueLicensee) =>
+              val decryptedLicensee = opaqueLicensee.asInstanceOf[String]
+              licenseeCache = Some( read[Licensee](decryptedLicensee) )
+              console.log(s"cacheLicensee.onsuccess : $licenseeRecord", event)
+            case Failure(error) => console.error("cacheLicensee.onerror", error.getMessage)
+          }
+        } else console.log("cacheLicensee: no Licensee in db", event)
       }
     }
+    copyLicenseeCache
   }
 
   private def copyLicenseeCache: Option[Licensee] = {
     if (licenseeCache.nonEmpty) Some(licenseeCache.get) else None
   }
 
-  def getLicensee: Future[Option[Licensee]] = {
-    if (licenseeCache.isEmpty) cacheLicensee()
-    Future.successful(copyLicenseeCache)
-  }
+  def getLicensee: Future[Option[Licensee]] = cacheLicensee()
 
   def putLicensee(licensee: Licensee): Future[Option[Licensee]] = {
     val db = openDBRequest.result.asInstanceOf[IDBDatabase]
