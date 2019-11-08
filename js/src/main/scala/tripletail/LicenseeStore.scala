@@ -84,7 +84,7 @@ class LicenseeStore {
             case Success(opaqueLicensee) =>
               val decryptedLicensee = opaqueLicensee.asInstanceOf[String]
               licenseeCache = Some( read[Licensee](decryptedLicensee) )
-              console.log(s"cacheLicensee.onsuccess : $licenseeRecord", event)
+              console.log(s"cacheLicensee.onsuccess : $licenseeCache", event)
             case Failure(error) => console.error("cacheLicensee.onerror", error.getMessage)
           }
         } else console.log("cacheLicensee: no Licensee in db", event)
@@ -111,7 +111,7 @@ class LicenseeStore {
                              dbRequest.onerror = (event: ErrorEvent) => console.error("putLicensee.onerror", event)
                              dbRequest.onsuccess = (event: dom.Event) => {
                                licenseeCache = Some(licensee)
-                               console.log(s"putLicensee.onsuccess : $licenseeRecord", event)
+                               console.log(s"putLicensee.onsuccess : $licenseeCache", event)
                              }
                            }
     } yield copyLicenseeCache
