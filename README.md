@@ -4,7 +4,7 @@ Tripletail
 
 TODO
 ----
-1. IndexedDB and WebCrypto, SubtleCrypto, CryptoKey encryption.
+1. Test LicenseeStore.
 2. Licensee recovery scenario.
 3. Laminar table prototype.
 4. Explore Stripe and Braintree Checkout
