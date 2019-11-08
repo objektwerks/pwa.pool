@@ -28,6 +28,10 @@ object LicenseeRecord {
     js.Dynamic.literal(key = key, cryptoKey = cryptoKey, encryptedLicensee = encryptedLicensee).asInstanceOf[LicenseeRecord]
 }
 
+object LicenseeStore {
+  def apply(): LicenseeStore = new LicenseeStore()
+}
+
 class LicenseeStore {
   private val dbName = "db"
   private val dbVersion = 1
