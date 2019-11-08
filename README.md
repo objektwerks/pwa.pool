@@ -19,7 +19,7 @@ Dev
 6. open browser to http://127.0.0.1:7979
 7. open developer tools
 
-* View js-fastopt.js in js/target. View sharedjs-fastopt.js in shared/target.
+* View js-fastopt.js or js-fullOptJS.js in js/target. View sharedjs-fastopt.js or sharedjs-fullOptJS.js in shared/target.
 * For step 5, see the build.sbt > mainClass in reStart := Some("tripletail.Server")
 
 Test
@@ -37,7 +37,7 @@ Bloop
 
 Build
 -----
->View js-fastopt.js or js-fullOptJS.js in js/target. View sharedjs-fastopt.js or sharedjs-fullOptJS.jss in shared/target.
+>View js-fastopt.js or js-fullOptJS.js in js/target. View sharedjs-fastopt.js or sharedjs-fullOptJS.js in shared/target.
 1. sbt clean compile package
 
 Run
