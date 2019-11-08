@@ -98,7 +98,7 @@ class LicenseeStore {
     Future.successful(copyLicenseeCache)
   }
 
-  def putLicensee(licensee: Licensee): Future[Unit] = {
+  def putLicensee(licensee: Licensee): Future[Option[Licensee]] = {
     val db = openDBRequest.result.asInstanceOf[IDBDatabase]
     val store = db.transaction(licenseeStore, "readwrite").objectStore(licenseeStore)
     for {
@@ -115,5 +115,6 @@ class LicenseeStore {
         console.log(s"putLicensee.onsuccess : $licenseeRecord", event)
       }
     }
+    Future.successful(copyLicenseeCache)
   }
 }
