@@ -36,7 +36,7 @@ Bloop
 
 Build
 -----
->View js-fastopt.js in js/target. View sharedjs-fastopt.js in shared/target.
+>View js-fastopt.js or js-fullOptJS.js in js/target. View sharedjs-fastopt.js or sharedjs-fullOptJS.jss in shared/target.
 1. sbt clean compile package
 
 Run

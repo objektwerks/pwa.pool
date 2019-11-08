@@ -9,7 +9,7 @@ val quillVersion = "3.4.10"
 val upickleVersion = "0.8.0"
 val scalaTestVersion = "3.0.8"
 
-val jsCompileMode = fullOptJS  // fastOptJS
+val jsCompileMode = fastOptJS  // fullOptJS
 
 lazy val commonSettings = Defaults.coreDefaultSettings ++ Seq(
   organization := "objektwerks",
