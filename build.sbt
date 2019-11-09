@@ -43,7 +43,6 @@ lazy val js = (project in file("js"))
   .settings(
     libraryDependencies ++= Seq(
       "com.raquo" %%% "laminar" % "0.7.1",
-      "com.raquo" %%% "domtypes" % "0.9.5",
       "com.lihaoyi" %%% "upickle" % upickleVersion,
       "org.scalatest" %%% "scalatest" % scalaTestVersion % Test
     )
@@ -55,7 +54,7 @@ lazy val sw = (project in file("sw"))
   .settings(
     scalaJSUseMainModuleInitializer := true,
     libraryDependencies ++= Seq(
-      "com.raquo" %%% "domtypes" % "0.9.5"
+      "com.raquo" %%% "domtypes" % "0.9.4"
     )
   )
 
