@@ -2,7 +2,6 @@ package tripletail
 
 import akka.actor.{ActorSystem, Props}
 import akka.http.scaladsl.Http
-import akka.stream.ActorMaterializer
 import com.typesafe.config.ConfigFactory
 import org.slf4j.LoggerFactory
 
@@ -14,7 +13,6 @@ object Server {
     val logger = LoggerFactory.getLogger(Server.getClass)
     val conf = ConfigFactory.load("server.conf")
     implicit val system = ActorSystem.create(conf.getString("server.name"), conf.getConfig("akka"))
-    implicit val materializer = ActorMaterializer()
     implicit val dispatcher = system.dispatcher
 
     val store = Store(conf)
