@@ -33,7 +33,7 @@ Bloop
 3. bloop compile tripletail
 4. bloop test sharedJVM : sbt sharedJVM/test
 5. bloop test jvm-it : sbt jvm/it:test
-6. bloop test js : sbt js/tests
+6. bloop test js : sbt js/test
 
 Build
 -----
