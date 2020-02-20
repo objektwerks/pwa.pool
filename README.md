@@ -24,7 +24,7 @@ Dev
 
 Test
 ----
-1. sbt clean test | sbt clean it:test
+1. sbt clean sharedJVM/test | sbt clean jvm/it:test
 
 Bloop
 -----
