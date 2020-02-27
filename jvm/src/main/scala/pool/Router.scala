@@ -384,8 +384,8 @@ class Router(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef) {
       }
     }
   }
-  val url = "/api/v1/tripletail"
-  val api = pathPrefix("api" / "v1" / "tripletail") {
+  val url = "/api/v1/pool"
+  val api = pathPrefix("api" / "v1" / "pool") {
     signin ~ pools ~ surfaces ~ pumps ~ timers ~ timersettings ~ heaters ~ heatersettings ~
       measurements ~ cleanings ~ chemicals ~ supplies ~ repairs ~ deactivatelicensee
   }
