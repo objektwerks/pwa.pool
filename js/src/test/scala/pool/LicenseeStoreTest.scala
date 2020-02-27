@@ -1,4 +1,4 @@
-package tripletail
+package pool
 
 import org.scalatest.{FunSuite, Matchers}
 

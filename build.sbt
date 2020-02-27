@@ -1,7 +1,7 @@
 import sbt.Keys._
 import sbtcrossproject.CrossPlugin.autoImport.{CrossType, crossProject}
 
-name := "tripletail"
+name := "pwa.pool"
 
 val akkaVersion = "2.6.3"
 val akkkHttpVersion = "10.1.11"

@@ -1,4 +1,4 @@
-package tripletail
+package pool
 
 import org.scalajs.dom.experimental.Fetch._
 import org.scalajs.dom.experimental._

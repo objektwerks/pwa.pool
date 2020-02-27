@@ -1,4 +1,4 @@
-package tripletail
+package pool
 
 sealed trait State extends Product with Serializable
 

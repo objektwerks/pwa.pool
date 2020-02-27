@@ -1,6 +1,6 @@
 {
-  "name": "Tripletail",
-  "short_name": "Tripletail",
+  "name": "PWA Pool",
+  "short_name": "PWA Pool",
   "start_url": ".",
   "scope": ".",
   "display": "standalone",

@@ -1,4 +1,4 @@
-package tripletail
+package pool
 
 import org.scalajs.dom.console
 import org.scalajs.dom.ext.Ajax

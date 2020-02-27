@@ -1,4 +1,4 @@
-package tripletail
+package pool
 
 import com.typesafe.config.Config
 import io.getquill._

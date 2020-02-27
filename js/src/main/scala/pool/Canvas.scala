@@ -1,4 +1,4 @@
-package tripletail
+package pool
 
 object Canvas {
   def apply(licenseeStore: LicenseeStore,

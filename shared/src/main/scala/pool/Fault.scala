@@ -1,4 +1,4 @@
-package tripletail
+package pool
 
 final case class Fault(cause: String,
                        code: Int = 500,

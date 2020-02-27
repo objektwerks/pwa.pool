@@ -1,4 +1,4 @@
-package tripletail
+package pool
 
 sealed trait Event extends Product with Serializable
 

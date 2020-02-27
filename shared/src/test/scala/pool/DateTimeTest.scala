@@ -1,9 +1,9 @@
-package tripletail
+package pool
 
 import java.time.{LocalDate, LocalTime}
 
 import org.scalatest.{FunSuite, Matchers}
-import tripletail.DateTime._
+import pool.DateTime._
 
 class DateTimeTest extends FunSuite with Matchers {
   test("low date") {

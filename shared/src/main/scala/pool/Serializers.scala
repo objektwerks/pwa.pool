@@ -1,4 +1,4 @@
-package tripletail
+package pool
 
 object Serializers {
   import upickle.default._

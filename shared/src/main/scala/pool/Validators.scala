@@ -1,4 +1,4 @@
-package tripletail
+package pool
 
 object Validators {
   implicit class StringOps(val value: String) {

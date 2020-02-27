@@ -1,4 +1,4 @@
-package tripletail
+package pool
 
 import java.nio.charset.StandardCharsets
 
@@ -7,7 +7,7 @@ import org.scalajs.dom._
 import org.scalajs.dom.crypto.GlobalCrypto.crypto.subtle._
 import org.scalajs.dom.crypto.{BufferSource, CryptoKey, KeyUsage}
 import org.scalajs.dom.raw.{IDBDatabase, IDBVersionChangeEvent}
-import tripletail.Serializers._
+import pool.Serializers._
 import upickle.default._
 
 import scala.concurrent.ExecutionContext.Implicits.global

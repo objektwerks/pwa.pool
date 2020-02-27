@@ -1,4 +1,4 @@
-package tripletail
+package pool
 
 import org.scalajs.dom._
 import org.scalajs.dom.experimental.serviceworkers._

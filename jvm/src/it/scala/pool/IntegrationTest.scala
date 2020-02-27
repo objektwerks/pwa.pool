@@ -1,4 +1,4 @@
-package tripletail
+package pool
 
 import de.heikoseeberger.akkahttpupickle.{UpickleSupport => Upickle}
 import akka.actor.{ActorSystem, Props}

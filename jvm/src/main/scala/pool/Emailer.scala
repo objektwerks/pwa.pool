@@ -1,4 +1,4 @@
-package tripletail
+package pool
 
 import akka.actor.{Actor, ActorLogging}
 import com.typesafe.config.Config

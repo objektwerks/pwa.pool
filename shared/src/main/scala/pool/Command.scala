@@ -1,4 +1,4 @@
-package tripletail
+package pool
 
 sealed trait Command extends Product with Serializable
 
