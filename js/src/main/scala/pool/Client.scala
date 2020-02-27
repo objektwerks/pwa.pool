@@ -10,7 +10,7 @@ import scala.util.{Failure, Success}
 @JSExportTopLevel("Client")
 object Client {
   private val serverUrl = "http://127.0.0.1:7979"
-  private val apiUrl = "http://127.0.0.1:7979/api/v1/tripletail"
+  private val apiUrl = "http://127.0.0.1:7979/api/v1/pool"
 
   @JSExport
   def init(): Unit = {
