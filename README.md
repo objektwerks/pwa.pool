@@ -13,7 +13,7 @@ Dev
 7. open developer tools
 
 * View js-fastopt.js or js-fullOptJS.js in js/target. View sharedjs-fastopt.js or sharedjs-fullOptJS.js in shared/target.
-* For step 5, see the build.sbt > mainClass in reStart := Some("tripletail.Server")
+* For step 5, see the build.sbt > mainClass in reStart := Some("pool.Server")
 
 Test
 ----
@@ -22,8 +22,8 @@ Test
 Bloop
 -----
 1. sbt bloopInstall
-2. bloop clean tripletail
-3. bloop compile tripletail
+2. bloop clean pool
+3. bloop compile pool
 4. bloop test sharedJVM : sbt sharedJVM/test
 5. bloop test jvm-it : sbt jvm/it:test
 6. bloop test js : sbt js/test
@@ -85,7 +85,7 @@ Alternate Licensee Scenarios
 Rest
 ----
 >Root server url: ""
->Root api url: /api/v1/tripletail
+>Root api url: /api/v1/pool
 * /signup
 * /activatelicensee
 * /signin
