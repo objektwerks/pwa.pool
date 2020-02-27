@@ -1,13 +1,6 @@
-Tripletail
-----------
->Pool maintenance application.
-
-TODO
-----
-1. Test LicenseeStore.
-2. Licensee recovery scenario.
-3. Laminar table prototype.
-4. Explore Stripe and Braintree Checkout
+PWA Pool App
+------------
+>Pool maintenance application. Unfinished.
 
 Dev
 ---
