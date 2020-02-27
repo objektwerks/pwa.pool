@@ -1,6 +1,6 @@
 PWA Pool App
 ------------
->Pool maintenance application. Unfinished prototype.
+>Pool maintenance ( prototype ) application.
 
 Dev
 ---
