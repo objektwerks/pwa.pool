@@ -1,8 +1,9 @@
 package pool
 
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
-class LicenseeStoreTest extends FunSuite with Matchers {
+class LicenseeStoreTest extends AnyFunSuite with Matchers {
   test("licensee store") {
 
   }

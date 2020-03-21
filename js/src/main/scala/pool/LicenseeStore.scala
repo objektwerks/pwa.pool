@@ -10,10 +10,10 @@ import org.scalajs.dom.raw.{IDBDatabase, IDBVersionChangeEvent}
 import pool.Serializers._
 import upickle.default._
 
+import scala.collection.mutable.ArrayBuffer
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.scalajs.js
-import scala.scalajs.js.typedarray.Uint8Array
 import scala.util.{Failure, Success}
 
 @js.native
@@ -62,8 +62,8 @@ class LicenseeStore {
   }
 
   private def encryptLicensee(licensee: String, cryptoKey: CryptoKey): Future[Any] = {
-    val array = new Uint8Array(js.Array(licensee.getBytes(StandardCharsets.UTF_8).toIterable))
-    val buffer = array.buffer.asInstanceOf[BufferSource]
+    val array = js.Array(licensee.getBytes(StandardCharsets.UTF_8).to[ArrayBuffer])
+    val buffer = array.asInstanceOf[BufferSource]
     encrypt(cryptoKeyAlgo, cryptoKey, buffer).toFuture
   }
 

@@ -3,18 +3,18 @@ import sbtcrossproject.CrossPlugin.autoImport.{CrossType, crossProject}
 
 name := "pwa.pool"
 
-val akkaVersion = "2.6.3"
+val akkaVersion = "2.6.4"
 val akkkHttpVersion = "10.1.11"
 val quillVersion = "3.5.0"
-val upickleVersion = "0.9.9"
-val scalaTestVersion = "3.0.8"
+val upickleVersion = "1.0.0"
+val scalaTestVersion = "3.1.1"
 
 val jsCompileMode = fastOptJS  // fullOptJS
 
 lazy val commonSettings = Defaults.coreDefaultSettings ++ Seq(
   organization := "objektwerks",
   version := "0.1-SNAPSHOT",
-  scalaVersion := "2.12.10"
+  scalaVersion := "2.12.11"
 )
 
 lazy val tripletail = project.in(file("."))
@@ -42,7 +42,7 @@ lazy val js = (project in file("js"))
   .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
-      "com.raquo" %%% "laminar" % "0.7.2",
+      "com.raquo" %%% "laminar" % "0.8.0",
       "com.lihaoyi" %%% "upickle" % upickleVersion,
       "org.scalatest" %%% "scalatest" % scalaTestVersion % Test
     )
@@ -54,7 +54,7 @@ lazy val sw = (project in file("sw"))
   .settings(
     scalaJSUseMainModuleInitializer := true,
     libraryDependencies ++= Seq(
-      "com.raquo" %%% "domtypes" % "0.9.6"
+      "com.raquo" %%% "domtypes" % "0.9.7"
     )
   )
 
@@ -69,12 +69,12 @@ lazy val jvm = (project in file("jvm"))
       "com.typesafe.akka" %% "akka-http" % akkkHttpVersion,
       "com.typesafe.akka" %% "akka-stream" % akkaVersion,
       "com.typesafe.akka" %% "akka-slf4j" % akkaVersion,
-      "com.typesafe.akka" %% "akka-agent" % "2.5.26",
-      "de.heikoseeberger" %% "akka-http-upickle" % "1.29.1",
+      "com.typesafe.akka" %% "akka-agent" % "2.5.30",
+      "de.heikoseeberger" %% "akka-http-upickle" % "1.31.0",
       "io.getquill" %% "quill-sql" % quillVersion,
       "io.getquill" %% "quill-async-postgres" % quillVersion,
       "com.github.cb372" %% "scalacache-caffeine" % "0.28.0",
-      "org.jodd" % "jodd-mail" % "5.1.0-20190624",
+      "org.jodd" % "jodd-mail" % "5.1.4",
       "com.typesafe" % "config" % "1.4.0",
       "ch.qos.logback" % "logback-classic" % "1.2.3",
       "com.typesafe.akka" %% "akka-http-testkit" % akkkHttpVersion % IntegrationTest,

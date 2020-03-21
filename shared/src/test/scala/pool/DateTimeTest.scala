@@ -2,10 +2,11 @@ package pool
 
 import java.time.{LocalDate, LocalTime}
 
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 import pool.DateTime._
 
-class DateTimeTest extends FunSuite with Matchers {
+class DateTimeTest extends AnyFunSuite with Matchers {
   test("low date") {
     val localDate = LocalDate.of(1999, 3, 3)
     localDateToInt(localDate) shouldEqual 19990303

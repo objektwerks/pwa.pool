@@ -17,16 +17,18 @@ Dev
 
 Test
 ----
-1. sbt clean sharedJVM/test | sbt clean jvm/it:test
+1. sbt clean sharedJVM/test
+2. sbt clean jvm/it:test  // Requires valid email address at this time in jvm/src/it/resources/test.server.conf.
+3. sbt clean js/test
 
 Bloop
 -----
 1. sbt bloopInstall
 2. bloop clean pool
 3. bloop compile pool
-4. bloop test sharedJVM : sbt sharedJVM/test
-5. bloop test jvm-it : sbt jvm/it:test
-6. bloop test js : sbt js/test
+4. bloop test sharedJVM
+5. bloop test jvm-it
+6. bloop test js
 
 Build
 -----
