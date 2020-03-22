@@ -13,7 +13,7 @@ val jsCompileMode = fastOptJS  // fullOptJS
 lazy val commonSettings = Defaults.coreDefaultSettings ++ Seq(
   organization := "objektwerks",
   version := "0.1-SNAPSHOT",
-  scalaVersion := "2.12.11",
+  scalaVersion := "2.12.11"
 )
 
 lazy val tripletail = project.in(file("."))
