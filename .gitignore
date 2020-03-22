@@ -3,7 +3,7 @@
 .metals
 js/target/
 jvm/target/
-project/.bloop
+project/metals.sbt
 project/project/
 project/target/
 shared/.js
