@@ -14,7 +14,8 @@ val jsCompileMode = fastOptJS  // fullOptJS
 lazy val commonSettings = Defaults.coreDefaultSettings ++ Seq(
   organization := "objektwerks",
   version := "0.1-SNAPSHOT",
-  scalaVersion := "2.12.11"
+  scalaVersion := "2.12.11",
+  scalacOptions in (Compile, compile) ++= Seq("--illegal-access=deny")
 )
 
 lazy val tripletail = project.in(file("."))
