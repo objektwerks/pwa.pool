@@ -17,7 +17,7 @@ lazy val commonSettings = Defaults.coreDefaultSettings ++ Seq(
 )
 
 lazy val pool = project.in(file("."))
-  .aggregate(sharedJS, sharedJVM, js, sw, jvm)
+  .aggregate(shared.js, shared.jvm, js, sw, jvm)
   .settings(commonSettings)
   .settings(
     publish := {},
@@ -33,8 +33,6 @@ lazy val shared = crossProject(JSPlatform, JVMPlatform)
       "org.scalatest" %% "scalatest" % scalaTestVersion % Test
     )
   )
-lazy val sharedJS = shared.js
-lazy val sharedJVM = shared.jvm
 
 lazy val js = (project in file("js"))
   .enablePlugins(ScalaJSPlugin)
@@ -45,7 +43,7 @@ lazy val js = (project in file("js"))
       "com.lihaoyi" %%% "upickle" % upickleVersion,
       "org.scalatest" %%% "scalatest" % scalaTestVersion % Test
     )
-  ) dependsOn sharedJS
+  ) dependsOn shared.js
 
 lazy val sw = (project in file("sw"))
   .enablePlugins(ScalaJSPlugin)
@@ -84,7 +82,7 @@ lazy val jvm = (project in file("jvm"))
       "-Ywarn-macros:after"
     ),
     javaOptions in IntegrationTest += "-Dquill.binds.log=true",
-    (resources in Compile) += (jsCompileMode in (sharedJS, Compile)).value.data,
+    (resources in Compile) += (jsCompileMode in (shared.js, Compile)).value.data,
     (resources in Compile) += (jsCompileMode in (js, Compile)).value.data,
     (resources in Compile) += (jsCompileMode in (sw, Compile)).value.data
-  ) dependsOn(sharedJS, sharedJVM, js, sw)
+  ) dependsOn(shared.js, shared.jvm, js, sw)
