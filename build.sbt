@@ -78,8 +78,6 @@ lazy val jvm = (project in file("jvm"))
       "com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion % IntegrationTest,
       "org.scalatest" %% "scalatest" % scalaTestVersion % IntegrationTest
     ),
-    scalacOptions ++= Seq(
-      "-Ywarn-macros:after"
-    ),
+    scalacOptions += "-Ywarn-macros:after",
     javaOptions in IntegrationTest += "-Dquill.binds.log=true"
   ) dependsOn(shared.js, shared.jvm, js, sw)
