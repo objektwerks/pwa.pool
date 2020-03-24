@@ -4,7 +4,7 @@ name := "pwa.pool"
 
 val akkaVersion = "2.6.4"
 val akkkHttpVersion = "10.1.11"
-val quillVersion = "3.5.0"
+val quillVersion = "3.5.1"
 val upickleVersion = "1.0.0"
 val scalaTestVersion = "3.1.1"
 
