@@ -15,6 +15,13 @@ Dev
 * View js-fastopt.js or js-fullOptJS.js in js/target. View sharedjs-fastopt.js or sharedjs-fullOptJS.js in shared/target.
 * For step 5, see the build.sbt > mainClass in reStart := Some("pool.Server")
 
+jsEnv
+-----
+1. NodeJs - Window not supported
+2. NodeJs and Jsdom - Window supported. IndexedDB not supported. And other Windos libraries likely not supported.
+3. PhantomJS - Throws exception. Advanced configuration no available.
+4. Selenium - Doesn't support headless.
+
 Test
 ----
 1. sbt clean sharedJVM/test
@@ -24,8 +31,8 @@ Test
 Bloop
 -----
 1. sbt bloopInstall
-2. bloop clean pool
-3. bloop compile pool
+2. bloop clean tripletail
+3. bloop compile tripletail
 4. bloop test sharedJVM
 5. bloop test jvm-it
 6. bloop test js

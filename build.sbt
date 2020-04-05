@@ -1,4 +1,4 @@
-import sbt.Keys._
+import sbt.Keys.{testFrameworks, _}
 
 name := "pwa.pool"
 
@@ -16,7 +16,7 @@ lazy val commonSettings = Defaults.coreDefaultSettings ++ Seq(
   scalaVersion := "2.12.11"
 )
 
-lazy val pool = project.in(file("."))
+lazy val tripletail = project.in(file("."))
   .aggregate(shared.js, shared.jvm, js, sw, jvm)
   .settings(commonSettings)
   .settings(
@@ -39,10 +39,15 @@ lazy val js = (project in file("js"))
   .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
-      "com.raquo" %%% "laminar" % "0.8.0",
+      "com.raquo" %%% "laminar" % "0.9.0",
       "com.lihaoyi" %%% "upickle" % upickleVersion,
-      "org.scalatest" %%% "scalatest" % scalaTestVersion % Test
-    )
+      "io.github.cquiroz" %%% "scala-java-time" % "2.0.0-RC5",
+      "com.lihaoyi" %%% "utest" % "0.7.4" % Test
+    ),
+    testFrameworks += new TestFramework("utest.runner.Framework")
+  )
+  .settings(
+    jsEnv in Test := new org.scalajs.jsenv.jsdomnodejs.JSDOMNodeJSEnv()
   ) dependsOn shared.js
 
 lazy val sw = (project in file("sw"))
@@ -51,7 +56,7 @@ lazy val sw = (project in file("sw"))
   .settings(
     scalaJSUseMainModuleInitializer := true,
     libraryDependencies ++= Seq(
-      "com.raquo" %%% "domtypes" % "0.9.7"
+      "com.raquo" %%% "domtypes" % "0.10.0"
     )
   )
 

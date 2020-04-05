@@ -10,13 +10,14 @@ import org.scalajs.dom.raw.{IDBDatabase, IDBVersionChangeEvent}
 import pool.Serializers._
 import upickle.default._
 
+import scala.collection.mutable.ArrayBuffer
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.scalajs.js
 import scala.util.{Failure, Success}
 
 @js.native
-trait LicenseeRecord extends js.Object {
+trait LicenseeRecord extends js.Any {
   val key: Int
   val cryptoKey: CryptoKey
   val encryptedLicensee: BufferSource
@@ -42,6 +43,8 @@ class LicenseeStore {
   private val licenseeKey = 1
   private var licenseeCache: Option[Licensee] = None
 
+  console.log(s"Window: $window")
+  console.log(s"IDBFactory: ${window.indexedDB}")
   private val openDBRequest = window.indexedDB.open(dbName, dbVersion)
 
   openDBRequest.onupgradeneeded = (event: IDBVersionChangeEvent) => {
@@ -61,8 +64,8 @@ class LicenseeStore {
   }
 
   private def encryptLicensee(licensee: String, cryptoKey: CryptoKey): Future[Any] = {
-    val bytes = licensee.getBytes(StandardCharsets.UTF_8)
-    val buffer = js.Array(bytes).asInstanceOf[BufferSource]
+    val array = js.Array(licensee.getBytes(StandardCharsets.UTF_8).to[ArrayBuffer])
+    val buffer = array.asInstanceOf[BufferSource]
     encrypt(cryptoKeyAlgo, cryptoKey, buffer).toFuture
   }
 
@@ -89,10 +92,10 @@ class LicenseeStore {
         } else console.log("cacheLicensee: no Licensee in db", event)
       }
     }
-    copyLicenseeCache
+    getCachedLicensee
   }
 
-  private def copyLicenseeCache: Option[Licensee] = if (licenseeCache.nonEmpty) Some(licenseeCache.get) else None
+  private def getCachedLicensee: Option[Licensee] = if (licenseeCache.nonEmpty) Some(licenseeCache.get) else None
 
   def getLicensee: Future[Option[Licensee]] = cacheLicensee()
 
@@ -107,12 +110,12 @@ class LicenseeStore {
       licenseeRecord    = LicenseeRecord(licenseeKey, cryptoKey, encryptedLicensee)
       dbRequest         = store.put(licenseeRecord, licenseeKey)
       _                 <- Future {
-                             dbRequest.onerror = (event: ErrorEvent) => console.error("putLicensee.onerror", event)
-                             dbRequest.onsuccess = (event: dom.Event) => {
-                               licenseeCache = Some(licensee)
-                               console.log(s"putLicensee.onsuccess : $licenseeCache", event)
-                             }
-                           }
-    } yield copyLicenseeCache
+        dbRequest.onerror = (event: ErrorEvent) => console.error("putLicensee.onerror", event)
+        dbRequest.onsuccess = (event: dom.Event) => {
+          licenseeCache = Some(licensee)
+          console.log(s"putLicensee.onsuccess : $licenseeCache", event)
+        }
+      }
+    } yield getCachedLicensee
   }
 }
