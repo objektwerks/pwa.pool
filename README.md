@@ -50,8 +50,10 @@ Run
 
 Package and Run
 ---------------
+>This process sort of works, but is totally broken in step 3.
 1. sbt clean compile stage
 2. ./target/universal/stage/bin/pool
+3. open browser to http://127.0.0.1:7979
 
 Panes
 -----
