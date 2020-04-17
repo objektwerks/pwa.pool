@@ -84,5 +84,8 @@ lazy val jvm = (project in file("jvm"))
       "org.scalatest" %% "scalatest" % scalaTestVersion % IntegrationTest
     ),
     scalacOptions += "-Ywarn-macros:after",
-    javaOptions in IntegrationTest += "-Dquill.binds.log=true"
+    javaOptions in IntegrationTest += "-Dquill.binds.log=true",
+    (resources in Compile) += (fastOptJS in (shared.js, Compile)).value.data,
+    (resources in Compile) += (fastOptJS in (js, Compile)).value.data,
+    (resources in Compile) += (fastOptJS in (sw, Compile)).value.data
   ) dependsOn(shared.js, shared.jvm, js, sw)
