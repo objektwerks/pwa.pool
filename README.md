@@ -48,6 +48,11 @@ Run
 2. open index.html and click target browser in right top corner
 3. open developer tools in target brower; select console tab
 
+Package and Run
+---------------
+1. sbt stage
+2. ./target/universal/stage/bin/pool
+
 Panes
 -----
 >All panes, less Account panes, will include list, add and update features.
