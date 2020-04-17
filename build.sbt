@@ -22,6 +22,9 @@ lazy val pool = project.in(file("."))
   .settings(
     maintainer := "pool@gmail.com",
     mainClass in Compile := Some("pool.Server"),
+    jlinkModules := {
+      jlinkModules.value :+ "jdk.unsupported"
+    },
     jlinkIgnoreMissingDependency := JlinkIgnore.everything
   )
   .enablePlugins(JlinkPlugin)
