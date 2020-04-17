@@ -50,7 +50,7 @@ Run
 
 Package and Run
 ---------------
-1. sbt stage
+1. sbt clean compile stage
 2. ./target/universal/stage/bin/pool
 
 Panes

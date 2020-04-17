@@ -20,9 +20,13 @@ lazy val pool = project.in(file("."))
   .aggregate(shared.js, shared.jvm, js, sw, jvm)
   .settings(commonSettings)
   .settings(
-    publish := {},
-    publishLocal := {}
+    maintainer := "pool@gmail.com",
+    mainClass in Compile := Some("pool.Server"),
+    jlinkIgnoreMissingDependency := JlinkIgnore.everything
   )
+  .enablePlugins(JlinkPlugin)
+  .dependsOn(shared.js, shared.jvm, js, sw, jvm)
+
 
 lazy val shared = crossProject(JSPlatform, JVMPlatform)
   .crossType(CrossType.Pure)
@@ -65,7 +69,7 @@ lazy val jvm = (project in file("jvm"))
   .settings(commonSettings)
   .settings(
     Defaults.itSettings,
-    mainClass in reStart := Some("tripletail.Server"),
+    mainClass in reStart := Some("pool.Server"),
     libraryDependencies ++= Seq(
       "com.typesafe.akka" %% "akka-actor" % akkaVersion,
       "com.typesafe.akka" %% "akka-http" % akkkHttpVersion,
