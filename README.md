@@ -50,10 +50,17 @@ Run
 
 Package and Run
 ---------------
->This process sort of works, but is totally broken in step 3.
+>This process sort of works, but is effectively broken in step 3.
 1. sbt clean compile stage
 2. ./target/universal/stage/bin/pool
 3. open browser to http://127.0.0.1:7979
+
+The ScalaJS Bundling Nightmare
+------------------------------
+>Research the following:
+1. ScalaJS Bundler: https://scalacenter.github.io/scalajs-bundler/index.html
+2. Sbt Web: https://github.com/sbt/sbt-web
+3. Sbt Web ScalaJS: https://github.com/vmunier/sbt-web-scalajs
 
 Panes
 -----
