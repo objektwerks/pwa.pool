@@ -50,7 +50,7 @@ Run
 
 Package and Run
 ---------------
->This process sort of works, but is totally broken in step 3.
+>This process sort of works, but is totally broken in step 4.
 1. sbt clean universal:packageBin | sbt clean universal:packageZipTarball
 2. unzip ./jvm/target/universal/jvm-0.1-SNAPSHOT.zip
 2. ./jvm/target/universal/jvm-0.1-SNAPSHOT/bin/jvm
