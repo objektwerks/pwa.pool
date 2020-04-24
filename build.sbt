@@ -1,4 +1,5 @@
-import sbt.Keys.{testFrameworks, _}
+import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport.jsEnv
+import sbt.Keys.{scalacOptions, testFrameworks, _}
 
 name := "pwa.pool"
 
@@ -8,31 +9,15 @@ val quillVersion = "3.5.1"
 val upickleVersion = "1.0.0"
 val scalaTestVersion = "3.1.1"
 
-val jsCompileMode = fastOptJS  // fullOptJS
-
 lazy val commonSettings = Defaults.coreDefaultSettings ++ Seq(
   organization := "objektwerks",
   version := "0.1-SNAPSHOT",
   scalaVersion := "2.12.11"
 )
 
-lazy val pool = project.in(file("."))
-  .aggregate(shared.js, shared.jvm, js, sw, jvm)
-  .settings(commonSettings)
-  .settings(
-    maintainer := "pool@gmail.com",
-    mainClass in Compile := Some("pool.Server"),
-    jlinkModules := {
-      jlinkModules.value :+ "jdk.unsupported"
-    },
-    jlinkIgnoreMissingDependency := JlinkIgnore.everything
-  )
-  .enablePlugins(JlinkPlugin)
-  .dependsOn(shared.js, shared.jvm, js, sw, jvm)
-
-
 lazy val shared = crossProject(JSPlatform, JVMPlatform)
   .crossType(CrossType.Pure)
+  .in(file("shared"))
   .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
@@ -41,8 +26,11 @@ lazy val shared = crossProject(JSPlatform, JVMPlatform)
     )
   )
 
+lazy val sharedJs = shared.js
+lazy val sharedJvm = shared.jvm
+
 lazy val js = (project in file("js"))
-  .enablePlugins(ScalaJSPlugin)
+  .enablePlugins(ScalaJSPlugin, ScalaJSWeb)
   .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
@@ -51,14 +39,12 @@ lazy val js = (project in file("js"))
       "io.github.cquiroz" %%% "scala-java-time" % "2.0.0-RC5",
       "com.lihaoyi" %%% "utest" % "0.7.4" % Test
     ),
-    testFrameworks += new TestFramework("utest.runner.Framework")
-  )
-  .settings(
+    testFrameworks += new TestFramework("utest.runner.Framework"),
     jsEnv in Test := new org.scalajs.jsenv.jsdomnodejs.JSDOMNodeJSEnv()
-  ) dependsOn shared.js
+  ) dependsOn sharedJs
 
 lazy val sw = (project in file("sw"))
-  .enablePlugins(ScalaJSPlugin)
+  .enablePlugins(ScalaJSPlugin, ScalaJSWeb)
   .settings(commonSettings)
   .settings(
     scalaJSUseMainModuleInitializer := true,
@@ -68,18 +54,22 @@ lazy val sw = (project in file("sw"))
   )
 
 lazy val jvm = (project in file("jvm"))
+  .enablePlugins(SbtWeb, JavaAppPackaging)
   .configs(IntegrationTest)
   .settings(commonSettings)
   .settings(
     Defaults.itSettings,
     mainClass in reStart := Some("pool.Server"),
+    maintainer := "pool@grmail.com"
+  )
+  .settings(
     libraryDependencies ++= Seq(
       "com.typesafe.akka" %% "akka-actor" % akkaVersion,
       "com.typesafe.akka" %% "akka-http" % akkkHttpVersion,
       "com.typesafe.akka" %% "akka-stream" % akkaVersion,
       "com.typesafe.akka" %% "akka-slf4j" % akkaVersion,
-      "com.typesafe.akka" %% "akka-agent" % "2.5.30",
-      "de.heikoseeberger" %% "akka-http-upickle" % "1.31.0",
+      "com.typesafe.akka" %% "akka-agent" % "2.5.31",
+      "de.heikoseeberger" %% "akka-http-upickle" % "1.32.0",
       "io.getquill" %% "quill-sql" % quillVersion,
       "io.getquill" %% "quill-async-postgres" % quillVersion,
       "com.github.cb372" %% "scalacache-caffeine" % "0.28.0",
@@ -90,9 +80,17 @@ lazy val jvm = (project in file("jvm"))
       "com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion % IntegrationTest,
       "org.scalatest" %% "scalatest" % scalaTestVersion % IntegrationTest
     ),
-    scalacOptions += "-Ywarn-macros:after",
+    scalacOptions ++= Seq("-Ywarn-macros:after"),
     javaOptions in IntegrationTest += "-Dquill.binds.log=true",
-    (resources in Compile) += (fastOptJS in (shared.js, Compile)).value.data,
-    (resources in Compile) += (fastOptJS in (js, Compile)).value.data,
-    (resources in Compile) += (fastOptJS in (sw, Compile)).value.data
-  ) dependsOn(shared.js, shared.jvm, js, sw)
+  )
+  .settings(
+    scalaJSProjects := Seq(js, sw),
+    pipelineStages in Assets := Seq(scalaJSPipeline),
+    isDevMode in scalaJSPipeline := false, // default to fullOptJs
+    compile in Compile := ((compile in Compile) dependsOn scalaJSPipeline).value,
+    WebKeys.packagePrefix in Assets := "/",
+    managedClasspath in Runtime += (packageBin in Assets).value
+  )
+  .dependsOn(sharedJvm)
+
+onLoad in Global := (onLoad in Global).value.andThen(state => "project jvm" :: state)

@@ -15,14 +15,11 @@ object ServiceWorker {
   val poolCache = "pool-cache"
   val poolAssets: js.Array[RequestInfo] = List[RequestInfo](
     "index.html",
-    "w3c.css",
     "favicon.ico",
-    "logo.png",
-    "logo-192.png",
-    "logo-512.png",
-    "js-opt.js",
-    "sharedjs-opt.js",
-    "sw-opt.js"
+    "css/w3c.css",
+    "images/logo.png",
+    "images/logo-192.png",
+    "images/logo-512.png"
   ).toJSArray
 
   def main(args: Array[String]): Unit = {

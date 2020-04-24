@@ -2,6 +2,8 @@ libraryDependencies += "org.scala-js" %% "scalajs-env-jsdom-nodejs" % "1.0.0"
 
 addSbtPlugin("ch.epfl.scala" % "sbt-bloop" % "1.4.0-RC1-203-ee72533a")
 
+addSbtPlugin("com.vmunier" % "sbt-web-scalajs" % "1.0.11")
+
 addSbtPlugin("org.scala-js" % "sbt-scalajs" % "1.0.1")
 addSbtPlugin("org.portable-scala" % "sbt-scalajs-crossproject" % "1.0.0")
 
