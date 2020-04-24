@@ -14,9 +14,6 @@ Dev
 6. open browser to http://127.0.0.1:7979
 7. open developer tools
 
-* View js-fastopt.js or js-fullOptJS.js in js/target. View sharedjs-fastopt.js or sharedjs-fullOptJS.js in shared/target.
-* For step 5, see the build.sbt > mainClass in reStart := Some("pool.Server")
-
 jsEnv
 -----
 1. NodeJs - Window not supported
