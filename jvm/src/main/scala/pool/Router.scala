@@ -8,7 +8,6 @@ import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.{ExceptionHandler, Route}
 import akka.util.Timeout
-import de.heikoseeberger.akkahttpupickle.UpickleSupport._
 import org.slf4j.LoggerFactory
 
 import scala.util.control.NonFatal
@@ -18,6 +17,7 @@ object Router {
 }
 
 class Router(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef) {
+  import de.heikoseeberger.akkahttpupickle.UpickleSupport._
   import Serializers._
   import Validators._
   import StatusCodes._
