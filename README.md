@@ -44,7 +44,7 @@ Build
 
 Run
 ---
-1. sbt jvm/run
+1. sbt jvm/run | sbt ~reStart
 2. open index.html and click target browser in right top corner
 3. open developer tools in target brower; select console tab
 
