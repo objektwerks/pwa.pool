@@ -2,6 +2,8 @@ PWA Pool App
 ------------
 >Pool maintenance ( prototype ) application.
 
+**WARNING:** I've been unable to get the sbt-web-scalajs plugin to work correctly beyond a simple build.
+
 Dev
 ---
 1. sbt
