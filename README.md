@@ -51,7 +51,7 @@ Run
 Package and Run
 ---------------
 >This process sort of works, but is totally broken in step 3.
-1. sbt universal:packageZipTarball
+1. sbt clean universal:packageBin | sbt clean universal:packageZipTarball
 2. ./jvm/target/universal/scripts/bin/jvm
 3. open browser to http://127.0.0.1:7979
 
