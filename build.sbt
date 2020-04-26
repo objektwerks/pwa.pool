@@ -6,7 +6,7 @@ val quillVersion = "3.5.1"
 val upickleVersion = "1.0.0"
 val scalaTestVersion = "3.1.1"
 
-lazy val commonSettings = Defaults.coreDefaultSettings ++ Seq(
+lazy val common = Defaults.coreDefaultSettings ++ Seq(
   organization := "objektwerks",
   version := "0.1-SNAPSHOT",
   scalaVersion := "2.12.11"
@@ -15,7 +15,7 @@ lazy val commonSettings = Defaults.coreDefaultSettings ++ Seq(
 lazy val shared = crossProject(JSPlatform, JVMPlatform)
   .crossType(CrossType.Pure)
   .in(file("shared"))
-  .settings(commonSettings)
+  .settings(common)
   .settings(
     libraryDependencies ++= Seq(
       "com.lihaoyi" %% "upickle" % upickleVersion,
@@ -28,7 +28,7 @@ lazy val sharedJvm = shared.jvm
 
 lazy val js = (project in file("js"))
   .enablePlugins(ScalaJSPlugin, ScalaJSWeb)
-  .settings(commonSettings)
+  .settings(common)
   .settings(
     libraryDependencies ++= Seq(
       "com.raquo" %%% "laminar" % "0.9.0",
@@ -42,7 +42,7 @@ lazy val js = (project in file("js"))
 
 lazy val sw = (project in file("sw"))
   .enablePlugins(ScalaJSPlugin, ScalaJSWeb)
-  .settings(commonSettings)
+  .settings(common)
   .settings(
     scalaJSUseMainModuleInitializer := true,
     libraryDependencies ++= Seq(
@@ -53,11 +53,17 @@ lazy val sw = (project in file("sw"))
 lazy val jvm = (project in file("jvm"))
   .enablePlugins(SbtWeb, JavaAppPackaging)
   .configs(IntegrationTest)
-  .settings(commonSettings)
+  .settings(common)
   .settings(
     Defaults.itSettings,
     mainClass in reStart := Some("pool.Server"),
-    maintainer := "pool@grmail.com"
+    maintainer := "pool@grmail.com",
+    scalaJSProjects := Seq(js, sw),
+    pipelineStages in Assets := Seq(scalaJSPipeline),
+    isDevMode in scalaJSPipeline := false, // default to fullOptJs
+    compile in Compile := ((compile in Compile) dependsOn scalaJSPipeline).value,
+    WebKeys.packagePrefix in Assets := "/",
+    managedClasspath in Runtime += (packageBin in Assets).value
   )
   .settings(
     libraryDependencies ++= Seq(
@@ -79,14 +85,6 @@ lazy val jvm = (project in file("jvm"))
     ),
     scalacOptions ++= Seq("-Ywarn-macros:after"),
     javaOptions in IntegrationTest += "-Dquill.binds.log=true",
-  )
-  .settings(
-    scalaJSProjects := Seq(js, sw),
-    pipelineStages in Assets := Seq(scalaJSPipeline),
-    isDevMode in scalaJSPipeline := false, // default to fullOptJs
-    compile in Compile := ((compile in Compile) dependsOn scalaJSPipeline).value,
-    WebKeys.packagePrefix in Assets := "/",
-    managedClasspath in Runtime += (packageBin in Assets).value
   )
   .dependsOn(sharedJvm)
 
