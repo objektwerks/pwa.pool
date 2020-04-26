@@ -1,6 +1,3 @@
-import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport.jsEnv
-import sbt.Keys.{scalacOptions, testFrameworks, _}
-
 name := "pwa.pool"
 
 val akkaVersion = "2.6.4"
