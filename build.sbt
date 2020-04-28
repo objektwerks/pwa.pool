@@ -30,7 +30,7 @@ lazy val js = (project in file("js"))
   .enablePlugins(ScalaJSPlugin, ScalaJSWeb)
   .settings(common)
   .settings(
-    maintainer := "pool@grmail.com",
+    maintainer := "pool@gmail.com",
     scalaJSProjects := Seq(js, sw),
     pipelineStages in Assets := Seq(scalaJSPipeline),
     isDevMode in scalaJSPipeline := false, // default to fullOptJs
