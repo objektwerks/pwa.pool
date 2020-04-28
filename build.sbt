@@ -12,6 +12,14 @@ lazy val common = Defaults.coreDefaultSettings ++ Seq(
   scalaVersion := "2.12.11"
 )
 
+lazy val pool = project.in(file("."))
+  .aggregate(sharedJs, sharedJvm, sw, js, jvm)
+  .settings(common)
+  .settings(
+    publish := {},
+    publishLocal := {}
+  )
+
 lazy val shared = crossProject(JSPlatform, JVMPlatform)
   .crossType(CrossType.Pure)
   .in(file("shared"))
@@ -26,18 +34,26 @@ lazy val shared = crossProject(JSPlatform, JVMPlatform)
 lazy val sharedJs = shared.js
 lazy val sharedJvm = shared.jvm
 
+lazy val sw = (project in file("sw"))
+  .enablePlugins(ScalaJSPlugin)
+  .settings(common)
+  .settings(
+    scalaJSUseMainModuleInitializer := true,
+    libraryDependencies ++= Seq(
+      "com.raquo" %%% "domtypes" % "0.10.0"
+    )
+  )
+
 lazy val js = (project in file("js"))
   .enablePlugins(ScalaJSPlugin, ScalaJSWeb)
   .settings(common)
   .settings(
     maintainer := "pool@gmail.com",
-    scalaJSProjects := Seq(js, sw),
+    scalaJSProjects := Seq(sharedJs, sw),
     pipelineStages in Assets := Seq(scalaJSPipeline),
     isDevMode in scalaJSPipeline := false, // default to fullOptJs
-    compile in Compile := ((compile in Compile) dependsOn scalaJSPipeline).value,
     WebKeys.packagePrefix in Assets := "/",
-    managedClasspath in Runtime += (packageBin in Assets).value,
-      libraryDependencies ++= Seq(
+    libraryDependencies ++= Seq(
       "com.raquo" %%% "laminar" % "0.9.0",
       "com.lihaoyi" %%% "upickle" % upickleVersion,
       "io.github.cquiroz" %%% "scala-java-time" % "2.0.0-RC5",
@@ -48,18 +64,7 @@ lazy val js = (project in file("js"))
   )
   .dependsOn(sharedJs, sw)
 
-lazy val sw = (project in file("sw"))
-  .enablePlugins(ScalaJSPlugin, ScalaJSWeb)
-  .settings(common)
-  .settings(
-    scalaJSUseMainModuleInitializer := true,
-    libraryDependencies ++= Seq(
-      "com.raquo" %%% "domtypes" % "0.10.0"
-    )
-  )
-
 lazy val jvm = (project in file("jvm"))
-  .enablePlugins(JavaAppPackaging)
   .configs(IntegrationTest)
   .settings(common)
   .settings(
@@ -88,5 +93,3 @@ lazy val jvm = (project in file("jvm"))
     javaOptions in IntegrationTest += "-Dquill.binds.log=true",
   )
   .dependsOn(sharedJvm)
-
-onLoad in Global := (onLoad in Global).value.andThen(state => "project js" :: state)
