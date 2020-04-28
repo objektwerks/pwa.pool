@@ -2,15 +2,24 @@ PWA Pool App
 ------------
 >Pool maintenance ( prototype ) application.
 
+WARNING
+-------
+>Using ScalaJs in a multi-module project is not for the faint-of-heart. Moreover, the current js project
+>build process is not correct. Perhaps, you will have more luck with the options detailed in the
+>**ScalaJS Bundling** section detailed below. Cheers! ;)
+
 Dev
 ---
-1. [ interactive ] sbt
-2. clean
-3. compile
-4. project jvm
-5. ~reStart
-6. open js/src/main/assets/index.html and click target browser in right top corner
-7. open developer tools
+>In a seperate session [ server ]:
+1. [ interactive session ] sbt
+2. project jvm
+3. ~reStart
+>In a seperate session [ client ]
+1. [ interactive session ] sbt
+2. project js
+3. ~fastOptJS
+4. open js/src/main/assets/index.html and click target browser in right top corner
+5. open developer tools
 
 jsEnv
 -----
