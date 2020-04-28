@@ -30,7 +30,14 @@ lazy val js = (project in file("js"))
   .enablePlugins(ScalaJSPlugin, ScalaJSWeb)
   .settings(common)
   .settings(
-    libraryDependencies ++= Seq(
+    maintainer := "pool@grmail.com",
+    scalaJSProjects := Seq(js, sw),
+    pipelineStages in Assets := Seq(scalaJSPipeline),
+    isDevMode in scalaJSPipeline := false, // default to fullOptJs
+    compile in Compile := ((compile in Compile) dependsOn scalaJSPipeline).value,
+    WebKeys.packagePrefix in Assets := "/",
+    managedClasspath in Runtime += (packageBin in Assets).value,
+      libraryDependencies ++= Seq(
       "com.raquo" %%% "laminar" % "0.9.0",
       "com.lihaoyi" %%% "upickle" % upickleVersion,
       "io.github.cquiroz" %%% "scala-java-time" % "2.0.0-RC5",
@@ -38,7 +45,8 @@ lazy val js = (project in file("js"))
     ),
     testFrameworks += new TestFramework("utest.runner.Framework"),
     jsEnv in Test := new org.scalajs.jsenv.jsdomnodejs.JSDOMNodeJSEnv()
-  ) dependsOn sharedJs
+  )
+  .dependsOn(sharedJs, sw)
 
 lazy val sw = (project in file("sw"))
   .enablePlugins(ScalaJSPlugin, ScalaJSWeb)
@@ -51,19 +59,12 @@ lazy val sw = (project in file("sw"))
   )
 
 lazy val jvm = (project in file("jvm"))
-  .enablePlugins(SbtWeb, JavaAppPackaging)
+  .enablePlugins(JavaAppPackaging)
   .configs(IntegrationTest)
   .settings(common)
   .settings(
     Defaults.itSettings,
     mainClass in reStart := Some("pool.Server"),
-    maintainer := "pool@grmail.com",
-    scalaJSProjects := Seq(js, sw),
-    pipelineStages in Assets := Seq(scalaJSPipeline),
-    isDevMode in scalaJSPipeline := false, // default to fullOptJs
-    compile in Compile := ((compile in Compile) dependsOn scalaJSPipeline).value,
-    WebKeys.packagePrefix in Assets := "/",
-    managedClasspath in Runtime += (packageBin in Assets).value
   )
   .settings(
     libraryDependencies ++= Seq(
@@ -88,4 +89,4 @@ lazy val jvm = (project in file("jvm"))
   )
   .dependsOn(sharedJvm)
 
-onLoad in Global := (onLoad in Global).value.andThen(state => "project jvm" :: state)
+onLoad in Global := (onLoad in Global).value.andThen(state => "project js" :: state)
