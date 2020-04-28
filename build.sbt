@@ -60,7 +60,6 @@ lazy val js = (project in file("js"))
     ),
     (resources in Compile) += (jsCompileMode in (sharedJs, Compile)).value.data,
     (resources in Compile) += (jsCompileMode in (sw, Compile)).value.data,
-    (resources in Compile) += (jsCompileMode in Compile).value.data,
     testFrameworks += new TestFramework("utest.runner.Framework"),
     jsEnv in Test := new org.scalajs.jsenv.jsdomnodejs.JSDOMNodeJSEnv()
   )
