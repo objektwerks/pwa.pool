@@ -4,12 +4,12 @@ PWA Pool App
 
 Dev
 ---
-1. sbt
+1. [ interactive ] sbt
 2. clean
 3. compile
 4. project jvm
 5. ~reStart
-6. open browser to http://127.0.0.1:7979
+6. open js/src/main/assets/index.html and click target browser in right top corner
 7. open developer tools
 
 jsEnv
@@ -36,26 +36,20 @@ Bloop
 
 Build
 -----
->View js-fastopt.js or js-fullOptJS.js in js/target. View sharedjs-fastopt.js or sharedjs-fullOptJS.js in shared/target.
 1. sbt clean compile package
 
 Run
 ---
-1. sbt jvm/run | sbt ~reStart
-2. open index.html and click target browser in right top corner
+1. sbt jvm/run
+2. open js/src/main/assets/index.html and click target browser in right top corner
 3. open developer tools in target brower; select console tab
 
-Package and Run
----------------
->This process sort of works, but is totally broken in step 4.
-1. sbt clean universal:packageBin | sbt clean universal:packageZipTarball
-2. unzip ./jvm/target/universal/jvm-0.1-SNAPSHOT.zip
-2. ./jvm/target/universal/jvm-0.1-SNAPSHOT/bin/jvm
-3. open browser to http://127.0.0.1:7979
+Package
+-------
+1. sbt clean universal:packageZipTarball
 
-The ScalaJS Bundling Nightmare
-------------------------------
->Research the following:
+ScalaJS Bundling
+----------------
 1. ScalaJS Bundler: https://scalacenter.github.io/scalajs-bundler/index.html
 2. Sbt Web: https://github.com/sbt/sbt-web
 3. Sbt Web ScalaJS: https://github.com/vmunier/sbt-web-scalajs
