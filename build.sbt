@@ -6,6 +6,8 @@ val quillVersion = "3.5.1"
 val upickleVersion = "1.0.0"
 val scalaTestVersion = "3.1.1"
 
+val jsCompileMode = fastOptJS  // fullOptJS
+
 lazy val common = Defaults.coreDefaultSettings ++ Seq(
   organization := "objektwerks",
   version := "0.1-SNAPSHOT",
@@ -45,26 +47,27 @@ lazy val sw = (project in file("sw"))
   )
 
 lazy val js = (project in file("js"))
-  .enablePlugins(ScalaJSPlugin, ScalaJSWeb)
+  .aggregate(sharedJs, sw)
+  .enablePlugins(ScalaJSPlugin)
   .settings(common)
   .settings(
     maintainer := "pool@gmail.com",
-    scalaJSProjects := Seq(sharedJs, sw),
-    pipelineStages in Assets := Seq(scalaJSPipeline),
-    isDevMode in scalaJSPipeline := false, // default to fullOptJs
-    WebKeys.packagePrefix in Assets := "/",
     libraryDependencies ++= Seq(
       "com.raquo" %%% "laminar" % "0.9.0",
       "com.lihaoyi" %%% "upickle" % upickleVersion,
       "io.github.cquiroz" %%% "scala-java-time" % "2.0.0-RC5",
       "com.lihaoyi" %%% "utest" % "0.7.4" % Test
     ),
+    (resources in Compile) += (jsCompileMode in (sharedJs, Compile)).value.data,
+    (resources in Compile) += (jsCompileMode in (sw, Compile)).value.data,
+    (resources in Compile) += (jsCompileMode in Compile).value.data,
     testFrameworks += new TestFramework("utest.runner.Framework"),
     jsEnv in Test := new org.scalajs.jsenv.jsdomnodejs.JSDOMNodeJSEnv()
   )
   .dependsOn(sharedJs, sw)
 
 lazy val jvm = (project in file("jvm"))
+  .aggregate(sharedJvm)
   .configs(IntegrationTest)
   .settings(common)
   .settings(
