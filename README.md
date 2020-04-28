@@ -10,15 +10,15 @@ WARNING
 
 Dev
 ---
->In a seperate session [ server ]:
+>In a unique session [ server ]:
 1. [ interactive session ] sbt
 2. project jvm
 3. ~reStart
->In a seperate session [ client ]
+>In a unique session [ client ]
 1. [ interactive session ] sbt
 2. project js
 3. ~fastOptJS
-4. open js/src/main/assets/index.html and click target browser in right top corner
+4. open js/src/main/web/index.html and click target browser in right top corner
 5. open developer tools
 
 jsEnv
