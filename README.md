@@ -4,9 +4,15 @@ PWA Pool App
 
 WARNING
 -------
->Using ScalaJs in a multi-module project is not for the faint-of-heart. Moreover, the current js project
->build process is not correct. Perhaps, you will have more luck with the options detailed in the
->**ScalaJS Bundling** section detailed below. Cheers! ;)
+>Using ScalaJs in a multi-module project is not a pleasant experience. The js project build
+>process is not correct. I've tried each bundling option, listed in the **ScalaJS Bundling**
+>section below, with unsatisfactory results. I'll attempt a custom sbt task next.:)
+
+ScalaJS Bundling
+----------------
+1. ScalaJS Bundler: https://scalacenter.github.io/scalajs-bundler/index.html
+2. Sbt Web: https://github.com/sbt/sbt-web
+3. Sbt Web ScalaJS: https://github.com/vmunier/sbt-web-scalajs
 
 Dev
 ---
@@ -56,12 +62,6 @@ Run
 Package
 -------
 1. sbt clean universal:packageZipTarball
-
-ScalaJS Bundling
-----------------
-1. ScalaJS Bundler: https://scalacenter.github.io/scalajs-bundler/index.html
-2. Sbt Web: https://github.com/sbt/sbt-web
-3. Sbt Web ScalaJS: https://github.com/vmunier/sbt-web-scalajs
 
 Panes
 -----
