@@ -63,6 +63,7 @@ lazy val js = (project in file("js"))
     ),
     Assets / resources += (jsCompileMode in (sharedJs, Compile)).value.data,
     Assets / resources += (jsCompileMode in (sw, Compile)).value.data,
+    artifactPath in(Compile, jsCompileMode) := target.value / "web/classes/main/META-INF/resources/webjars/js/0.1-SNAPSHOT/js-fastopt.js",
     testFrameworks += new TestFramework("utest.runner.Framework"),
     jsEnv in Test := new org.scalajs.jsenv.jsdomnodejs.JSDOMNodeJSEnv()
   )
