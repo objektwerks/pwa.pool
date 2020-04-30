@@ -46,6 +46,8 @@ lazy val sw = (project in file("sw"))
     )
   )
 
+import sbt._
+
 lazy val js = (project in file("js"))
   .aggregate(sharedJs, sw)
   .enablePlugins(ScalaJSPlugin)
@@ -58,8 +60,8 @@ lazy val js = (project in file("js"))
       "io.github.cquiroz" %%% "scala-java-time" % "2.0.0-RC5",
       "com.lihaoyi" %%% "utest" % "0.7.4" % Test
     ),
-    (resources in Compile) += (jsCompileMode in (sharedJs, Compile)).value.data,
-    (resources in Compile) += (jsCompileMode in (sw, Compile)).value.data,
+    Compile / resources += (jsCompileMode in (sharedJs, Compile)).value.data,
+    Compile / resources += (jsCompileMode in (sw, Compile)).value.data,
     testFrameworks += new TestFramework("utest.runner.Framework"),
     jsEnv in Test := new org.scalajs.jsenv.jsdomnodejs.JSDOMNodeJSEnv()
   )
