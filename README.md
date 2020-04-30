@@ -24,11 +24,9 @@ Dev
 >In a unique session [ client ]
 1. [ interactive session ] sbt
 2. project js
-3. clean
-4. compile
-5. ~fastOptJS
-6. open js/src/main/assets/index.html and click target browser in right top corner
-7. open developer tools
+3. ~fastOptJS
+4. open js/src/main/assets/index.html and click target browser in right top corner
+5. open developer tools
 
 jsEnv
 -----

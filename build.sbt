@@ -50,7 +50,7 @@ lazy val sw = (project in file("sw"))
 import sbt._
 
 lazy val js = (project in file("js"))
-  .aggregate(sharedJs, sw)
+  .dependsOn(sharedJs, sw)
   .enablePlugins(ScalaJSPlugin, SbtWeb)
   .settings(common)
   .settings(
@@ -66,10 +66,10 @@ lazy val js = (project in file("js"))
     testFrameworks += new TestFramework("utest.runner.Framework"),
     jsEnv in Test := new org.scalajs.jsenv.jsdomnodejs.JSDOMNodeJSEnv()
   )
-  .dependsOn(sharedJs, sw)
 
 lazy val jvm = (project in file("jvm"))
   .aggregate(sharedJvm)
+  .dependsOn(sharedJvm)
   .configs(IntegrationTest)
   .settings(common)
   .settings(
@@ -97,4 +97,3 @@ lazy val jvm = (project in file("jvm"))
     scalacOptions ++= Seq("-Ywarn-macros:after"),
     javaOptions in IntegrationTest += "-Dquill.binds.log=true",
   )
-  .dependsOn(sharedJvm)
