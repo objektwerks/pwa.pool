@@ -1,11 +1,12 @@
 name := "pwa.pool"
 
+useCoursier := false
+
 val akkaVersion = "2.6.4"
 val akkkHttpVersion = "10.1.11"
 val quillVersion = "3.5.1"
 val upickleVersion = "1.0.0"
 val scalaTestVersion = "3.1.1"
-
 val jsCompileMode = fastOptJS  // fullOptJS
 
 lazy val common = Defaults.coreDefaultSettings ++ Seq(
