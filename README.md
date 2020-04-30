@@ -6,7 +6,7 @@ WARNING
 -------
 >Using ScalaJs in a multi-module project is not a pleasant experience. The js project build
 >process is not correct. I've tried each bundling option, listed in the **ScalaJS Bundling**
->section below, with unsatisfactory results. I'll attempt a custom sbt task next.:)
+>section below, with unsatisfactory results. I've also built tasks, but to no avail.
 
 ScalaJS Bundling
 ----------------
