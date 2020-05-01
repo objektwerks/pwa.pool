@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory
 import scala.concurrent.duration._
 import scala.language.postfixOps
 
-class IntegrationTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
+class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
   val logger = LoggerFactory.getLogger(getClass)
   val conf = ConfigFactory.load("test.server.conf")
   val actorRefFactory = ActorSystem.create(conf.getString("server.name"), conf.getConfig("akka"))
