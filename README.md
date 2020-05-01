@@ -13,6 +13,7 @@ ScalaJS Bundling
 Dev
 ---
 1. sbt clean compile test
+2. sbt js/fastOptJS | fullOptJS
 >In a unique session [ server ]:
 1. [ interactive session ] sbt
 2. project jvm

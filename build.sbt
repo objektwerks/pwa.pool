@@ -1,10 +1,7 @@
 name := "pwa.pool"
 
-val akkaVersion = "2.6.4"
-val akkkHttpVersion = "10.1.11"
-val quillVersion = "3.5.1"
-val upickleVersion = "1.0.0"
-val scalaTestVersion = "3.1.1"
+lazy val upickleVersion = "1.0.0"
+lazy val scalaTestVersion = "3.1.1"
 
 lazy val common = Defaults.coreDefaultSettings ++ Seq(
   organization := "objektwerks",
@@ -44,7 +41,9 @@ lazy val sw = (project in file("sw"))
     )
   )
 
-val jsCompileMode = fastOptJS  // fullOptJS
+lazy val jsOptCompileMode = fastOptJS  // fullOptJS
+lazy val jsOptFile = "js-fastopt.js"
+lazy val jsOptDir = "web/classes/main/META-INF/resources/webjars/js/0.1-SNAPSHOT/" + jsOptFile
 
 lazy val js = (project in file("js"))
   .dependsOn(sharedJs, sw)
@@ -58,9 +57,9 @@ lazy val js = (project in file("js"))
       "io.github.cquiroz" %%% "scala-java-time" % "2.0.0-RC5",
       "com.lihaoyi" %%% "utest" % "0.7.4" % Test
     ),
-    Assets / resources += (jsCompileMode in (sharedJs, Compile)).value.data,
-    Assets / resources += (jsCompileMode in (sw, Compile)).value.data,
-    artifactPath in(Compile, jsCompileMode) := target.value / "web/classes/main/META-INF/resources/webjars/js/0.1-SNAPSHOT/js-fastopt.js",
+    Assets / resources += (jsOptCompileMode in (sharedJs, Compile)).value.data,
+    Assets / resources += (jsOptCompileMode in (sw, Compile)).value.data,
+    artifactPath in(Compile, jsOptCompileMode) := target.value / jsOptDir,
     testFrameworks += new TestFramework("utest.runner.Framework"),
     jsEnv in Test := new org.scalajs.jsenv.jsdomnodejs.JSDOMNodeJSEnv()
   )
@@ -73,25 +72,28 @@ lazy val jvm = (project in file("jvm"))
   .settings(
     Defaults.itSettings,
     mainClass in reStart := Some("pool.Server"),
-  )
-  .settings(
-    libraryDependencies ++= Seq(
-      "com.typesafe.akka" %% "akka-actor" % akkaVersion,
-      "com.typesafe.akka" %% "akka-http" % akkkHttpVersion,
-      "com.typesafe.akka" %% "akka-stream" % akkaVersion,
-      "com.typesafe.akka" %% "akka-slf4j" % akkaVersion,
-      "com.typesafe.akka" %% "akka-agent" % "2.5.31",
-      "de.heikoseeberger" %% "akka-http-upickle" % "1.32.0",
-      "io.getquill" %% "quill-sql" % quillVersion,
-      "io.getquill" %% "quill-async-postgres" % quillVersion,
-      "com.github.cb372" %% "scalacache-caffeine" % "0.28.0",
-      "org.jodd" % "jodd-mail" % "5.1.4",
-      "com.typesafe" % "config" % "1.4.0",
-      "ch.qos.logback" % "logback-classic" % "1.2.3",
-      "com.typesafe.akka" %% "akka-http-testkit" % akkkHttpVersion % IntegrationTest,
-      "com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion % IntegrationTest,
-      "org.scalatest" %% "scalatest" % scalaTestVersion % IntegrationTest
-    ),
+    libraryDependencies ++= {
+      val akkaVersion = "2.6.4"
+      val akkkHttpVersion = "10.1.11"
+      val quillVersion = "3.5.1"
+      Seq(
+        "com.typesafe.akka" %% "akka-actor" % akkaVersion,
+        "com.typesafe.akka" %% "akka-http" % akkkHttpVersion,
+        "com.typesafe.akka" %% "akka-stream" % akkaVersion,
+        "com.typesafe.akka" %% "akka-slf4j" % akkaVersion,
+        "com.typesafe.akka" %% "akka-agent" % "2.5.31",
+        "de.heikoseeberger" %% "akka-http-upickle" % "1.32.0",
+        "io.getquill" %% "quill-sql" % quillVersion,
+        "io.getquill" %% "quill-async-postgres" % quillVersion,
+        "com.github.cb372" %% "scalacache-caffeine" % "0.28.0",
+        "org.jodd" % "jodd-mail" % "5.1.4",
+        "com.typesafe" % "config" % "1.4.0",
+        "ch.qos.logback" % "logback-classic" % "1.2.3",
+        "com.typesafe.akka" %% "akka-http-testkit" % akkkHttpVersion % IntegrationTest,
+        "com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion % IntegrationTest,
+        "org.scalatest" %% "scalatest" % scalaTestVersion % IntegrationTest
+      )
+    },
     scalacOptions ++= Seq("-Ywarn-macros:after"),
     javaOptions in IntegrationTest += "-Dquill.binds.log=true",
   )
