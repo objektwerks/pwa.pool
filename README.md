@@ -2,14 +2,10 @@ PWA Pool App
 ------------
 >Pool maintenance ( prototype ) application.
 
-WARNING
--------
->Using ScalaJs in a multi-module project is not a pleasant experience. The js project build
->process is not correct. I've tried each bundling option, listed in the **ScalaJS Bundling**
->section below, with unsatisfactory results. I've also built tasks, but to no avail.
-
 ScalaJS Bundling
 ----------------
+>None of these options yield satisfactory results. Currently this project used SbtWeb
+>and fastOptJS | fullOptJS, with artifacts landing in the target/web directory.
 1. ScalaJS Bundler: https://scalacenter.github.io/scalajs-bundler/index.html
 2. Sbt Web: https://github.com/sbt/sbt-web
 3. Sbt Web ScalaJS: https://github.com/vmunier/sbt-web-scalajs

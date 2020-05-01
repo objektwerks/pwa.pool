@@ -1,7 +1,5 @@
 name := "pwa.pool"
 
-useCoursier := false
-
 val akkaVersion = "2.6.4"
 val akkkHttpVersion = "10.1.11"
 val quillVersion = "3.5.1"
