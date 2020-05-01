@@ -5,7 +5,6 @@ val akkkHttpVersion = "10.1.11"
 val quillVersion = "3.5.1"
 val upickleVersion = "1.0.0"
 val scalaTestVersion = "3.1.1"
-val jsCompileMode = fastOptJS  // fullOptJS
 
 lazy val common = Defaults.coreDefaultSettings ++ Seq(
   organization := "objektwerks",
@@ -45,7 +44,7 @@ lazy val sw = (project in file("sw"))
     )
   )
 
-import sbt._
+val jsCompileMode = fastOptJS  // fullOptJS
 
 lazy val js = (project in file("js"))
   .dependsOn(sharedJs, sw)

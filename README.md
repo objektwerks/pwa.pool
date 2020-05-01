@@ -20,7 +20,7 @@ Dev
 >In a unique session [ client ]
 1. [ interactive session ] sbt
 2. project js
-3. ~fastOptJS
+3. ~fastOptJS | fullOptJS
 4. open js/src/main/assets/index.html and click target browser in right top corner
 5. open developer tools
 
