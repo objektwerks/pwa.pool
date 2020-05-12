@@ -35,8 +35,9 @@ jsEnv
 Test
 ----
 1. sbt clean sharedJVM/test
-2. sbt clean jvm/it:test  // Requires valid email address at this time in jvm/src/it/resources/test.server.conf
-3. sbt clean js/test  // Doesn't work because IDBDatabase and Crypto no supported by scalajs-env-jsdom-nodejs
+2. sbt clean jvm/test
+3. sbt clean jvm/it:test  // Requires valid email address at this time in jvm/src/it/resources/test.server.conf
+4. sbt clean js/test  // Doesn't work because IDBDatabase and Crypto no supported by scalajs-env-jsdom-nodejs
 
 Bloop
 -----
@@ -44,8 +45,9 @@ Bloop
 2. bloop clean pwa-pool
 3. bloop compile pwa-pool
 4. bloop test sharedJVM
-5. bloop test jvm-it // Requires valid email address at this time in jvm/src/it/resources/test.server.conf
-6. bloop test js  // Doesn't work because IDBDatabase and Crypto no supported by scalajs-env-jsdom-nodejs
+5. bloop test jvm
+6. bloop test jvm-it // Requires valid email address at this time in jvm/src/it/resources/test.server.conf
+7. bloop test js  // Doesn't work because IDBDatabase and Crypto no supported by scalajs-env-jsdom-nodejs
 
 Build
 -----
