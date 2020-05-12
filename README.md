@@ -4,8 +4,8 @@ PWA Pool App
 
 ScalaJS Bundling
 ----------------
->None of these options yield satisfactory results. Currently this project used SbtWeb
->and fastOptJS | fullOptJS, with artifacts landing in the target/web directory.
+>None of these options yield satisfactory results. Currently this project used the SbtWeb
+>plugin and fastOptJS | fullOptJS, with artifacts landing in the js/target/web directory.
 1. ScalaJS Bundler: https://scalacenter.github.io/scalajs-bundler/index.html
 2. Sbt Web: https://github.com/sbt/sbt-web
 3. Sbt Web ScalaJS: https://github.com/vmunier/sbt-web-scalajs
