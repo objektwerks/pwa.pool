@@ -51,7 +51,7 @@ Bloop
 
 Build
 -----
-1. sbt clean compile package
+1. sbt clean compile
 
 Run
 ---
@@ -61,7 +61,9 @@ Run
 
 Package
 -------
-1. sbt clean universal:packageZipTarball
+1. sbt clean compile package
+2. sbt jvm/universal:packageZipTarball
+3. sbt js/fastOptJS | fullOptJS
 
 Panes
 -----
