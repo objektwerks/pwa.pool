@@ -42,8 +42,8 @@ Test
 Bloop
 -----
 1. sbt bloopInstall
-2. bloop clean pwa-pool
-3. bloop compile pwa-pool
+2. bloop clean pool
+3. bloop compile pool
 4. bloop test sharedJVM
 5. bloop test jvm
 6. bloop test jvm-it // Requires valid email address at this time in jvm/src/it/resources/test.server.conf
