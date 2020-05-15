@@ -81,7 +81,6 @@ lazy val jvm = (project in file("jvm"))
         "com.typesafe.akka" %% "akka-http" % akkkHttpVersion,
         "com.typesafe.akka" %% "akka-stream" % akkaVersion,
         "com.typesafe.akka" %% "akka-slf4j" % akkaVersion,
-        "com.typesafe.akka" %% "akka-agent" % "2.5.31",
         "de.heikoseeberger" %% "akka-http-upickle" % "1.32.0",
         "io.getquill" %% "quill-sql" % quillVersion,
         "io.getquill" %% "quill-async-postgres" % quillVersion,
