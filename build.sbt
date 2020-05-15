@@ -66,7 +66,7 @@ lazy val js = (project in file("js"))
 
 lazy val jvm = (project in file("jvm"))
   .dependsOn(sharedJvm)
-  .enablePlugins(JavaAppPackaging)
+  .enablePlugins(JavaServerAppPackaging)
   .configs(IntegrationTest)
   .settings(common)
   .settings(

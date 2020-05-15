@@ -62,7 +62,7 @@ Run
 Package
 -------
 1. sbt clean compile package
-2. sbt jvm/universal:packageZipTarball
+2. sbt jvm/stage
 3. sbt js/fastOptJS | fullOptJS
 
 Panes
