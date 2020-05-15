@@ -4,7 +4,7 @@ PWA Pool App
 
 ScalaJS Bundling
 ----------------
->None of these options yield satisfactory results. Currently this project used the SbtWeb
+>None of these options yield satisfactory results. Currently this project uses the SbtWeb
 >plugin and fastOptJS | fullOptJS, with artifacts landing in the js/target/web directory.
 1. ScalaJS Bundler: https://scalacenter.github.io/scalajs-bundler/index.html
 2. Sbt Web: https://github.com/sbt/sbt-web
@@ -15,11 +15,11 @@ Dev
 1. sbt clean compile test
 2. sbt js/fastOptJS | fullOptJS
 >In a unique session [ server ]:
-1. [ interactive session ] sbt
+1. sbt [ interactive session ]
 2. project jvm
 3. ~reStart
 >In a unique session [ client ]
-1. [ interactive session ] sbt
+1. sbt [ interactive session ]
 2. project js
 3. ~fastOptJS | fullOptJS
 4. open js/src/main/assets/index.html and click target browser in right top corner
@@ -27,9 +27,9 @@ Dev
 
 jsEnv
 -----
-1. NodeJs - Window not supported
-2. NodeJs and Jsdom - Window supported. IndexedDB not supported. And other Windos libraries likely not supported.
-3. PhantomJS - Throws exception. Advanced configuration no available.
+1. NodeJs - Window object not supported.
+2. NodeJs and Jsdom - Window object supported. IndexedDB not supported. Other Windows libraries likely not supported.
+3. PhantomJS - Throws exception. Advanced configuration not available.
 4. Selenium - Doesn't support headless.
 
 Test
@@ -37,7 +37,7 @@ Test
 1. sbt clean sharedJVM/test
 2. sbt clean jvm/test
 3. sbt clean jvm/it:test  // Requires valid email address at this time in jvm/src/it/resources/test.server.conf
-4. sbt clean js/test  // Doesn't work because IDBDatabase and Crypto no supported by scalajs-env-jsdom-nodejs
+4. sbt clean js/test  // Doesn't work because IDBDatabase and Crypto not supported by scalajs-env-jsdom-nodejs
 
 Bloop
 -----
