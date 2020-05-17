@@ -43,7 +43,6 @@ lazy val sw = (project in file("sw"))
 
 lazy val jsOptCompileMode = fastOptJS  // fullOptJS
 lazy val jsOptDir = "web/classes/main/META-INF/resources/webjars/js/0.1-SNAPSHOT"
-//                   web/classes/main/META-INF/resources/webjars/js/0.1-SNAPSHOT
 lazy val jsOptFile = "js-fastopt.js"
 
 import NativePackagerHelper._
