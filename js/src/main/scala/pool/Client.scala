@@ -24,7 +24,7 @@ object Client {
   def registerServiceWorker(): Unit = {
     toServiceWorkerNavigator(window.navigator)
       .serviceWorker
-      .register("sw-opt.js")
+      .register("sw-fastopt.js")
       .toFuture
       .onComplete {
         case Success(registration) =>
