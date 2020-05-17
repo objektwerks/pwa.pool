@@ -42,12 +42,15 @@ lazy val sw = (project in file("sw"))
   )
 
 lazy val jsOptCompileMode = fastOptJS  // fullOptJS
+lazy val jsOptDir = "web/classes/main/META-INF/resources/webjars/js/0.1-SNAPSHOT"
+//                   web/classes/main/META-INF/resources/webjars/js/0.1-SNAPSHOT
 lazy val jsOptFile = "js-fastopt.js"
-lazy val jsOptDir = "web/classes/main/META-INF/resources/webjars/js/0.1-SNAPSHOT/" + jsOptFile
+
+import NativePackagerHelper._
 
 lazy val js = (project in file("js"))
   .dependsOn(sharedJs, sw)
-  .enablePlugins(ScalaJSPlugin, SbtWeb)
+  .enablePlugins(ScalaJSPlugin, SbtWeb, UniversalPlugin)
   .settings(common)
   .settings(
     maintainer := "pool@gmail.com",
@@ -59,7 +62,8 @@ lazy val js = (project in file("js"))
     ),
     Assets / resources += (jsOptCompileMode in (sharedJs, Compile)).value.data,
     Assets / resources += (jsOptCompileMode in (sw, Compile)).value.data,
-    artifactPath in(Compile, jsOptCompileMode) := target.value / jsOptDir,
+    artifactPath in(Compile, jsOptCompileMode) := target.value / jsOptDir / jsOptFile,
+    mappings in Universal := (mappings in Universal).value ++ directory(target.value / jsOptDir),
     testFrameworks += new TestFramework("utest.runner.Framework"),
     jsEnv in Test := new org.scalajs.jsenv.jsdomnodejs.JSDOMNodeJSEnv()
   )
