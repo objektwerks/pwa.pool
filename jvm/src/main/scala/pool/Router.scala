@@ -13,15 +13,15 @@ import org.slf4j.LoggerFactory
 import scala.util.control.NonFatal
 
 object Router {
-  def apply(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef): Router = new Router(store, licenseeCache, emailer)
+  def apply(store: Store, cache: LicenseeCache, emailer: ActorRef): Router = new Router(store, cache, emailer)
 }
 
-class Router(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef) {
+class Router(store: Store, cache: LicenseeCache, emailer: ActorRef) {
   import de.heikoseeberger.akkahttpupickle.UpickleSupport._
   import Serializers._
   import Validators._
   import StatusCodes._
-  import licenseeCache._
+  import cache._
   import store._
 
   val logger = LoggerFactory.getLogger(Router.getClass)
