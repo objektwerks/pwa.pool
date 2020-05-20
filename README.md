@@ -2,6 +2,10 @@ PWA Pool App
 ------------
 >Pool maintenance ( prototype ) application.
 
+Bug Report
+----------
+>This project is cited in the following Intellij bug: https://youtrack.jetbrains.com/issue/SCL-17514
+
 ScalaJS Bundling
 ----------------
 >None of these options yield satisfactory results. Currently this project uses the SbtWeb
