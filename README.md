@@ -2,6 +2,13 @@ PWA Pool App
 ------------
 >Pool maintenance ( prototype ) application.
 
+Warning
+-------
+>I recommend moving off of Quill. It is not well maintained. Nor is gitter helpful. Moreover,
+>the async support is dated and not production ready. And Scala 2.13 is still not supported.
+>Yet the maintainer(s) are preoccuppied with building out Dotty support, with a release date
+>of 2021/Q2, and an adoption rate limited to fanboys - not paying customers.
+
 Bug Report
 ----------
 >This project is cited in the following Intellij bug: https://youtrack.jetbrains.com/issue/SCL-17514
