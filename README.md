@@ -9,6 +9,8 @@ Warning
 >Yet the maintainer(s) are preoccuppied with building out Dotty support, with a release date
 >of 2021/Q2, and an adoption rate limited to fanboys - not paying customers.
 
+>**Also, read Test section for 2 warnings.**
+
 Bug Report
 ----------
 >This project is cited in the following Intellij bug: https://youtrack.jetbrains.com/issue/SCL-17514
@@ -46,8 +48,8 @@ jsEnv
 Test
 ----
 1. sbt clean sharedJVM/test
-2. sbt clean jvm/it:test  // Requires valid email address at this time in jvm/src/it/resources/test.server.conf
-3. sbt clean js/test  // Doesn't work because IDBDatabase and Crypto not supported by scalajs-env-jsdom-nodejs
+2. sbt clean jvm/it:test  // **Warning** Requires valid email address at this time in jvm/src/it/resources/test.server.conf
+3. sbt clean js/test  // **Warning** Doesn't work because IDBDatabase and Crypto not supported by scalajs-env-jsdom-nodejs
 
 Bloop
 -----
