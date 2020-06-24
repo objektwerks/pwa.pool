@@ -1,7 +1,7 @@
 name := "pwa.pool"
 
 lazy val upickleVersion = "1.1.0"
-lazy val scalaTestVersion = "3.1.2"
+lazy val scalaTestVersion = "3.2.0"
 
 lazy val common = Defaults.coreDefaultSettings ++ Seq(
   organization := "objektwerks",
@@ -76,7 +76,7 @@ lazy val jvm = (project in file("jvm"))
     Defaults.itSettings,
     mainClass in reStart := Some("pool.Server"),
     libraryDependencies ++= {
-      val akkaVersion = "2.6.5"
+      val akkaVersion = "2.6.6"
       val akkkHttpVersion = "10.1.12"
       val quillVersion = "3.5.1"
       Seq(
