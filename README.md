@@ -4,7 +4,9 @@ PWA Pool App
 
 Warning
 -------
->**Read Test section for 2 warnings.**
+1. A correct email address/password is required in: 1) build.sbt 2) server.conf 3) test.server.conf
+2. Correct postgresql config is required in: 1) server.conf and 2) test.server.conf
+3. Read Test section for 2 warnings.
 
 Bug Report
 ----------
