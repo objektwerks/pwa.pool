@@ -22,7 +22,8 @@ object Server {
     val host = conf.getString("server.host")
     val port = conf.getInt("server.port")
     Http()
-      .bindAndHandle(router.routes, host, port)
+      .newServerAt(host, port)
+      .bindFlow(router.routes)
       .map { server =>
         logger.info(s"*** Server host: ${server.localAddress.toString}")
       }
