@@ -37,7 +37,7 @@ lazy val sw = (project in file("sw"))
   .settings(
     scalaJSUseMainModuleInitializer := true,
     libraryDependencies ++= Seq(
-      "com.raquo" %%% "domtypes" % "0.10.0"
+      "com.raquo" %%% "domtypes" % "0.10.1"
     )
   )
 
