@@ -54,10 +54,10 @@ lazy val js = (project in file("js"))
   .settings(
     maintainer := "pool@gmail.com",
     libraryDependencies ++= Seq(
-      "com.raquo" %%% "laminar" % "0.10.2",
+      "com.raquo" %%% "laminar" % "0.10.3",
       "com.lihaoyi" %%% "upickle" % upickleVersion,
       "io.github.cquiroz" %%% "scala-java-time" % "2.0.0",
-      "com.lihaoyi" %%% "utest" % "0.7.4" % Test
+      "com.lihaoyi" %%% "utest" % "0.7.5" % Test
     ),
     Assets / resources += (jsOptCompileMode in (sharedJs, Compile)).value.data,
     Assets / resources += (jsOptCompileMode in (sw, Compile)).value.data,
