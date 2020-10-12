@@ -1,7 +1,7 @@
 name := "pwa.pool"
 
-lazy val upickleVersion = "1.1.0"
-lazy val scalaTestVersion = "3.2.0"
+lazy val upickleVersion = "1.2.2"
+lazy val scalaTestVersion = "3.2.2"
 
 lazy val common = Defaults.coreDefaultSettings ++ Seq(
   organization := "objektwerks",
@@ -76,19 +76,19 @@ lazy val jvm = (project in file("jvm"))
     Defaults.itSettings,
     mainClass in reStart := Some("pool.Server"),
     libraryDependencies ++= {
-      val akkaVersion = "2.6.8"
-      val akkkHttpVersion = "10.2.0"
-      val quillVersion = "3.5.2"
+      val akkaVersion = "2.6.10"
+      val akkkHttpVersion = "10.2.1"
+      val quillVersion = "3.5.3"
       Seq(
         "com.typesafe.akka" %% "akka-actor" % akkaVersion,
         "com.typesafe.akka" %% "akka-http" % akkkHttpVersion,
         "com.typesafe.akka" %% "akka-stream" % akkaVersion,
         "com.typesafe.akka" %% "akka-slf4j" % akkaVersion,
-        "de.heikoseeberger" %% "akka-http-upickle" % "1.32.0",
+        "de.heikoseeberger" %% "akka-http-upickle" % "1.35.0",
         "io.getquill" %% "quill-sql" % quillVersion,
         "io.getquill" %% "quill-async-postgres" % quillVersion,
         "com.github.cb372" %% "scalacache-caffeine" % "0.28.0",
-        "org.jodd" % "jodd-mail" % "5.1.4",
+        "org.jodd" % "jodd-mail" % "6.0.1",
         "com.typesafe" % "config" % "1.4.0",
         "ch.qos.logback" % "logback-classic" % "1.2.3",
         "com.typesafe.akka" %% "akka-http-testkit" % akkkHttpVersion % IntegrationTest,
