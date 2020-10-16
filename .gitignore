@@ -1,13 +1,9 @@
-js/target/
-jvm/target/
-sw/target/
-shared/.js
-shared/.jvm
 .*
-!/.gitignore
-project/.bloop
+!.gitignore
 project/metals.sbt
 project/project/
 project/target/
 target/
-.DS_Store
+js/target/
+jvm/target/
+sw/target/
