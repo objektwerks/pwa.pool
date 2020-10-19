@@ -69,6 +69,6 @@ class Emailer(conf: Config) extends Actor with ActorLogging {
         messageId = sendEmail(send.to, send.license)
         attempts = attempts + 1
       }
-      sender ! messageId
+      sender() ! messageId
   }
 }

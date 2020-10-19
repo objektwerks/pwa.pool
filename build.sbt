@@ -6,7 +6,7 @@ lazy val scalaTestVersion = "3.2.2"
 lazy val common = Defaults.coreDefaultSettings ++ Seq(
   organization := "objektwerks",
   version := "0.1-SNAPSHOT",
-  scalaVersion := "2.13.2"
+  scalaVersion := "2.13.3"
 )
 
 lazy val pool = project.in(file("."))
