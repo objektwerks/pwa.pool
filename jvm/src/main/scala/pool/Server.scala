@@ -2,7 +2,9 @@ package pool
 
 import akka.actor.{ActorSystem, Props}
 import akka.http.scaladsl.Http
+
 import com.typesafe.config.ConfigFactory
+
 import org.slf4j.LoggerFactory
 
 import scala.concurrent.Await

@@ -1,6 +1,7 @@
 package pool
 
 import com.typesafe.config.Config
+
 import io.getquill._
 
 import scala.concurrent.{ExecutionContext, Future}

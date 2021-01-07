@@ -3,6 +3,7 @@ package pool
 import java.util.concurrent.TimeUnit
 
 import com.github.benmanes.caffeine.cache.Caffeine
+
 import scalacache.caffeine.CaffeineCache
 import scalacache.modes.sync._
 import scalacache.{Cache, Entry}

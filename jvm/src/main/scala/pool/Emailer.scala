@@ -1,7 +1,9 @@
 package pool
 
 import akka.actor.{Actor, ActorLogging}
+
 import com.typesafe.config.Config
+
 import jodd.mail.{Email, MailServer, SendMailSession, SmtpServer}
 
 import scala.util.control.NonFatal
