@@ -76,7 +76,7 @@ lazy val jvm = (project in file("jvm"))
     Defaults.itSettings,
     mainClass in reStart := Some("pool.Server"),
     libraryDependencies ++= {
-      val akkaVersion = "2.6.11"
+      val akkaVersion = "2.6.12"
       val akkkHttpVersion = "10.2.3"
       val quillVersion = "3.6.0"
       Seq(
@@ -88,7 +88,7 @@ lazy val jvm = (project in file("jvm"))
         "io.getquill" %% "quill-sql" % quillVersion,
         "io.getquill" %% "quill-async-postgres" % quillVersion,
         "com.github.cb372" %% "scalacache-caffeine" % "0.28.0",
-        "org.jodd" % "jodd-mail" % "6.0.1",
+        "org.jodd" % "jodd-mail" % "6.0.4",
         "com.typesafe" % "config" % "1.4.0",
         "ch.qos.logback" % "logback-classic" % "1.2.3",
         "com.typesafe.akka" %% "akka-http-testkit" % akkkHttpVersion % IntegrationTest,
