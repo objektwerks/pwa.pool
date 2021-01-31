@@ -1,6 +1,6 @@
 name := "pwa.pool"
 
-lazy val upickleVersion = "1.2.2"
+lazy val upickleVersion = "1.2.3"
 lazy val scalaTestVersion = "3.2.3"
 
 lazy val common = Defaults.coreDefaultSettings ++ Seq(
@@ -37,7 +37,7 @@ lazy val sw = (project in file("sw"))
   .settings(
     scalaJSUseMainModuleInitializer := true,
     libraryDependencies ++= Seq(
-      "com.raquo" %%% "domtypes" % "0.10.1"
+      "com.raquo" %%% "domtypes" % "0.12.0"
     )
   )
 
@@ -54,10 +54,10 @@ lazy val js = (project in file("js"))
   .settings(
     maintainer := "pool@gmail.com",
     libraryDependencies ++= Seq(
-      "com.raquo" %%% "laminar" % "0.10.3",
+      "com.raquo" %%% "laminar" % "0.11.0",
       "com.lihaoyi" %%% "upickle" % upickleVersion,
-      "io.github.cquiroz" %%% "scala-java-time" % "2.0.0",
-      "com.lihaoyi" %%% "utest" % "0.7.5" % Test
+      "io.github.cquiroz" %%% "scala-java-time" % "2.1.0",
+      "com.lihaoyi" %%% "utest" % "0.7.7" % Test
     ),
     Assets / resources += (jsOptCompileMode in (sharedJs, Compile)).value.data,
     Assets / resources += (jsOptCompileMode in (sw, Compile)).value.data,
@@ -84,7 +84,7 @@ lazy val jvm = (project in file("jvm"))
         "com.typesafe.akka" %% "akka-http" % akkkHttpVersion,
         "com.typesafe.akka" %% "akka-stream" % akkaVersion,
         "com.typesafe.akka" %% "akka-slf4j" % akkaVersion,
-        "de.heikoseeberger" %% "akka-http-upickle" % "1.35.0",
+        "de.heikoseeberger" %% "akka-http-upickle" % "1.35.3",
         "io.getquill" %% "quill-sql" % quillVersion,
         "io.getquill" %% "quill-async-postgres" % quillVersion,
         "com.github.cb372" %% "scalacache-caffeine" % "0.28.0",
