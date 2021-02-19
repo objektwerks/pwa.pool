@@ -1,7 +1,7 @@
 name := "pwa.pool"
 
 lazy val upickleVersion = "1.2.3"
-lazy val scalaTestVersion = "3.2.3"
+lazy val scalaTestVersion = "3.2.4"
 
 lazy val common = Defaults.coreDefaultSettings ++ Seq(
   organization := "objektwerks",
