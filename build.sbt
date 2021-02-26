@@ -37,7 +37,7 @@ lazy val sw = (project in file("sw"))
   .settings(
     scalaJSUseMainModuleInitializer := true,
     libraryDependencies ++= Seq(
-      "com.raquo" %%% "domtypes" % "0.12.0"
+      "com.raquo" %%% "domtypes" % "0.14.0"
     )
   )
 
@@ -56,7 +56,7 @@ lazy val js = (project in file("js"))
     libraryDependencies ++= Seq(
       "com.raquo" %%% "laminar" % "0.11.0",
       "com.lihaoyi" %%% "upickle" % upickleVersion,
-      "io.github.cquiroz" %%% "scala-java-time" % "2.1.0",
+      "io.github.cquiroz" %%% "scala-java-time" % "2.2.0",
       "com.lihaoyi" %%% "utest" % "0.7.7" % Test
     ),
     Assets / resources += (jsOptCompileMode in (sharedJs, Compile)).value.data,
@@ -78,7 +78,7 @@ lazy val jvm = (project in file("jvm"))
     libraryDependencies ++= {
       val akkaVersion = "2.6.12"
       val akkkHttpVersion = "10.2.3"
-      val quillVersion = "3.6.0"
+      val quillVersion = "3.6.1"
       Seq(
         "com.typesafe.akka" %% "akka-actor" % akkaVersion,
         "com.typesafe.akka" %% "akka-http" % akkkHttpVersion,
