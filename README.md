@@ -1,5 +1,5 @@
-PWA Pool App
-------------
+Scalajs Pool App
+----------------
 >Pool maintenance ( prototype ) application.
 
 Warning
@@ -47,15 +47,6 @@ Test
 1. sbt clean sharedJVM/test
 2. sbt clean jvm/it:test  // **Warning** Requires valid email address at this time in jvm/src/it/resources/test.server.conf
 3. sbt clean js/test  // **Warning** Doesn't work because IDBDatabase and Crypto not supported by scalajs-env-jsdom-nodejs
-
-Bloop
------
-1. sbt bloopInstall
-2. bloop clean pool
-3. bloop compile pool
-4. bloop test sharedJVM
-5. bloop test jvm-it // Requires valid email address at this time in jvm/src/it/resources/test.server.conf
-6. bloop test js  // Doesn't work because IDBDatabase and Crypto no supported by scalajs-env-jsdom-nodejs
 
 Build
 -----
