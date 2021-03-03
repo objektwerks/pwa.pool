@@ -2,11 +2,11 @@ Scalajs Pool App
 ----------------
 >Pool maintenance ( prototype ) application.
 
-Warning
--------
-1. A correct email address/password is required in: 1) build.sbt 2) server.conf 3) test.server.conf
-2. Correct postgresql config is required in: 1) server.conf and 2) test.server.conf
-3. Read Test section for 2 warnings.
+Note
+----
+1. Valid SMTP conf required server.conf and test.server.conf
+2. Valid postgresql config required in server.conf and test.server.conf
+3. See Test section for 2 warnings.
 
 Bug Report
 ----------
@@ -45,7 +45,7 @@ jsEnv
 Test
 ----
 1. sbt clean sharedJVM/test
-2. sbt clean jvm/it:test  // **Warning** Requires valid email address at this time in jvm/src/it/resources/test.server.conf
+2. sbt clean jvm/it:test  // **Warning** Requires valid SMTP conf in jvm/src/it/resources/test.server.conf
 3. sbt clean js/test  // **Warning** Doesn't work because IDBDatabase and Crypto not supported by scalajs-env-jsdom-nodejs
 
 Build
