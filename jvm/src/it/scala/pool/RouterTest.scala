@@ -52,7 +52,7 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
 
   "signup" should {
     "post to signedup" in {
-      Post("/signup", SignUp(emailAddress = conf.getString("email.testUser"))) ~> router.routes ~> check {
+      Post("/signup", SignUp(emailAddress = conf.getString("email.from"))) ~> router.routes ~> check {
         status shouldBe OK
         licensee = responseAs[SignedUp].licensee
         licensee.isActivated shouldBe false
