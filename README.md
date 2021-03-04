@@ -9,9 +9,10 @@ Install
 
 Note
 ----
-1. Valid SMTP conf required server.conf and test.server.conf
-2. Valid postgresql config required in server.conf and test.server.conf
-3. See Test section for 2 warnings.
+1. Must run on JDK 8. See .sbtopts
+2. Valid SMTP conf required server.conf and test.server.conf
+3. Valid postgresql config required in server.conf and test.server.conf
+4. See Test section for 2 warnings.
 
 Bug Report
 ----------
