@@ -18,9 +18,9 @@ object LicenseeStoreTest extends TestSuite {
   }
 
   private def validate(licensee: Licensee, optionalLicensee: Option[Licensee]): Unit = optionalLicensee match {
-    case Some(value) =>
-      println(s"*** Licensee: $value")
-      assert(value == licensee)
+    case Some(target) =>
+      println(s"*** Licensee: $target")
+      assert(licensee == target)
     case None => 
       println(s"*** No Licensee!")
       assert(false)
