@@ -2,6 +2,11 @@ Scalajs Pool App
 ----------------
 >Pool maintenance ( prototype ) application.
 
+Install
+-------
+1. brew install npm
+2. npm install jsdom
+
 Note
 ----
 1. Valid SMTP conf required server.conf and test.server.conf

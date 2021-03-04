@@ -52,7 +52,7 @@ lazy val js = (project in file("js"))
   .enablePlugins(ScalaJSPlugin, SbtWeb, UniversalPlugin)
   .settings(common)
   .settings(
-    maintainer := "pool@gmail.com",
+    maintainer := "funkwerks@runbox.com",
     libraryDependencies ++= Seq(
       "com.raquo" %%% "laminar" % "0.12.0",
       "com.lihaoyi" %%% "upickle" % upickleVersion,

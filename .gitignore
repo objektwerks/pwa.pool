@@ -1,5 +1,8 @@
 .*
 !.gitignore
+node_modules
+package-lock.json
+package.json
 project/metals.sbt
 project/project/
 project/target/
