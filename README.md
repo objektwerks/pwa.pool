@@ -1,6 +1,6 @@
 Scalajs Pool App
 ----------------
->Pool maintenance application using Akka-Http, Quil, UPickle, ScalaJs and Postgresql.
+>Pool maintenance PWA app using Akka-Http, Quil, UPickle, ScalaJs and Postgresql.
 
 Install
 -------
