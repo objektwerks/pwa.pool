@@ -1,6 +1,6 @@
 Scalajs Pool App
 ----------------
->Pool maintenance ( prototype ) application.
+>Pool maintenance application using Akka-Http, Quil, UPickle, ScalaJs and Postgresql.
 
 Install
 -------
@@ -10,13 +10,8 @@ Install
 Note
 ----
 1. Must run on JDK 8. See .sbtopts
-2. Valid SMTP conf required server.conf and test.server.conf
-3. Valid postgresql config required in server.conf and test.server.conf
-4. See Test section for 2 warnings.
-
-Bug Report
-----------
->This project is cited in the following Intellij bug: https://youtrack.jetbrains.com/issue/SCL-17514
+2. Must provide valid SMTP conf in server.conf and test.server.conf
+3. Must provide valid postgresql conf in server.conf and test.server.conf
 
 ScalaJS Bundling
 ----------------
@@ -25,6 +20,16 @@ ScalaJS Bundling
 1. ScalaJS Bundler: https://scalacenter.github.io/scalajs-bundler/index.html
 2. Sbt Web: https://github.com/sbt/sbt-web
 3. Sbt Web ScalaJS: https://github.com/vmunier/sbt-web-scalajs
+
+jsEnv
+-----
+>Using ( libraryDependencies += "org.scala-js" %% "scalajs-env-jsdom-nodejs" % "1.1.0" ) in plugins.sbt
+>provides access to a NodeJs environment ( https://github.com/scala-js/scala-js-env-jsdom-nodejs ). Yet
+>items 1 and 2 below highlight glaring weaknesses.
+1. NodeJs - Window object not supported.
+2. NodeJs and Jsdom - Window object supported. IndexedDB not supported. Other Windows libraries likely not supported.
+3. PhantomJS - Throws exception. Advanced configuration not available.
+4. Selenium - Doesn't support headless.
 
 Dev
 ---
@@ -41,18 +46,11 @@ Dev
 4. open js/src/main/assets/index.html and click target browser in right top corner
 5. open developer tools
 
-jsEnv
------
-1. NodeJs - Window object not supported.
-2. NodeJs and Jsdom - Window object supported. IndexedDB not supported. Other Windows libraries likely not supported.
-3. PhantomJS - Throws exception. Advanced configuration not available.
-4. Selenium - Doesn't support headless.
-
 Test
 ----
 1. sbt clean sharedJVM/test
-2. sbt clean jvm/it:test  // **Warning** Requires valid SMTP conf in jvm/src/it/resources/test.server.conf
-3. sbt clean js/test  // **Warning** Doesn't work because IDBDatabase and Crypto not supported by scalajs-env-jsdom-nodejs
+2. sbt clean jvm/it:test
+3. sbt clean js/test
 
 Build
 -----
