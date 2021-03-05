@@ -56,15 +56,12 @@ lazy val js = (project in file("js"))
     libraryDependencies ++= Seq(
       "com.raquo" %%% "laminar" % "0.12.0",
       "com.lihaoyi" %%% "upickle" % upickleVersion,
-      "io.github.cquiroz" %%% "scala-java-time" % "2.2.0",
-      "com.lihaoyi" %%% "utest" % "0.7.7" % Test
+      "io.github.cquiroz" %%% "scala-java-time" % "2.2.0"
     ),
     Assets / resources += (jsOptCompileMode in (sharedJs, Compile)).value.data,
     Assets / resources += (jsOptCompileMode in (sw, Compile)).value.data,
     artifactPath in(Compile, jsOptCompileMode) := target.value / jsOptDir / jsOptFile,
     mappings in Universal := (mappings in Universal).value ++ directory(target.value / jsOptDir),
-    testFrameworks += new TestFramework("utest.runner.Framework"),
-    jsEnv in Test := new org.scalajs.jsenv.jsdomnodejs.JSDOMNodeJSEnv()
   )
 
 lazy val jvm = (project in file("jvm"))

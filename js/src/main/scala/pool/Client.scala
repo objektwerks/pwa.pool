@@ -15,9 +15,8 @@ object Client {
   @JSExport
   def init(): Unit = {
     registerServiceWorker()
-    val licenseeStore = LicenseeStore()
     val serverProxy = ServerProxy()
-    val canvas = Canvas(licenseeStore, serverProxy, serverUrl, apiUrl)
+    val canvas = Canvas(serverProxy, serverUrl, apiUrl)
     canvas.init()
   }
 
