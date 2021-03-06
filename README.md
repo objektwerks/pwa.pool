@@ -9,9 +9,10 @@ Install
 
 Note
 ----
-1. Must run on JDK 8. See .sbtopts
-2. Must provide valid SMTP conf in server.conf and test.server.conf
-3. Must provide valid postgresql conf in server.conf and test.server.conf
+>Must:
+1. run on JDK 8. See .sbtopts
+2. provide valid Postgresql conf in server.conf and test.server.conf
+3. provide valid SMTP conf in server.conf and test.server.conf
 
 ScalaJS Bundling
 ----------------
