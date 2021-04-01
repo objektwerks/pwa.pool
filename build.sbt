@@ -54,7 +54,7 @@ lazy val js = (project in file("js"))
   .settings(
     maintainer := "funkwerks@runbox.com",
     libraryDependencies ++= Seq(
-      "com.raquo" %%% "laminar" % "0.12.0",
+      "com.raquo" %%% "laminar" % "0.12.1",
       "com.lihaoyi" %%% "upickle" % upickleVersion,
       "io.github.cquiroz" %%% "scala-java-time" % "2.2.0"
     ),
@@ -73,8 +73,8 @@ lazy val jvm = (project in file("jvm"))
     Defaults.itSettings,
     mainClass in reStart := Some("pool.Server"),
     libraryDependencies ++= {
-      val akkaVersion = "2.6.12"
-      val akkkHttpVersion = "10.2.3"
+      val akkaVersion = "2.6.13"
+      val akkkHttpVersion = "10.2.4"
       val quillVersion = "3.6.1"
       Seq(
         "com.typesafe.akka" %% "akka-actor" % akkaVersion,
