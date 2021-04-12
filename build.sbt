@@ -56,7 +56,7 @@ lazy val js = (project in file("js"))
     libraryDependencies ++= Seq(
       "com.raquo" %%% "laminar" % "0.12.2",
       "com.lihaoyi" %%% "upickle" % upickleVersion,
-      "io.github.cquiroz" %%% "scala-java-time" % "2.2.0"
+      "io.github.cquiroz" %%% "scala-java-time" % "2.2.1"
     ),
     Assets / resources += (jsOptCompileMode in (sharedJs, Compile)).value.data,
     Assets / resources += (jsOptCompileMode in (sw, Compile)).value.data,
