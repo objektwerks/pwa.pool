@@ -75,7 +75,7 @@ lazy val jvm = (project in file("jvm"))
     libraryDependencies ++= {
       val akkaVersion = "2.6.13"
       val akkkHttpVersion = "10.2.4"
-      val quillVersion = "3.6.1"
+      val quillVersion = "3.7.0"
       Seq(
         "com.typesafe.akka" %% "akka-actor" % akkaVersion,
         "com.typesafe.akka" %% "akka-http" % akkkHttpVersion,
