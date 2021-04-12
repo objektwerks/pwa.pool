@@ -73,7 +73,7 @@ lazy val jvm = (project in file("jvm"))
     Defaults.itSettings,
     mainClass in reStart := Some("pool.Server"),
     libraryDependencies ++= {
-      val akkaVersion = "2.6.13"
+      val akkaVersion = "2.6.14"
       val akkkHttpVersion = "10.2.4"
       val quillVersion = "3.7.0"
       Seq(
