@@ -1,7 +1,7 @@
 name := "scalajs.pool"
 
 lazy val upickleVersion = "1.3.11"
-lazy val scalaTestVersion = "3.2.7"
+lazy val scalaTestVersion = "3.2.8"
 
 lazy val common = Defaults.coreDefaultSettings ++ Seq(
   organization := "objektwerks",
