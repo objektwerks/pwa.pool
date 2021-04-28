@@ -64,7 +64,7 @@ class Router(store: Store, cache: LicenseeCache, emailer: ActorRef) {
             case Some(_) => onSuccess(signUp(sendEmail.license, signup.emailAddress)) {
               licensee => complete(OK -> SignedUp(licensee))
             }
-            case None => complete(BadRequest -> onInvalid(signup))
+            case _ => complete(BadRequest -> onInvalid(signup))
           }
         } else complete(BadRequest -> onInvalid(signup))
       }
