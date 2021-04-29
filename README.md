@@ -16,7 +16,7 @@ Note
 
 ScalaJS Bundling
 ----------------
->None of these options yield satisfactory results. Currently this project uses the SbtWeb plugin.
+>None of these options yield satisfactory results.
 1. ScalaJS Bundler: https://scalacenter.github.io/scalajs-bundler/index.html
 2. Sbt Web: https://github.com/sbt/sbt-web
 3. Sbt Web ScalaJS: https://github.com/vmunier/sbt-web-scalajs
