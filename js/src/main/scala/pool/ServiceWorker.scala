@@ -16,10 +16,10 @@ object ServiceWorker {
   val poolAssets: js.Array[RequestInfo] = List[RequestInfo](
     "index.html",
     "favicon.ico",
-    "css/w3c.css",
-    "images/logo.png",
-    "images/logo-192.png",
-    "images/logo-512.png"
+    "w3c.css",
+    "logo.png",
+    "logo-192.png",
+    "logo-512.png"
   ).toJSArray
 
   def main(args: Array[String]): Unit = {
