@@ -10,3 +10,5 @@ target/
 js/target/
 jvm/target/
 shared/target/
+web/node_modules/
+web/package-lock.json
