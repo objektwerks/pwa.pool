@@ -2,6 +2,10 @@ Scalajs Pool App
 ----------------
 >Pool maintenance PWA app using Akka-Http, Quil, UPickle, ScalaJs and Postgresql.
 
+Warning
+-------
+>The Scalajs build, packaging and deploy story is simply broken.
+
 Install
 -------
 1. brew install npm
