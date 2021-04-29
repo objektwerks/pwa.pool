@@ -20,6 +20,7 @@ lazy val pool = project.in(file("."))
 lazy val shared = crossProject(JSPlatform, JVMPlatform)
   .crossType(CrossType.Pure)
   .in(file("shared"))
+  .enablePlugins(SbtWeb)
   .settings(common)
   .settings(
     libraryDependencies ++= Seq(
@@ -32,7 +33,7 @@ lazy val sharedJs = shared.js
 lazy val sharedJvm = shared.jvm
 
 lazy val sw = (project in file("sw"))
-  .enablePlugins(ScalaJSPlugin)
+  .enablePlugins(ScalaJSPlugin, SbtWeb)
   .settings(common)
   .settings(
     scalaJSUseMainModuleInitializer := true,
@@ -41,27 +42,16 @@ lazy val sw = (project in file("sw"))
     )
   )
 
-lazy val jsOptCompileMode = fastOptJS  // fullOptJS
-lazy val jsOptDir = "web/classes/main/META-INF/resources/webjars/js/0.1-SNAPSHOT"
-lazy val jsOptFile = "js-fastopt.js"
-
-import NativePackagerHelper._
-
 lazy val js = (project in file("js"))
   .dependsOn(sharedJs, sw)
-  .enablePlugins(ScalaJSPlugin, SbtWeb, UniversalPlugin)
+  .enablePlugins(ScalaJSPlugin, SbtWeb)
   .settings(common)
   .settings(
-    maintainer := "funkwerks@runbox.com",
     libraryDependencies ++= Seq(
       "com.raquo" %%% "laminar" % "0.12.2",
       "com.lihaoyi" %%% "upickle" % upickleVersion,
       "io.github.cquiroz" %%% "scala-java-time" % "2.2.1"
-    ),
-    Assets / resources += (jsOptCompileMode in (sharedJs, Compile)).value.data,
-    Assets / resources += (jsOptCompileMode in (sw, Compile)).value.data,
-    artifactPath in(Compile, jsOptCompileMode) := target.value / jsOptDir / jsOptFile,
-    mappings in Universal := (mappings in Universal).value ++ directory(target.value / jsOptDir),
+    )
   )
 
 lazy val jvm = (project in file("jvm"))
@@ -71,7 +61,7 @@ lazy val jvm = (project in file("jvm"))
   .settings(common)
   .settings(
     Defaults.itSettings,
-    mainClass in reStart := Some("pool.Server"),
+    reStart / mainClass := Some("pool.Server"),
     libraryDependencies ++= {
       val akkaVersion = "2.6.14"
       val akkkHttpVersion = "10.2.4"
@@ -94,5 +84,5 @@ lazy val jvm = (project in file("jvm"))
       )
     },
     scalacOptions ++= Seq("-Ywarn-macros:after"),
-    javaOptions in IntegrationTest += "-Dquill.binds.log=true"
+    IntegrationTest / javaOptions += "-Dquill.binds.log=true"
   )

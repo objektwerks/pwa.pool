@@ -34,7 +34,7 @@ jsEnv
 
 Dev
 ---
-1. sbt clean compile test
+1. sbt clean test
 2. sbt js/fastLinkJS | fullLinkJS
 >In a unique session [ server ]:
 1. sbt [ interactive session ]
@@ -68,7 +68,7 @@ Package
 1. sbt clean compile
 2. sbt jvm/stage | jvm/universal:packageZipTarball
 3. sbt js/fastLinkJS | js/fullLinkJS
-4. sbt js/stage | js/universal:packageZipTarball
+4. sbt js/webStage | js/universal:packageZipTarball
 
 Panes
 -----
