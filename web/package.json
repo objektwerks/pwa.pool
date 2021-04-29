@@ -1,7 +1,7 @@
 {
-  "name": "scalajs.pool",
+  "name": "pwa.pool",
   "version": "0.0.1",
-  "description": "scalajs pool app",
+  "description": "pwa pool app",
   "module": "index.html",
   "scripts": {
     "prebuild": "rm -rf dist && mkdir dist",
@@ -19,9 +19,9 @@
   "author": "Objektwerks",
   "license": "Apache 2.0",
   "bugs": {
-    "url": "https://github.com/objektwerks/scalajs.pool/issues"
+    "url": "https://github.com/objektwerks/scalajs.pool"
   },
-  "homepage": "https://github.com/objektwerks/scalajs.pool#readme",
+  "homepage": "https://github.com/objektwerks/scalajs.pool",
   "keywords": [],
   "devDependencies": {
     "babel-cli": "^6.18.0",

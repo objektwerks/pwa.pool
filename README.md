@@ -35,6 +35,7 @@ Web
 ---
 >To update web/package-json, run:
 1. npm update --save-dev
+2. npm run build ( see dist directory )
 
 Dev
 ---
