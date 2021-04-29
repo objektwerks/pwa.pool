@@ -3,11 +3,10 @@
 !.sbtopts
 node_modules
 package-lock.json
-package.json
 project/metals.sbt
 project/project/
 project/target/
 target/
 js/target/
 jvm/target/
-sw/target/
+shared/target/
