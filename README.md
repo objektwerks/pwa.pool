@@ -2,10 +2,6 @@ Scalajs Pool App
 ----------------
 >Pool maintenance PWA app using Akka-Http, Quil, UPickle, ScalaJs and Postgresql.
 
-Warning
--------
->The Scalajs build, packaging and deploy story is simply broken.
-
 Install
 -------
 1. brew install npm
@@ -20,8 +16,7 @@ Note
 
 ScalaJS Bundling
 ----------------
->None of these options yield satisfactory results. Currently this project uses the SbtWeb
->plugin and fastOptJS | fullOptJS, with artifacts landing in the js/target/web directory.
+>None of these options yield satisfactory results. Currently this project uses the SbtWeb plugin.
 1. ScalaJS Bundler: https://scalacenter.github.io/scalajs-bundler/index.html
 2. Sbt Web: https://github.com/sbt/sbt-web
 3. Sbt Web ScalaJS: https://github.com/vmunier/sbt-web-scalajs
@@ -30,7 +25,7 @@ jsEnv
 -----
 >Using ( libraryDependencies += "org.scala-js" %% "scalajs-env-jsdom-nodejs" % "1.1.0" ) in plugins.sbt
 >provides access to a NodeJs environment ( https://github.com/scala-js/scala-js-env-jsdom-nodejs ). Yet
->items 1 and 2 below highlight glaring weaknesses.
+>detailed items below highlight glaring weaknesses.
 1. NodeJs - Window object not supported.
 2. NodeJs and Jsdom - Window object supported. IndexedDB not supported. Other Windows libraries likely not supported.
 3. PhantomJS - Throws exception. Advanced configuration not available.
@@ -64,7 +59,7 @@ Build
 Run
 ---
 1. sbt jvm/run
-2. open js/src/main/assets/index.html and click target browser in right top corner
+2. open js/src/main/public/index.html and click target browser in right top corner
 3. open developer tools in target brower; select console tab
 
 Package
