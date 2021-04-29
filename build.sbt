@@ -10,7 +10,7 @@ lazy val common = Defaults.coreDefaultSettings ++ Seq(
 )
 
 lazy val pool = project.in(file("."))
-  .aggregate(sharedJs, sharedJvm, sw, js, jvm)
+  .aggregate(sharedJs, sharedJvm, js, jvm)
   .settings(common)
   .settings(
     publish := {},
@@ -20,7 +20,6 @@ lazy val pool = project.in(file("."))
 lazy val shared = crossProject(JSPlatform, JVMPlatform)
   .crossType(CrossType.Pure)
   .in(file("shared"))
-  .enablePlugins(SbtWeb)
   .settings(common)
   .settings(
     libraryDependencies ++= Seq(
@@ -32,18 +31,8 @@ lazy val shared = crossProject(JSPlatform, JVMPlatform)
 lazy val sharedJs = shared.js
 lazy val sharedJvm = shared.jvm
 
-lazy val sw = (project in file("sw"))
-  .enablePlugins(ScalaJSPlugin, SbtWeb)
-  .settings(common)
-  .settings(
-    scalaJSUseMainModuleInitializer := true,
-    libraryDependencies ++= Seq(
-      "com.raquo" %%% "domtypes" % "0.14.2"
-    )
-  )
-
 lazy val js = (project in file("js"))
-  .dependsOn(sharedJs, sw)
+  .dependsOn(sharedJs)
   .enablePlugins(ScalaJSPlugin, SbtWeb)
   .settings(common)
   .settings(
