@@ -32,7 +32,6 @@ lazy val sharedJs = shared.js
 lazy val sharedJvm = shared.jvm
 
 lazy val public = "scala-2.13/classes/public"
-lazy val mainJS = "scala-2.13/js-opt/main.js"
 
 import NativePackagerHelper._
 
@@ -46,8 +45,9 @@ lazy val js = (project in file("js"))
       "com.lihaoyi" %%% "upickle" % upickleVersion,
       "io.github.cquiroz" %%% "scala-java-time" % "2.2.1"
     ),
-    Universal / mappings := (Universal / mappings).value ++ contentOf(target.value / public),
-    Universal / mappings := (Universal / mappings).value ++ directory(target.value / mainJS)
+    fastLinkJS / crossTarget := target.value / public,
+    fullLinkJS / crossTarget := target.value / public,
+    Universal / mappings := (Universal / mappings).value ++ contentOf(target.value / public)
   )
 
 lazy val jvm = (project in file("jvm"))
