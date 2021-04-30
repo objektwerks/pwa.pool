@@ -19,18 +19,18 @@ Bundling
 1. ScalaJS Bundler: https://scalacenter.github.io/scalajs-bundler/index.html
 2. Sbt Web: https://github.com/sbt/sbt-web
 3. Sbt Web ScalaJS: https://github.com/vmunier/sbt-web-scalajs
->There is **no** Scalajs bundling standard.
+>There is ***no*** Scalajs bundling standard.
 
 jsEnv
 -----
 >Using ( libraryDependencies += "org.scala-js" %% "scalajs-env-jsdom-nodejs" % "1.1.0" ) in plugins.sbt
->provides access to a NodeJs environment ( https://github.com/scala-js/scala-js-env-jsdom-nodejs ). Yet
->detailed items below highlight weaknesses.
+>provides access to a NodeJs environment ( github.com/scala-js/scala-js-env-jsdom-nodejs ). Yet
+>the following jsEnv shortcomings exist:
 1. NodeJs - Window object not supported.
 2. NodeJs and Jsdom - Window object supported. IndexedDB not supported. Other Windows libraries likely not supported.
 3. PhantomJS - Throws exception. Advanced configuration not available.
 4. Selenium - Doesn't support headless.
->Use utest ( https://www.lihaoyi.com/post/uTesttheEssentialTestFrameworkforScala.html ) for testing.
+>Use utest ( www.lihaoyi.com/post/uTesttheEssentialTestFrameworkforScala.html ) for testing.
 
 Dev
 ---
@@ -68,8 +68,8 @@ Run
 
 Package
 -------
->Refer to https://www.scala-sbt.org/sbt-native-packager/formats/universal.html for universal:packageZipTarball.
->See jvm | js/target/universal for output.
+>See www.scala-sbt.org/sbt-native-packager/formats/universal.html for details on
+>universal:packageZipTarball. See jvm | js/target/universal for output.
 
 >jvm
 1. sbt jvm/universal:packageZipTarball
