@@ -45,6 +45,8 @@ lazy val js = (project in file("js"))
       "com.lihaoyi" %%% "upickle" % upickleVersion,
       "io.github.cquiroz" %%% "scala-java-time" % "2.2.1"
     ),
+    Compile / fastLinkJS / scalaJSLinkerOutputDirectory := target.value / public / "js",
+    Compile / fullLinkJS / scalaJSLinkerOutputDirectory := target.value / public / "js",
     fastLinkJS / crossTarget := target.value / public,
     fullLinkJS / crossTarget := target.value / public,
     Universal / mappings := (Universal / mappings).value ++ contentOf(target.value / public)
