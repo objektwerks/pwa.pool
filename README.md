@@ -19,7 +19,7 @@ Bundling
 1. ScalaJS Bundler: https://scalacenter.github.io/scalajs-bundler/index.html
 2. Sbt Web: https://github.com/sbt/sbt-web
 3. Sbt Web ScalaJS: https://github.com/vmunier/sbt-web-scalajs
->No Scalajs bundling standard exists.
+>There is **no** Scalajs bundling standard.
 
 jsEnv
 -----
