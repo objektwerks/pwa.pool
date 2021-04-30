@@ -41,8 +41,8 @@ Dev
 >In a unique session [ client ]
 1. sbt [ interactive session ]
 2. project js
-3. ~fastLinkJS | fullLinkJS
-4. open js/src/main/assets/index.html and click target browser in right top corner
+3. ~fastLinkJS | ~fullLinkJS
+4. open target/scala-2.13/classes/public/index.html and click target browser in right top corner
 5. open developer tools
 
 Test
