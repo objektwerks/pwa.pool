@@ -34,7 +34,6 @@ jsEnv
 Dev
 ---
 1. sbt clean test
-2. sbt js/fastLinkJS | fullLinkJS
 >In a unique session [ server ]:
 1. sbt [ interactive session ]
 2. project jvm
@@ -59,15 +58,17 @@ Build
 Run
 ---
 1. sbt jvm/run
-2. open js/src/main/public/index.html and click target browser in right top corner
+2. open js/src/main/public/index.html and click target browser in right top corner ( Intellij )
 3. open developer tools in target brower; select console tab
 
 Package
 -------
-1. sbt clean compile
-2. sbt jvm/stage | jvm/universal:packageZipTarball
-3. sbt js/fastLinkJS | js/fullLinkJS
-4. sbt js/webStage | js/universal:packageZipTarball
+1. sbt clean test
+>jvm
+1. sbt jvm/universal:packageZipTarball
+>js
+1. sbt js/fullLinkJS
+2. sbt js/universal:packageZipTarball
 
 Panes
 -----
