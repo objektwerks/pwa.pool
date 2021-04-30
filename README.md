@@ -7,68 +7,73 @@ Install
 1. brew install npm
 2. npm install jsdom
 
-Note
-----
->Must:
+Requirements
+------------
 1. run on JDK 8. See .sbtopts
 2. provide valid Postgresql conf in server.conf and test.server.conf
 3. provide valid SMTP conf in server.conf and test.server.conf
 
-ScalaJS Bundling
-----------------
->None of these options yield satisfactory results.
+Bundling
+--------
+>None of these Scalajs bundling options yield satisfactory results.
 1. ScalaJS Bundler: https://scalacenter.github.io/scalajs-bundler/index.html
 2. Sbt Web: https://github.com/sbt/sbt-web
 3. Sbt Web ScalaJS: https://github.com/vmunier/sbt-web-scalajs
+>There is no standard Scalajs bundling standard.
 
 jsEnv
 -----
 >Using ( libraryDependencies += "org.scala-js" %% "scalajs-env-jsdom-nodejs" % "1.1.0" ) in plugins.sbt
 >provides access to a NodeJs environment ( https://github.com/scala-js/scala-js-env-jsdom-nodejs ). Yet
->detailed items below highlight glaring weaknesses.
+>detailed items below highlight weaknesses.
 1. NodeJs - Window object not supported.
 2. NodeJs and Jsdom - Window object supported. IndexedDB not supported. Other Windows libraries likely not supported.
 3. PhantomJS - Throws exception. Advanced configuration not available.
 4. Selenium - Doesn't support headless.
+>Use utest ( https://www.lihaoyi.com/post/uTesttheEssentialTestFrameworkforScala.html ) for testing.
 
 Dev
 ---
-1. sbt clean test
->In a unique session [ server ]:
+>[ shared ]:
+1. sbt [ interactive session ]
+2. project shared
+3. clean | compile | test
+4. ~compile
+>[ jvm ]:
 1. sbt [ interactive session ]
 2. project jvm
-3. ~reStart
->In a unique session [ client ]
+3. clean | compile | test | it:test
+4. ~reStart
+>[ js ]
 1. sbt [ interactive session ]
 2. project js
-3. ~fastLinkJS | ~fullLinkJS
-4. open target/scala-2.13/classes/public/index.html and click target browser in right top corner
-5. open developer tools
+3. clean | compile
+4. ~fastLinkJS | ~fullLinkJS
+5. open target/scala-2.13/classes/public/index.html and click target browser in right top corner ( Intellij )
+6. open developer tools
 
 Test
 ----
 1. sbt clean sharedJVM/test
 2. sbt clean jvm/it:test
-3. sbt clean js/test
-
-Build
------
-1. sbt clean compile
+3. sbt clean js/test ( not test at this time )
 
 Run
 ---
+>jvm
 1. sbt jvm/run
-2. open js/src/main/public/index.html and click target browser in right top corner ( Intellij )
-3. open developer tools in target brower; select console tab
+>js
+1. open js/src/main/public/index.html and click target browser in right top corner ( Intellij )
+2. open developer tools
 
 Package
 -------
-1. sbt clean test
+>See jvm | js/target/universal for output.
 >jvm
-1. sbt jvm/universal:packageZipTarball ( see target/universal for output )
+1. sbt jvm/universal:packageZipTarball
 >js
 1. sbt js/fullLinkJS
-2. sbt js/universal:packageZipTarball  ( see target/universal for output )
+2. sbt js/universal:packageZipTarball
 
 Panes
 -----
