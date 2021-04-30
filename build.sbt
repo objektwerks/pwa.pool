@@ -42,12 +42,18 @@ lazy val js = (project in file("js"))
       "com.raquo" %%% "laminar" % "0.12.2",
       "com.lihaoyi" %%% "upickle" % upickleVersion,
       "io.github.cquiroz" %%% "scala-java-time" % "2.2.1"
-    ),
-    copyTask := IO.copyFile(
-      target.value / "scala-2.13/js-opt.js",
-      baseDirectory.value / "web/js-opt.js",
-      CopyOptions(overwrite = true, preserveLastModified = true, preserveExecutable = true)
     )
+  )
+  .settings(
+    fullOptJS / copyTask := {
+      println("*** copy task ...")
+      IO.copyFile(
+        target.value / "scala-2.13/js-opt.js",
+        baseDirectory.value / "web/js-opt.js",
+        CopyOptions(overwrite = true, preserveLastModified = false, preserveExecutable = false)
+      )
+      println("*** copy task.")
+    }
   )
 
 lazy val jvm = (project in file("jvm"))
