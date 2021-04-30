@@ -31,18 +31,23 @@ lazy val shared = crossProject(JSPlatform, JVMPlatform)
 lazy val sharedJs = shared.js
 lazy val sharedJvm = shared.jvm
 
-val copyTask = taskKey[Unit]("Copy files.")
+lazy val public = "scala-2.13/classes/public"
+lazy val mainJS = "scala-2.13/js-opt/main.js"
+
+import NativePackagerHelper._
 
 lazy val js = (project in file("js"))
   .dependsOn(sharedJs)
-  .enablePlugins(ScalaJSPlugin)
+  .enablePlugins(ScalaJSPlugin, UniversalPlugin)
   .settings(common)
   .settings(
     libraryDependencies ++= Seq(
       "com.raquo" %%% "laminar" % "0.12.2",
       "com.lihaoyi" %%% "upickle" % upickleVersion,
       "io.github.cquiroz" %%% "scala-java-time" % "2.2.1"
-    )
+    ),
+    Universal / mappings := (Universal / mappings).value ++ directory(target.value / public),
+    Universal / mappings := (Universal / mappings).value ++ directory(target.value / mainJS)
   )
 
 lazy val jvm = (project in file("jvm"))
