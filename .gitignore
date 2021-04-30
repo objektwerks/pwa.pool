@@ -1,8 +1,6 @@
 .*
 !.gitignore
 !.sbtopts
-node_modules
-package-lock.json
 project/metals.sbt
 project/project/
 project/target/
@@ -10,5 +8,3 @@ target/
 js/target/
 jvm/target/
 shared/target/
-web/node_modules/
-web/package-lock.json
