@@ -68,6 +68,7 @@ Run
 
 Package
 -------
+>Refer to https://www.scala-sbt.org/sbt-native-packager/formats/universal.html for universal:packageZipTarball.
 >See jvm | js/target/universal for output.
 >jvm
 1. sbt jvm/universal:packageZipTarball
