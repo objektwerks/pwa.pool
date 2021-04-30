@@ -15,11 +15,11 @@ Requirements
 
 Bundling
 --------
->None of these Scalajs bundling options yield satisfactory results.
+>None of the following Scalajs bundling options yield satisfactory results:
 1. ScalaJS Bundler: https://scalacenter.github.io/scalajs-bundler/index.html
 2. Sbt Web: https://github.com/sbt/sbt-web
 3. Sbt Web ScalaJS: https://github.com/vmunier/sbt-web-scalajs
->There is no standard Scalajs bundling standard.
+>No Scalajs bundling standard exists.
 
 jsEnv
 -----
