@@ -65,10 +65,10 @@ Package
 -------
 1. sbt clean test
 >jvm
-1. sbt jvm/universal:packageZipTarball
+1. sbt jvm/universal:packageZipTarball ( see target/universal for output )
 >js
 1. sbt js/fullLinkJS
-2. sbt js/universal:packageZipTarball
+2. sbt js/universal:packageZipTarball  ( see target/universal for output )
 
 Panes
 -----
