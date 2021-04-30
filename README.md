@@ -238,12 +238,13 @@ Postgresql
 2. /usr/local/var/postgres/postgresql.conf : listen_addresses = ‘*’, port = 5432
 3. brew services start postgresql
 4. in build.sbt : javaOptions in IntegrationTest += "-Dquill.binds.log=true"
-5. /usr/local/var/log/postgres.log : verify database is running or is shutdown
+5. on mac osx intel: /usr/local/var/log/postgres.log : verify database is running or is shutdown
+6. on mac m1 chip: /opt/homebrew/var/log/postgres.log
 
 Database
 --------
 1. psql postgres
-2. CREATE USER tripletail WITH ENCRYPTED PASSWORD 'pool';
+2. CREATE USER pool WITH ENCRYPTED PASSWORD 'pool';
 3. CREATE DATABASE pool OWNER pool;
 4. GRANT ALL PRIVILEGES ON DATABASE pool TO pool;
 5. \l
