@@ -31,12 +31,6 @@ jsEnv
 3. PhantomJS - Throws exception. Advanced configuration not available.
 4. Selenium - Doesn't support headless.
 
-Web
----
->To update web/package-json, run:
-1. npm update --save-dev
-2. npm run build ( see dist directory )
-
 Dev
 ---
 1. sbt clean test
