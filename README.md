@@ -56,7 +56,7 @@ Test
 ----
 1. sbt clean sharedJVM/test
 2. sbt clean jvm/it:test
-3. sbt clean js/test ( not test at this time )
+3. sbt clean js/test ( there's no test(s) at this time )
 
 Run
 ---
