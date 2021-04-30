@@ -46,7 +46,7 @@ lazy val js = (project in file("js"))
       "com.lihaoyi" %%% "upickle" % upickleVersion,
       "io.github.cquiroz" %%% "scala-java-time" % "2.2.1"
     ),
-    Universal / mappings := (Universal / mappings).value ++ directory(target.value / public),
+    Universal / mappings := (Universal / mappings).value ++ contentOf(target.value / public),
     Universal / mappings := (Universal / mappings).value ++ directory(target.value / mainJS)
   )
 
