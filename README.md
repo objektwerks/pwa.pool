@@ -19,7 +19,7 @@ Bundling
 1. ScalaJS Bundler: https://scalacenter.github.io/scalajs-bundler/index.html
 2. Sbt Web: https://github.com/sbt/sbt-web
 3. Sbt Web ScalaJS: https://github.com/vmunier/sbt-web-scalajs
->There is ***NO*** Scalajs bundling standard.
+>There is ***no*** Scalajs bundling standard.
 
 jsEnv
 -----
@@ -34,12 +34,12 @@ jsEnv
 
 Dev
 ---
->[ shared ]:
+>[ shared ]
 1. sbt [ interactive session ]
 2. project shared
 3. clean | compile | test
 4. ~compile
->[ jvm ]:
+>[ jvm ]
 1. sbt [ interactive session ]
 2. project jvm
 3. clean | compile | test | it:test
@@ -56,7 +56,7 @@ Test
 ----
 1. sbt clean sharedJVM/test
 2. sbt clean jvm/it:test
-3. sbt clean js/test ( there's no test(s) at this time )
+3. sbt clean js/test ( no test(s) at this time )
 
 Run
 ---
