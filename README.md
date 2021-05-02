@@ -244,15 +244,15 @@ Postgresql
 
 Database
 --------
+>Example database url: postgresql://localhost:5432/pool?user=mycomputername&password='"
 1. psql postgres
-2. CREATE USER pool WITH ENCRYPTED PASSWORD 'pool';
-3. CREATE DATABASE pool OWNER pool;
-4. GRANT ALL PRIVILEGES ON DATABASE pool TO pool;
-5. \l
-6. \q
-7. psql pool
-8. \i ddl.sql
-9. \q
+2. CREATE DATABASE pool OWNER <my computer name>;
+3. GRANT ALL PRIVILEGES ON DATABASE pool TO <my computer name>;
+4. \l
+5. \q
+6. psql pool
+7. \i ddl.sql
+8. \q
 
 DDL
 ---
