@@ -59,6 +59,7 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
       }
     }
   }
+  
   "activatelicensee" should {
     "post to activated licensee" in {
       Post("/activatelicensee", ActivateLicensee(licensee.license, licensee.emailAddress)) ~> router.routes ~> check {
