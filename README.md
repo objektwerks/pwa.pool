@@ -4,8 +4,9 @@ Scalajs Pool App
 
 Install
 -------
-1. brew install node
-2. npm install jsdom
+1. brew install postgresql
+2. brew install node
+3. npm install jsdom
 
 Requirements
 ------------
@@ -234,12 +235,12 @@ Validation
 
 Postgresql
 ----------
-1. brew install postgresql
-2. /usr/local/var/postgres/postgresql.conf : listen_addresses = ‘*’, port = 5432
+1. on osx intel: /usr/local/var/postgres/postgresql.conf : listen_addresses = ‘localhost’, port = 5432
+2. on osx m1: /opt/homebrew/var/postgres/postgresql.conf : listen_addresses = ‘localhost’, port = 5432
 3. brew services start postgresql
-4. in build.sbt : javaOptions in IntegrationTest += "-Dquill.binds.log=true"
-5. on mac osx intel: /usr/local/var/log/postgres.log : verify database is running or is shutdown
-6. on mac m1 chip: /opt/homebrew/var/log/postgres.log
+4. on osx intel: /usr/local/var/log/postgres.log
+5. on m1: /opt/homebrew/var/log/postgres.log
+6. in build.sbt : IntegrationTest / javaOptions += "-Dquill.binds.log=true"
 
 Database
 --------
