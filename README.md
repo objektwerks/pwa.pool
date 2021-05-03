@@ -64,7 +64,7 @@ Run
 >jvm
 1. sbt jvm/run
 >js
-1. open js/src/main/public/index.html and click target browser in right top corner ( Intellij )
+1. open js/target/scala-2.13/classes/public/index.html and click target browser in right top corner ( Intellij )
 2. open developer tools
 
 Package
