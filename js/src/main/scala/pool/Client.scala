@@ -9,8 +9,8 @@ import scala.util.{Failure, Success}
 
 @JSExportTopLevel("Client")
 object Client {
-  private val serverUrl = "http://127.0.0.1:7979"
-  private val apiUrl = "http://127.0.0.1:7979/api/v1/pool"
+  private val serverUrl = "http://localhost:7979"
+  private val apiUrl = "http://localhost:7979/api/v1/pool"
 
   @JSExport
   def init(): Unit = {
@@ -23,7 +23,7 @@ object Client {
   def registerServiceWorker(): Unit = {
     toServiceWorkerNavigator(window.navigator)
       .serviceWorker
-      .register("sw-fastopt.js")
+      .register("js/main.js")
       .toFuture
       .onComplete {
         case Success(registration) =>
