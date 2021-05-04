@@ -29,6 +29,7 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
   val router = Router(store, cache, emailer)
   val host = conf.getString("server.host")
   val port = conf.getInt("server.port")
+  val url = conf.getString("server.url")
   Http()
     .newServerAt(host, port)
     .bindFlow(router.routes)
@@ -43,7 +44,6 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
   import Serializers._
   import Validators._
 
-  val url = router.url
   var licensee: Licensee = _
   var licenseHeader: RawHeader = _
   var poolid: PoolId = _
