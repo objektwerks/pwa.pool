@@ -35,7 +35,8 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
     .bindFlow(router.routes)
     .map { server =>
       logger.info(s"*** Server integration test host: ${server.localAddress.toString}")
-    }
+      logger.info(s"*** Server integration test url: $url")
+  }
 
   import de.heikoseeberger.akkahttpupickle.{UpickleSupport => Upickle}
   import Upickle._
