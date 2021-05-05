@@ -1,5 +1,6 @@
 package pool
 
+import java.time.Instant
 import java.util.concurrent.TimeUnit
 
 import akka.actor.ActorRef
@@ -53,6 +54,11 @@ class Router(store: Store, cache: LicenseeCache, emailer: ActorRef) {
   }
   val resources = get {
     getFromResourceDirectory("./")
+  }
+  val now = path("now") {
+    get {
+      complete(OK -> Instant.now.toString)
+    }
   }
   val signup = path("signup") {
     post {
@@ -399,5 +405,5 @@ class Router(store: Store, cache: LicenseeCache, emailer: ActorRef) {
     }
   }
   val secureApi = secure { api }
-  val routes = Route.seal( index ~ resources ~ signup ~ activatelicensee ~ secureApi )
+  val routes = Route.seal( index ~ resources ~ now ~ signup ~ activatelicensee ~ secureApi )
 }
