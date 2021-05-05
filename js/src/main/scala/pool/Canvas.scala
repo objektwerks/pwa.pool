@@ -5,9 +5,8 @@ object Canvas {
 }
 
 class Canvas(serverProxy: ServerProxy, apiUrl: String) {
-  def init(): Unit = {
-    println(serverProxy)
-    println(apiUrl)
-    ()
-  }
+  println(serverProxy)
+  println(apiUrl)
+
+  def init(): Unit = ()
 }
