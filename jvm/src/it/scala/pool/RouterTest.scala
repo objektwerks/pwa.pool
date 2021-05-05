@@ -51,6 +51,15 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
   var timerid: TimerId = _
   var heaterid: HeaterId = _
 
+  "now" should {
+    "get now" in {
+      Get("/now") ~> router.routes ~> check {
+        status shouldBe OK
+        responseAs[String].nonEmpty shouldBe true
+      }
+    }
+  }
+
   "signup" should {
     "post to signedup" in {
       Post("/signup", SignUp(emailAddress = conf.getString("email.from"))) ~> router.routes ~> check {
