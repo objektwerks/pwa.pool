@@ -14,10 +14,7 @@ object Client {
   @JSExport
   def init(apiUrl: String): Unit = {
     registerServiceWorker()
-    render(
-      container = document.getElementById("container"),
-      rootNode = Container(ServerProxy(), apiUrl)
-    )
+    render(document.getElementById("container"), Container(ServerProxy(), apiUrl))
     ()
   }
 
