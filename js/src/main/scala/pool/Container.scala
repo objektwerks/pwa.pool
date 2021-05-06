@@ -6,6 +6,6 @@ object Container {
   def apply(serverProxy: ServerProxy, apiUrl: String): HtmlElement = {
     println(serverProxy)
     println(apiUrl)
-    div()
+    div( p( "Todo!") )
   }
 }
