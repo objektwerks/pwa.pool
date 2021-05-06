@@ -1,5 +1,7 @@
 package pool
 
+import com.raquo.laminar.api.L._
+
 import org.scalajs.dom._
 import org.scalajs.dom.experimental.serviceworkers._
 
@@ -12,9 +14,11 @@ object Client {
   @JSExport
   def init(apiUrl: String): Unit = {
     registerServiceWorker()
-    val serverProxy = ServerProxy()
-    val canvas = Canvas(serverProxy, apiUrl)
-    canvas.init()
+    render(
+      container = document.getElementById("container"),
+      rootNode = Container(ServerProxy(), apiUrl)
+    )
+    ()
   }
 
   def registerServiceWorker(): Unit = {
