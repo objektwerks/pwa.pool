@@ -60,10 +60,8 @@ class Router(store: Store, cache: LicenseeCache, emailer: ActorRef)(implicit act
   }
     
   val now = path("now") {
-    cors(CorsSettings.default) {
-      get {
-        complete(OK -> Instant.now.toString)
-      }
+    get {
+      complete(OK -> Instant.now.toString)
     }
   }
   val signup = path("signup") {
@@ -412,5 +410,7 @@ class Router(store: Store, cache: LicenseeCache, emailer: ActorRef)(implicit act
   }
   val secureApi = secure { api }
 
-  val routes = Route.seal( index ~ resources ~ now ~ signup ~ activatelicensee ~ secureApi )
+  val routes = cors(CorsSettings.default) { // Sett cors settings!
+    Route.seal( index ~ resources ~ now ~ signup ~ activatelicensee ~ secureApi )
+  }
 }
