@@ -20,7 +20,7 @@ object Server {
     val store = Store(conf)
     val cache = LicenseeCache(store)
     val emailer = system.actorOf(Props(classOf[Emailer], conf), name = "emailer")
-    val router = Router(conf, store, cache, emailer)
+    val router = Router(store, cache, emailer)
     val host = conf.getString("server.host")
     val port = conf.getInt("server.port")
     Http()

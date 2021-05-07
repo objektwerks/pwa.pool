@@ -13,17 +13,17 @@ import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.{ExceptionHandler, Route}
 import akka.util.Timeout
 
-import com.typesafe.config.Config
+import com.typesafe.config.ConfigFactory
 
 import org.slf4j.LoggerFactory
 
 import scala.util.control.NonFatal
 
 object Router {
-  def apply(conf: Config, store: Store, cache: LicenseeCache, emailer: ActorRef): Router = new Router(conf, store, cache, emailer)
+  def apply(store: Store, cache: LicenseeCache, emailer: ActorRef): Router = new Router(store, cache, emailer)
 }
 
-class Router(conf: Config, store: Store, cache: LicenseeCache, emailer: ActorRef) {
+class Router(store: Store, cache: LicenseeCache, emailer: ActorRef) {
   import de.heikoseeberger.akkahttpupickle.UpickleSupport._
   import Serializers._
   import Validators._
@@ -31,6 +31,7 @@ class Router(conf: Config, store: Store, cache: LicenseeCache, emailer: ActorRef
   import cache._
   import store._
 
+  val conf = ConfigFactory.load("server.conf")
   val logger = LoggerFactory.getLogger(Router.getClass)
 
   val onUnauthorized = (cause: String) => {
