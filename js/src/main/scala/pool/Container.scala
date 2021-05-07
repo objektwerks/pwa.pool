@@ -5,9 +5,12 @@ import com.raquo.laminar.api.L._
 import scala.concurrent.ExecutionContext.Implicits.global
 
 object Container {
-  def apply(serverProxy: ServerProxy, apiUrl: String): HtmlElement = {
+  def apply(serverProxy: ServerProxy, publicUrl: String, apiUrl: String): HtmlElement = {
+    println(s"public url: $publicUrl")
+    println(s"apil url: $apiUrl")
+
     val datetimeVar = Var("")
-    serverProxy.get(s"$apiUrl/now").foreach( now => datetimeVar.set(now) )
+    serverProxy.get(s"$publicUrl/now").foreach( now => datetimeVar.set(now) )
     div(
       child.text <-- datetimeVar
     )

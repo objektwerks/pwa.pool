@@ -12,9 +12,9 @@ import scala.util.{Failure, Success}
 @JSExportTopLevel("Client")
 object Client {
   @JSExport
-  def init(apiUrl: String): Unit = {
+  def init(publicUrl: String, apiUrl: String): Unit = {
     registerServiceWorker()
-    render(document.getElementById("container"), Container(ServerProxy(), apiUrl))
+    render(document.getElementById("container"), Container(ServerProxy(), publicUrl, apiUrl))
     ()
   }
 
