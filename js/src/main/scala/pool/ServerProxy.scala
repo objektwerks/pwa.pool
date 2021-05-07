@@ -15,6 +15,15 @@ class ServerProxy() {
   import Serializers._
   import upickle.default._
 
+  def get(url: String): Future[String] = {
+    Ajax.get(url).map { xhr =>
+      xhr.status match {
+        case 200 => xhr.responseText
+        case _ => xhr.statusText
+      }
+    }.recover { case error => error.getMessage }
+  }
+
   def post(url: String, license: String, command: Command): Future[Either[Fault, Event]] = {
     Ajax.post(url = url, headers = headers(license), data = write[Command](command)).map { xhr =>
       xhr.status match {
