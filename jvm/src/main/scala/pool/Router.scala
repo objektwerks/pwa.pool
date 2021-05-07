@@ -10,7 +10,7 @@ import akka.actor.ActorRef
 import akka.pattern._
 import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.Directives._
-import akka.http.scaladsl.server.{ExceptionHandler, RejectionHandler, Route}
+import akka.http.scaladsl.server.{ExceptionHandler, Route}
 import akka.util.Timeout
 
 import com.typesafe.config.Config
@@ -416,13 +416,12 @@ class Router(conf: Config, store: Store, cache: LicenseeCache, emailer: ActorRef
   }
   val secureApi = secure { api }
 
+  /*
   val rejectionHandler = corsRejectionHandler.withFallback(RejectionHandler.default)
   val exceptionHandler = ExceptionHandler { case error: NoSuchElementException =>
     complete(StatusCodes.NotFound -> error.getMessage)
   }
-  val handleErrors = handleRejections(rejectionHandler) & handleExceptions(exceptionHandler)
+  val handleErrors = handleRejections(rejectionHandler) & handleExceptions(exceptionHandler) */
 
-  val routes = handleErrors {
-    cors(CorsSettings(conf)) { public ~ secureApi }
-  }
+  val routes = cors(CorsSettings(conf)) { public ~ secureApi }
 }

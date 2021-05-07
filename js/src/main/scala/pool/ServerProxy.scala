@@ -45,19 +45,13 @@ class ServerProxy() {
   }
 
   def headers() = Map(
-    "Content-Type" -> "text/html; charset=utf-8",
-    "Accept" -> "text/html",
-    "Access-Control-Allow-Origin" -> "*",
-    "Access-Control-Allow-Methods" -> "GET",
-    "Access-Control-Allow-Headers" -> "*"
+    "Content-Type" -> "text/plain; charset=utf-8",
+    "Accept" -> "text/plain"
   )
 
   def headers(license: String) = Map(
     "Content-Type" -> "application/json; charset=utf-8",
     "Accept" -> "application/json",
-    "Access-Control-Allow-Origin" -> "*",
-    "Access-Control-Allow-Methods" -> "POST",
-    "Access-Control-Allow-Headers" -> "*",
     Licensee.headerLicenseKey -> license
   )
 
