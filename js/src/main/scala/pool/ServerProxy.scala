@@ -16,7 +16,7 @@ class ServerProxy() {
   import upickle.default._
 
   def get(url: String): Future[String] = {
-    Ajax.get(url).map { xhr =>
+    Ajax.get(url = url, headers = headers()).map { xhr =>
       xhr.status match {
         case 200 => xhr.responseText
         case _ => xhr.statusText
@@ -44,9 +44,16 @@ class ServerProxy() {
     }.recover { case error => Left( log(Fault(cause = error.getMessage)) ) }
   }
 
+  def headers() = Map(
+    "Content-Type" -> "text/html; charset=utf-8",
+    "Accept" -> "text/html",
+    "Access-Control-Allow-Origin" -> "*"
+  )
+
   def headers(license: String) = Map(
     "Content-Type" -> "application/json; charset=utf-8",
     "Accept" -> "application/json",
+    "Access-Control-Allow-Origin" -> "*",
     Licensee.headerLicenseKey -> license
   )
 
