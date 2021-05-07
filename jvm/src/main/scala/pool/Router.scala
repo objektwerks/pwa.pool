@@ -6,22 +6,24 @@ import ch.megard.akka.http.cors.scaladsl.CorsDirectives._
 import java.time.Instant
 import java.util.concurrent.TimeUnit
 
-import akka.actor.{ActorRef, ActorSystem}
+import akka.actor.ActorRef
 import akka.pattern._
 import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.Directives._
-import akka.http.scaladsl.server.{ExceptionHandler, Route}
+import akka.http.scaladsl.server.{ExceptionHandler, RejectionHandler, Route}
 import akka.util.Timeout
+
+import com.typesafe.config.Config
 
 import org.slf4j.LoggerFactory
 
 import scala.util.control.NonFatal
 
 object Router {
-  def apply(store: Store, cache: LicenseeCache, emailer: ActorRef)(implicit actorSystem: ActorSystem): Router = new Router(store, cache, emailer)
+  def apply(conf: Config, store: Store, cache: LicenseeCache, emailer: ActorRef): Router = new Router(conf, store, cache, emailer)
 }
 
-class Router(store: Store, cache: LicenseeCache, emailer: ActorRef)(implicit actorSystem: ActorSystem) {
+class Router(conf: Config, store: Store, cache: LicenseeCache, emailer: ActorRef) {
   import de.heikoseeberger.akkahttpupickle.UpickleSupport._
   import Serializers._
   import Validators._
@@ -395,10 +397,14 @@ class Router(store: Store, cache: LicenseeCache, emailer: ActorRef)(implicit act
       }
     }
   }
+
+  val public = index ~ resources ~ now ~ signup ~ activatelicensee
+
   val api = pathPrefix("api" / "v1" / "pool") {
     signin ~ pools ~ surfaces ~ pumps ~ timers ~ timersettings ~ heaters ~ heatersettings ~
       measurements ~ cleanings ~ chemicals ~ supplies ~ repairs ~ deactivatelicensee
   }
+
   val secure = (route: Route) => headerValueByName(Licensee.headerLicenseKey) { license =>
     onSuccess(isLicenseActivated(license)) { isActivated =>
       if (isActivated) route
@@ -410,7 +416,13 @@ class Router(store: Store, cache: LicenseeCache, emailer: ActorRef)(implicit act
   }
   val secureApi = secure { api }
 
-  val routes = cors(CorsSettings.default) { // Sett cors settings!
-    Route.seal( index ~ resources ~ now ~ signup ~ activatelicensee ~ secureApi )
+  val rejectionHandler = corsRejectionHandler.withFallback(RejectionHandler.default)
+  val exceptionHandler = ExceptionHandler { case error: NoSuchElementException =>
+    complete(StatusCodes.NotFound -> error.getMessage)
+  }
+  val handleErrors = handleRejections(rejectionHandler) & handleExceptions(exceptionHandler)
+
+  val routes = handleErrors {
+    cors(CorsSettings(conf)) { public ~ secureApi }
   }
 }
