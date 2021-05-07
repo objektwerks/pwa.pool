@@ -1,9 +1,12 @@
 package pool
 
+import ch.megard.akka.http.cors.scaladsl.settings.CorsSettings
+import ch.megard.akka.http.cors.scaladsl.CorsDirectives._
+
 import java.time.Instant
 import java.util.concurrent.TimeUnit
 
-import akka.actor.ActorRef
+import akka.actor.{ActorRef, ActorSystem}
 import akka.pattern._
 import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.Directives._
@@ -15,10 +18,10 @@ import org.slf4j.LoggerFactory
 import scala.util.control.NonFatal
 
 object Router {
-  def apply(store: Store, cache: LicenseeCache, emailer: ActorRef): Router = new Router(store, cache, emailer)
+  def apply(store: Store, cache: LicenseeCache, emailer: ActorRef)(implicit actorSystem: ActorSystem): Router = new Router(store, cache, emailer)
 }
 
-class Router(store: Store, cache: LicenseeCache, emailer: ActorRef) {
+class Router(store: Store, cache: LicenseeCache, emailer: ActorRef)(implicit actorSystem: ActorSystem) {
   import de.heikoseeberger.akkahttpupickle.UpickleSupport._
   import Serializers._
   import Validators._
@@ -55,9 +58,12 @@ class Router(store: Store, cache: LicenseeCache, emailer: ActorRef) {
   val resources = get {
     getFromResourceDirectory("./")
   }
+    
   val now = path("now") {
-    get {
-      complete(OK -> Instant.now.toString)
+    cors(CorsSettings.default) {
+      get {
+        complete(OK -> Instant.now.toString)
+      }
     }
   }
   val signup = path("signup") {
@@ -405,5 +411,6 @@ class Router(store: Store, cache: LicenseeCache, emailer: ActorRef) {
     }
   }
   val secureApi = secure { api }
+
   val routes = Route.seal( index ~ resources ~ now ~ signup ~ activatelicensee ~ secureApi )
 }
