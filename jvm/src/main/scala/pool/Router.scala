@@ -1,8 +1,5 @@
 package pool
 
-import ch.megard.akka.http.cors.scaladsl.settings.CorsSettings
-import ch.megard.akka.http.cors.scaladsl.CorsDirectives._
-
 import java.time.Instant
 import java.util.concurrent.TimeUnit
 
@@ -13,7 +10,6 @@ import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.{ExceptionHandler, Route}
 import akka.util.Timeout
 
-import com.typesafe.config.ConfigFactory
 
 import org.slf4j.LoggerFactory
 
@@ -416,6 +412,5 @@ class Router(store: Store, cache: LicenseeCache, emailer: ActorRef) {
   }
   val secureApi = secure { api }
 
-  val conf = ConfigFactory.load("server.conf") // Not good practice; but cors is not working ....
-  val routes = cors(CorsSettings(conf)) { public ~ secureApi }
+  val routes = public ~ secureApi
 }
