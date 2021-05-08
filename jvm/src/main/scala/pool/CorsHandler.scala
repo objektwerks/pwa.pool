@@ -13,6 +13,8 @@ trait CorsHandler {
     `Access-Control-Allow-Headers`("Authorization", "Content-Type", "X-Requested-With")
   )
 
+  def corsHandler(route: Route): Route = addAccessControlHeaders { preflightRequestHandler ~ route }
+
   def addAccessControlHeaders: Directive0 = respondWithHeaders(corsResponseHeaders)
 
   def preflightRequestHandler: Route = options {
@@ -20,7 +22,5 @@ trait CorsHandler {
       withHeaders(`Access-Control-Allow-Methods`(OPTIONS, POST, PUT, GET, DELETE)))
   }
 
-  def corsHandler(route: Route): Route = addAccessControlHeaders { preflightRequestHandler ~ route }
-
-  def addCORSHeaders(response: HttpResponse):HttpResponse = response.withHeaders(corsResponseHeaders)
+  def addCORSHeaders(response: HttpResponse): HttpResponse = response.withHeaders(corsResponseHeaders)
 }

@@ -19,7 +19,7 @@ object Router {
   def apply(store: Store, cache: LicenseeCache, emailer: ActorRef): Router = new Router(store, cache, emailer)
 }
 
-class Router(store: Store, cache: LicenseeCache, emailer: ActorRef) {
+class Router(store: Store, cache: LicenseeCache, emailer: ActorRef) extends CorsHandler {
   import de.heikoseeberger.akkahttpupickle.UpickleSupport._
   import Serializers._
   import Validators._
@@ -412,5 +412,5 @@ class Router(store: Store, cache: LicenseeCache, emailer: ActorRef) {
   }
   val secureApi = secure { api }
 
-  val routes = public ~ secureApi
+  val routes = corsHandler { public ~ secureApi }
 }
