@@ -44,12 +44,7 @@ class ServerProxy() {
     }.recover { case error => Left( log(Fault(cause = error.getMessage)) ) }
   }
 
-  def headers() = Map(
-    "Content-Type" -> "application/json; charset=utf-8",
-    "Accept" -> "application/json"
-  )
-
-  def headers(license: String) = Map(
+  def headers(license: String = "") = Map(
     "Content-Type" -> "application/json; charset=utf-8",
     "Accept" -> "application/json",
     Licensee.headerLicenseKey -> license
