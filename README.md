@@ -63,6 +63,7 @@ Run
 ---
 >jvm
 1. sbt jvm/run
+2. curl -v http://localhost:7979/now
 >js
 1. In Intellij, open js/target/scala-2.13/classes/public/index.html and click target browser in right top corner
 2. **Or** in VsCode, right click js/target/scala-2.13/classes/public/index.html and open with Live Server ( must install )
