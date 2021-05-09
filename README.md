@@ -39,17 +39,14 @@ Dev
 1. sbt [ interactive session ]
 2. project shared
 3. clean | compile | test
-4. ~compile
 >[ jvm ]
 1. sbt [ interactive session ]
 2. project jvm
 3. clean | compile | test | it:test
-4. ~reStart
 >[ js ]
 1. sbt [ interactive session ]
 2. project js
-3. clean | compile
-4. ~fastLinkJS | ~fullLinkJS
+3. clean | compile | fastLinkJS | fullLinkJS
 5. open target/scala-2.13/classes/public/index.html and click target browser in right top corner ( Intellij )
 6. open developer tools
 
