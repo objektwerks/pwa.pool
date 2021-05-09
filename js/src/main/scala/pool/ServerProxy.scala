@@ -45,8 +45,8 @@ class ServerProxy() {
   }
 
   def headers() = Map(
-    "Content-Type" -> "text/plain; charset=utf-8",
-    "Accept" -> "text/plain"
+    "Content-Type" -> "application/json; charset=utf-8",
+    "Accept" -> "application/json"
   )
 
   def headers(license: String) = Map(
