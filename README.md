@@ -104,8 +104,7 @@ Panes
 Licensee Scenarios
 ------------------
 1. If Licensee not saved on client, user must:
-    * SignIn(license, emailAddress) => SignedIn(Licensee) |
-    * SignUp(emailAddress) => SignedUp(Licensee)
+    * SignIn(license, emailAddress) => SignedIn(Licensee) | SignUp(emailAddress) => SignedUp(Licensee)
 2. If Licensee saved on client, yet not activated, user must:
     * ActivateLicensee(license, emailAddress) => LicenseeActivated(Licensee)
 3. If Licensee saved on client and activated, user must:
