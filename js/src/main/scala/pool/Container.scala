@@ -11,7 +11,7 @@ object Container {
     println(s"now url: $publicUrl/now")
 
     val datetimeVar = Var("")
-    serverProxy.get(s"$publicUrl/now").foreach( now => datetimeVar.set(now) )
+    serverProxy.get(s"$publicUrl/now").foreach( now => datetimeVar.set(now.stripPrefix("\"").stripSuffix("\"")) )
     div(
       cls("w3-white"),
       fontSize("12px"),
