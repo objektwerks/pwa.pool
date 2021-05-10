@@ -13,6 +13,9 @@ object Container {
     val datetimeVar = Var("")
     serverProxy.get(s"$publicUrl/now").foreach( now => datetimeVar.set(now) )
     div(
+      cls("w3-white"),
+      fontSize("12px"),
+      color("indigo"),
       child.text <-- datetimeVar
     )
   }
