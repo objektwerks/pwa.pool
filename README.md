@@ -114,7 +114,7 @@ Licensee Scenarios
 
 Alternate Licensee Scenarios
 ----------------------------
-* SignUp(Licensee) => SignedUp(Licensee)
+* SignUp(EmailAddress) => SignedUp(Licensee)
 * ActivateLicensee(Licensee) => LicenseeActivated(Licensee)
 * SignIn(Licensee) => SignedIn(Licensee)
 * DeativateLicensee(Licensee) => LicenseeDeactivated(Licensee)
