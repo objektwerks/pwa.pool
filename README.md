@@ -79,13 +79,13 @@ Package
 
 Panes
 -----
->All panes, less Account panes, will include list, add and update features.
-1. Account
+>All panes, less Licensee panes, will include list, add and update features.
+1. Licensee
     * Sign Up ( emailAddress )
     * Activate Licensee ( license, emailAddress )
     * Sign In ( license, emailAddress )
     * Deactivate Licensee ( license, emailAddress )
-2. Hardware
+2. Pool
     * Pools -> Pool
     * Surfaces -> Surface
     * Pumps -> Pump
@@ -95,18 +95,18 @@ Panes
     * Measurments -> Measurement **
     * Cleanings -> Cleaning **
     * Chemicals -> Chemical **
-4. Costs
+4. Expenses
     * Supplies -> Supply **
     * Repairs -> Repair **
 
-** Charts -> measurements, cleanings, chemicals, supplies and repairs
+** Charts -> measurements, cleanings, chemicals, supplies and repairs.
 
 Licensee Scenarios
 ------------------
-* SignUp(EmailAddress) => SignedUp(Licensee)
-* ActivateLicensee(Licensee) => LicenseeActivated(Licensee)
-* SignIn(Licensee) => SignedIn(Licensee)
-* DeativateLicensee(Licensee) => LicenseeDeactivated(Licensee)
+* SignUp( emailAddress ) => SignedUp( licensee )
+* ActivateLicensee( license, emailAddress ) => LicenseeActivated( licensee )
+* SignIn( license, emailAddress ) => SignedIn( licensee )
+* DeativateLicensee( license, emailAddress ) => LicenseeDeactivated( licensee )
 
 Rest
 ----
