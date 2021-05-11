@@ -15,8 +15,15 @@ class ServerProxy() {
   import Serializers._
   import upickle.default._
 
+  val headers = Map(
+    "Content-Type" -> "application/json; charset=utf-8",
+    "Accept" -> "application/json"
+  )
+
+  def headers(license: String): Map[String, String] = headers + ( Licensee.headerLicenseKey -> license )
+
   def get(url: String): Future[String] = {
-    Ajax.get(url = url, headers = headers()).map { xhr =>
+    Ajax.get(url = url, headers = headers).map { xhr =>
       xhr.status match {
         case 200 => xhr.responseText
         case _ => xhr.statusText
@@ -43,17 +50,6 @@ class ServerProxy() {
       }
     }.recover { case error => Left( log(Fault(cause = error.getMessage)) ) }
   }
-
-  def headers() = Map(
-    "Content-Type" -> "application/json; charset=utf-8",
-    "Accept" -> "application/json"
-  )
-
-  def headers(license: String) = Map(
-    "Content-Type" -> "application/json; charset=utf-8",
-    "Accept" -> "application/json",
-    Licensee.headerLicenseKey -> license
-  )
 
   def log(error: Throwable): Fault = log(Fault(error.getMessage))
 
