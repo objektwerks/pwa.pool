@@ -131,8 +131,8 @@ Rest
 
 Client
 ------
-* Command => Fault | Event
-* Entity => Fault | State
+* Command => Event | Fault
+* Entity  => State | Fault
 
 Object Model
 ------------
