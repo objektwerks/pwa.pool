@@ -22,16 +22,15 @@ class ServerProxy() {
 
   def headers(license: String): Map[String, String] = headers + ( Licensee.headerLicenseKey -> license )
 
-  def get(url: String): Future[String] = {
+  def get(url: String): Future[String] =
     Ajax.get(url = url, headers = headers).map { xhr =>
       xhr.status match {
         case 200 => xhr.responseText
         case _ => xhr.statusText
       }
     }.recover { case error => error.getMessage }
-  }
 
-  def post(url: String, license: String, command: Command): Future[Either[Fault, Event]] = {
+  def post(url: String, license: String, command: Command): Future[Either[Fault, Event]] =
     Ajax.post(url = url, headers = headers(license), data = write[Command](command)).map { xhr =>
       xhr.status match {
         case 200 => Try(read[Event](xhr.responseText)).fold(error => Left(log(error)), event => Right(event))
@@ -39,9 +38,8 @@ class ServerProxy() {
         case _ => Left( log(Fault(xhr.statusText, xhr.status)) )
       }
     }.recover { case error => Left( log(Fault(cause = error.getMessage)) ) }
-  }
 
-  def post(url: String, license: String, entity: Entity): Future[Either[Fault, State]] = {
+  def post(url: String, license: String, entity: Entity): Future[Either[Fault, State]] =
     Ajax.post(url = url, headers = headers(license), data = write(entity)).map { xhr =>
       xhr.status match {
         case 200 => Try(read[State](xhr.responseText)).fold(error => Left(log(error)), state => Right(state))
@@ -49,7 +47,6 @@ class ServerProxy() {
         case _ => Left( log(Fault(xhr.statusText, xhr.status)) )
       }
     }.recover { case error => Left( log(Fault(cause = error.getMessage)) ) }
-  }
 
   def log(error: Throwable): Fault = log(Fault(error.getMessage))
 
