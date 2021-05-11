@@ -14,12 +14,12 @@ import scala.util.{Failure, Success}
 object ServiceWorker {
   val poolCache = "pool-cache"
   val poolAssets: js.Array[RequestInfo] = List[RequestInfo](
-    "web/index.html",
-    "web/favicon.ico",
-    "web/w3c.css",
-    "web/logo.png",
-    "web/logo-192.png",
-    "web/logo-512.png"
+    "public/index.html",
+    "public/favicon.ico",
+    "public/w3c.css",
+    "public/logo.png",
+    "public/logo-192.png",
+    "public/logo-512.png"
   ).toJSArray
 
   def main(args: Array[String]): Unit = {
