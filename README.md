@@ -10,7 +10,7 @@ Install
 
 Requirements
 ------------
-1. run on JDK 8. See .sbtopts
+1. run on JDK 8.
 2. provide valid Postgresql configuration in (1) server.conf and (2) test.server.conf
 3. provide valid SMTP configuration in (1) server.conf and (2) test.server.conf
 
