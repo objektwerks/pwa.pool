@@ -1,6 +1,6 @@
-Scalajs Pool App
-----------------
->Pool maintenance PWA app using Akka-Http, Quil, UPickle, ScalaJs and Postgresql.
+PWA Pool App
+------------
+>Pool maintenance PWA app using Akka-Http, Quil, UPickle, ScalaJs, Laminar and Postgresql.
 
 Install
 -------
@@ -10,9 +10,9 @@ Install
 
 Requirements
 ------------
-1. run on JDK 8.
-2. provide valid Postgresql configuration in (1) server.conf and (2) test.server.conf
-3. provide valid SMTP configuration in (1) server.conf and (2) test.server.conf
+>Provide valid:
+1. Postgresql configuration in (1) server.conf and (2) test.server.conf
+2. SMTP configuration in (1) server.conf and (2) test.server.conf
 
 Bundling
 --------
@@ -25,8 +25,8 @@ Bundling
 jsEnv
 -----
 >Using ( libraryDependencies += "org.scala-js" %% "scalajs-env-jsdom-nodejs" % "1.1.0" ) in plugins.sbt
->provides access to a NodeJs environment ( github.com/scala-js/scala-js-env-jsdom-nodejs ). Yet
->the following jsEnv shortcomings exist:
+>provides access to a NodeJs environment ( github.com/scala-js/scala-js-env-jsdom-nodejs ) for testing.
+>Yet the following jsEnv shortcomings exist:
 1. NodeJs - Window object not supported.
 2. NodeJs and Jsdom - Window object supported. IndexedDB not supported. Other Windows libraries likely not supported.
 3. PhantomJS - Throws exception. Advanced configuration not available.
@@ -46,35 +46,36 @@ Dev
 >[ js ]
 1. sbt [ interactive session ]
 2. project js
-3. clean | compile | fastLinkJS | fullLinkJS
-5. open target/scala-2.13/classes/public/index.html and click target browser in right top corner ( Intellij )
-6. open developer tools
+3. clean | fastLinkJS | fullLinkJS
+5. open target/scala-2.13/classes/public/index.html and:
+    a. click target browser in right top corner ( Intellij )
+    b. right click open with Live Server ( VSCode ) ( must install Live Server extension )
+6. open developer tools in index.html browser tab
 
 Test
 ----
 1. sbt clean sharedJVM/test
 2. sbt clean jvm/it:test
-3. sbt clean js/test ( no test(s) at this time )
 
 Run
 ---
 >jvm
-1. sbt jvm/run
-2. curl -v http://localhost:7979/now
+1. sbt jvm/run  [ curl -v http://localhost:7979/now ]
 >js
-1. In Intellij, open js/target/scala-2.13/classes/public/index.html and click target browser in right top corner
-2. **Or** in VsCode, right click js/target/scala-2.13/classes/public/index.html and open with Live Server ( must install )
-3. open browser developer tools
+5. open target/scala-2.13/classes/public/index.html and:
+    a. click target browser in right top corner ( Intellij )
+    b. right click open with Live Server ( VSCode ) ( must install Live Server extension )
+6. open developer tools in index.html browser tab
 
 Package
 -------
->See www.scala-sbt.org/sbt-native-packager/formats/universal.html for details on
->universal:packageZipTarball. See jvm | js/target/universal for output.
+>See sbt-native-packager ( www.scala-sbt.org/sbt-native-packager/formats/universal.html ) for
+>details on universal:packageZipTarball.
 
 >jvm
 1. sbt jvm/universal:packageZipTarball
 >js
-1. sbt js/fullLinkJS
+1. sbt js/clean fullLinkJS
 2. sbt js/universal:packageZipTarball
 
 Panes
@@ -176,6 +177,7 @@ Chemicals
 ---------
 1. Chlorine for pool.
 2. Chlorine tablets for pool filtration system.
+3. Pool Shock
 
 Solutions
 ---------
