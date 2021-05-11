@@ -16,16 +16,13 @@ object Container {
     )
   }
 
-  def renderNow(serverProxy: ServerProxy, publicUrl: String): Div = {
+  def renderNow(serverProxy: ServerProxy, publicUrl: String): Label = {
     val datetimeVar = Var("")
     serverProxy.get(s"$publicUrl/now").foreach( now => datetimeVar.set(now.stripPrefix("\"").stripSuffix("\"")) )
-    div(
-      cls("w3-container w3-white"),
-      label(
-        fontSize("11px"),
-        color("indigo"),
-        child.text <-- datetimeVar
-      )
+    label(
+      fontSize("11px"),
+      color("indigo"),
+      child.text <-- datetimeVar
     )
   }
 }
