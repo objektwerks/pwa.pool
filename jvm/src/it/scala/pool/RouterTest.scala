@@ -51,11 +51,6 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
   var timerid: TimerId = _
   var heaterid: HeaterId = _
 
-  import scala.sys.process.Process
-  val psql = Process("psql pool")
-  val ddl = Process("\\i ddl.sql")
-  psql #| ddl !
-
   "now" should {
     "get now" in {
       Get("/now") ~> router.routes ~> check {
