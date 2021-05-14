@@ -52,9 +52,8 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
   var heaterid: HeaterId = _
 
   import scala.sys.process.Process
-  val psql = Process("psql pool")
-  val ddl = Process("\\i ddl.sql")
-  psql #| ddl !
+  val exitValue = Process("psql -d pool -f ddl.sql").run().exitValue()
+  logger.debug(s"*** Psql process exit value: $exitValue")
 
   "now" should {
     "get now" in {

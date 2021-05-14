@@ -249,6 +249,7 @@ Database
 
 DDL
 ---
+>Or: psql -d pool -f ddl.sql
 1. psql pool
 2. \i ddl.sql
 3. \q
