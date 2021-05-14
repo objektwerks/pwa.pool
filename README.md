@@ -225,15 +225,15 @@ Validation
 Postgresql
 ----------
 1. conf:
-    a. on osx intel: /usr/local/var/postgres/postgresql.conf : listen_addresses = ‘localhost’, port = 5432
-    b. on osx m1: /opt/homebrew/var/postgres/postgresql.conf : listen_addresses = ‘localhost’, port = 5432
+    1. on osx intel: /usr/local/var/postgres/postgresql.conf : listen_addresses = ‘localhost’, port = 5432
+    2. on osx m1: /opt/homebrew/var/postgres/postgresql.conf : listen_addresses = ‘localhost’, port = 5432
 2. build.sbt:
-    a. IntegrationTest / javaOptions += "-Dquill.binds.log=true"
+    1. IntegrationTest / javaOptions += "-Dquill.binds.log=true"
 3. run:
-    a. brew services start postgresql
+    1. brew services start postgresql
 4. logs:
-    a. on osx intel: /usr/local/var/log/postgres.log
-    b. on m1: /opt/homebrew/var/log/postgres.log
+    1. on osx intel: /usr/local/var/log/postgres.log
+    2. on m1: /opt/homebrew/var/log/postgres.log
 
 Database
 --------
