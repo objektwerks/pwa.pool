@@ -6,6 +6,7 @@ sealed trait Entity extends Product with Serializable
 
 final case class Licensee(license: String = Licensee.generateLicense,
                           emailAddress: String,
+                          pin: Int,
                           created: Int = DateTime.currentDate,
                           activated: Int = 0,
                           deactivated: Int = 0) extends Entity {

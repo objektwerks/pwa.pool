@@ -7,11 +7,11 @@ object Serializers {
 
   implicit val faultRW: ReadWriter[Fault] = macroRW
 
-  @nowarn implicit val commandRW: ReadWriter[Command] = ReadWriter.merge(
+  implicit val commandRW: ReadWriter[Command] = ReadWriter.merge(
     macroRW[SignUp], macroRW[ActivateLicensee], macroRW[SignIn], macroRW[DeactivateLicensee]
   )
 
-  @nowarn implicit val signupRW: ReadWriter[SignUp] = macroRW
+  implicit val signupRW: ReadWriter[SignUp] = macroRW
   implicit val activateLicenseeRW: ReadWriter[ActivateLicensee] = macroRW
   implicit val signinRW: ReadWriter[SignIn] = macroRW
   implicit val deactivateLicenseeRW: ReadWriter[DeactivateLicensee] = macroRW
