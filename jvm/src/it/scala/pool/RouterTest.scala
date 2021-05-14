@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory
 
 import scala.concurrent.duration._
 import scala.language.postfixOps
-import scala.util.Random
 
 class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
   val logger = LoggerFactory.getLogger(getClass)
@@ -63,7 +62,7 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
 
   "signup" should {
     "post to signedup" in {
-      Post("/signup", SignUp(emailAddress = conf.getString("email.from"), pin = Math.abs(Random.nextInt()))) ~> router.routes ~> check {
+      Post("/signup", SignUp(emailAddress = conf.getString("email.from"))) ~> router.routes ~> check {
         status shouldBe OK
         licensee = responseAs[SignedUp].licensee
         licensee.isActivated shouldBe false
@@ -352,7 +351,7 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
 
   "invalid" should {
     "post to signedup, fault" in {
-      Post("/signup", SignUp(emailAddress = "invalid.email", pin = -1)) ~> router.routes ~> check {
+      Post("/signup", SignUp(emailAddress = "invalid.email")) ~> router.routes ~> check {
         status shouldBe BadRequest
         val fault = responseAs[Fault]
         fault.cause.nonEmpty shouldBe true

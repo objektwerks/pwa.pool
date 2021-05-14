@@ -69,7 +69,7 @@ class Router(store: Store, cache: LicenseeCache, emailer: ActorRef) extends Cors
           implicit val timeout = new Timeout(10, TimeUnit.SECONDS)
           val sendEmail = SendEmail(signup.emailAddress, Licensee.generateLicense)
           onSuccess( emailer ? sendEmail ) {
-            case Some(_) => onSuccess(signUp(sendEmail.license, signup.emailAddress, signup.pin)) {
+            case Some(_) => onSuccess(signUp(sendEmail.license, signup.emailAddress)) {
               licensee => complete(OK -> SignedUp(licensee))
             }
             case _ => complete(BadRequest -> onInvalid(signup))

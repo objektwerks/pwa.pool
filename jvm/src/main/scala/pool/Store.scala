@@ -14,8 +14,8 @@ class Store(conf: Config)(implicit ec: ExecutionContext) {
   implicit val ctx = new PostgresAsyncContext(SnakeCase, conf.getConfig("quill.ctx"))
   import ctx._
 
-  def signUp(license: String, emailAddress: String, pin: Int): Future[Licensee] = {
-    val licensee = Licensee(license = license, emailAddress = emailAddress, pin = pin)
+  def signUp(license: String, emailAddress: String): Future[Licensee] = {
+    val licensee = Licensee(license = license, emailAddress = emailAddress)
     ctx.transaction { implicit ec =>
       run(query[Licensee]
         .insert(lift(licensee)))

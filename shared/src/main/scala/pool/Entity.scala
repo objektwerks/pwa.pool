@@ -2,11 +2,13 @@ package pool
 
 import java.util.UUID
 
+import scala.util.Random
+
 sealed trait Entity extends Product with Serializable
 
 final case class Licensee(license: String = Licensee.generateLicense,
                           emailAddress: String,
-                          pin: Int,
+                          pin: Int = Math.abs(Random.nextInt()),
                           created: Int = DateTime.currentDate,
                           activated: Int = 0,
                           deactivated: Int = 0) extends Entity {
