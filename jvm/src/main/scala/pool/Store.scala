@@ -14,8 +14,7 @@ class Store(conf: Config)(implicit ec: ExecutionContext) {
   implicit val ctx = new PostgresAsyncContext(SnakeCase, conf.getConfig("quill.ctx"))
   import ctx._
 
-  def signUp(license: String, emailAddress: String): Future[Licensee] = {
-    val licensee = Licensee(license = license, emailAddress = emailAddress)
+  def signUp(licensee: Licensee): Future[Licensee] = {
     ctx.transaction { implicit ec =>
       run(query[Licensee]
         .insert(lift(licensee)))
@@ -37,6 +36,15 @@ class Store(conf: Config)(implicit ec: ExecutionContext) {
     getLicensee(license)
   }
 
+  def signIn(emailAddress: String, pin: Int): Future[Option[Licensee]] =
+    run(
+      query[Licensee]
+        .filter(_.emailAddress == lift(emailAddress))
+        .filter(_.pin == lift(pin))
+        .filter(_.activated > 0)
+        .filter(_.deactivated == 0)
+    ).map(result => result.headOption)
+
   def deactivateLicensee(license: String, emailAddress: String, pin: Int, deactivatedDate: Int): Future[Option[Licensee]] = {
     ctx.transaction { implicit ec =>
       run( query[Licensee]
@@ -50,15 +58,6 @@ class Store(conf: Config)(implicit ec: ExecutionContext) {
     }
     getLicensee(license)
   }
-
-  def signIn(emailAddress: String, pin: Int): Future[Option[Licensee]] =
-    run(
-      query[Licensee]
-        .filter(_.emailAddress == lift(emailAddress))
-        .filter(_.pin == lift(pin))
-        .filter(_.activated > 0)
-        .filter(_.deactivated == 0)
-    ).map(result => result.headOption)
 
   def getLicensee(license: String): Future[Option[Licensee]] =
     run(
