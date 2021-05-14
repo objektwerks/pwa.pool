@@ -7,34 +7,37 @@ object Validators {
     def ===(length: Int): Boolean = if (value.nonEmpty) value.length == length else false
     def >(length: Int): Boolean = if (value.nonEmpty) value.length > length else false
     def >=(length: Int): Boolean = if (value.nonEmpty) value.length >= length else false
+    def isEmailAddress: Boolean = value.nonEmpty && value.length >=3 && value.contains("@")
   }
 
   implicit class SignUpOps(val signup: SignUp) {
-    def isValid: Boolean = signup.emailAddress.nonEmpty
+    def isValid: Boolean = signup.emailAddress.isEmailAddress
   }
 
   implicit class ActivateLicenseeOps(val activateLicensee: ActivateLicensee) {
-    def isValid: Boolean = activateLicensee.license === 36 && activateLicensee.emailAddress.nonEmpty
+    def isValid: Boolean = activateLicensee.license === 36 && activateLicensee.emailAddress.isEmailAddress
   }
 
   implicit class SignInOps(val signin: SignIn) {
-    def isValid: Boolean = signin.emailAddress.nonEmpty && signin.pin > 0
+    def isValid: Boolean = signin.emailAddress.isEmailAddress && signin.pin > 0
   }
 
   implicit class DeactivateLicenseeOps(val deactivateLicensee: DeactivateLicensee) {
-    def isValid: Boolean = deactivateLicensee.license === 36 && deactivateLicensee.emailAddress.nonEmpty
+    def isValid: Boolean = deactivateLicensee.license === 36 && deactivateLicensee.emailAddress.isEmailAddress
   }
 
   implicit class LicenseeOps(val licensee: Licensee) {
     def isActivated: Boolean =
       licensee.license === 36 &&
-      licensee.emailAddress.nonEmpty &&
+      licensee.emailAddress.isEmailAddress &&
+      licensee.pin > 0 &&
       licensee.created > 0 &&
       licensee.activated > 0 &&
       licensee.deactivated == 0
     def isDeactivated: Boolean =
       licensee.license === 36 &&
-      licensee.emailAddress.nonEmpty &&
+      licensee.emailAddress.isEmailAddress &&
+      licensee.pin > 0 &&
       licensee.created > 0 &&
       licensee.activated > 0 &&
       licensee.deactivated > 0

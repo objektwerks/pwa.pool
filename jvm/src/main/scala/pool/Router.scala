@@ -394,11 +394,11 @@ class Router(store: Store, cache: LicenseeCache, emailer: ActorRef) extends Cors
     }
   }
 
-  val public = index ~ resources ~ now ~ signup ~ activatelicensee
+  val public = index ~ resources ~ now ~ signup ~ activatelicensee ~ signin ~ deactivatelicensee
 
   val api = pathPrefix("api" / "v1" / "pool") {
-    signin ~ pools ~ surfaces ~ pumps ~ timers ~ timersettings ~ heaters ~ heatersettings ~
-      measurements ~ cleanings ~ chemicals ~ supplies ~ repairs ~ deactivatelicensee
+    pools ~ surfaces ~ pumps ~ timers ~ timersettings ~ heaters ~ heatersettings ~
+      measurements ~ cleanings ~ chemicals ~ supplies ~ repairs
   }
 
   val secure = (route: Route) => headerValueByName(Licensee.headerLicenseKey) { license =>

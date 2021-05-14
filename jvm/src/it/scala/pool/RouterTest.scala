@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory
 
 import scala.concurrent.duration._
 import scala.language.postfixOps
+import scala.util.Random
 
 class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
   val logger = LoggerFactory.getLogger(getClass)
@@ -62,7 +63,7 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
 
   "signup" should {
     "post to signedup" in {
-      Post("/signup", SignUp(emailAddress = conf.getString("email.from"), pin = 1234)) ~> router.routes ~> check {
+      Post("/signup", SignUp(emailAddress = conf.getString("email.from"), pin = Math.abs(Random.nextInt()))) ~> router.routes ~> check {
         status shouldBe OK
         licensee = responseAs[SignedUp].licensee
         licensee.isActivated shouldBe false
@@ -83,7 +84,7 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
 
   "signin" should {
     "post to signedin" in {
-      Post(url + "/signin", SignIn(licensee.emailAddress, licensee.pin)) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post("/signin", SignIn(licensee.emailAddress, licensee.pin)) ~> router.routes ~> check {
         status shouldBe OK
         responseAs[SignedIn].licensee shouldEqual licensee
         licensee.isActivated shouldBe true
@@ -351,7 +352,7 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
 
   "invalid" should {
     "post to signedup, fault" in {
-      Post("/signup", SignUp(emailAddress = "", pin = 0)) ~> router.routes ~> check {
+      Post("/signup", SignUp(emailAddress = "invalid.email", pin = -1)) ~> router.routes ~> check {
         status shouldBe BadRequest
         val fault = responseAs[Fault]
         fault.cause.nonEmpty shouldBe true
@@ -373,7 +374,7 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
 
   "deactivatelicensee" should {
     "post to deactivated licensee" in {
-      Post(url + "/deactivatelicensee", DeactivateLicensee(licensee.license, licensee.emailAddress, licensee.pin)) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post("/deactivatelicensee", DeactivateLicensee(licensee.license, licensee.emailAddress, licensee.pin)) ~> router.routes ~> check {
         status shouldBe OK
         licensee = responseAs[LicenseeDeactivated].licensee
         licensee.isDeactivated shouldBe true
