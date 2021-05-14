@@ -249,7 +249,7 @@ Database
 
 DDL
 ---
->Or: psql -d pool -f ddl.sql
+>Alternatively run: psql -d pool -f ddl.sql ( see RouterTest )
 1. psql pool
 2. \i ddl.sql
 3. \q
