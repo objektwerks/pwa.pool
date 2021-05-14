@@ -72,7 +72,7 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
   
   "activatelicensee" should {
     "post to activated licensee" in {
-      Post("/activatelicensee", ActivateLicensee(licensee.license, licensee.emailAddress)) ~> router.routes ~> check {
+      Post("/activatelicensee", ActivateLicensee(licensee.license, licensee.emailAddress, licensee.pin)) ~> router.routes ~> check {
         status shouldBe OK
         licensee = responseAs[LicenseeActivated].licensee
         licenseHeader = RawHeader(Licensee.headerLicenseKey, licensee.license)
@@ -83,7 +83,7 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
 
   "signin" should {
     "post to signedin" in {
-      Post(url + "/signin", SignIn(licensee.license, licensee.emailAddress)) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post(url + "/signin", SignIn(licensee.emailAddress, licensee.pin)) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         responseAs[SignedIn].licensee shouldEqual licensee
         licensee.isActivated shouldBe true
@@ -373,7 +373,7 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
 
   "deactivatelicensee" should {
     "post to deactivated licensee" in {
-      Post(url + "/deactivatelicensee", DeactivateLicensee(licensee.license, licensee.emailAddress)) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post(url + "/deactivatelicensee", DeactivateLicensee(licensee.license, licensee.emailAddress, licensee.pin)) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         licensee = responseAs[LicenseeDeactivated].licensee
         licensee.isDeactivated shouldBe true

@@ -82,7 +82,7 @@ class Router(store: Store, cache: LicenseeCache, emailer: ActorRef) extends Cors
     post {
       entity(as[ActivateLicensee]) { activatelicensee =>
         if (activatelicensee.isValid) {
-          onSuccess(activateLicensee(activatelicensee.license, activatelicensee.emailAddress, DateTime.currentDate)) {
+          onSuccess(activateLicensee(activatelicensee.license, activatelicensee.emailAddress, activatelicensee.pin, DateTime.currentDate)) {
             case Some(licensee) =>
               cacheLicensee(licensee)
               complete(OK -> LicenseeActivated(licensee))
@@ -114,7 +114,7 @@ class Router(store: Store, cache: LicenseeCache, emailer: ActorRef) extends Cors
     post {
       entity(as[DeactivateLicensee]) { deactivatelicensee =>
         if (deactivatelicensee.isValid) {
-          onSuccess(deactivateLicensee(deactivatelicensee.license, deactivatelicensee.emailAddress, DateTime.currentDate)) {
+          onSuccess(deactivateLicensee(deactivatelicensee.license, deactivatelicensee.emailAddress, deactivatelicensee.pin, DateTime.currentDate)) {
             case Some(licensee) =>
               decacheLicensee(licensee)
               complete(OK -> LicenseeDeactivated(licensee))
