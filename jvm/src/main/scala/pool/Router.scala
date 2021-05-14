@@ -82,12 +82,12 @@ class Router(store: Store, cache: LicenseeCache, emailer: ActorRef) extends Cors
     post {
       entity(as[ActivateLicensee]) { activatelicensee =>
         if (activatelicensee.isValid) {
-          onSuccess(activateLicensee(activatelicensee.emailAddress, activatelicensee.license, activatelicensee.pin, DateTime.currentDate)) {
+          onSuccess(activateLicensee(activatelicensee.license, activatelicensee.emailAddress, activatelicensee.pin, DateTime.currentDate)) {
             case Some(licensee) =>
               cacheLicensee(licensee)
               complete(OK -> LicenseeActivated(licensee))
             case None =>
-              val cause = s"*** Unauthorized email address: ${activatelicensee.emailAddress} and/or license: ${activatelicensee.license}"
+              val cause = s"*** Unauthorized license: ${activatelicensee.license} and/or email address: ${activatelicensee.emailAddress}"
               complete(Unauthorized -> onUnauthorized(cause))
           }
         } else complete(BadRequest -> onInvalid(activatelicensee))
@@ -114,12 +114,12 @@ class Router(store: Store, cache: LicenseeCache, emailer: ActorRef) extends Cors
     post {
       entity(as[DeactivateLicensee]) { deactivatelicensee =>
         if (deactivatelicensee.isValid) {
-          onSuccess(deactivateLicensee(deactivatelicensee.emailAddress, deactivatelicensee.license, deactivatelicensee.pin, DateTime.currentDate)) {
+          onSuccess(deactivateLicensee(deactivatelicensee.license, deactivatelicensee.emailAddress, deactivatelicensee.pin, DateTime.currentDate)) {
             case Some(licensee) =>
               decacheLicensee(licensee)
               complete(OK -> LicenseeDeactivated(licensee))
             case None =>
-              val cause = s"*** Unauthorized email address: ${deactivatelicensee.emailAddress} and/or license: ${deactivatelicensee.license}"
+              val cause = s"*** Unauthorized license: ${deactivatelicensee.license} and/or email address: ${deactivatelicensee.emailAddress}"
               complete(Unauthorized -> onUnauthorized(cause))
           }
         } else complete(BadRequest -> onInvalid(deactivatelicensee))
