@@ -15,8 +15,11 @@ import org.slf4j.LoggerFactory
 
 import scala.concurrent.duration._
 import scala.language.postfixOps
+import scala.sys.process.Process
 
 class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
+  Process("psql -d pool -f ddl.sql").run().exitValue()
+
   val logger = LoggerFactory.getLogger(getClass)
   val conf = ConfigFactory.load("test.server.conf")
   val actorRefFactory = ActorSystem.create(conf.getString("server.name"), conf.getConfig("akka"))
@@ -50,10 +53,6 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
   var poolid: PoolId = _
   var timerid: TimerId = _
   var heaterid: HeaterId = _
-
-  import scala.sys.process.Process
-  val exitValue = Process("psql -d pool -f ddl.sql").run().exitValue()
-  logger.debug(s"*** Psql process exit value: $exitValue")
 
   "now" should {
     "get now" in {
