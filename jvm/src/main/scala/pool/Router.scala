@@ -98,12 +98,12 @@ class Router(store: Store, cache: LicenseeCache, emailer: ActorRef) extends Cors
     post {
       entity(as[SignIn]) { signin =>
         if (signin.isValid) {
-          onSuccess(signIn(signin.license, signin.emailAddress)) {
+          onSuccess(signIn(signin.emailAddress, signin.pin)) {
             case Some(licensee) =>
               cacheLicensee(licensee)
               complete(OK -> SignedIn(licensee))
             case None =>
-              val cause = s"*** Unauthorized license: ${signin.license} and/or email address: ${signin.emailAddress}"
+              val cause = s"*** Unauthorized email address: ${signin.emailAddress} and/or pin: ${signin.pin}"
               complete(Unauthorized -> onUnauthorized(cause))
           }
         } else complete(BadRequest -> onInvalid(signin))
