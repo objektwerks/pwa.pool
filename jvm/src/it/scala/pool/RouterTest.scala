@@ -62,7 +62,7 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
 
   "signup" should {
     "post to signedup" in {
-      Post("/signup", SignUp(emailAddress = conf.getString("email.from"))) ~> router.routes ~> check {
+      Post("/signup", SignUp(emailAddress = conf.getString("email.from"), pin = 1234)) ~> router.routes ~> check {
         status shouldBe OK
         licensee = responseAs[SignedUp].licensee
         licensee.isActivated shouldBe false
@@ -351,7 +351,7 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
 
   "invalid" should {
     "post to signedup, fault" in {
-      Post("/signup", SignUp(emailAddress = "")) ~> router.routes ~> check {
+      Post("/signup", SignUp(emailAddress = "", pin = 0)) ~> router.routes ~> check {
         status shouldBe BadRequest
         val fault = responseAs[Fault]
         fault.cause.nonEmpty shouldBe true
