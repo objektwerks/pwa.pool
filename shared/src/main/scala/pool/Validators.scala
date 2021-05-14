@@ -15,7 +15,7 @@ object Validators {
   }
 
   implicit class ActivateLicenseeOps(val activateLicensee: ActivateLicensee) {
-    def isValid: Boolean = activateLicensee.license === 36 && activateLicensee.emailAddress.isEmailAddress
+    def isValid: Boolean = activateLicensee.license === 36 && activateLicensee.emailAddress.isEmailAddress && activateLicensee.pin > 0
   }
 
   implicit class SignInOps(val signin: SignIn) {
@@ -23,7 +23,7 @@ object Validators {
   }
 
   implicit class DeactivateLicenseeOps(val deactivateLicensee: DeactivateLicensee) {
-    def isValid: Boolean = deactivateLicensee.license === 36 && deactivateLicensee.emailAddress.isEmailAddress
+    def isValid: Boolean = deactivateLicensee.license === 36 && deactivateLicensee.emailAddress.isEmailAddress && deactivateLicensee.pin > 0
   }
 
   implicit class LicenseeOps(val licensee: Licensee) {
