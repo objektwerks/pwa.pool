@@ -83,9 +83,9 @@ Panes
 >All panes, less Licensee panes, will include list, add and update features.
 1. Licensee
     * SignUp ( emailAddress, pin )
-    * ActivateLicensee ( license, emailAddress )
+    * ActivateLicensee ( license, emailAddress, pin )
     * SignIn ( emailAddress, pin )
-    * DeactivateLicensee ( license, emailAddress )
+    * DeactivateLicensee ( license, emailAddress, pin )
 2. Pool
     * Pools -> Pool
     * Surfaces -> Surface
@@ -105,9 +105,9 @@ Panes
 Licensee Scenarios
 ------------------
 * SignUp( emailAddress, pin ) => SignedUp( licensee )
-* ActivateLicensee( license, emailAddress ) => LicenseeActivated( licensee )
+* ActivateLicensee( license, emailAddress, pin ) => LicenseeActivated( licensee )
 * SignIn( emailAddress, pin ) => SignedIn( licensee )
-* DeactivateLicensee( license, emailAddress ) => LicenseeDeactivated( licensee )
+* DeactivateLicensee( license, emailAddress, pin ) => LicenseeDeactivated( licensee )
 
 Rest
 ----
