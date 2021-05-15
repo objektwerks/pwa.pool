@@ -68,16 +68,6 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
       Post("/signup", SignUp(emailAddress = conf.getString("email.from"))) ~> router.routes ~> check {
         status shouldBe OK
         licensee = responseAs[SignedUp].licensee
-        licensee.isActivated shouldBe false
-      }
-    }
-  }
-  
-  "activatelicensee" should {
-    "post to activated licensee" in {
-      Post("/activatelicensee", ActivateLicensee(licensee.license, licensee.emailAddress, licensee.pin)) ~> router.routes ~> check {
-        status shouldBe OK
-        licensee = responseAs[LicenseeActivated].licensee
         licenseHeader = RawHeader(Licensee.headerLicenseKey, licensee.license)
         licensee.isActivated shouldBe true
       }
@@ -375,11 +365,21 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
   }
 
   "deactivatelicensee" should {
-    "post to deactivated licensee" in {
+    "post to licensee deactivated" in {
       Post("/deactivatelicensee", DeactivateLicensee(licensee.license, licensee.emailAddress, licensee.pin)) ~> router.routes ~> check {
         status shouldBe OK
         licensee = responseAs[LicenseeDeactivated].licensee
         licensee.isDeactivated shouldBe true
+      }
+    }
+  }
+
+  "reactivatelicensee" should {
+    "post to licensee reactivated" in {
+      Post("/reactivatelicensee", ReactivateLicensee(licensee.license, licensee.emailAddress, licensee.pin)) ~> router.routes ~> check {
+        status shouldBe OK
+        licensee = responseAs[LicenseeReactivated].licensee
+        licensee.isActivated shouldBe true
       }
     }
   }

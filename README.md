@@ -81,18 +81,18 @@ Package
 Licensee Scenarios
 ------------------
 * SignUp( emailAddress ) => SignedUp( licensee ) & Email( emailAddress, license, pin )
-* ActivateLicensee( license, emailAddress, pin ) => LicenseeActivated( licensee )
 * SignIn( emailAddress, pin ) => SignedIn( licensee )
 * DeactivateLicensee( license, emailAddress, pin ) => LicenseeDeactivated( licensee )
+* ReactivateLicensee( license, emailAddress, pin ) => LicenseeReactivated( licensee )
 
 Panes
 -----
 >All panes, less Licensee panes, will include list, add and update features.
 1. Licensee
     * SignUp ( emailAddress )
-    * ActivateLicensee ( license, emailAddress, pin )
     * SignIn ( emailAddress, pin )
     * DeactivateLicensee ( license, emailAddress, pin )
+    * ReactivateLicensee ( license, emailAddress, pin )
 2. Pool
     * Pools -> Pool
     * Surfaces -> Surface
