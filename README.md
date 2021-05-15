@@ -78,6 +78,13 @@ Package
 1. sbt js/clean fullLinkJS
 2. sbt js/universal:packageZipTarball
 
+Licensee Scenarios
+------------------
+* SignUp( emailAddress ) => SignedUp( licensee )
+* ActivateLicensee( license, emailAddress, pin ) => LicenseeActivated( licensee )
+* SignIn( emailAddress, pin ) => SignedIn( licensee )
+* DeactivateLicensee( license, emailAddress, pin ) => LicenseeDeactivated( licensee )
+
 Panes
 -----
 >All panes, less Licensee panes, will include list, add and update features.
@@ -101,13 +108,6 @@ Panes
     * Repairs -> Repair **
 
 ** Charts -> measurements, cleanings, chemicals, supplies and repairs.
-
-Licensee Scenarios
-------------------
-* SignUp( emailAddress ) => SignedUp( licensee )
-* ActivateLicensee( license, emailAddress, pin ) => LicenseeActivated( licensee )
-* SignIn( emailAddress, pin ) => SignedIn( licensee )
-* DeactivateLicensee( license, emailAddress, pin ) => LicenseeDeactivated( licensee )
 
 Rest
 ----
