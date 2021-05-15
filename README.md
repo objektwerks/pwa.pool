@@ -80,7 +80,7 @@ Package
 
 Licensee Scenarios
 ------------------
-* SignUp( emailAddress ) => SignedUp( licensee )
+* SignUp( emailAddress ) => SignedUp( licensee ) & Email( emailAddress, license, pin )
 * ActivateLicensee( license, emailAddress, pin ) => LicenseeActivated( licensee )
 * SignIn( emailAddress, pin ) => SignedIn( licensee )
 * DeactivateLicensee( license, emailAddress, pin ) => LicenseeDeactivated( licensee )
