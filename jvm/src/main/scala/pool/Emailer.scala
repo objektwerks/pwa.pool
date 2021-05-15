@@ -67,11 +67,11 @@ class Emailer(conf: Config) extends Actor with ActorLogging {
 
   override def receive: Receive = {
     case send: SendEmail =>
-      var attempts = 0
+      var attempts = -1
       var messageId: Option[String] = None
-      while ( attempts < retries && messageId.isEmpty ) {
+      while ( attempts != retries && messageId.isEmpty ) {
         messageId = sendEmail(send.licensee)
-        attempts = attempts + 1
+        attempts += 1
       }
       sender() ! messageId
   }
