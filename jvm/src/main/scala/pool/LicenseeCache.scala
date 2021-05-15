@@ -16,7 +16,6 @@ object LicenseeCache {
 
 class LicenseeCache(store: Store)(implicit ec: ExecutionContext) {
   import Validators._
-  import store._
 
   private val conf = Caffeine
     .newBuilder
@@ -38,7 +37,7 @@ class LicenseeCache(store: Store)(implicit ec: ExecutionContext) {
 
   def isLicenseActivated(license: String): Future[Boolean] = {
     if (cache.get(license).nonEmpty) Future.successful(cache.get(license).get.isActivated)
-    else getLicensee(license).map {
+    else store.getLicensee(license).map {
       case Some(licensee) =>
         if (licensee.isActivated) {
           cache.put(licensee.license)(licensee)
