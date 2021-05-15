@@ -2,11 +2,7 @@ package pool
 
 object Validators {
   implicit class StringOps(val value: String) {
-    def <(length: Int): Boolean = if (value.nonEmpty) value.length < length else false
-    def <=(length: Int): Boolean = if (value.nonEmpty) value.length <= length else false
-    def ===(length: Int): Boolean = if (value.nonEmpty) value.length == length else false
-    def >(length: Int): Boolean = if (value.nonEmpty) value.length > length else false
-    def >=(length: Int): Boolean = if (value.nonEmpty) value.length >= length else false
+    def isLicense: Boolean = if (value.nonEmpty) value.length == 36 else false
     def isEmailAddress: Boolean = value.nonEmpty && value.length >=3 && value.contains("@")
   }
 
@@ -20,27 +16,27 @@ object Validators {
 
   implicit class DeactivateLicenseeOps(val deactivateLicensee: DeactivateLicensee) {
     def isValid: Boolean =
-      deactivateLicensee.license === 36 &&
+      deactivateLicensee.license.isLicense &&
       deactivateLicensee.emailAddress.isEmailAddress &&
       deactivateLicensee.pin > 0
   }
 
   implicit class ReactivateLicenseeOps(val reactivateLicensee: ReactivateLicensee) {
     def isValid: Boolean =
-      reactivateLicensee.license === 36 &&
+      reactivateLicensee.license.isLicense &&
       reactivateLicensee.emailAddress.isEmailAddress &&
       reactivateLicensee.pin > 0
   }
 
   implicit class LicenseeOps(val licensee: Licensee) {
     def isActivated: Boolean =
-      licensee.license === 36 &&
+      licensee.license.isLicense &&
       licensee.emailAddress.isEmailAddress &&
       licensee.pin > 0 &&
       licensee.activated > 0 &&
       licensee.deactivated == 0
     def isDeactivated: Boolean =
-      licensee.license === 36 &&
+      licensee.license.isLicense &&
       licensee.emailAddress.isEmailAddress &&
       licensee.pin > 0 &&
       licensee.activated > 0 &&
@@ -48,13 +44,13 @@ object Validators {
   }
 
   implicit class LicenseOps(val license: License) {
-    def isValid: Boolean = license.key === 36
+    def isValid: Boolean = license.key.isLicense
   }
 
   implicit class PoolOps(val pool: Pool) {
     def isValid: Boolean =
       pool.id >= 0 &&
-      pool.license === 36 &&
+      pool.license.isLicense &&
       pool.built > 0 &&
       (pool.lat >= -90.000000 && pool.lat <= 90.000000) &&
       (pool.lat >= -180.000000 && pool.lat <= 180.000000) &&
@@ -149,8 +145,8 @@ object Validators {
   implicit class CleaningOps(val cleaning: Cleaning) {
     def isValid: Boolean =
       cleaning.id >= 0 &&
-        cleaning.poolId > 0 &&
-        cleaning.cleaned > 0
+      cleaning.poolId > 0 &&
+      cleaning.cleaned > 0
   }
 
   implicit class ChemicalOps(val chemical: Chemical) {
