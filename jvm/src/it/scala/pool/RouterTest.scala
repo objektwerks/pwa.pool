@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory
 import scala.concurrent.duration._
 import scala.language.postfixOps
 import scala.sys.process.Process
+import scala.concurrent.Await
 
 class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
   Process("psql -d pool -f ddl.sql").run().exitValue()
@@ -25,6 +26,13 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
   val actorRefFactory = ActorSystem.create(conf.getString("server.name"), conf.getConfig("akka"))
   implicit val dispatcher = system.dispatcher
   implicit val timeout = RouteTestTimeout(10.seconds dilated)
+
+  sys.addShutdownHook {
+    logger.info("*** Server integration test shutting down...")
+    actorRefFactory.terminate()
+    Await.result(system.whenTerminated, 30.seconds)
+    logger.info("*** Server integration test shutdown.")
+  }
 
   val store = Store(conf)
   val cache = LicenseeCache(store)

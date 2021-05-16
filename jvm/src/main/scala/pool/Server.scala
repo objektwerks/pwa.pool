@@ -17,6 +17,13 @@ object Server {
     implicit val system = ActorSystem.create(conf.getString("server.name"), conf.getConfig("akka"))
     implicit val dispatcher = system.dispatcher
 
+    sys.addShutdownHook {
+      logger.info("*** Server shutting down...")
+      system.terminate()
+      Await.result(system.whenTerminated, 30.seconds)
+      logger.info("*** Server shutdown.")
+    }
+
     val store = Store(conf)
     val cache = LicenseeCache(store)
     val emailer = system.actorOf(Props(classOf[Emailer], conf), name = "emailer")
@@ -29,13 +36,6 @@ object Server {
       .map { server =>
         logger.info(s"*** Server host: ${server.localAddress.toString}")
       }
-
-    sys.addShutdownHook {
-      logger.info("*** Server shutting down...")
-      system.terminate()
-      Await.result(system.whenTerminated, 30.seconds)
-      logger.info("*** Server shutdown.")
-    }
     ()
   }
 }
