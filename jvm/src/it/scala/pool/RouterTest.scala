@@ -28,10 +28,10 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
   implicit val timeout = RouteTestTimeout(10.seconds dilated)
 
   CoordinatedShutdown(actorRefFactory).addJvmShutdownHook {
-    logger.info("*** Server integration test shutting down...")
+    logger.info("*** Server shutting down...")
     actorRefFactory.terminate()
     Await.result(system.whenTerminated, 10.seconds)
-    logger.info("*** Server integration test shutdown.")
+    logger.info("*** Server shutdown.")
   }
 
   val store = Store(conf)
@@ -40,13 +40,13 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
   val router = Router(store, cache, emailer)
   val host = conf.getString("server.host")
   val port = conf.getInt("server.port")
-  val url = conf.getString("server.url")
+  val apiUrl = conf.getString("server.apiUrl")
   Http()
     .newServerAt(host, port)
     .bindFlow(router.routes)
     .map { server =>
-      logger.info(s"*** Server integration test host: ${server.localAddress.toString}")
-      logger.info(s"*** Server integration test url: $url")
+      logger.info(s"*** Server host: ${server.localAddress.toString}")
+      logger.info(s"*** Server api url: $apiUrl")
       server.addToCoordinatedShutdown(hardTerminationDeadline = 10.seconds)
   }
 
@@ -96,18 +96,18 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
   "pools" should {
     "post to id, count, pools" in {
       var pool = Pool(license = licensee.license, built = localDateToInt(1991, 3, 13), lat = 26.862631, lon = -82.288834, volume = 10000)
-      Post(url + "/pools/add", pool) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post(apiUrl + "/pools/add", pool) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         pool = pool.copy(id = responseAs[Id].id)
         pool.id should be > 0
         poolid = PoolId(pool.id)
       }
       pool = pool.copy(volume = 9000)
-      Post(url + "/pools/update", pool) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post(apiUrl + "/pools/update", pool) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         responseAs[Count].count shouldEqual 1
       }
-      Post(url + "/pools", licensee.toLicense) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post(apiUrl + "/pools", licensee.toLicense) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         responseAs[Pools].pools.length shouldEqual 1
       }
@@ -117,17 +117,17 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
   "surfaces" should {
     "post to id, count, surfaces" in {
       var surface = Surface(poolId = poolid.id, installed = localDateToInt(1991, 3, 13), kind = "concrete")
-      Post(url + "/surfaces/add", surface) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post(apiUrl + "/surfaces/add", surface) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         surface = surface.copy(id = responseAs[Id].id)
         surface.id should be > 0
       }
       surface = surface.copy(kind = "pebble")
-      Post(url + "/surface/update", surface) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post(apiUrl + "/surface/update", surface) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         responseAs[Count].count shouldEqual 1
       }
-      Post(url + "/surfaces", poolid) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post(apiUrl + "/surfaces", poolid) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         responseAs[Surfaces].surfaces.length shouldEqual 1
       }
@@ -137,17 +137,17 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
   "pumps" should {
     "post to id, count, pumps" in {
       var pump = Pump(poolId = poolid.id, installed = localDateToInt(1991, 3, 13), model = "rocket")
-      Post(url + "/pumps/add", pump) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post(apiUrl + "/pumps/add", pump) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         pump = pump.copy(id = responseAs[Id].id)
         pump.id should be > 0
       }
       pump = pump.copy(model = "iron")
-      Post(url + "/pumps/update", pump) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post(apiUrl + "/pumps/update", pump) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         responseAs[Count].count shouldEqual 1
       }
-      Post(url + "/pumps", poolid) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post(apiUrl + "/pumps", poolid) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         responseAs[Pumps].pumps.length shouldEqual 1
       }
@@ -157,18 +157,18 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
   "timers" should {
     "post to id, count, timers" in {
       var timer = Timer(poolId = poolid.id, installed = localDateToInt(1991, 3, 13), model = "timex")
-      Post(url + "/timers/add", timer) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post(apiUrl + "/timers/add", timer) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         timer = timer.copy(id = responseAs[Id].id)
         timer.id should be > 0
         timerid = TimerId(timer.id)
       }
       timer = timer.copy(model = "rolex")
-      Post(url + "/timers/update", timer) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post(apiUrl + "/timers/update", timer) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         responseAs[Count].count shouldEqual 1
       }
-      Post(url + "/timers", poolid) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post(apiUrl + "/timers", poolid) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         responseAs[Timers].timers.length shouldEqual 1
       }
@@ -181,17 +181,17 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
         created = localDateToInt(1991, 3, 13),
         timeOn = localTimeToInt(8, 15),
         timeOff = localTimeToInt(17, 15))
-      Post(url + "/timersettings/add", timerSetting) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post(apiUrl + "/timersettings/add", timerSetting) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         timerSetting = timerSetting.copy(id = responseAs[Id].id)
         timerSetting.id should be > 0
       }
       timerSetting = timerSetting.copy(timeOff = localTimeToInt(17, 30))
-      Post(url + "/timersettings/update", timerSetting) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post(apiUrl + "/timersettings/update", timerSetting) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         responseAs[Count].count shouldEqual 1
       }
-      Post(url + "/timersettings", timerid) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post(apiUrl + "/timersettings", timerid) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         responseAs[TimerSettings].timerSettings.length shouldEqual 1
       }
@@ -201,18 +201,18 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
   "heaters" should {
     "post to id, count, heaters" in {
       var heater = Heater(poolId = poolid.id, installed = localDateToInt(1991, 3, 13), model = "hotty")
-      Post(url + "/heaters/add", heater) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post(apiUrl + "/heaters/add", heater) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         heater = heater.copy(id = responseAs[Id].id)
         heater.id should be > 0
         heaterid = HeaterId(heater.id)
       }
       heater = heater.copy(model = "burner")
-      Post(url + "/heaters/update", heater) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post(apiUrl + "/heaters/update", heater) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         responseAs[Count].count shouldEqual 1
       }
-      Post(url + "/heaters", poolid) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post(apiUrl + "/heaters", poolid) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         responseAs[Heaters].heaters.length shouldEqual 1
       }
@@ -222,17 +222,17 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
   "heatersettings" should {
     "post to id, count, heatersettings" in {
       var heaterOn = HeaterSetting(heaterId = heaterid.id, temp = 85, dateOn = localDateToInt(1991, 3, 13))
-      Post(url + "/heatersettings/add", heaterOn) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post(apiUrl + "/heatersettings/add", heaterOn) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         heaterOn = heaterOn.copy(id = responseAs[Id].id)
         heaterOn.id should be > 0
       }
       heaterOn = heaterOn.copy(dateOff = localDateToInt(1991, 9, 13))
-      Post(url + "/heatersettings/update", heaterOn) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post(apiUrl + "/heatersettings/update", heaterOn) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         responseAs[Count].count shouldEqual 1
       }
-      Post(url + "/heatersettings", heaterid) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post(apiUrl + "/heatersettings", heaterid) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         responseAs[HeaterSettings].heaterSettings.length shouldEqual 1
       }
@@ -242,17 +242,17 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
   "measurements" should {
     "post to id, count, measurements" in {
       var measurement = Measurement(poolId = poolid.id, measured = localDateToInt(1991, 3, 13))
-      Post(url + "/measurements/add", measurement) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post(apiUrl + "/measurements/add", measurement) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         measurement = measurement.copy(id = responseAs[Id].id)
         measurement.id should be > 0
       }
       measurement = measurement.copy(temp = 90)
-      Post(url + "/measurements/update", measurement) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post(apiUrl + "/measurements/update", measurement) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         responseAs[Count].count shouldEqual 1
       }
-      Post(url + "/measurements", poolid) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post(apiUrl + "/measurements", poolid) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         responseAs[Measurements].measurements.length shouldEqual 1
       }
@@ -262,17 +262,17 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
   "cleanings" should {
     "post to id, count, cleanings" in {
       var cleaning = Cleaning(poolId = poolid.id, cleaned = localDateToInt(1991, 3, 13))
-      Post(url + "/cleanings/add", cleaning) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post(apiUrl + "/cleanings/add", cleaning) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         cleaning = cleaning.copy(id = responseAs[Id].id)
         cleaning.id should be > 0
       }
       cleaning = cleaning.copy(deck = true)
-      Post(url + "/cleanings/update", cleaning) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post(apiUrl + "/cleanings/update", cleaning) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         responseAs[Count].count shouldEqual 1
       }
-      Post(url + "/cleanings", poolid) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post(apiUrl + "/cleanings", poolid) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         responseAs[Cleanings].cleanings.length shouldEqual 1
       }
@@ -286,17 +286,17 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
         chemical = "chlorine",
         amount = 1.25,
         unit = "gallon")
-      Post(url + "/chemicals/add", _chemical) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post(apiUrl + "/chemicals/add", _chemical) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         _chemical = _chemical.copy(id = responseAs[Id].id)
         _chemical.id should be > 0
       }
       _chemical = _chemical.copy(amount = 1.50)
-      Post(url + "/chemicals/update", _chemical) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post(apiUrl + "/chemicals/update", _chemical) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         responseAs[Count].count shouldEqual 1
       }
-      Post(url + "/chemicals", poolid) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post(apiUrl + "/chemicals", poolid) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         responseAs[Chemicals].chemicals.length shouldEqual 1
       }
@@ -311,17 +311,17 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
         item = "chlorine",
         amount = 1.25,
         unit = "gallon")
-      Post(url + "/supplies/add", supply) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post(apiUrl + "/supplies/add", supply) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         supply = supply.copy(id = responseAs[Id].id)
         supply.id should be > 0
       }
       supply = supply.copy(amount = 1.50)
-      Post(url + "/supplies/update", supply) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post(apiUrl + "/supplies/update", supply) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         responseAs[Count].count shouldEqual 1
       }
-      Post(url + "/supplies", poolid) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post(apiUrl + "/supplies", poolid) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         responseAs[Supplies].supplies.length shouldEqual 1
       }
@@ -334,17 +334,17 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
         repaired = localDateToInt(1991, 3, 13),
         cost = 50.50,
         repair = "paint pool deck")
-      Post(url + "/repairs/add", _repair) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post(apiUrl + "/repairs/add", _repair) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         _repair = _repair.copy(id = responseAs[Id].id)
         _repair.id should be > 0
       }
       _repair = _repair.copy(repair = "repaint pool deck")
-      Post(url + "/repairs/update", _repair) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post(apiUrl + "/repairs/update", _repair) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         responseAs[Count].count shouldEqual 1
       }
-      Post(url + "/repairs", poolid) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post(apiUrl + "/repairs", poolid) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         responseAs[Repairs].repairs.length shouldEqual 1
       }
@@ -364,7 +364,7 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
 
   "unauthorized" should {
     "post to pools, fault" in {
-      Post(url + "/pools", License("")) ~> addHeader(licenseHeader.copy(value = "")) ~> router.routes ~> check {
+      Post(apiUrl + "/pools", License("")) ~> addHeader(licenseHeader.copy(value = "")) ~> router.routes ~> check {
         status shouldBe Unauthorized
         val fault = responseAs[Fault]
         fault.cause.nonEmpty shouldBe true
