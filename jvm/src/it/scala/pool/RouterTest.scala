@@ -1,6 +1,6 @@
 package pool
 
-import akka.actor.{ActorSystem, Props}
+import akka.actor.{ActorSystem, CoordinatedShutdown, Props}
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.model.headers.RawHeader
@@ -27,7 +27,7 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
   implicit val dispatcher = system.dispatcher
   implicit val timeout = RouteTestTimeout(10.seconds dilated)
 
-  sys.addShutdownHook {
+  CoordinatedShutdown(actorRefFactory).addJvmShutdownHook {
     logger.info("*** Server integration test shutting down...")
     actorRefFactory.terminate()
     Await.result(system.whenTerminated, 30.seconds)
