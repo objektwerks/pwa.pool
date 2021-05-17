@@ -207,20 +207,14 @@ Charts
 Date
 ----
 1. Format: yyyy-MM-dd
-2. String: 1999-03-03, 1999-12-13
-3. Int: 19990303, 19991213
+2. String: 1999-01-01, 1999-12-16
+3. Int: 19990101, 19991216
 
 Time
 ----
 1. Format: HH:mm
-2. String: 03:03, 23:33
-3. Int: 303, 2333
-
-Validation
-----------
-* string - non empty
-* string length - lt, lte, eq, gt, gte
-* range - inclusive
+2. String: 01:01, 19:14
+3. Int: 101, 1914
 
 Postgresql
 ----------
@@ -239,8 +233,8 @@ Database
 --------
 >Example database url: postgresql://localhost:5432/pool?user=mycomputername&password='"
 1. psql postgres
-2. CREATE DATABASE pool OWNER <my computer name>;
-3. GRANT ALL PRIVILEGES ON DATABASE pool TO <my computer name>;
+2. CREATE DATABASE pool OWNER <your computer name>;
+3. GRANT ALL PRIVILEGES ON DATABASE pool TO <your computer name>;
 4. \l
 5. \q
 6. psql pool
