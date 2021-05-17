@@ -1,6 +1,6 @@
 package pool
 
-import akka.actor.{ActorSystem, Props}
+import akka.actor.{ActorSystem, CoordinatedShutdown, Props}
 import akka.http.scaladsl.Http
 
 import com.typesafe.config.ConfigFactory
@@ -17,7 +17,7 @@ object Server {
     implicit val system = ActorSystem.create(conf.getString("server.name"), conf.getConfig("akka"))
     implicit val dispatcher = system.dispatcher
 
-    sys.addShutdownHook {
+    CoordinatedShutdown(system).addJvmShutdownHook {
       logger.info("*** Server shutting down...")
       system.terminate()
       Await.result(system.whenTerminated, 30.seconds)
