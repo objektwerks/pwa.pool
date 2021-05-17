@@ -47,6 +47,7 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
     .map { server =>
       logger.info(s"*** Server integration test host: ${server.localAddress.toString}")
       logger.info(s"*** Server integration test url: $url")
+      server.addToCoordinatedShutdown(hardTerminationDeadline = 10.seconds)
   }
 
   import de.heikoseeberger.akkahttpupickle.{UpickleSupport => Upickle}
