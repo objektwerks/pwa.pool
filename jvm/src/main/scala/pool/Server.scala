@@ -35,7 +35,7 @@ object Server {
       .bindFlow(router.routes)
       .map { server =>
         logger.info(s"*** Server host: ${server.localAddress.toString}")
-        server.addToCoordinatedShutdown(hardTerminationDeadline = 10.seconds)
+        server.addToCoordinatedShutdown(hardTerminationDeadline = 30.seconds)
       }
     ()
   }

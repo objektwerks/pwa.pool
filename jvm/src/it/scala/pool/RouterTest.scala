@@ -30,7 +30,7 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
   CoordinatedShutdown(actorRefFactory).addJvmShutdownHook {
     logger.info("*** Server integration test shutting down...")
     actorRefFactory.terminate()
-    Await.result(system.whenTerminated, 30.seconds)
+    Await.result(system.whenTerminated, 10.seconds)
     logger.info("*** Server integration test shutdown.")
   }
 
