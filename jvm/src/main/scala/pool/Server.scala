@@ -32,7 +32,7 @@ object Server {
         server
       }
 
-    println(s"*** Server started at http://$host:$port Press any key to shutdown...")
+    println(s"*** Server started at: $host:$port Press return to shutdown.")
 
     StdIn.readLine()
     server
