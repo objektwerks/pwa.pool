@@ -1,6 +1,6 @@
 package pool
 
-import akka.actor.{ActorSystem, CoordinatedShutdown, Props}
+import akka.actor.{ActorSystem, Props}
 import akka.http.scaladsl.Http
 
 import com.typesafe.config.ConfigFactory
@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory
 
 import scala.concurrent.Await
 import scala.concurrent.duration._
+import scala.io.StdIn
 
 object Server {
   def main(args: Array[String]): Unit = {
@@ -17,25 +18,30 @@ object Server {
     implicit val system = ActorSystem.create(conf.getString("server.name"), conf.getConfig("akka"))
     implicit val dispatcher = system.dispatcher
 
-    CoordinatedShutdown(system).addJvmShutdownHook {
-      logger.info("*** Server shutting down...")
-      system.terminate()
-      Await.result(system.whenTerminated, 30.seconds)
-      logger.info("*** Server shutdown.")
-    }
-
     val store = Store(conf)
     val cache = LicenseeCache(store)
     val emailer = system.actorOf(Props(classOf[Emailer], conf), name = "emailer")
     val router = Router(store, cache, emailer)
     val host = conf.getString("server.host")
     val port = conf.getInt("server.port")
-    Http()
+    val server = Http()
       .newServerAt(host, port)
       .bindFlow(router.routes)
       .map { server =>
         logger.info(s"*** Server host: ${server.localAddress.toString}")
-        server.addToCoordinatedShutdown(hardTerminationDeadline = 30.seconds)
+        server
+      }
+
+    println(s"*** Server started at http://$host:$port Press any key to shutdown...")
+
+    StdIn.readLine()
+    server
+      .flatMap(_.unbind())
+      .onComplete { _ =>
+        logger.info("*** Server shutting down...")
+        system.terminate()
+        Await.result(system.whenTerminated, 30.seconds)
+        logger.info("*** Server shutdown.")
       }
     ()
   }
