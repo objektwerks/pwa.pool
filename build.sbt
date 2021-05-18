@@ -81,6 +81,5 @@ lazy val jvm = (project in file("jvm"))
         "org.scalatest" %% "scalatest" % scalaTestVersion % IntegrationTest
       )
     },
-    scalacOptions ++= Seq("-Ywarn-macros:after"),
-    IntegrationTest / javaOptions += "-Dquill.binds.log=true"
+    scalacOptions ++= Seq("-Ywarn-macros:after")
   )
