@@ -1,5 +1,8 @@
 name := "pwa.pool"
 
+lazy val akkaVersion = "2.6.14"
+lazy val akkkHttpVersion = "10.2.4"
+lazy val quillVersion = "3.7.0"
 lazy val upickleVersion = "1.3.12"
 lazy val scalaTestVersion = "3.2.9"
 
@@ -61,9 +64,6 @@ lazy val jvm = (project in file("jvm"))
     Defaults.itSettings,
     reStart / mainClass := Some("pool.Server"),
     libraryDependencies ++= {
-      val akkaVersion = "2.6.14"
-      val akkkHttpVersion = "10.2.4"
-      val quillVersion = "3.7.0"
       Seq(
         "com.typesafe.akka" %% "akka-actor" % akkaVersion,
         "com.typesafe.akka" %% "akka-http" % akkkHttpVersion,
