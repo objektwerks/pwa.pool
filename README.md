@@ -114,7 +114,6 @@ Rest
 >Root server url: ""
 >Root api url: /api/v1/pool
 * /signup
-* /activatelicensee
 * /signin
 * /pools           /add   /update
 * /surfaces        /add   /update
@@ -129,6 +128,7 @@ Rest
 * /supplies        /add   /update
 * /repairs         /add   /update
 * /deactivatelicensee
+* /reactivatelicensee
 
 Client
 ------
