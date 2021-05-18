@@ -1,6 +1,6 @@
 package pool
 
-import akka.actor.{ActorSystem, CoordinatedShutdown, Props}
+import akka.actor.{ActorSystem, Props}
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.model.headers.RawHeader
@@ -9,6 +9,7 @@ import akka.testkit.TestDuration
 
 import com.typesafe.config.ConfigFactory
 
+import org.scalatest.BeforeAndAfterAll
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import org.slf4j.LoggerFactory
@@ -18,7 +19,7 @@ import scala.language.postfixOps
 import scala.sys.process.Process
 import scala.concurrent.Await
 
-class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
+class RouterTest extends AnyWordSpec with BeforeAndAfterAll with Matchers with ScalatestRouteTest {
   Process("psql -d pool -f ddl.sql").run().exitValue()
 
   val logger = LoggerFactory.getLogger(getClass)
@@ -27,13 +28,6 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
   implicit val dispatcher = system.dispatcher
   implicit val timeout = RouteTestTimeout(10.seconds dilated)
 
-  CoordinatedShutdown(actorRefFactory).addJvmShutdownHook {
-    logger.info("*** Server shutting down...")
-    actorRefFactory.terminate()
-    Await.result(system.whenTerminated, 10.seconds)
-    logger.info("*** Server shutdown.")
-  }
-
   val store = Store(conf)
   val cache = LicenseeCache(store)
   val emailer = system.actorOf(Props(classOf[Emailer], conf), name = "emailer")
@@ -41,14 +35,24 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
   val host = conf.getString("server.host")
   val port = conf.getInt("server.port")
   val apiUrl = conf.getString("server.apiUrl")
-  Http()
+  val server = Http()
     .newServerAt(host, port)
     .bindFlow(router.routes)
     .map { server =>
       logger.info(s"*** Server host: ${server.localAddress.toString}")
       logger.info(s"*** Server api url: $apiUrl")
-      server.addToCoordinatedShutdown(hardTerminationDeadline = 10.seconds)
+      server
   }
+
+  override protected def afterAll(): Unit =
+    server
+      .flatMap(_.unbind())
+      .onComplete { _ =>
+        logger.info("*** Server shutting down...")
+        actorRefFactory.terminate()
+        Await.result(actorRefFactory.whenTerminated, 10.seconds)
+        logger.info("*** Server shutdown.")
+      }
 
   import de.heikoseeberger.akkahttpupickle.{UpickleSupport => Upickle}
   import Upickle._
