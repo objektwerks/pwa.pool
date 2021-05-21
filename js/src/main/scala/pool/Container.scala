@@ -39,4 +39,8 @@ object Container {
       child.text <-- datetimeVar
     )
   }
+
+  def renderRegister(publicUrl: String): Div = div( publicUrl )
+
+  def renderLogin(publicUrl: String): Div = div( publicUrl )
 }
