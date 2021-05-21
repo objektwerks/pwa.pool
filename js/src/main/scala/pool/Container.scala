@@ -12,18 +12,30 @@ object Container {
     println(s"api url: $apiUrl")
     println(s"now url: $publicUrl/now")
 
-    div(
-      cls("w3-container w3-white"),
-      renderNow(publicUrl)
-    )
+    renderHome(publicUrl)
   }
+
+  def renderHome(publicUrl: String): Div =
+    div(
+      renderHomeNavigation,
+      div(
+        renderNow(publicUrl)
+      )
+    )
+
+  def renderHomeNavigation: Div =
+    div( 
+      cls("w3-bar w3-white w3-text-indigo"),
+      a( href("#"), cls("w3-bar-item w3-button"), "Register"),
+      a( href("#"), cls("w3-bar-item w3-button"), "Login")
+    )
 
   def renderNow(publicUrl: String): Label = {
     val datetimeVar = Var("")
     get(s"$publicUrl/now").foreach( now => datetimeVar.set(now.stripPrefix("\"").stripSuffix("\"")) )
     label(
+      cls("w3-text-indigo"),
       fontSize("11px"),
-      color("indigo"),
       child.text <-- datetimeVar
     )
   }
