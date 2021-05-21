@@ -40,7 +40,7 @@ object Container {
     )
   }
 
-  def renderRegisterPage(publicUrl: String): Div = div( publicUrl )
+  def renderRegisterPage(publicUrl: String): Div = div( idAttr("register"), publicUrl )
 
-  def renderLoginPage(publicUrl: String): Div = div( publicUrl )
+  def renderLoginPage(publicUrl: String): Div = div( idAttr("login"), publicUrl )
 }
