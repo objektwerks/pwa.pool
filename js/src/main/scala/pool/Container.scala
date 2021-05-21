@@ -12,14 +12,14 @@ object Container {
     println(s"api url: $apiUrl")
     println(s"now url: $publicUrl/now")
 
-    renderHome(publicUrl)
+    renderHomePage(publicUrl)
   }
 
-  def renderHome(publicUrl: String): Div =
+  def renderHomePage(publicUrl: String): Div =
     div(
       renderHomeNavigation,
       div(
-        renderNow(publicUrl)
+        renderNowLabel(publicUrl)
       )
     )
 
@@ -30,7 +30,7 @@ object Container {
       a( href("#"), cls("w3-bar-item w3-button"), "Login")
     )
 
-  def renderNow(publicUrl: String): Label = {
+  def renderNowLabel(publicUrl: String): Label = {
     val datetimeVar = Var("")
     get(s"$publicUrl/now").foreach( now => datetimeVar.set(now.stripPrefix("\"").stripSuffix("\"")) )
     label(
@@ -40,7 +40,7 @@ object Container {
     )
   }
 
-  def renderRegister(publicUrl: String): Div = div( publicUrl )
+  def renderRegisterPage(publicUrl: String): Div = div( publicUrl )
 
-  def renderLogin(publicUrl: String): Div = div( publicUrl )
+  def renderLoginPage(publicUrl: String): Div = div( publicUrl )
 }
