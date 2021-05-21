@@ -35,7 +35,7 @@ object Container {
     get(s"$publicUrl/now").foreach( now => datetimeVar.set(now.stripPrefix("\"").stripSuffix("\"")) )
     label(
       cls("w3-text-indigo"),
-      fontSize("11px"),
+      fontSize("12px"),
       child.text <-- datetimeVar
     )
   }
