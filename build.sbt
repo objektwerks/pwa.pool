@@ -3,7 +3,7 @@ name := "pwa.pool"
 lazy val akkaVersion = "2.6.14"
 lazy val akkkHttpVersion = "10.2.4"
 lazy val quillVersion = "3.7.0"
-lazy val upickleVersion = "1.3.12"
+lazy val upickleVersion = "1.3.15"
 lazy val scalaTestVersion = "3.2.9"
 
 lazy val common = Defaults.coreDefaultSettings ++ Seq(
