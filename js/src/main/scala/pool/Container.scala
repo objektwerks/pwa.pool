@@ -12,36 +12,32 @@ class Container(publicUrl: String, apiUrl: String, serverProxy: ServerProxy) {
   println(s"public url: $publicUrl")
   println(s"api url: $apiUrl")
 
-  def render: Div = {
-    renderHomePage
-  }
-
-  def renderHomePage: Div =
+  def render: Div =
     div(
-      renderHomeNavigation,
-      div(
-        renderNowLabel
-      )
+      renderNavigation,
+      renderNow
     )
 
-  def renderHomeNavigation: Div =
+  def renderNavigation: Div =
     div( 
       cls("w3-bar w3-white w3-text-indigo"),
       a( href("#"), cls("w3-bar-item w3-button"), "Register" ),
       a( href("#"), cls("w3-bar-item w3-button"), "Login" )
     )
 
-  def renderNowLabel: Label = {
+  def renderNow: Div = {
     val datetimeVar = Var("")
     serverProxy.get(s"$publicUrl/now").foreach( now => datetimeVar.set(now.stripPrefix("\"").stripSuffix("\"")) )
-    label(
-      cls("w3-text-indigo"),
-      fontSize("12px"),
-      child.text <-- datetimeVar
+    div(
+      label(
+        cls("w3-text-indigo"),
+        fontSize("12px"),
+        child.text <-- datetimeVar
+      )
     )
   }
 
-  def renderRegisterPage: Div = div( idAttr("register"), publicUrl )
+  def renderRegister: Div = div( idAttr("register") )
 
-  def renderLoginPage: Div = div( idAttr("login"), publicUrl )
+  def renderLogin: Div = div( idAttr("login") )
 }
