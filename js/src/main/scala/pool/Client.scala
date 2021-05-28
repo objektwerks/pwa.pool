@@ -16,10 +16,11 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
   println(s"public url: $publicUrl")
   println(s"api url: $apiUrl")
 
+  val serverProxy = ServerProxy()
+
   registerServiceWorker()
   render(document.getElementById("client"), renderHome)
 
-  val serverProxy = ServerProxy()
 
   def renderHome: Div =
     div(
