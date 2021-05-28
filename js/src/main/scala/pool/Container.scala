@@ -3,6 +3,7 @@ package pool
 import com.raquo.laminar.api.L._
 
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.annotation.nowarn
 
 object Container {
   def apply(publicUrl: String, apiUrl: String, serverProxy: ServerProxy): Container = new Container(publicUrl, apiUrl, serverProxy)
@@ -18,11 +19,11 @@ class Container(publicUrl: String, apiUrl: String, serverProxy: ServerProxy) {
       renderNow
     )
 
-  def renderNavigation: Div =
+  @nowarn def renderNavigation: Div =
     div( 
       cls("w3-bar w3-white w3-text-indigo"),
-      a( href("#"), cls("w3-bar-item w3-button"), "Register" ),
-      a( href("#"), cls("w3-bar-item w3-button"), "Login" )
+      a( href("#"), onClick --> (_ => renderRegister), cls("w3-bar-item w3-button"), "Register" ),
+      a( href("#"), onClick --> (_ => renderLogin), cls("w3-bar-item w3-button"), "Login" )
     )
 
   def renderNow: Div = {
