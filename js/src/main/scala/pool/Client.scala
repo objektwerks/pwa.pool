@@ -5,7 +5,6 @@ import com.raquo.laminar.api.L._
 import org.scalajs.dom._
 import org.scalajs.dom.experimental.serviceworkers._
 
-import scala.annotation.nowarn
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExportTopLevel
@@ -19,7 +18,7 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
   val serverProxy = ServerProxy()
 
   registerServiceWorker()
-  render(document.getElementById("client"), renderHome)
+  var root = render(document.getElementById("client"), renderHome)
 
 
   def renderHome: Div =
@@ -28,12 +27,18 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
       renderNow
     )
 
-  @nowarn def renderNavigation: Div =
+  def renderCenter(center: Div): Unit = {
+    root.unmount()
+    root = render(document.getElementById("client"), center)
+  }
+
+
+  def renderNavigation: Div =
     div(
       idAttr("navigation"),
       cls("w3-bar w3-white w3-text-indigo"),
-      a( href("#"), onClick --> (_ => renderRegister), cls("w3-bar-item w3-button"), "Register" ),
-      a( href("#"), onClick --> (_ => renderLogin), cls("w3-bar-item w3-button"), "Login" )
+      a( href("#"), onClick --> (_ => renderCenter( renderRegister) ), cls("w3-bar-item w3-button"), "Register" ),
+      a( href("#"), onClick --> (_ => renderCenter( renderLogin) ), cls("w3-bar-item w3-button"), "Login" )
     )
 
   def renderNow: Div = {
@@ -51,20 +56,15 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
 
   def renderRegister: Div =
     div(
-      idAttr("register"),
-      cls("w3-container"),
-      label("Email Address:"),
-      input( cls("w3-input w3-text-indigo"), tpe("text") )
+      idAttr("register"), cls("w3-container"),
+      label("Email Address:"), input( cls("w3-input w3-text-indigo"), tpe("text") )
     )
 
   def renderLogin: Div =
     div(
-      idAttr("login"),
-      cls("w3-container"),
-      label("Email Address:"),
-      input( cls("w3-input w3-text-indigo"), tpe("text") ),
-      label("PIN:"),
-      input( cls("w3-input w3-text-indigo"), tpe("text") )
+      idAttr("login"), cls("w3-container"),
+      label("Email Address:"), input( cls("w3-input w3-text-indigo"), tpe("text") ),
+      label("PIN:"), input( cls("w3-input w3-text-indigo"), tpe("text") )
     )
 
   def registerServiceWorker(): Unit =
