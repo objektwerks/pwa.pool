@@ -18,7 +18,7 @@ object Client {
     ()
   }
 
-  def registerServiceWorker(): Unit = {
+  def registerServiceWorker(): Unit =
     toServiceWorkerNavigator(window.navigator)
       .serviceWorker
       .register("js/main.js")
@@ -29,5 +29,5 @@ object Client {
           registration.update()
         case Failure(error) => println(s"registerServiceWorker: service worker registration failed > ${error.printStackTrace()}")
       }
-  }
+
 }
