@@ -8,6 +8,10 @@ import scala.concurrent.Future
 import scala.util.Try
 
 object ServerProxy {
+  def apply(): ServerProxy = new ServerProxy
+}
+
+class ServerProxy {
   import Serializers._
   import upickle.default._
 

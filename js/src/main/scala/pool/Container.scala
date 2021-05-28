@@ -5,21 +5,22 @@ import com.raquo.laminar.api.L._
 import scala.concurrent.ExecutionContext.Implicits.global
 
 object Container {
-  import ServerProxy._
+  def apply(publicUrl: String, apiUrl: String, serverProxy: ServerProxy): Container = new Container(publicUrl, apiUrl, serverProxy)
+}
 
-  def render(publicUrl: String, apiUrl: String): Div = {
-    println(s"public url: $publicUrl")
-    println(s"api url: $apiUrl")
-    println(s"now url: $publicUrl/now")
+class Container(publicUrl: String, apiUrl: String, serverProxy: ServerProxy) {
+  println(s"public url: $publicUrl")
+  println(s"api url: $apiUrl")
 
-    renderHomePage(publicUrl)
+  def render: Div = {
+    renderHomePage
   }
 
-  def renderHomePage(publicUrl: String): Div =
+  def renderHomePage: Div =
     div(
       renderHomeNavigation,
       div(
-        renderNowLabel(publicUrl)
+        renderNowLabel
       )
     )
 
@@ -30,9 +31,9 @@ object Container {
       a( href("#"), cls("w3-bar-item w3-button"), "Login")
     )
 
-  def renderNowLabel(publicUrl: String): Label = {
+  def renderNowLabel: Label = {
     val datetimeVar = Var("")
-    get(s"$publicUrl/now").foreach( now => datetimeVar.set(now.stripPrefix("\"").stripSuffix("\"")) )
+    serverProxy.get(s"$publicUrl/now").foreach( now => datetimeVar.set(now.stripPrefix("\"").stripSuffix("\"")) )
     label(
       cls("w3-text-indigo"),
       fontSize("12px"),
@@ -40,7 +41,7 @@ object Container {
     )
   }
 
-  def renderRegisterPage(publicUrl: String): Div = div( idAttr("register"), publicUrl )
+  def renderRegisterPage: Div = div( idAttr("register"), publicUrl )
 
-  def renderLoginPage(publicUrl: String): Div = div( idAttr("login"), publicUrl )
+  def renderLoginPage: Div = div( idAttr("login"), publicUrl )
 }
