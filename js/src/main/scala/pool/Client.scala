@@ -4,6 +4,7 @@ import com.raquo.laminar.api.L._
 
 import org.scalajs.dom._
 import org.scalajs.dom.experimental.serviceworkers._
+import org.scalajs.dom.ext.KeyCode
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js
@@ -16,6 +17,8 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
   println(s"api url: $apiUrl")
 
   val serverProxy = ServerProxy()
+  val register = Var("")
+  val onEnterPress = onKeyPress.filter(_.keyCode == KeyCode.Enter)
 
   registerServiceWorker()
   var root = render(document.getElementById("client"), renderHome)
@@ -55,9 +58,21 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
   }
 
   def renderRegister: Div =
-    div(
-      idAttr("register"), cls("w3-container"),
-      label("Email Address:"), input( cls("w3-input w3-text-indigo"), tpe("text") )
+    div(cls("w3-container"), paddingTop("3px"), paddingBottom("3px"),
+      div(cls("w3-row"),
+        div(cls("w3-col"), width("15%"),
+          label(cls("w3-left-align w3-text-indigo"), "Email:")),
+        div(cls("w3-col"), width("85%"),
+          input(cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("text"),
+            inContext { input =>
+              onEnterPress.mapTo(input.ref.value).filter(_.nonEmpty) --> { value =>
+                register.set(value)
+                input.ref.value = ""
+              }
+            }
+          )
+        )
+      )
     )
 
   def renderLogin: Div =
@@ -78,5 +93,4 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
           registration.update()
         case Failure(error) => println(s"registerServiceWorker: service worker registration failed > ${error.printStackTrace()}")
       }
-
 }
