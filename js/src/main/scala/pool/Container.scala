@@ -37,7 +37,21 @@ class Container(publicUrl: String, apiUrl: String, serverProxy: ServerProxy) {
     )
   }
 
-  def renderRegister: Div = div( idAttr("register") )
+  def renderRegister: Div =
+    div(
+      idAttr("register"),
+      cls("w3-container"),
+      label("Email Address:"),
+      input( cls("w3-input w3-text-indigo"), tpe("text") )
+    )
 
-  def renderLogin: Div = div( idAttr("login") )
+  def renderLogin: Div =
+    div(
+      idAttr("login"),
+      cls("w3-container"),
+      label("Email Address:"),
+      input( cls("w3-input w3-text-indigo"), tpe("text") ),
+      label("PIN:"),
+      input( cls("w3-input w3-text-indigo"), tpe("text") )
+    )
 }
