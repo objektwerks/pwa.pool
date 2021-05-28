@@ -27,8 +27,8 @@ class Container(publicUrl: String, apiUrl: String, serverProxy: ServerProxy) {
   def renderHomeNavigation: Div =
     div( 
       cls("w3-bar w3-white w3-text-indigo"),
-      a( href("#"), cls("w3-bar-item w3-button"), "Register"),
-      a( href("#"), cls("w3-bar-item w3-button"), "Login")
+      a( href("#"), cls("w3-bar-item w3-button"), "Register" ),
+      a( href("#"), cls("w3-bar-item w3-button"), "Login" )
     )
 
   def renderNowLabel: Label = {
