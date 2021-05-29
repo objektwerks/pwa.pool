@@ -73,7 +73,7 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
           )
         )
       ),
-      button( cls("w3-btn w3-text-indigo"), "Submit" )
+      button( onClick --> (_ => println("register submit ...") ), cls("w3-btn w3-text-indigo"), "Submit" )
     )
 
   def renderLogin: Div =
@@ -106,7 +106,7 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
           )
         )
       ),
-      button( cls("w3-btn w3-text-indigo"), "Submit" )
+      button( onClick --> (_ => println("login submit ...") ), cls("w3-btn w3-text-indigo"), "Submit" )
     )
 
   def registerServiceWorker(): Unit =
