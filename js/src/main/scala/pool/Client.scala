@@ -17,13 +17,14 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
   println(s"api url: $apiUrl")
 
   val serverProxy = ServerProxy()
-  val email = Var("")
-  val pin = Var("")
-  val onEnterPress = onKeyPress.filter(_.keyCode == KeyCode.Enter)
-
   registerServiceWorker()
+
+  val onKeyUp = onKeyPress.filter(_.keyCode == KeyCode.Up)
+
   var root = render(document.getElementById("client"), renderHome)
 
+  val email = Var("")
+  val pin = Var("")
 
   def renderHome: Div =
     div(
@@ -39,7 +40,6 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
 
   def renderNavigation: Div =
     div(
-      idAttr("navigation"),
       cls("w3-bar w3-white w3-text-indigo"),
       a( href("#"), onClick --> (_ => renderCenter( renderRegister) ), cls("w3-bar-item w3-button"), "Register" ),
       a( href("#"), onClick --> (_ => renderCenter( renderLogin) ), cls("w3-bar-item w3-button"), "Login" )
@@ -49,7 +49,6 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
     val datetimeVar = Var("")
     serverProxy.get(s"$publicUrl/now").foreach( now => datetimeVar.set(now.stripPrefix("\"").stripSuffix("\"")) )
     div(
-      idAttr("now"),
       label(
         cls("w3-text-indigo"),
         fontSize("12px"),
@@ -63,13 +62,13 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
       div(cls("w3-container"), paddingTop("3px"), paddingBottom("3px"),
         div(cls("w3-row"),
           div(cls("w3-col"), width("15%"),
-            label(cls("w3-left-align w3-text-indigo"), "Email:")),
+            label( cls("w3-left-align w3-text-indigo"), "Email:" )
+          ),
           div(cls("w3-col"), width("85%"),
-            input(cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("text"),
+            input(idAttr("register-email"), cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("text"),
               inContext { input =>
-                onEnterPress.mapTo(input.ref.value).filter(_.nonEmpty) --> { value =>
+                onKeyUp.mapTo(input.ref.value).filter(_.nonEmpty) --> { value =>
                   email.set(value)
-                  input.ref.value = ""
                 }
               }
             )
@@ -83,13 +82,13 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
       div(cls("w3-container"), paddingTop("3px"), paddingBottom("3px"),
         div(cls("w3-row"),
           div(cls("w3-col"), width("15%"),
-            label(cls("w3-left-align w3-text-indigo"), "Email:")),
+            label( cls("w3-left-align w3-text-indigo"), "Email:" )
+          ),
           div(cls("w3-col"), width("85%"),
-            input(cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("text"),
+            input( idAttr("login-email"), cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("text"),
               inContext { input =>
-                onEnterPress.mapTo(input.ref.value).filter(_.nonEmpty) --> { value =>
+                onKeyUp.mapTo(input.ref.value).filter(_.nonEmpty) --> { value =>
                   email.set(value)
-                  input.ref.value = ""
                 }
               }
             )
@@ -97,13 +96,13 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
         ),
         div(cls("w3-row"),
           div(cls("w3-col"), width("15%"),
-            label(cls("w3-left-align w3-text-indigo"), "PIN:")),
+            label(cls("w3-left-align w3-text-indigo"), "PIN:")
+          ),
           div(cls("w3-col"), width("85%"),
-            input(cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("text"),
+            input( idAttr("login-pin"), cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("text"),
               inContext { input =>
-                onEnterPress.mapTo(input.ref.value).filter(_.nonEmpty) --> { value =>
+                onKeyUp.mapTo(input.ref.value).filter(_.nonEmpty) --> { value =>
                   pin.set(value)
-                  input.ref.value = ""
                 }
               }
             )
