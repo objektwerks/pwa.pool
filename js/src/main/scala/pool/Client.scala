@@ -58,57 +58,55 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
   }
 
   def renderRegister: Div =
-    div(
-      div(cls("w3-container"), paddingTop("3px"), paddingBottom("3px"),
-        div(cls("w3-row"),
-          div(cls("w3-col"), width("15%"),
-            label( cls("w3-left-align w3-text-indigo"), "Email:" )
-          ),
-          div(cls("w3-col"), width("85%"),
-            input(idAttr("register-email"), cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("text"),
-              inContext { input =>
-                onKeyUp.mapTo(input.ref.value).filter(_.nonEmpty) --> { value =>
-                  email.set(value)
-                }
+    div(cls("w3-container"), paddingTop("3px"), paddingBottom("3px"),
+      div(cls("w3-row"),
+        div(cls("w3-col"), width("15%"),
+          label( cls("w3-left-align w3-text-indigo"), "Email:" )
+        ),
+        div(cls("w3-col"), width("85%"),
+          input(idAttr("register-email"), cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("text"),
+            inContext { input =>
+              onKeyUp.mapTo(input.ref.value).filter(_.nonEmpty) --> { value =>
+                email.set(value)
               }
-            )
+            }
           )
         )
-      )
+      ),
+      button( cls("w3-btn w3-text-indigo"), "Submit" )
     )
 
   def renderLogin: Div =
-    div(
-      div(cls("w3-container"), paddingTop("3px"), paddingBottom("3px"),
-        div(cls("w3-row"),
-          div(cls("w3-col"), width("15%"),
-            label( cls("w3-left-align w3-text-indigo"), "Email:" )
-          ),
-          div(cls("w3-col"), width("85%"),
-            input( idAttr("login-email"), cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("text"),
-              inContext { input =>
-                onKeyUp.mapTo(input.ref.value).filter(_.nonEmpty) --> { value =>
-                  email.set(value)
-                }
-              }
-            )
-          )
+    div(cls("w3-container"), paddingTop("3px"), paddingBottom("3px"),
+      div(cls("w3-row"),
+        div(cls("w3-col"), width("15%"),
+          label( cls("w3-left-align w3-text-indigo"), "Email:" )
         ),
-        div(cls("w3-row"),
-          div(cls("w3-col"), width("15%"),
-            label(cls("w3-left-align w3-text-indigo"), "PIN:")
-          ),
-          div(cls("w3-col"), width("85%"),
-            input( idAttr("login-pin"), cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("text"),
-              inContext { input =>
-                onKeyUp.mapTo(input.ref.value).filter(_.nonEmpty) --> { value =>
-                  pin.set(value)
-                }
+        div(cls("w3-col"), width("85%"),
+          input( idAttr("login-email"), cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("text"),
+            inContext { input =>
+              onKeyUp.mapTo(input.ref.value).filter(_.nonEmpty) --> { value =>
+                email.set(value)
               }
-            )
+            }
           )
         )
-      )
+      ),
+      div(cls("w3-row"),
+        div(cls("w3-col"), width("15%"),
+          label(cls("w3-left-align w3-text-indigo"), "PIN:")
+        ),
+        div(cls("w3-col"), width("85%"),
+          input( idAttr("login-pin"), cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("text"),
+            inContext { input =>
+              onKeyUp.mapTo(input.ref.value).filter(_.nonEmpty) --> { value =>
+                pin.set(value)
+              }
+            }
+          )
+        )
+      ),
+      button( cls("w3-btn w3-text-indigo"), "Submit" )
     )
 
   def registerServiceWorker(): Unit =
