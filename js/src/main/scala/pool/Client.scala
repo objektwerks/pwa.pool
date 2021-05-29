@@ -24,7 +24,15 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
   var root = render(document.getElementById("client"), renderHome)
 
   val email = Var("")
-  val pin = Var("")
+  val pin = Var(0)
+
+  val commandObserver = Observer[Command] {
+    case signup: SignUp => println(s"signup server  $signup ...")
+    case signin: SignIn => println(s"signin submit $signin...")
+    case licensee: DeactivateLicensee => println(s"signin submit $licensee...")
+    case licensee: ReactivateLicensee => println(s"signin submit $licensee...")
+ }
+
 
   def renderHome: Div =
     div(
@@ -73,7 +81,7 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
           )
         )
       ),
-      button( onClick --> (_ => println("register submit ...") ), cls("w3-btn w3-text-indigo"), "Submit" )
+      button( onClick.mapTo(SignUp(email.now())) --> commandObserver, cls("w3-btn w3-text-indigo"), "Submit" )
     )
 
   def renderLogin: Div =
@@ -99,14 +107,14 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
         div(cls("w3-col"), width("85%"),
           input( idAttr("login-pin"), cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("text"),
             inContext { input =>
-              onKeyUp.mapTo(input.ref.value).filter(_.nonEmpty) --> { value =>
-                pin.set(value)
+              onKeyUp.mapTo(input.ref.value).filter(_.nonEmpty).filter(_.toIntOption.nonEmpty) --> { value =>
+                pin.set(value.toInt)
               }
             }
           )
         )
       ),
-      button( onClick --> (_ => println("login submit ...") ), cls("w3-btn w3-text-indigo"), "Submit" )
+      button( onClick.mapTo(SignIn(email.now(), pin.now())) --> commandObserver, cls("w3-btn w3-text-indigo"), "Submit" )
     )
 
   def registerServiceWorker(): Unit =
