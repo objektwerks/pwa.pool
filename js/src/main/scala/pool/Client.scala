@@ -31,8 +31,7 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
     case signin: SignIn => println(s"signin submit $signin...")
     case licensee: DeactivateLicensee => println(s"signin submit $licensee...")
     case licensee: ReactivateLicensee => println(s"signin submit $licensee...")
- }
-
+  }
 
   def renderHome: Div =
     div(
@@ -44,7 +43,6 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
     root.unmount()
     root = render(document.getElementById("client"), center)
   }
-
 
   def renderNavigation: Div =
     div(
