@@ -3,7 +3,6 @@ package pool
 import com.raquo.laminar.api.L._
 
 import org.scalajs.dom._
-import org.scalajs.dom.ext.KeyCode
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js
@@ -16,8 +15,6 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
   val serverProxy = ServerProxy()
   val eventObserver = EventObserver()
   val commandObserver = CommandObserver(apiUrl)
-
-  val onKeyUp = onKeyPress.filter(_.keyCode == KeyCode.Up)
 
   var root = render(document.getElementById("client"), renderHome)
 
@@ -63,7 +60,7 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
         div(cls("w3-col"), width("85%"),
           input(idAttr("register-email"), cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("text"),
             inContext { input =>
-              onKeyUp.mapTo(input.ref.value).filter(_.nonEmpty) --> { value =>
+              onChange.mapTo(input.ref.value).filter(_.nonEmpty) --> { value =>
                 email.set(value)
               }
             }
@@ -84,7 +81,7 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
         div(cls("w3-col"), width("85%"),
           input( idAttr("login-email"), cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("text"),
             inContext { input =>
-              onKeyUp.mapTo(input.ref.value).filter(_.nonEmpty) --> { value =>
+              onChange.mapTo(input.ref.value).filter(_.nonEmpty) --> { value =>
                 email.set(value)
               }
             }
@@ -96,9 +93,9 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
           label(cls("w3-left-align w3-text-indigo"), "PIN:")
         ),
         div(cls("w3-col"), width("85%"),
-          input( idAttr("login-pin"), cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("text"),
+          input( idAttr("login-pin"), cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("text"), pattern("[0-9]"),
             inContext { input =>
-              onKeyUp.mapTo(input.ref.value).filter(_.toIntOption.nonEmpty) --> { value =>
+              onInput.mapTo(input.ref.value).filter(_.toIntOption.nonEmpty) --> { value =>
                 pin.set(value.toInt)
               }
             }
