@@ -97,6 +97,7 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
             inContext { input =>
               onInput.mapTo(input.ref.value).filter(_.toIntOption.nonEmpty) --> { value =>
                 pin.set(value.toInt)
+                println(s"set pin value: $value")
               }
             }
           )
