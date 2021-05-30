@@ -1,7 +1,9 @@
 package pool
 
+import org.scalajs.dom._
 import org.scalajs.dom.experimental.Fetch._
 import org.scalajs.dom.experimental._
+import org.scalajs.dom.experimental.serviceworkers._
 import org.scalajs.dom.experimental.serviceworkers.ServiceWorkerGlobalScope._
 import org.scalajs.dom.experimental.serviceworkers.{ExtendableEvent, FetchEvent}
 
@@ -57,6 +59,18 @@ object ServiceWorker {
 
     println("main: ServiceWorker installing...")
   }
+
+  def register(): Unit =
+    toServiceWorkerNavigator(window.navigator)
+      .serviceWorker
+      .register("js/main.js")
+      .toFuture
+      .onComplete {
+        case Success(registration) =>
+          println("registerServiceWorker: registered service worker")
+          registration.update()
+        case Failure(error) => println(s"registerServiceWorker: service worker registration failed > ${error.printStackTrace()}")
+      }  
 
   def toCache: Future[Unit] = {
     self.caches.open(poolCache)

@@ -3,20 +3,15 @@ package pool
 import com.raquo.laminar.api.L._
 
 import org.scalajs.dom._
-import org.scalajs.dom.experimental.serviceworkers._
 import org.scalajs.dom.ext.KeyCode
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExportTopLevel
-import scala.util.{Failure, Success}
 
 @JSExportTopLevel("Client")
 class Client(publicUrl: String, apiUrl: String) extends js.Object {
-  println(s"public url: $publicUrl")
-  println(s"api url: $apiUrl")
-
-  registerServiceWorker()
+  ServiceWorker.register()
 
   val serverProxy = ServerProxy()
   val eventObserver = EventObserver()
@@ -110,16 +105,4 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
       ),
       button( onClick.mapTo(SignIn(email.now(), pin.now())) --> commandObserver, cls("w3-btn w3-text-indigo"), "Submit" )
     )
-
-  def registerServiceWorker(): Unit =
-    toServiceWorkerNavigator(window.navigator)
-      .serviceWorker
-      .register("js/main.js")
-      .toFuture
-      .onComplete {
-        case Success(registration) =>
-          println("registerServiceWorker: registered service worker")
-          registration.update()
-        case Failure(error) => println(s"registerServiceWorker: service worker registration failed > ${error.printStackTrace()}")
-      }
 }
