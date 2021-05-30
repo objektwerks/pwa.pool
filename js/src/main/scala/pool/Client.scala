@@ -70,7 +70,7 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
           )
         )
       ),
-      button( onClick.mapTo(SignUp(email.now())) --> commandObserver, cls("w3-btn w3-text-indigo"), "Submit" )
+      button( onClick.mapTo(SignUp(email.now())) --> commandObserver, cls("w3-btn w3-indigo"), "Register" )
     )
 
   def renderLogin: Div =
@@ -103,6 +103,6 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
           )
         )
       ),
-      button( onClick.mapTo(SignIn(email.now(), pin.now())) --> commandObserver, cls("w3-btn w3-text-indigo"), "Submit" )
+      button( onClick.mapTo(SignIn(email.now(), pin.now())) --> commandObserver, cls("w3-btn w3-indigo"), "Login" )
     )
 }
