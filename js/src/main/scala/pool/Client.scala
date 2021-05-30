@@ -19,6 +19,7 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
   registerServiceWorker()
 
   val serverProxy = ServerProxy()
+  val eventObserver = EventObserver()
   val commandObserver = CommandObserver(apiUrl)
 
   val onKeyUp = onKeyPress.filter(_.keyCode == KeyCode.Up)
