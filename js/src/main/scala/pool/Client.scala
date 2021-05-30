@@ -16,8 +16,10 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
   println(s"public url: $publicUrl")
   println(s"api url: $apiUrl")
 
-  val serverProxy = ServerProxy()
   registerServiceWorker()
+
+  val serverProxy = ServerProxy()
+  val commandObserver = CommandObserver(apiUrl)
 
   val onKeyUp = onKeyPress.filter(_.keyCode == KeyCode.Up)
 
@@ -25,13 +27,6 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
 
   val email = Var("")
   val pin = Var(0)
-
-  val commandObserver = Observer[Command] {
-    case signup: SignUp => println(s"signup server  $signup ...")
-    case signin: SignIn => println(s"signin submit $signin...")
-    case licensee: DeactivateLicensee => println(s"signin submit $licensee...")
-    case licensee: ReactivateLicensee => println(s"signin submit $licensee...")
-  }
 
   def renderHome: Div =
     div(
