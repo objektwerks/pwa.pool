@@ -62,14 +62,13 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
             inContext { input =>
               onChange.mapTo(input.ref.value).filter(_.nonEmpty) --> { value =>
                 email.set(value)
-                println(s"set email value: $value")
               }
             }
           )
         )
       ),
-      div(cls("w3-row"),
-        button( onClick.mapTo(SignUp(email.now())) --> commandObserver, cls("w3-btn w3-indigo"), "Register" )
+      div(cls("w3-row w3-padding-16"),
+        button( onClick.mapTo(SignUp(email.now())) --> commandObserver, cls("w3-btn w3-text-indigo"), "Register" )
       )
     )
 
@@ -84,7 +83,6 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
             inContext { input =>
               onChange.mapTo(input.ref.value).filter(_.nonEmpty) --> { value =>
                 email.set(value)
-                println(s"set email value: $value")
               }
             }
           )
@@ -99,14 +97,13 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
             inContext { input =>
               onChange.mapTo(input.ref.value).filter(_.toIntOption.nonEmpty) --> { value =>
                 pin.set(value.toInt)
-                println(s"set pin value: $value")
               }
             }
           )
         )
       ),
-      div(cls("w3-row"),
-        button( onClick.mapTo(SignIn(email.now(), pin.now())) --> commandObserver, cls("w3-btn w3-indigo"), "Login" )
+      div(cls("w3-row w3-padding-16"),
+        button( onClick.mapTo(SignIn(email.now(), pin.now())) --> commandObserver, cls("w3-btn w3-text-indigo"), "Login" )
       )
     )
 }
