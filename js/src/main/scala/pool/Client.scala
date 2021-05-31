@@ -78,7 +78,7 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
       ),
       div( cls("w3-row"),
         div( cls("w3-col"), width("15%"),
-          label( cls("w3-left-align w3-text-indigo"), "Pin:")
+          label( cls("w3-left-align w3-text-indigo"), "Pin:" )
         ),
         div( cls("w3-col"), width("85%"),
           input( cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("number"), required(true),
