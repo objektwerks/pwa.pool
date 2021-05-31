@@ -19,6 +19,7 @@ object ServiceWorker {
     "index.html",
     "favicon.ico",
     "w3c.css",
+    "app.css",
     "logo.png",
     "logo-192.png",
     "logo-512.png"
