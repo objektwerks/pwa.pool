@@ -43,67 +43,51 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
     val datetimeVar = Var("")
     serverProxy.get(s"$publicUrl/now").foreach( now => datetimeVar.set(now.stripPrefix("\"").stripSuffix("\"")) )
     div(
-      label(
-        cls("w3-text-indigo"),
-        fontSize("12px"),
-        child.text <-- datetimeVar
-      )
+      label( cls("w3-text-indigo"), fontSize("12px"), child.text <-- datetimeVar )
     )
   }
 
   def renderRegister: Div =
-    div(cls("w3-container"), paddingTop("3px"), paddingBottom("3px"),
-      div(cls("w3-row"),
-        div(cls("w3-col"), width("15%"),
+    div( cls("w3-container w3-padding-16"),
+      div( cls("w3-row"),
+        div( cls("w3-col"), width("15%"),
           label( cls("w3-left-align w3-text-indigo"), "Email:" )
         ),
-        div(cls("w3-col"), width("85%"),
-          input(idAttr("register-email"), cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("text"),
-            inContext { input =>
-              onChange.mapTo(input.ref.value).filter(_.nonEmpty) --> { value =>
-                email.set(value)
-              }
-            }
+        div( cls("w3-col"), width("85%"),
+          input( cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("email"),
+            onChange.mapToValue.filter(_.nonEmpty) --> email
           )
         )
       ),
-      div(cls("w3-row w3-padding-16"),
-        button( onClick.mapTo(SignUp(email.now())) --> commandObserver, cls("w3-btn w3-text-indigo"), "Register" )
+      div( cls("w3-row w3-padding-16"),
+        button( onClick.mapTo( SignUp(email.now()) ) --> commandObserver, cls("w3-btn w3-text-indigo"), "Register" )
       )
     )
 
   def renderLogin: Div =
-    div(cls("w3-container"), paddingTop("3px"), paddingBottom("3px"),
-      div(cls("w3-row"),
-        div(cls("w3-col"), width("15%"),
+    div( cls("w3-container w3-padding-16"),
+      div( cls("w3-row"),
+        div( cls("w3-col"), width("15%"),
           label( cls("w3-left-align w3-text-indigo"), "Email:" )
         ),
-        div(cls("w3-col"), width("85%"),
-          input( idAttr("login-email"), cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("text"),
-            inContext { input =>
-              onChange.mapTo(input.ref.value).filter(_.nonEmpty) --> { value =>
-                email.set(value)
-              }
-            }
+        div( cls("w3-col"), width("85%"),
+          input( cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("email"),
+            onChange.mapToValue.filter(_.nonEmpty) --> email
           )
         )
       ),
-      div(cls("w3-row"),
-        div(cls("w3-col"), width("15%"),
-          label(cls("w3-left-align w3-text-indigo"), "PIN:")
+      div( cls("w3-row"),
+        div( cls("w3-col"), width("15%"),
+          label( cls("w3-left-align w3-text-indigo"), "Pin:")
         ),
-        div(cls("w3-col"), width("85%"),
-          input( idAttr("login-pin"), cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("number"),
-            inContext { input =>
-              onChange.mapTo(input.ref.value).filter(_.toIntOption.nonEmpty) --> { value =>
-                pin.set(value.toInt)
-              }
-            }
+        div( cls("w3-col"), width("85%"),
+          input( cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("number"),
+            onChange.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> pin
           )
         )
       ),
-      div(cls("w3-row w3-padding-16"),
-        button( onClick.mapTo(SignIn(email.now(), pin.now())) --> commandObserver, cls("w3-btn w3-text-indigo"), "Login" )
+      div( cls("w3-row w3-padding-16"),
+        button( onClick.mapTo( SignIn(email.now(), pin.now()) ) --> commandObserver, cls("w3-btn w3-text-indigo"), "Login" )
       )
     )
 }
