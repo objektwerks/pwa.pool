@@ -54,7 +54,7 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
           label( cls("w3-left-align w3-text-indigo"), "Email:" )
         ),
         div( cls("w3-col"), width("85%"),
-          input( cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("email"), required(true),
+          input( cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("email"), required(true), autoFocus(true),
             onChange.mapToValue.filter(_.nonEmpty) --> email
           )
         )
@@ -71,7 +71,7 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
           label( cls("w3-left-align w3-text-indigo"), "Email:" )
         ),
         div( cls("w3-col"), width("85%"),
-          input( cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("email"), required(true),
+          input( cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("email"), required(true), autoFocus(true),
             onChange.mapToValue.filter(_.nonEmpty) --> email
           )
         )
