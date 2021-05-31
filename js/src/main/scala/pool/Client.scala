@@ -62,6 +62,7 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
             inContext { input =>
               onChange.mapTo(input.ref.value).filter(_.nonEmpty) --> { value =>
                 email.set(value)
+                println(s"set email value: $value")
               }
             }
           )
@@ -83,6 +84,7 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
             inContext { input =>
               onChange.mapTo(input.ref.value).filter(_.nonEmpty) --> { value =>
                 email.set(value)
+                println(s"set email value: $value")
               }
             }
           )
@@ -93,9 +95,9 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
           label(cls("w3-left-align w3-text-indigo"), "PIN:")
         ),
         div(cls("w3-col"), width("85%"),
-          input( idAttr("login-pin"), cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("text"), pattern("[0-9]"),
+          input( idAttr("login-pin"), cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("number"),
             inContext { input =>
-              onInput.mapTo(input.ref.value).filter(_.toIntOption.nonEmpty) --> { value =>
+              onChange.mapTo(input.ref.value).filter(_.toIntOption.nonEmpty) --> { value =>
                 pin.set(value.toInt)
                 println(s"set pin value: $value")
               }
