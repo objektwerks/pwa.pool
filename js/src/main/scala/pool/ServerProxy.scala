@@ -13,7 +13,7 @@ object ServerProxy {
 
   val headers = Map(
     "Content-Type" -> "application/json; charset=utf-8",
-    "Accept" -> "application/json"
+    "Accept" -> "application/jsonx"
   )
 
   def headers(license: String): Map[String, String] =
