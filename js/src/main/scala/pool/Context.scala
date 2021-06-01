@@ -4,24 +4,26 @@ import com.raquo.laminar.api.L._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
+case class Urls(signup: String, signin: String, deactivate: String, reactivate: String)
+
 object Context {
   def apply(apiUrl: String): Context = {
-    val urls = Map(
-      "signup" -> s"$apiUrl/signup",
-      "signin" -> s"$apiUrl/signin",
-      "deactivate" -> s"$apiUrl/deactivatelicensee",
-      "reactivate" -> s"$apiUrl/reactivatelicensee"
+    val urls = Urls(
+      s"$apiUrl/signup",
+      s"$apiUrl/signin",
+      s"$apiUrl/deactivatelicensee",
+      s"$apiUrl/reactivatelicensee"
     )
     new Context(urls)
   }
 }
 
-class Context(urls: Map[String, String]) {
+class Context(urls: Urls) {
   val commandObserver = Observer[Command] {
-    case signup: SignUp => post(urls("signup"), "", signup)
-    case signin: SignIn => post(urls("signin"), "", signin)
-    case deactivate: DeactivateLicensee => post(urls("deactivate"), deactivate.license, deactivate)
-    case reactivate: ReactivateLicensee => post(urls("reactivate"), reactivate.license, reactivate)
+    case signup: SignUp => post(urls.signup, "", signup)
+    case signin: SignIn => post(urls.signin, "", signin)
+    case deactivate: DeactivateLicensee => post(urls.deactivate, deactivate.license, deactivate)
+    case reactivate: ReactivateLicensee => post(urls.reactivate, reactivate.license, reactivate)
   }
 
   private def post(url: String,

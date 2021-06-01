@@ -13,10 +13,8 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
   ServiceWorker.register()
 
   val context = Context(apiUrl)
+  val model = Model()
   var root = render(document.getElementById("client"), renderHome)
-
-  val email = Var("")
-  val pin = Var(0)
 
   def renderHome: Div =
     div(
@@ -52,12 +50,12 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
         ),
         div( cls("w3-col"), width("85%"),
           input( cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("email"), required(true), autoFocus(true),
-            onChange.mapToValue.filter(_.nonEmpty) --> email
+            onChange.mapToValue.filter(_.nonEmpty) --> model.email
           )
         )
       ),
       div( cls("w3-row w3-padding-16"),
-        button( onClick.mapTo( SignUp(email.now()) ) --> context.commandObserver, cls("w3-btn w3-text-indigo"), "Register" )
+        button( onClick.mapTo( SignUp(model.email.now()) ) --> context.commandObserver, cls("w3-btn w3-text-indigo"), "Register" )
       )
     )
 
@@ -69,7 +67,7 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
         ),
         div( cls("w3-col"), width("85%"),
           input( cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("email"), required(true), autoFocus(true),
-            onChange.mapToValue.filter(_.nonEmpty) --> email
+            onChange.mapToValue.filter(_.nonEmpty) --> model.email
           )
         )
       ),
@@ -79,12 +77,12 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
         ),
         div( cls("w3-col"), width("85%"),
           input( cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("number"), required(true),
-            onChange.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> pin
+            onChange.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> model.pin
           )
         )
       ),
       div( cls("w3-row w3-padding-16"),
-        button( onClick.mapTo( SignIn(email.now(), pin.now()) ) --> context.commandObserver, cls("w3-btn w3-text-indigo"), "Login" )
+        button( onClick.mapTo( SignIn(model.email.now(), model.pin.now()) ) --> context.commandObserver, cls("w3-btn w3-text-indigo"), "Login" )
       )
     )
 }
