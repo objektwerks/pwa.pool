@@ -3,21 +3,38 @@ package pool
 import com.raquo.laminar.api.L._
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.annotation.nowarn
 
-@nowarn object CommandObserver {
+object CommandObserver {
   def apply(apiUrl: String,
             serverProxy: ServerProxy,
-            eventObserver: EventHandler): Observer[Command] = Observer[Command] {
-    case signup: SignUp => 
-      println(s"signup $apiUrl/signup with $signup ...")
-      serverProxy.post(s"$apiUrl/signup", "", signup).map {
-        case Right(event) => eventObserver.handle(event)
-        case Left(fault) => println(s"signup $apiUrl/signup to $fault ...")
-      }
+            eventHandler: EventHandler): Observer[Command] = Observer[Command] {
+    case signup: SignUp =>
+      val url = s"$apiUrl/signup"
+      println(s"$url : $signup")
+      post(serverProxy, url, "", signup, eventHandler)
+    case signin: SignIn =>
+      val url = s"$apiUrl/signin"
+      println(s"$url : $signin")
+      post(serverProxy, url, "", signin, eventHandler)
+    case deactivate: DeactivateLicensee =>
+      val url = s"$apiUrl/deactivatelicensee"
+      println(s"$url : $deactivate")
+      post(serverProxy, url, deactivate.license, deactivate, eventHandler)
+    case reactivate: ReactivateLicensee =>
+      val url = s"$apiUrl/reactivatelicensee"
+      println(s"$url : $reactivate")
+      post(serverProxy, url, reactivate.license, reactivate, eventHandler)
+  }
 
-    case signin: SignIn => println(s"signin $apiUrl/signin with $signin ...")
-    case deactivate: DeactivateLicensee => println(s"deactivate license $apiUrl/deactivatelicensee with $deactivate ...")
-    case reactivate: ReactivateLicensee => println(s"reactivated licensee $apiUrl/reactivatelicensee with $reactivate ...")
+  def post(serverProxy: ServerProxy,
+           url: String,
+           license: String,
+           command: Command,
+           eventHandler: EventHandler): Unit = {
+    serverProxy.post(url, license, command).map {
+      case Right(event) => eventHandler.handle(event)
+      case Left(fault) => println(s"$url : $fault")
+    }
+    ()
   }
 }
