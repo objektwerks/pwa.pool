@@ -13,8 +13,7 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
   ServiceWorker.register()
 
   val serverProxy = ServerProxy()
-  val eventObserver = EventObserver()
-  val commandObserver = CommandObserver(apiUrl)
+  val commandObserver = CommandObserver(apiUrl, serverProxy, EventObserver())
 
   var root = render(document.getElementById("client"), renderHome)
 
