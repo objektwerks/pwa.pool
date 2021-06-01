@@ -12,11 +12,7 @@ import scala.scalajs.js.annotation.JSExportTopLevel
 class Client(publicUrl: String, apiUrl: String) extends js.Object {
   ServiceWorker.register()
 
-  val commandUrls = Map("signup" -> s"$apiUrl/signup",
-                        "signin" -> s"$apiUrl/signin",
-                        "deactivate" -> s"$apiUrl/deactivatelicensee",
-                        "reactivate" -> s"$apiUrl/reactivatelicensee")
-  val commandObserver = CommandObserver(commandUrls)
+  val context = Context(apiUrl)
   var root = render(document.getElementById("client"), renderHome)
 
   val email = Var("")
@@ -61,7 +57,7 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
         )
       ),
       div( cls("w3-row w3-padding-16"),
-        button( onClick.mapTo( SignUp(email.now()) ) --> commandObserver, cls("w3-btn w3-text-indigo"), "Register" )
+        button( onClick.mapTo( SignUp(email.now()) ) --> context.commandObserver, cls("w3-btn w3-text-indigo"), "Register" )
       )
     )
 
@@ -88,7 +84,7 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
         )
       ),
       div( cls("w3-row w3-padding-16"),
-        button( onClick.mapTo( SignIn(email.now(), pin.now()) ) --> commandObserver, cls("w3-btn w3-text-indigo"), "Login" )
+        button( onClick.mapTo( SignIn(email.now(), pin.now()) ) --> context.commandObserver, cls("w3-btn w3-text-indigo"), "Login" )
       )
     )
 }
