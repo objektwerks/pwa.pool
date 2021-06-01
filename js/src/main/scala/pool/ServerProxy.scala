@@ -16,7 +16,9 @@ object ServerProxy {
     "Accept" -> "application/json"
   )
 
-  def headers(license: String): Map[String, String] = headers + ( Licensee.headerLicenseKey -> license )
+  def headers(license: String): Map[String, String] =
+    if (license.nonEmpty) headers + ( Licensee.headerLicenseKey -> license )
+    else headers
 
   def get(url: String): Future[String] =
     Ajax.get(url = url, headers = headers).map { xhr =>
