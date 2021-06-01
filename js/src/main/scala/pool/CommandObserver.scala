@@ -12,14 +12,11 @@ object CommandObserver {
     case reactivate: ReactivateLicensee => post(urls("reactivate"), reactivate.license, reactivate)
   }
 
-  def post(url: String,
-           license: String,
-           command: Command): Unit = {
-    println(s"url: $url license:$license command: $command")
-    ServerProxy.post(url, license, command).map {
-      case Right(event) => EventHandler.handle(event)
-      case Left(fault) => println(s"$url : $fault")
-    }
+  private def post(url: String,
+                   license: String,
+                   command: Command): Unit = {
+    println(s"url: $url license: $license command: $command")
+    ServerProxy.post(url, license, command).map { either => EventHandler.handle(either) }
     ()
   }
 }
