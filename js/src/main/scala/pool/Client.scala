@@ -12,9 +12,7 @@ import scala.scalajs.js.annotation.JSExportTopLevel
 class Client(publicUrl: String, apiUrl: String) extends js.Object {
   ServiceWorker.register()
 
-  val serverProxy = ServerProxy()
-  val commandObserver = CommandObserver(apiUrl, serverProxy, EventHandler())
-
+  val commandObserver = CommandObserver(apiUrl)
   var root = render(document.getElementById("client"), renderHome)
 
   val email = Var("")
@@ -40,7 +38,7 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
 
   def renderNow: Div = {
     val datetimeVar = Var("")
-    serverProxy.get(s"$publicUrl/now").foreach( now => datetimeVar.set(now.stripPrefix("\"").stripSuffix("\"")) )
+    ServerProxy.get(s"$publicUrl/now").foreach( now => datetimeVar.set(now.stripPrefix("\"").stripSuffix("\"")) )
     div(
       label( cls("w3-text-indigo"), fontSize("12px"), child.text <-- datetimeVar )
     )

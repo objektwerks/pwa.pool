@@ -5,27 +5,23 @@ import com.raquo.laminar.api.L._
 import scala.concurrent.ExecutionContext.Implicits.global
 
 object CommandObserver {
-  def apply(apiUrl: String,
-            serverProxy: ServerProxy,
-            eventHandler: EventHandler): Observer[Command] = Observer[Command] {
+  def apply(apiUrl: String): Observer[Command] = Observer[Command] {
     case signup: SignUp =>
-      post(serverProxy, s"$apiUrl/signup", "", signup, eventHandler)
+      post(s"$apiUrl/signup", "", signup)
     case signin: SignIn =>
-      post(serverProxy, s"$apiUrl/signin", "", signin, eventHandler)
+      post(s"$apiUrl/signin", "", signin)
     case deactivate: DeactivateLicensee =>
-      post(serverProxy, s"$apiUrl/deactivatelicensee", deactivate.license, deactivate, eventHandler)
+      post(s"$apiUrl/deactivatelicensee", deactivate.license, deactivate)
     case reactivate: ReactivateLicensee =>
-      post(serverProxy, s"$apiUrl/reactivatelicensee", reactivate.license, reactivate, eventHandler)
+      post(s"$apiUrl/reactivatelicensee", reactivate.license, reactivate)
   }
 
-  def post(serverProxy: ServerProxy,
-           url: String,
+  def post(url: String,
            license: String,
-           command: Command,
-           eventHandler: EventHandler): Unit = {
+           command: Command): Unit = {
     println(s"url: $url license:$license command: $command")
-    serverProxy.post(url, license, command).map {
-      case Right(event) => eventHandler.handle(event)
+    ServerProxy.post(url, license, command).map {
+      case Right(event) => EventHandler.handle(event)
       case Left(fault) => println(s"$url : $fault")
     }
     ()
