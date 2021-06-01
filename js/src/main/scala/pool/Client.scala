@@ -55,7 +55,10 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
         )
       ),
       div( cls("w3-row w3-padding-16"),
-        button( onClick.mapTo( SignUp(model.email.now()) ) --> context.commandObserver, cls("w3-btn w3-text-indigo"), "Register" )
+        button( cls("w3-btn w3-text-indigo"),
+          onClick.mapTo( SignUp(model.email.now()) ) --> context.commandObserver,
+          "Register"
+        )
       )
     )
 
@@ -82,7 +85,10 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
         )
       ),
       div( cls("w3-row w3-padding-16"),
-        button( onClick.mapTo( SignIn(model.email.now(), model.pin.now()) ) --> context.commandObserver, cls("w3-btn w3-text-indigo"), "Login" )
+        button( cls("w3-btn w3-text-indigo"),
+          onClick.mapTo( SignIn(model.email.now(), model.pin.now()) ) --> context.commandObserver,
+          "Login"
+        )
       )
     )
 }
