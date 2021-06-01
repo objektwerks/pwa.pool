@@ -9,21 +9,13 @@ object CommandObserver {
             serverProxy: ServerProxy,
             eventHandler: EventHandler): Observer[Command] = Observer[Command] {
     case signup: SignUp =>
-      val url = s"$apiUrl/signup"
-      println(s"$url : $signup")
-      post(serverProxy, url, "", signup, eventHandler)
+      post(serverProxy, s"$apiUrl/signup", "", signup, eventHandler)
     case signin: SignIn =>
-      val url = s"$apiUrl/signin"
-      println(s"$url : $signin")
-      post(serverProxy, url, "", signin, eventHandler)
+      post(serverProxy, s"$apiUrl/signin", "", signin, eventHandler)
     case deactivate: DeactivateLicensee =>
-      val url = s"$apiUrl/deactivatelicensee"
-      println(s"$url : $deactivate")
-      post(serverProxy, url, deactivate.license, deactivate, eventHandler)
+      post(serverProxy, s"$apiUrl/deactivatelicensee", deactivate.license, deactivate, eventHandler)
     case reactivate: ReactivateLicensee =>
-      val url = s"$apiUrl/reactivatelicensee"
-      println(s"$url : $reactivate")
-      post(serverProxy, url, reactivate.license, reactivate, eventHandler)
+      post(serverProxy, s"$apiUrl/reactivatelicensee", reactivate.license, reactivate, eventHandler)
   }
 
   def post(serverProxy: ServerProxy,
@@ -31,6 +23,7 @@ object CommandObserver {
            license: String,
            command: Command,
            eventHandler: EventHandler): Unit = {
+    println(s"url: $url license:$license command: $command")
     serverProxy.post(url, license, command).map {
       case Right(event) => eventHandler.handle(event)
       case Left(fault) => println(s"$url : $fault")
