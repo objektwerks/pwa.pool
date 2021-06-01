@@ -8,7 +8,7 @@ import akka.http.scaladsl.server.{Directive0, Route}
 
 trait CorsHandler {
   val corsResponseHeaders = List(
-    `Access-Control-Allow-Origin`.*,
+    `Access-Control-Allow-Origin`("*"),
     `Access-Control-Allow-Credentials`(true),
     `Access-Control-Allow-Headers`("*")
   )
