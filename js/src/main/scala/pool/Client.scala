@@ -12,7 +12,11 @@ import scala.scalajs.js.annotation.JSExportTopLevel
 class Client(publicUrl: String, apiUrl: String) extends js.Object {
   ServiceWorker.register()
 
-  val commandObserver = CommandObserver(apiUrl)
+  val commandUrls = Map("signup" -> s"$apiUrl/signup",
+                        "signin" -> s"$apiUrl/signin",
+                        "deactivate" -> s"$apiUrl/deactivatelicensee",
+                        "reactivate" -> s"$apiUrl/reactivatelicensee")
+  val commandObserver = CommandObserver(commandUrls)
   var root = render(document.getElementById("client"), renderHome)
 
   val email = Var("")
