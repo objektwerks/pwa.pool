@@ -1,10 +1,10 @@
 package pool
 
-object EventObserver {
-  def apply(): EventObserver = new EventObserver()
+object EventHandler {
+  def apply(): EventHandler = new EventHandler()
 }
 
-class EventObserver {
+class EventHandler {
   def handle(event: Event): Unit = event match {
     case signedup: SignedUp => println(s"signedup $signedup")
     case signedin: SignedIn => println(s"signedin $signedin")

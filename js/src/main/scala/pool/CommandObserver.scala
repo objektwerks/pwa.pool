@@ -8,14 +8,12 @@ import scala.annotation.nowarn
 @nowarn object CommandObserver {
   def apply(apiUrl: String,
             serverProxy: ServerProxy,
-            eventObserver: EventObserver): Observer[Command] = Observer[Command] {
+            eventObserver: EventHandler): Observer[Command] = Observer[Command] {
     case signup: SignUp => 
       println(s"signup $apiUrl/signup with $signup ...")
-      serverProxy.post(s"$apiUrl/signup", "", signup).map { either =>
-        either match {
-          case Right(event) => eventObserver.handle(event)
-          case Left(fault) => println(s"signup $apiUrl/signup to $fault ...")
-        }
+      serverProxy.post(s"$apiUrl/signup", "", signup).map {
+        case Right(event) => eventObserver.handle(event)
+        case Left(fault) => println(s"signup $apiUrl/signup to $fault ...")
       }
 
     case signin: SignIn => println(s"signin $apiUrl/signin with $signin ...")
