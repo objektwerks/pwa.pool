@@ -6,6 +6,9 @@ import akka.http.scaladsl.model.{HttpResponse, StatusCodes}
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.{Directive0, Route}
 
+/**
+ * See: https://dzone.com/articles/handling-cors-in-akka-http
+ */
 trait CorsHandler {
   val corsResponseHeaders = List(
     `Access-Control-Allow-Origin`.*,
