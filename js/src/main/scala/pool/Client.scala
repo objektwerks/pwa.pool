@@ -12,7 +12,7 @@ import scala.scalajs.js.annotation.JSExportTopLevel
 class Client(publicUrl: String, apiUrl: String) extends js.Object {
   ServiceWorker.register()
 
-  val context = Context(apiUrl)
+  val context = Context(publicUrl, apiUrl)
   val model = Model()
   var root = render(document.getElementById("client"), renderHome)
 

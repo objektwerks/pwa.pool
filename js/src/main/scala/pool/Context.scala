@@ -4,21 +4,11 @@ import com.raquo.laminar.api.L._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
-case class Urls(signup: String, signin: String, deactivate: String, reactivate: String)
-
 object Context {
-  def apply(apiUrl: String): Context = {
-    val urls = Urls(
-      s"$apiUrl/signup",
-      s"$apiUrl/signin",
-      s"$apiUrl/deactivatelicensee",
-      s"$apiUrl/reactivatelicensee"
-    )
-    new Context(urls)
-  }
+  def apply(publicUrl: String, apiUrl: String): Context = new Context( Urls( publicUrl, apiUrl ) )
 }
 
-class Context(urls: Urls) {
+case class Context(urls: Urls) extends Product with Serializable {
   val commandObserver = Observer[Command] {
     case signup: SignUp => post(urls.signup, "", signup)
     case signin: SignIn => post(urls.signin, "", signin)
