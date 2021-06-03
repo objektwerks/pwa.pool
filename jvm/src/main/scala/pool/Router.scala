@@ -49,16 +49,9 @@ class Router(store: Store, cache: LicenseeCache, emailer: ActorRef) extends Cors
         complete(InternalServerError -> addFault(Fault(cause)))
       }
   }
-
-  val index = path("") {
-    getFromResource("index.html")
-  }
-  val resources = get {
-    getFromResourceDirectory("./")
-  }
     
   val now = path("now") {
-    get {
+    post {
       complete(OK -> Instant.now.toString)
     }
   }
@@ -393,7 +386,7 @@ class Router(store: Store, cache: LicenseeCache, emailer: ActorRef) extends Cors
     }
   }
 
-  val public = index ~ resources ~ now ~ signup ~ signin ~ deactivatelicensee ~ reactivatelicensee
+  val public = now ~ signup ~ signin ~ deactivatelicensee ~ reactivatelicensee
 
   val api = pathPrefix("api" / "v1" / "pool") {
     pools ~ surfaces ~ pumps ~ timers ~ timersettings ~ heaters ~ heatersettings ~

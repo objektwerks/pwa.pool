@@ -20,8 +20,8 @@ object ServerProxy {
     if (license.nonEmpty) headers + ( Licensee.headerLicenseKey -> license )
     else headers
 
-  def get(url: String): Future[String] =
-    Ajax.get(url = url, headers = headers).map { xhr =>
+  def post(url: String): Future[String] =
+    Ajax.post(url = url, headers = headers).map { xhr =>
       xhr.status match {
         case 200 => xhr.responseText
         case _ => xhr.statusText

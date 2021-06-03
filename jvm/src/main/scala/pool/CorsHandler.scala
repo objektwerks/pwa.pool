@@ -23,7 +23,7 @@ trait CorsHandler {
   def preflightRequestHandler: Route = options {
     complete(
       HttpResponse().withHeaders(
-        `Access-Control-Allow-Methods`(GET, POST, PUT, DELETE, PATCH, OPTIONS)
+        `Access-Control-Allow-Methods`(POST, GET, PUT, DELETE, PATCH, OPTIONS)
       )
     )
   }

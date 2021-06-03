@@ -36,7 +36,7 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
 
   def renderNow: Div = {
     val datetimeVar = Var("")
-    ServerProxy.get(s"$publicUrl/now").foreach( now => datetimeVar.set(now.stripPrefix("\"").stripSuffix("\"")) )
+    ServerProxy.post(s"$publicUrl/now").foreach(now => datetimeVar.set(now.stripPrefix("\"").stripSuffix("\"")) )
     div(
       label( cls("w3-text-indigo"), fontSize("12px"), child.text <-- datetimeVar )
     )
