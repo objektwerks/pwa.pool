@@ -7,7 +7,6 @@ import org.scalajs.dom._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExportTopLevel
-import scala.annotation.nowarn
 
 @JSExportTopLevel("Client")
 class Client(publicUrl: String, apiUrl: String) extends js.Object {
@@ -16,14 +15,15 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
 
   val context = Context(publicUrl, apiUrl)
   val model = Model()
-  render(document.getElementById("root"), renderClient)
+  val root = document.getElementById("root")
+  render(root, renderNavigation)
 
-  def renderClient: Div = renderNavigation
+  def renderRoot(div: Div): Unit = root.innerHTML = div.ref.innerHTML
 
-  @nowarn def renderNavigation: Div =
+  def renderNavigation: Div =
     div( cls("w3-bar w3-white w3-text-indigo"),
-      a( href("#"), onClick --> (_ => renderRegister), cls("w3-bar-item w3-button"), "Register" ),
-      a( href("#"), onClick --> (_ => renderLogin), cls("w3-bar-item w3-button"), "Login" )
+      a( href("#"), onClick --> (_ => renderRoot( renderRegister ) ), cls("w3-bar-item w3-button"), "Register" ),
+      a( href("#"), onClick --> (_ => renderRoot( renderLogin ) ), cls("w3-bar-item w3-button"), "Login" )
     )
 
   def renderRegister: Div =
