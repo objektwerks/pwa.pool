@@ -16,7 +16,7 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
 
   val context = Context(publicUrl, apiUrl)
   val model = Model()
-  render(document.getElementById("client"), renderClient)
+  render(document.getElementById("root"), renderClient)
 
   def renderClient: Div = renderNavigation
 
