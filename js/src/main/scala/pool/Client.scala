@@ -7,10 +7,12 @@ import org.scalajs.dom._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExportTopLevel
+import scala.annotation.nowarn
 
 @JSExportTopLevel("Client")
 class Client(publicUrl: String, apiUrl: String) extends js.Object {
   ServiceWorker.register()
+  ServerProxy.post(s"$publicUrl/now").foreach(println)
 
   val context = Context(publicUrl, apiUrl)
   val model = Model()
@@ -18,29 +20,15 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
 
   def renderHome: Div =
     div(
-      renderNavigation,
-      renderNow
+      renderNavigation
     )
 
-  def renderCenter(center: Div): Unit = {
-    root.unmount()
-    root = render(document.getElementById("client"), center)
-  }
-
-  def renderNavigation: Div =
+  @nowarn def renderNavigation: Div =
     div(
       cls("w3-bar w3-white w3-text-indigo"),
-      a( href("#"), onClick --> (_ => renderCenter( renderRegister) ), cls("w3-bar-item w3-button"), "Register" ),
-      a( href("#"), onClick --> (_ => renderCenter( renderLogin) ), cls("w3-bar-item w3-button"), "Login" )
+      a( href("#"), onClick --> (_ => renderRegister), cls("w3-bar-item w3-button"), "Register" ),
+      a( href("#"), onClick --> (_ => renderLogin), cls("w3-bar-item w3-button"), "Login" )
     )
-
-  def renderNow: Div = {
-    val datetimeVar = Var("")
-    ServerProxy.post(s"$publicUrl/now").foreach(now => datetimeVar.set(now.stripPrefix("\"").stripSuffix("\"")) )
-    div(
-      label( cls("w3-text-indigo"), fontSize("12px"), child.text <-- datetimeVar )
-    )
-  }
 
   def renderRegister: Div =
     div( cls("w3-container w3-padding-16"),
