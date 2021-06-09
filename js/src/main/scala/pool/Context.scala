@@ -36,5 +36,5 @@ case class Context(urls: Urls) extends Product with Serializable {
     case reactivated: LicenseeReactivated => println(s"licensee reactivated $reactivated")
   }
 
-  private def handle(fault: Fault): Unit = println(s"$fault")
+  private def handle(fault: Fault): Unit = println(s"fault: $fault")
 }
