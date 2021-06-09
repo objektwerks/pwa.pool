@@ -51,6 +51,10 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
               SignUp(model.email.now()) 
              } --> context.commandObserver,
             "Register"
+          ),
+          button( cls("w3-btn w3-text-indigo"),
+            onClick --> (_ => document.getElementById("login").setAttribute("style", "display: none") ),
+            "Cancel"
           )
         )
       )
@@ -86,6 +90,10 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
               SignIn(model.email.now(), model.pin.now()) 
             } --> context.commandObserver,
             "Login"
+          ),
+          button( cls("w3-btn w3-text-indigo"),
+            onClick --> (_ => document.getElementById("login").setAttribute("style", "display: none") ),
+            "Cancel"
           )
         )
       )
