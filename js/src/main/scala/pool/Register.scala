@@ -27,7 +27,7 @@ object Register {
             "Register"
           ),
           button( cls("w3-btn w3-text-indigo"),
-            onClick --> (_ => document.getElementById("login").setAttribute("style", "display: none") ),
+            onClick --> (_ => document.getElementById("register").setAttribute("style", "display: none") ),
             "Cancel"
           )
         )
