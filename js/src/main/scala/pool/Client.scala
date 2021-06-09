@@ -16,5 +16,7 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
   val context = Context(publicUrl, apiUrl)
   val model = Model()
   val navigation = Navigation.render(context, model)
-  render(document.getElementById("content"), Content.render(navigation))
+  val entities = Entities.render(context, model)
+  val content = Content.render(navigation, entities)
+  render(document.getElementById("content"), content)
 }
