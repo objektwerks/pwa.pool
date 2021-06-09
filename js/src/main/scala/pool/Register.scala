@@ -22,7 +22,7 @@ object Register {
           button( cls("w3-btn w3-text-indigo"),
             onClick.mapTo {
               document.getElementById("register").setAttribute("style", "display: none")
-              SignUp(model.email.now()) 
+              SignUp(model.email.now())
              } --> context.commandObserver,
             "Register"
           ),

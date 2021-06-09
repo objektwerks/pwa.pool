@@ -32,7 +32,7 @@ object Login {
           button( cls("w3-btn w3-text-indigo"),
             onClick.mapTo { 
               document.getElementById("login").setAttribute("style", "display: none")
-              SignIn(model.email.now(), model.pin.now()) 
+              SignIn(model.email.now(), model.pin.now())
             } --> context.commandObserver,
             "Login"
           ),
