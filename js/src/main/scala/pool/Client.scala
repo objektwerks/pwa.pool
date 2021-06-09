@@ -23,41 +23,12 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
   def renderNavigation: Div =
     div( cls("w3-bar w3-white w3-text-indigo"),
       a( href("#"), cls("w3-bar-item w3-button"),
-         onClick --> (_ => renderRoot( renderRegister.amend( display("block") ) ) ),
+         onClick --> (_ => renderRoot( Register.render(context, model).amend( display("block") ) ) ),
          "Register" ),
       a( href("#"),
          cls("w3-bar-item w3-button"),
          onClick --> (_ => renderRoot( renderLogin.amend( display("block") ) ) ),
          "Login" )
-    )
-
-  def renderRegister: Div =
-    div( idAttr("register"), cls("w3-modal"), display("block"),
-      div( cls("w3-modal-content w3-card w3-animate-left"),
-        div( cls("w3-row"),
-          div( cls("w3-col"), width("15%"),
-            label( cls("w3-left-align w3-text-indigo"), "Email:" )
-          ),
-          div( cls("w3-col"), width("85%"),
-            input( cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("email"), required(true), autoFocus(true),
-              onChange.mapToValue.filter(_.nonEmpty) --> model.email
-            )
-          )
-        ),
-        div( cls("w3-row w3-padding-16"),
-          button( cls("w3-btn w3-text-indigo"),
-            onClick.mapTo {
-              document.getElementById("register").setAttribute("style", "display: none")
-              SignUp(model.email.now()) 
-             } --> context.commandObserver,
-            "Register"
-          ),
-          button( cls("w3-btn w3-text-indigo"),
-            onClick --> (_ => document.getElementById("login").setAttribute("style", "display: none") ),
-            "Cancel"
-          )
-        )
-      )
     )
 
   def renderLogin: Div =
