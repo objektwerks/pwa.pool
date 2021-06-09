@@ -27,7 +27,7 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
     )
 
   def renderRegister: Div =
-    div( cls("w3-container w3-padding-16"),
+    div( idAttr("register"), cls("w3-container w3-padding-16"),
       div( cls("w3-row"),
         div( cls("w3-col"), width("15%"),
           label( cls("w3-left-align w3-text-indigo"), "Email:" )
@@ -47,7 +47,7 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
     )
 
   def renderLogin: Div =
-    div( cls("w3-container w3-padding-16"),
+    div( idAttr("login"), cls("w3-container w3-padding-16"),
       div( cls("w3-row"),
         div( cls("w3-col"), width("15%"),
           label( cls("w3-left-align w3-text-indigo"), "Email:" )
