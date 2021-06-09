@@ -15,10 +15,10 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
 
   val context = Context(publicUrl, apiUrl)
   val model = Model()
-  val root = document.getElementById("root")
-  render(root, renderNavigation)
+  val content = document.getElementById("content")
+  render(content, renderNavigation)
 
-  def renderRoot(div: Div): Unit = root.innerHTML = div.ref.innerHTML
+  def renderRoot(div: Div): Unit = content.innerHTML = div.ref.innerHTML
 
   def renderNavigation: Div =
     div( cls("w3-bar w3-white w3-text-indigo"),
