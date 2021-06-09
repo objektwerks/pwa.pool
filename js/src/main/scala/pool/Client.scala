@@ -22,12 +22,17 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
 
   def renderNavigation: Div =
     div( cls("w3-bar w3-white w3-text-indigo"),
-      a( href("#"), onClick --> (_ => renderRoot( renderRegister ) ), cls("w3-bar-item w3-button"), "Register" ),
-      a( href("#"), onClick --> (_ => renderRoot( renderLogin ) ), cls("w3-bar-item w3-button"), "Login" )
+      a( href("#"), cls("w3-bar-item w3-button"),
+         onClick --> (_ => renderRoot( renderRegister.amend( display("block") ) ) ),
+         "Register" ),
+      a( href("#"),
+         cls("w3-bar-item w3-button"),
+         onClick --> (_ => renderRoot( renderLogin.amend( display("block") ) ) ),
+         "Login" )
     )
 
   def renderRegister: Div =
-    div( idAttr("register"), cls("w3-modal"),
+    div( idAttr("register"), cls("w3-modal"), display("block"),
       div( cls("w3-modal-content w3-card w3-animate-left"),
         div( cls("w3-row"),
           div( cls("w3-col"), width("15%"),
@@ -41,7 +46,10 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
         ),
         div( cls("w3-row w3-padding-16"),
           button( cls("w3-btn w3-text-indigo"),
-            onClick.mapTo( SignUp(model.email.now()) ) --> context.commandObserver,
+            onClick.mapTo {
+              document.getElementById("register").setAttribute("style", "display: none")
+              SignUp(model.email.now()) 
+             } --> context.commandObserver,
             "Register"
           )
         )
@@ -73,7 +81,10 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
         ),
         div( cls("w3-row w3-padding-16"),
           button( cls("w3-btn w3-text-indigo"),
-            onClick.mapTo( SignIn(model.email.now(), model.pin.now()) ) --> context.commandObserver,
+            onClick.mapTo { 
+              document.getElementById("login").setAttribute("style", "display: none")
+              SignIn(model.email.now(), model.pin.now()) 
+            } --> context.commandObserver,
             "Login"
           )
         )
