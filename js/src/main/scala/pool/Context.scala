@@ -19,7 +19,7 @@ case class Context(urls: Urls) extends Product with Serializable {
   private def post(url: String,
                    license: String,
                    command: Command): Unit = {
-    println(s"url: $url license: $license command: $command")
+    println(s"command > post url: $url license: $license command: $command")
     ServerProxy.post(url, license, command).map { either => handle(either) }
     ()
   }
