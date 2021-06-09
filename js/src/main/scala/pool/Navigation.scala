@@ -6,7 +6,7 @@ import scala.annotation.nowarn
 
 object Navigation {
   @nowarn def render(context: Context, model: Model): Div =
-    div( cls("w3-bar w3-white w3-text-indigo"),
+    div( idAttr("navigation"), cls("w3-bar w3-white w3-text-indigo"),
       a( href("#"),
          cls("w3-bar-item w3-button"),
          onClick --> (_ => Register.render(context, model) ),
