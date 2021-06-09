@@ -16,16 +16,5 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
   val context = Context(publicUrl, apiUrl)
   val model = Model()
   val content = document.getElementById("content")
-  render(content, renderNavigation)
-
-  def renderNavigation: Div =
-    div( cls("w3-bar w3-white w3-text-indigo"),
-      a( href("#"), cls("w3-bar-item w3-button"),
-         onClick --> (_ => Register.render(context, model).amend( display("block") ) ),
-         "Register" ),
-      a( href("#"),
-         cls("w3-bar-item w3-button"),
-         onClick --> (_ => Login.render(context, model).amend( display("block") ) ),
-         "Login" )
-    )
+  render(content, Navigation.render(context, model))
 }
