@@ -28,50 +28,54 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
 
   def renderRegister: Div =
     div( idAttr("register"), cls("w3-modal"),
-      div( cls("w3-row"),
-        div( cls("w3-col"), width("15%"),
-          label( cls("w3-left-align w3-text-indigo"), "Email:" )
-        ),
-        div( cls("w3-col"), width("85%"),
-          input( cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("email"), required(true), autoFocus(true),
-            onChange.mapToValue.filter(_.nonEmpty) --> model.email
+      div( cls("w3-modal-content w3-card w3-animate-left"),
+        div( cls("w3-row"),
+          div( cls("w3-col"), width("15%"),
+            label( cls("w3-left-align w3-text-indigo"), "Email:" )
+          ),
+          div( cls("w3-col"), width("85%"),
+            input( cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("email"), required(true), autoFocus(true),
+              onChange.mapToValue.filter(_.nonEmpty) --> model.email
+            )
           )
-        )
-      ),
-      div( cls("w3-row w3-padding-16"),
-        button( cls("w3-btn w3-text-indigo"),
-          onClick.mapTo( SignUp(model.email.now()) ) --> context.commandObserver,
-          "Register"
+        ),
+        div( cls("w3-row w3-padding-16"),
+          button( cls("w3-btn w3-text-indigo"),
+            onClick.mapTo( SignUp(model.email.now()) ) --> context.commandObserver,
+            "Register"
+          )
         )
       )
     )
 
   def renderLogin: Div =
     div( idAttr("login"), cls("w3-modal"),
-      div( cls("w3-row"),
-        div( cls("w3-col"), width("15%"),
-          label( cls("w3-left-align w3-text-indigo"), "Email:" )
-        ),
-        div( cls("w3-col"), width("85%"),
-          input( cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("email"), required(true), autoFocus(true),
-            onChange.mapToValue.filter(_.nonEmpty) --> model.email
+      div( cls("w3-modal-content w3-card w3-animate-left"),
+        div( cls("w3-row"),
+          div( cls("w3-col"), width("15%"),
+            label( cls("w3-left-align w3-text-indigo"), "Email:" )
+          ),
+          div( cls("w3-col"), width("85%"),
+            input( cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("email"), required(true), autoFocus(true),
+              onChange.mapToValue.filter(_.nonEmpty) --> model.email
+            )
           )
-        )
-      ),
-      div( cls("w3-row"),
-        div( cls("w3-col"), width("15%"),
-          label( cls("w3-left-align w3-text-indigo"), "Pin:" )
         ),
-        div( cls("w3-col"), width("85%"),
-          input( cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("number"), required(true),
-            onChange.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> model.pin
+        div( cls("w3-row"),
+          div( cls("w3-col"), width("15%"),
+            label( cls("w3-left-align w3-text-indigo"), "Pin:" )
+          ),
+          div( cls("w3-col"), width("85%"),
+            input( cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("number"), required(true),
+              onChange.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> model.pin
+            )
           )
-        )
-      ),
-      div( cls("w3-row w3-padding-16"),
-        button( cls("w3-btn w3-text-indigo"),
-          onClick.mapTo( SignIn(model.email.now(), model.pin.now()) ) --> context.commandObserver,
-          "Login"
+        ),
+        div( cls("w3-row w3-padding-16"),
+          button( cls("w3-btn w3-text-indigo"),
+            onClick.mapTo( SignIn(model.email.now(), model.pin.now()) ) --> context.commandObserver,
+            "Login"
+          )
         )
       )
     )
