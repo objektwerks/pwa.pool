@@ -6,7 +6,7 @@ import org.scalajs.dom._
 
 object Register {
   def render(context: Context, model: Model): Div =
-    div( idAttr("register"), cls("w3-modal"), display("block"),
+    div( idAttr("register"), cls("w3-modal"),
       div( cls("w3-modal-content w3-card w3-animate-left"),
         div( cls("w3-row"),
           div( cls("w3-col"), width("15%"),
