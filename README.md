@@ -54,8 +54,8 @@ Dev
 
 Test
 ----
-1. sbt clean sharedJVM/test
-2. sbt clean jvm/it:test
+1. sbt sharedJVM/clean test
+2. sbt jvm/clean it:test
 
 Run
 ---
