@@ -69,7 +69,7 @@ class RouterTest extends AnyWordSpec with BeforeAndAfterAll with Matchers with S
 
   "now" should {
     "get now" in {
-      Get("/now") ~> router.routes ~> check {
+      Post("/now") ~> router.routes ~> check {
         status shouldBe OK
         responseAs[String].nonEmpty shouldBe true
       }
