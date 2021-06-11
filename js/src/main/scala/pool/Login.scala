@@ -5,7 +5,7 @@ import com.raquo.laminar.api.L._
 import org.scalajs.dom._
 
 object Login {
-  def render(context: Context, model: Model): Div =
+  def render(context: Context): Div =
     div( idAttr("login"), cls("w3-modal"),
       div( cls("w3-container"),
         div( cls("w3-modal-content"),
@@ -15,7 +15,7 @@ object Login {
             ),
             div( cls("w3-col"), width("85%"),
               input( cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("email"), required(true), autoFocus(true),
-                onChange.mapToValue.filter(_.nonEmpty) --> model.email
+                onChange.mapToValue.filter(_.nonEmpty) --> context.model.email
               )
             )
           ),
@@ -25,7 +25,7 @@ object Login {
             ),
             div( cls("w3-col"), width("85%"),
               input( cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("number"), required(true),
-                onChange.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> model.pin
+                onChange.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> context.model.pin
               )
             )
           ),
@@ -33,7 +33,7 @@ object Login {
             button( cls("w3-btn w3-text-indigo"),
               onClick.mapTo {
                 document.getElementById("login").setAttribute("style", "display: none")
-                SignIn(model.email.now(), model.pin.now())
+                SignIn(context.model.email.now(), context.model.pin.now())
               } --> context.commands,
               "Login"
             ),

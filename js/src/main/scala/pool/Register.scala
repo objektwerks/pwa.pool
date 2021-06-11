@@ -5,7 +5,7 @@ import com.raquo.laminar.api.L._
 import org.scalajs.dom._
 
 object Register {
-  def render(context: Context, model: Model): Div =
+  def render(context: Context): Div =
     div( idAttr("register"), cls("w3-modal"),
       div( cls("w3-container"),
         div( cls("w3-modal-content"),
@@ -15,7 +15,7 @@ object Register {
             ),
             div( cls("w3-col"), width("85%"),
               input( cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("email"), required(true), autoFocus(true),
-                onChange.mapToValue.filter(_.nonEmpty) --> model.email
+                onChange.mapToValue.filter(_.nonEmpty) --> context.model.email
               )
             )
           ),
@@ -23,7 +23,7 @@ object Register {
             button( cls("w3-btn w3-text-indigo"),
               onClick.mapTo {
                 document.getElementById("register").setAttribute("style", "display: none")
-                SignUp(model.email.now())
+                SignUp(context.model.email.now())
                } --> context.commands,
               "Register"
             ),

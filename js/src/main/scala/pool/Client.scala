@@ -13,12 +13,10 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
   ServiceWorker.register()
   ServerProxy.post(s"$publicUrl/now").foreach(println)
 
-  val context = Context(publicUrl, apiUrl)
-  val model = Model()
-
+  val context = Context( Urls( publicUrl, apiUrl ), Model() )
   val content = Content.render(
-    Navigation.render(Register.render(context, model), Login.render(context, model)),
-    Entities.render(context, model)
+    Navigation.render(Register.render(context), Login.render(context)),
+    Entities.render(context)
   )
   render(document.getElementById("content"), content)
 }
