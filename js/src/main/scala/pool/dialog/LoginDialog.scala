@@ -34,13 +34,13 @@ object LoginDialog {
           div( cls("w3-row w3-padding-16"),
             button( cls("w3-btn w3-text-indigo"),
               onClick.mapTo {
-                document.getElementById("login").setAttribute("style", "display: none")
+                document.getElementById("loginDialog").setAttribute("style", "display: none")
                 SignIn(context.model.email.now(), context.model.pin.now())
               } --> context.commands,
               "Login"
             ),
             button( cls("w3-btn w3-text-indigo"),
-              onClick --> (_ => document.getElementById("login").setAttribute("style", "display: none") ),
+              onClick --> (_ => document.getElementById("loginDialog").setAttribute("style", "display: none") ),
               "Cancel"
             )
           )

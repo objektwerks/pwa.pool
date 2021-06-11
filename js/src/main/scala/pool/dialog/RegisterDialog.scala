@@ -24,13 +24,13 @@ object RegisterDialog {
           div( cls("w3-row w3-padding-16"),
             button( cls("w3-btn w3-text-indigo"),
               onClick.mapTo {
-                document.getElementById("register").setAttribute("style", "display: none")
+                document.getElementById("registerDialog").setAttribute("style", "display: none")
                 SignUp(context.model.email.now())
                } --> context.commands,
               "Register"
             ),
             button( cls("w3-btn w3-text-indigo"),
-              onClick --> (_ => document.getElementById("register").setAttribute("style", "display: none") ),
+              onClick --> (_ => document.getElementById("registerDialog").setAttribute("style", "display: none") ),
               "Cancel"
             )
           )
