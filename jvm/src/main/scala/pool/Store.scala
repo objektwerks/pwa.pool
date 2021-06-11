@@ -25,7 +25,7 @@ class Store(conf: Config)(implicit ec: ExecutionContext) {
   def signIn(emailAddress: String, pin: Int): Future[Option[Licensee]] =
     run(
       query[Licensee]
-        .filter(_.emailAddress == lift(emailAddress))
+        .filter(_.email == lift(emailAddress))
         .filter(_.pin == lift(pin))
         .filter(_.activated > 0)
         .filter(_.deactivated == 0)
@@ -35,7 +35,7 @@ class Store(conf: Config)(implicit ec: ExecutionContext) {
     ctx.transaction { implicit ec =>
       run( query[Licensee]
         .filter(_.license == lift(license))
-        .filter(_.emailAddress == lift(emailAddress))
+        .filter(_.email == lift(emailAddress))
         .filter(_.pin == lift(pin))
         .filter(_.activated > 0)
         .filter(_.deactivated == 0)
@@ -49,7 +49,7 @@ class Store(conf: Config)(implicit ec: ExecutionContext) {
     ctx.transaction { implicit ec =>
       run( query[Licensee]
         .filter(_.license == lift(license))
-        .filter(_.emailAddress == lift(emailAddress))
+        .filter(_.email == lift(emailAddress))
         .filter(_.pin == lift(pin))
         .filter(_.activated > 0)
         .filter(_.deactivated > 0)

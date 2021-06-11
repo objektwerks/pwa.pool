@@ -36,7 +36,7 @@ class Emailer(conf: Config) extends Actor with ActorLogging {
                   |</head>
                   |<body>
                   |<p>$message</p>
-                  |<p>$email ${licensee.emailAddress}</p>
+                  |<p>$email ${licensee.email}</p>
                   |<p>$lic ${licensee.license}</p>
                   |<p>$pin ${licensee.pin}</p>
                   |<p>$instructions</p>
@@ -45,7 +45,7 @@ class Emailer(conf: Config) extends Actor with ActorLogging {
                   |""".stripMargin
     Email.create()
       .from(from)
-      .to(licensee.emailAddress)
+      .to(licensee.email)
       .subject(subject)
       .htmlMessage(html, "UTF-8")
   }
@@ -58,7 +58,7 @@ class Emailer(conf: Config) extends Actor with ActorLogging {
       session.open()
       messageId = Some( session.sendMail(buildEmail(licensee)) )
     } catch {
-      case NonFatal(error) => log.error(s"*** Emailer send to: ${licensee.emailAddress} failed: ${error.getMessage}", error)
+      case NonFatal(error) => log.error(s"*** Emailer send to: ${licensee.email} failed: ${error.getMessage}", error)
     } finally {
       session.close()
     }

@@ -7,7 +7,7 @@ import scala.util.Random
 sealed trait Entity extends Product with Serializable
 
 final case class Licensee(license: String = UUID.randomUUID.toString.toLowerCase,
-                          emailAddress: String,
+                          email: String,
                           pin: Int = Math.abs(Random.nextInt()),
                           activated: Int = DateTime.currentDate,
                           deactivated: Int = 0) extends Entity {

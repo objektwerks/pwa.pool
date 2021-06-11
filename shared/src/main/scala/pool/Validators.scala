@@ -31,13 +31,13 @@ object Validators {
   implicit class LicenseeOps(val licensee: Licensee) {
     def isActivated: Boolean =
       licensee.license.isLicense &&
-      licensee.emailAddress.isEmailAddress &&
+      licensee.email.isEmailAddress &&
       licensee.pin > 0 &&
       licensee.activated > 0 &&
       licensee.deactivated == 0
     def isDeactivated: Boolean =
       licensee.license.isLicense &&
-      licensee.emailAddress.isEmailAddress &&
+      licensee.email.isEmailAddress &&
       licensee.pin > 0 &&
       licensee.activated > 0 &&
       licensee.deactivated > 0
