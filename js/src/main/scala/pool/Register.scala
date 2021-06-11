@@ -24,7 +24,7 @@ object Register {
               onClick.mapTo {
                 document.getElementById("register").setAttribute("style", "display: none")
                 SignUp(model.email.now())
-               } --> context.commandObserver,
+               } --> context.commands,
               "Register"
             ),
             button( cls("w3-btn w3-text-indigo"),

@@ -9,7 +9,7 @@ object Context {
 }
 
 case class Context(urls: Urls) extends Product with Serializable {
-  val commandObserver = Observer[Command] {
+  val commands = Observer[Command] {
     case signup: SignUp => post(urls.signup, "", signup)
     case signin: SignIn => post(urls.signin, "", signin)
     case deactivate: DeactivateLicensee => post(urls.deactivate, deactivate.license, deactivate)
