@@ -10,7 +10,6 @@ import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.{ExceptionHandler, Route}
 import akka.util.Timeout
 
-
 import org.slf4j.LoggerFactory
 
 import scala.util.control.NonFatal
