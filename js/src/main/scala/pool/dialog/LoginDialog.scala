@@ -1,12 +1,14 @@
-package pool
+package pool.dialog
 
 import com.raquo.laminar.api.L._
 
 import org.scalajs.dom._
 
-object Login {
+import pool.{Context, SignIn}
+
+object LoginDialog {
   def render(context: Context): Div =
-    div( idAttr("login"), cls("w3-modal"),
+    div( idAttr("loginDialog"), cls("w3-modal"),
       div( cls("w3-container"),
         div( cls("w3-modal-content"),
           div( cls("w3-row"),

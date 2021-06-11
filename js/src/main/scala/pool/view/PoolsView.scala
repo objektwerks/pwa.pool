@@ -1,11 +1,13 @@
-package pool
+package pool.view
 
 import com.raquo.laminar.api.L._
 
-object Entities {
+import pool.Context
+
+object PoolsView {
   def render(context: Context): Div = {
     println(context)
-    div( cls("w3-container"),
+    div( idAttr("poolsView"), cls("w3-container"),
       div( cls("w3-panel w3-indigo"),
         h3("Pools")
       ),

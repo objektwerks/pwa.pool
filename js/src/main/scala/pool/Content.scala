@@ -3,9 +3,9 @@ package pool
 import com.raquo.laminar.api.L._
 
 object Content {
-  def render(navigation: Div, entities: Div): Div = 
-    div( 
-      navigation, 
-      entities
+  def render(registerLoginMenu: Div, poolsView: Div): Div =
+    div( idAttr("content"), cls("w3-container"),
+      registerLoginMenu,
+      poolsView
     )
 }

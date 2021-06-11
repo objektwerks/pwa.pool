@@ -4,6 +4,10 @@ import com.raquo.laminar.api.L._
 
 import org.scalajs.dom._
 
+import pool.dialog.{LoginDialog, RegisterDialog}
+import pool.menu.RegisterLoginMenu
+import pool.view.PoolsView
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExportTopLevel
@@ -15,8 +19,8 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
 
   val context = Context( Urls( publicUrl, apiUrl ), Model() )
   val content = Content.render(
-    Navigation.render( Register.render(context), Login.render(context) ),
-    Entities.render(context)
+    RegisterLoginMenu.render( RegisterDialog.render(context), LoginDialog.render(context) ),
+    PoolsView.render(context)
   )
   render(document.getElementById("content"), content)
 }
