@@ -8,22 +8,22 @@ import scala.annotation.nowarn
   implicit val faultRW: ReadWriter[Fault] = macroRW
 
   implicit val commandRW: ReadWriter[Command] = ReadWriter.merge(
-    macroRW[SignUp], macroRW[ReactivateLicensee], macroRW[SignIn], macroRW[DeactivateLicensee]
+    macroRW[SignUp], macroRW[SignIn], macroRW[DeactivateLicensee], macroRW[ReactivateLicensee]
   )
 
   implicit val signupRW: ReadWriter[SignUp] = macroRW
-  implicit val activateLicenseeRW: ReadWriter[ReactivateLicensee] = macroRW
   implicit val signinRW: ReadWriter[SignIn] = macroRW
   implicit val deactivateLicenseeRW: ReadWriter[DeactivateLicensee] = macroRW
+  implicit val reactivateLicenseeRW: ReadWriter[ReactivateLicensee] = macroRW
 
   implicit val eventRW: ReadWriter[Event] = ReadWriter.merge(
-    macroRW[SignedUp], macroRW[LicenseeReactivated], macroRW[SignedIn], macroRW[LicenseeDeactivated]
+    macroRW[SignedIn], macroRW[SignedUp], macroRW[LicenseeDeactivated], macroRW[LicenseeReactivated]
   )
 
   implicit val signedUpRW: ReadWriter[SignedUp] = macroRW
-  implicit val licenseeActivatedRW: ReadWriter[LicenseeReactivated] = macroRW
   implicit val signedInRW: ReadWriter[SignedIn] = macroRW
   implicit val licenseeDeactivatedRW: ReadWriter[LicenseeDeactivated] = macroRW
+  implicit val licenseeReactivatedRW: ReadWriter[LicenseeReactivated] = macroRW
 
   implicit val entityRW: ReadWriter[Entity] = ReadWriter.merge(
     macroRW[Licensee], macroRW[License], macroRW[Pool], macroRW[PoolId], macroRW[Surface], macroRW[Pump], macroRW[Timer],
