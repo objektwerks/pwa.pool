@@ -18,9 +18,9 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
   ServerProxy.post(s"$publicUrl/now").foreach(println)
 
   val context = Context( Urls( publicUrl, apiUrl ), Model() )
-  val content = Content.render(
-    RegisterLoginMenu.render( RegisterDialog.render(context), LoginDialog.render(context) ),
-    PoolsView.render(context)
+  val content = Content(
+    RegisterLoginMenu( RegisterDialog(context), LoginDialog(context) ),
+    PoolsView(context)
   )
   render(document.getElementById("content"), content)
 }

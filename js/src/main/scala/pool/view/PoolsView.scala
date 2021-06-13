@@ -5,7 +5,7 @@ import com.raquo.laminar.api.L._
 import pool.Context
 
 object PoolsView {
-  def render(context: Context): Div = {
+  def apply(context: Context): Div = {
     println(context)
     div( idAttr("poolsView"), cls("w3-container"),
       ul( idAttr("pools"), cls("w3-ul w3-hoverable"),

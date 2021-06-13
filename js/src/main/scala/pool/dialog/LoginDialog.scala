@@ -7,7 +7,7 @@ import org.scalajs.dom._
 import pool.{Context, SignIn}
 
 object LoginDialog {
-  def render(context: Context): Div =
+  def apply(context: Context): Div =
     div( idAttr("loginDialog"), cls("w3-modal"),
       div( cls("w3-container"),
         div( cls("w3-modal-content"),
