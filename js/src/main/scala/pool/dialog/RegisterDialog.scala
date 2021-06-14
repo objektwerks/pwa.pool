@@ -2,8 +2,6 @@ package pool.dialog
 
 import com.raquo.laminar.api.L._
 
-import org.scalajs.dom._
-
 import pool.{Context, SignUp}
 
 object RegisterDialog {
@@ -24,7 +22,7 @@ object RegisterDialog {
           div( cls("w3-row w3-padding-16"),
             button( cls("w3-btn w3-text-indigo"),
               onClick.mapTo {
-                document.getElementById("registerDialog").setAttribute("style", "display: none")
+                context.displayToNone("registerDialog")
                 SignUp(context.model.email.now())
                } --> context.commands,
               "Register"

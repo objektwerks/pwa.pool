@@ -2,8 +2,6 @@ package pool.dialog
 
 import com.raquo.laminar.api.L._
 
-import org.scalajs.dom._
-
 import pool.{Context, SignIn}
 
 object LoginDialog {
@@ -34,7 +32,7 @@ object LoginDialog {
           div( cls("w3-row w3-padding-16"),
             button( cls("w3-btn w3-text-indigo"),
               onClick.mapTo {
-                document.getElementById("loginDialog").setAttribute("style", "display: none")
+                context.displayToNone("loginDialog")
                 SignIn(context.model.email.now(), context.model.pin.now())
               } --> context.commands,
               "Login"
