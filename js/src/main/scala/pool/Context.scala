@@ -21,17 +21,25 @@ case class Context(urls: Urls, model: Model) extends Product with Serializable {
                    license: String,
                    command: Command): Unit = {
     println(s"command > post url: $url license: $license command: $command")
-    ServerProxy.post(url, license, command).map { either => resolve(either) }
+    ServerProxy.post(url, license, command).map { either =>
+      either.fold( fault => onFault(fault), event => onEvent(event) )
+    }
     ()
   }
 
-  private def resolve(either: Either[Fault, Event]): Unit = either.fold( fault => onFault(fault), event => onEvent(event) )
-
   private def onEvent(event: Event): Unit = event match {
-    case signedup: SignedUp => println(s"signedup $signedup")
-    case signedin: SignedIn => println(s"signedin $signedin")
-    case deactivated: LicenseeDeactivated => println(s"licensee deactivated $deactivated")
-    case reactivated: LicenseeReactivated => println(s"licensee reactivated $reactivated")
+    case signedup: SignedUp =>
+      println(s"signedup $signedup")
+      model.licensee.set( Some(signedup.licensee) )
+    case signedin: SignedIn =>
+      println(s"signedin $signedin")
+      model.licensee.set( Some(signedin.licensee) )
+    case deactivated: LicenseeDeactivated =>
+      println(s"licensee deactivated $deactivated")
+      model.licensee.set( Some(deactivated.licensee) )
+    case reactivated: LicenseeReactivated =>
+      println(s"licensee reactivated $reactivated")
+      model.licensee.set( Some(reactivated.licensee) )
   }
 
   private def onFault(fault: Fault): Unit = println(s"fault: $fault")
