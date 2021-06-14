@@ -1,11 +1,13 @@
 package pool.dialog
 
 import com.raquo.laminar.api.L._
+import pool.{Context, Licensee, ServerProxy, SignIn, SignedIn}
 
-import pool.{Context, SignIn}
+import scala.annotation.nowarn
+import scala.concurrent.ExecutionContext.Implicits.global
 
 object LoginDialog {
-  def apply(context: Context): Div =
+  @nowarn def apply(context: Context): Div =
     div( idAttr("loginDialog"), cls("w3-modal"),
       div( cls("w3-container"),
         div( cls("w3-modal-content"),
@@ -31,10 +33,17 @@ object LoginDialog {
           ),
           div( cls("w3-row w3-padding-16"),
             button( cls("w3-btn w3-text-indigo"),
-              onClick.mapTo {
-                context.displayToNone("loginDialog")
-                SignIn(context.model.email.now(), context.model.pin.now())
-              } --> context.commands,
+              onClick --> {_ =>
+                val command = SignIn(context.model.email.now(), context.model.pin.now())
+                ServerProxy.post(context.urls.signin, Licensee.emptyLicense, command).map {
+                  case Right(event) if event.isInstanceOf[SignedIn] =>
+                    val signedin = event.asInstanceOf[SignedIn]
+                    println(s"signedup $signedin")
+                    context.model.licensee.set( Some(signedin.licensee) )
+                    context.displayToNone("loginDialog")
+                  case Left(fault) => println(s"fault: $fault")
+                }
+              },
               "Login"
             ),
             button( cls("w3-btn w3-text-indigo"),

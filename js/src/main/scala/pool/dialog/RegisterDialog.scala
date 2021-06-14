@@ -1,11 +1,13 @@
 package pool.dialog
 
 import com.raquo.laminar.api.L._
+import pool.{Context, Licensee, ServerProxy, SignUp, SignedUp}
 
-import pool.{Context, SignUp}
+import scala.annotation.nowarn
+import scala.concurrent.ExecutionContext.Implicits.global
 
 object RegisterDialog {
-  def apply(context: Context): Div =
+  @nowarn def apply(context: Context): Div =
     div( idAttr("registerDialog"), cls("w3-modal"),
       div( cls("w3-container"),
         div( cls("w3-modal-content"),
@@ -21,10 +23,17 @@ object RegisterDialog {
           ),
           div( cls("w3-row w3-padding-16"),
             button( cls("w3-btn w3-text-indigo"),
-              onClick.mapTo {
-                context.displayToNone("registerDialog")
-                SignUp(context.model.email.now())
-               } --> context.commands,
+              onClick --> {_ =>
+                val command = SignUp(context.model.email.now())
+                ServerProxy.post(context.urls.signup, Licensee.emptyLicense, command).map {
+                  case Right(event) if event.isInstanceOf[SignedUp] =>
+                    val signedup = event.asInstanceOf[SignedUp]
+                    println(s"signedup $signedup")
+                    context.model.licensee.set( Some(signedup.licensee) )
+                    context.displayToNone("registerDialog")
+                  case Left(fault) => println(s"fault: $fault")
+                }
+               },
               "Register"
             ),
             button( cls("w3-btn w3-text-indigo"),
