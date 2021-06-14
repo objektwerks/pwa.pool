@@ -1,6 +1,7 @@
 package pool
 
 import com.raquo.laminar.api.L._
+import org.scalajs.dom.document
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -11,6 +12,10 @@ case class Context(urls: Urls, model: Model) extends Product with Serializable {
     case deactivate: DeactivateLicensee => post(urls.deactivate, deactivate.license, deactivate)
     case reactivate: ReactivateLicensee => post(urls.reactivate, reactivate.license, reactivate)
   }
+
+  def displayToBlock(id: String): Unit = document.getElementById(id).setAttribute("style", "display: block")
+
+  def displayToNone(id: String): Unit = document.getElementById(id).setAttribute("style", "display: none")
 
   private def post(url: String,
                    license: String,
