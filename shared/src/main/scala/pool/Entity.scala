@@ -15,6 +15,7 @@ final case class Licensee(license: String = UUID.randomUUID.toString.toLowerCase
 }
 
 object Licensee {
+  val emptyLicense = ""
   val headerLicenseKey = "license"
 }
 

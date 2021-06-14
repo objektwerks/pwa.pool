@@ -7,8 +7,8 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 case class Context(urls: Urls, model: Model) extends Product with Serializable {
   val commands = Observer[Command] {
-    case signup: SignUp => post(urls.signup, "", signup)
-    case signin: SignIn => post(urls.signin, "", signin)
+    case signup: SignUp => post(urls.signup, Licensee.emptyLicense, signup)
+    case signin: SignIn => post(urls.signin, Licensee.emptyLicense, signin)
     case deactivate: DeactivateLicensee => post(urls.deactivate, deactivate.license, deactivate)
     case reactivate: ReactivateLicensee => post(urls.reactivate, reactivate.license, reactivate)
   }
