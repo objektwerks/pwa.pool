@@ -2,7 +2,7 @@ package pool.menu
 
 import com.raquo.laminar.api.L._
 
-object RegisterLoginMenu {
+object CommandMenu {
   def apply(registerDialog: Div, loginDialog: Div): Div =
     div( idAttr("registerLoginMenu"), cls("w3-bar w3-white w3-text-indigo"),
       a( href("#"),

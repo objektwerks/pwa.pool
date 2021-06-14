@@ -5,7 +5,7 @@ import com.raquo.laminar.api.L._
 import org.scalajs.dom._
 
 import pool.dialog.{LoginDialog, RegisterDialog}
-import pool.menu.RegisterLoginMenu
+import pool.menu.CommandMenu
 import pool.view.PoolsView
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -19,7 +19,7 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
 
   val context = Context( Urls( publicUrl, apiUrl ), Model() )
   val content = Content(
-    RegisterLoginMenu( RegisterDialog(context), LoginDialog(context) ),
+    CommandMenu( RegisterDialog(context), LoginDialog(context) ),
     PoolsView(context)
   )
   render(document.getElementById("content"), content)
