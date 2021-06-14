@@ -36,11 +36,12 @@ object LoginDialog {
               onClick --> {_ =>
                 val command = SignIn(context.model.email.now(), context.model.pin.now())
                 ServerProxy.post(context.urls.signin, Licensee.emptyLicense, command).map {
-                  case Right(event) if event.isInstanceOf[SignedIn] =>
-                    val signedin = event.asInstanceOf[SignedIn]
-                    println(s"signedup $signedin")
-                    context.model.licensee.set( Some(signedin.licensee) )
-                    context.displayToNone("loginDialog")
+                  case Right(event) => event match {
+                    case signedin: SignedIn =>
+                      println(s"signedin $signedin")
+                      context.model.licensee.set( Some(signedin.licensee) )
+                      context.displayToNone("loginDialog")
+                  }
                   case Left(fault) => println(s"fault: $fault")
                 }
               },

@@ -26,11 +26,12 @@ object RegisterDialog {
               onClick --> {_ =>
                 val command = SignUp(context.model.email.now())
                 ServerProxy.post(context.urls.signup, Licensee.emptyLicense, command).map {
-                  case Right(event) if event.isInstanceOf[SignedUp] =>
-                    val signedup = event.asInstanceOf[SignedUp]
-                    println(s"signedup $signedup")
-                    context.model.licensee.set( Some(signedup.licensee) )
-                    context.displayToNone("registerDialog")
+                  case Right(event) => event match {
+                    case signedup: SignedUp =>
+                      println(s"signedup $signedup")
+                      context.model.licensee.set( Some(signedup.licensee) )
+                      context.displayToNone("registerDialog")
+                  }
                   case Left(fault) => println(s"fault: $fault")
                 }
                },
