@@ -3,11 +3,10 @@ package pool.dialog
 import com.raquo.laminar.api.L._
 import pool.{Context, Licensee, ServerProxy, SignIn, SignedIn}
 
-import scala.annotation.nowarn
 import scala.concurrent.ExecutionContext.Implicits.global
 
 object LoginDialog {
-  @nowarn def apply(context: Context): Div =
+  def apply(context: Context): Div =
     div( idAttr("loginDialog"), cls("w3-modal"),
       div( cls("w3-container"),
         div( cls("w3-modal-content"),
@@ -35,12 +34,13 @@ object LoginDialog {
             button( cls("w3-btn w3-text-indigo"),
               onClick --> {_ =>
                 val command = SignIn(context.model.email.now(), context.model.pin.now())
-                ServerProxy.post(context.urls.signin, Licensee.emptyLicense, command).map {
+                ServerProxy.post(context.urls.signin, Licensee.emptyLicense, command).foreach {
                   case Right(event) => event match {
                     case signedin: SignedIn =>
                       println(s"signedin $signedin")
                       context.model.licensee.set( Some(signedin.licensee) )
                       context.displayToNone("loginDialog")
+                    case _ => println(s"wrong event: $event")
                   }
                   case Left(fault) => println(s"fault: $fault")
                 }
