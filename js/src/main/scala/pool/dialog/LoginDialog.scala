@@ -40,7 +40,7 @@ object LoginDialog {
               "Login"
             ),
             button( cls("w3-btn w3-text-indigo"),
-              onClick --> (_ => document.getElementById("loginDialog").setAttribute("style", "display: none") ),
+              onClick --> (_ => context.displayToNone("loginDialog") ),
               "Cancel"
             )
           )

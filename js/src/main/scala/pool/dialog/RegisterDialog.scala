@@ -30,7 +30,7 @@ object RegisterDialog {
               "Register"
             ),
             button( cls("w3-btn w3-text-indigo"),
-              onClick --> (_ => document.getElementById("registerDialog").setAttribute("style", "display: none") ),
+              onClick --> (_ => context.displayToNone("registerDialog") ),
               "Cancel"
             )
           )
