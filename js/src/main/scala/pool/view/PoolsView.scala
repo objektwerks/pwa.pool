@@ -7,7 +7,7 @@ import pool.Context
 object PoolsView {
   def apply(context: Context): Div = {
     println(context)
-    div( idAttr("poolsView"), cls("w3-container"),
+    div( cls("w3-container"),
       ul( idAttr("pools"), cls("w3-ul w3-hoverable"),
         li( h3("Pools") )
       ),
