@@ -4,7 +4,7 @@ import com.raquo.laminar.api.L._
 
 import org.scalajs.dom._
 
-import pool.dialog.{LoginDialog, RegisterDialog}
+import pool.dialog.{DeactivateDialog, LoginDialog, ReactivateDialog, RegisterDialog}
 import pool.menu.CommandMenu
 import pool.view.PoolsView
 
@@ -19,7 +19,12 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
 
   val context = Context( Urls( publicUrl, apiUrl ), Model() )
   val content = Content(
-    CommandMenu( RegisterDialog(context), LoginDialog(context) ),
+    CommandMenu(
+      RegisterDialog(context),
+      LoginDialog(context),
+      DeactivateDialog(context),
+      ReactivateDialog(context)
+    ),
     PoolsView(context)
   )
   render(document.getElementById("content"), content)
