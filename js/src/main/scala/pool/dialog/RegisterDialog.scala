@@ -7,8 +7,10 @@ import pool.{Context, Licensee, ServerProxy, SignUp, SignedUp}
 import scala.concurrent.ExecutionContext.Implicits.global
 
 object RegisterDialog {
+  val id = getClass.getSimpleName
+
   def apply(context: Context): Div =
-    div( idAttr("registerDialog"), cls("w3-modal"),
+    div( idAttr(id), cls("w3-modal"),
       div( cls("w3-container"),
         div( cls("w3-modal-content"),
           div( cls("w3-row"),
@@ -28,10 +30,10 @@ object RegisterDialog {
                 ServerProxy.post(context.urls.signup, Licensee.emptyLicense, command).foreach {
                   case Right(event) => event match {
                     case signedup: SignedUp =>
-                      println(s"signedup $signedup")
+                      println(s"signedup: $signedup")
                       context.model.licensee.set( Some(signedup.licensee) )
-                      context.displayToNone("registerDialog")
-                    case _ => println(s"wrong event: $event")
+                      context.displayToNone(id)
+                    case _ => println(s"invalid event: $event")
                   }
                   case Left(fault) => println(s"fault: $fault")
                 }
@@ -39,7 +41,7 @@ object RegisterDialog {
               "Register"
             ),
             button( cls("w3-btn w3-text-indigo"),
-              onClick --> (_ => context.displayToNone("registerDialog") ),
+              onClick --> (_ => context.displayToNone(id) ),
               "Cancel"
             )
           )
