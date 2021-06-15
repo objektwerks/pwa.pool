@@ -7,8 +7,10 @@ import pool.{Context, Licensee, ServerProxy, SignIn, SignedIn}
 import scala.concurrent.ExecutionContext.Implicits.global
 
 object LoginDialog {
+  val id = getClass.getSimpleName
+
   def apply(context: Context): Div =
-    div( idAttr("loginDialog"), cls("w3-modal"),
+    div( idAttr(id), cls("w3-modal"),
       div( cls("w3-container"),
         div( cls("w3-modal-content"),
           div( cls("w3-row"),
@@ -38,10 +40,10 @@ object LoginDialog {
                 ServerProxy.post(context.urls.signin, Licensee.emptyLicense, command).foreach {
                   case Right(event) => event match {
                     case signedin: SignedIn =>
-                      println(s"signedin $signedin")
+                      println(s"signedin: $signedin")
                       context.model.licensee.set( Some(signedin.licensee) )
-                      context.displayToNone("loginDialog")
-                    case _ => println(s"wrong event: $event")
+                      context.displayToNone(id)
+                    case _ => println(s"invalid event: $event")
                   }
                   case Left(fault) => println(s"fault: $fault")
                 }
@@ -49,7 +51,7 @@ object LoginDialog {
               "Login"
             ),
             button( cls("w3-btn w3-text-indigo"),
-              onClick --> (_ => context.displayToNone("loginDialog") ),
+              onClick --> (_ => context.displayToNone(id) ),
               "Cancel"
             )
           )
