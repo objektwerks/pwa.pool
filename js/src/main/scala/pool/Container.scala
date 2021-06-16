@@ -2,9 +2,11 @@ package pool
 
 import com.raquo.laminar.api.L._
 
-object Content {
+object Container {
+  val id = "container"
+
   def apply(commandMenu: Div, poolsView: Div): Div =
-    div( idAttr("content"), cls("w3-container"),
+    div( idAttr(id), cls("w3-container"),
       commandMenu,
       poolsView
     )

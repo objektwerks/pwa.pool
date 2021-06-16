@@ -17,8 +17,8 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
   ServiceWorker.register()
   ServerProxy.post(s"$publicUrl/now").foreach(println)
 
-  val context = Context( publicUrl, apiUrl )
-  val content = Content(
+  val context = Context(publicUrl, apiUrl)
+  val container = Container(
     CommandMenu(
       RegisterDialog(context),
       LoginDialog(context),
@@ -27,5 +27,5 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
     ),
     PoolsView(context)
   )
-  render(document.getElementById("content"), content)
+  render(document.getElementById("content"), container)
 }
