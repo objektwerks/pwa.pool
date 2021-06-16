@@ -24,7 +24,7 @@ object LoginDialog {
             ),
             div( cls("w3-col"), width("85%"),
               input( cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("email"), required(true), autoFocus(true),
-                onChange.mapToValue.filter(_.nonEmpty) --> context.model.email
+                onChange.mapToValue.filter(_.nonEmpty) --> context.email
               )
             )
           ),
@@ -34,19 +34,19 @@ object LoginDialog {
             ),
             div( cls("w3-col"), width("85%"),
               input( cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("number"), required(true),
-                onChange.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> context.model.pin
+                onChange.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> context.pin
               )
             )
           ),
           div( cls("w3-row w3-padding-16"),
             button( cls("w3-btn w3-text-indigo"),
               onClick --> {_ =>
-                val command = SignIn(context.model.email.now(), context.model.pin.now())
-                ServerProxy.post(context.urls.signin, Licensee.emptyLicense, command).foreach {
+                val command = SignIn(context.email.now(), context.pin.now())
+                ServerProxy.post(context.signinUrl, Licensee.emptyLicense, command).foreach {
                   case Right(event) => event match {
                     case signedin: SignedIn =>
                       statusEventBus.emit( s"Success: $signedin" )
-                      context.model.licensee.set( Some(signedin.licensee) )
+                      context.licensee.set( Some(signedin.licensee) )
                       context.displayToNone(id)
                     case _ => statusEventBus.emit( s"Invalid: $event" )
                   }

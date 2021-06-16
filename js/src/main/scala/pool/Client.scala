@@ -17,7 +17,7 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
   ServiceWorker.register()
   ServerProxy.post(s"$publicUrl/now").foreach(println)
 
-  val context = Context( Urls( publicUrl, apiUrl ), Model() )
+  val context = Context( publicUrl, apiUrl )
   val content = Content(
     CommandMenu(
       RegisterDialog(context),

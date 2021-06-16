@@ -1,5 +1,28 @@
 package pool
 
-import pool.dom.Display
+import com.raquo.laminar.api.L._
 
-case class Context(urls: Urls, model: Model) extends Product with Serializable with Display
+import org.scalajs.dom.document
+
+object Context {
+  def apply(publicUrl: String, apiUrl: String): Context = new Context(publicUrl, apiUrl)
+}
+
+class Context(publicUrl: String, apiUrl: String) {
+  val email: Var[String] = Var("")
+  val pin: Var[Int] = Var(0)
+  val license: Var[String] = Var("")
+  val licensee: Var[Option[Licensee]] = Var(None)
+
+  val signupUrl = s"$publicUrl/signup"
+  val signinUrl = s"$publicUrl/signin"
+  val deactivateUrl = s"$publicUrl/deactivatelicensee"
+  val reactivateUrl = s"$publicUrl/reactivatelicensee"
+  val poolsUrl = s"$apiUrl/pools"
+  val poolsAddUrl = s"$apiUrl/pools/add"
+  val poolsUpdateUrl = s"$apiUrl/pools/update"
+
+  def displayToBlock(id: String): Unit = document.getElementById(id).setAttribute("style", "display: block")
+
+  def displayToNone(id: String): Unit = document.getElementById(id).setAttribute("style", "display: none")
+}
