@@ -4,11 +4,7 @@ import com.raquo.laminar.api.L._
 
 import org.scalajs.dom.document
 
-object Context {
-  def apply(publicUrl: String, apiUrl: String): Context = new Context(publicUrl, apiUrl)
-}
-
-class Context(publicUrl: String, apiUrl: String) {
+case class Context(publicUrl: String, apiUrl: String) extends Product with Serializable {
   val email: Var[String] = Var("")
   val pin: Var[Int] = Var(0)
   val license: Var[String] = Var("")
