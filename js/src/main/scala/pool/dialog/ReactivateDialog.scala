@@ -18,7 +18,7 @@ object ReactivateDialog {
             label( cls("w3-left-align"), "Status:" ),
             child.text <-- statusEventBus.events
           ),
-          div( cls("w3-row"),
+          div( cls("w3-row w3-margin"),
             div( cls("w3-col"), width("15%"),
               label( cls("w3-left-align w3-text-indigo"), "License:" )
             ),
@@ -29,7 +29,7 @@ object ReactivateDialog {
               )
             )
           ),
-          div( cls("w3-row"),
+          div( cls("w3-row w3-margin"),
             div( cls("w3-col"), width("15%"),
               label( cls("w3-left-align w3-text-indigo"), "Email:" )
             ),
@@ -39,7 +39,7 @@ object ReactivateDialog {
               )
             )
           ),
-          div( cls("w3-row"),
+          div( cls("w3-row w3-margin"),
             div( cls("w3-col"), width("15%"),
               label( cls("w3-left-align w3-text-indigo"), "Pin:" )
             ),
@@ -49,7 +49,7 @@ object ReactivateDialog {
               )
             )
           ),
-          div( cls("w3-row w3-padding-16"),
+          div( cls("w3-row w3-margin"),
             button( cls("w3-btn w3-text-indigo"),
               onClick --> {_ =>
                 val command = ReactivateLicensee(context.license.now(), context.email.now(), context.pin.now())

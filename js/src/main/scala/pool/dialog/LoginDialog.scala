@@ -18,7 +18,7 @@ object LoginDialog {
             label( cls("w3-left-align"), "Status:" ),
             child.text <-- statusEventBus.events
           ),
-          div( cls("w3-row"),
+          div( cls("w3-row w3-margin"),
             div( cls("w3-col"), width("15%"),
               label( cls("w3-left-align w3-text-indigo"), "Email:" )
             ),
@@ -28,7 +28,7 @@ object LoginDialog {
               )
             )
           ),
-          div( cls("w3-row"),
+          div( cls("w3-row w3-margin"),
             div( cls("w3-col"), width("15%"),
               label( cls("w3-left-align w3-text-indigo"), "Pin:" )
             ),
@@ -38,7 +38,7 @@ object LoginDialog {
               )
             )
           ),
-          div( cls("w3-row w3-padding-16"),
+          div( cls("w3-row w3-margin"),
             button( cls("w3-btn w3-text-indigo"),
               onClick --> {_ =>
                 val command = SignIn(context.email.now(), context.pin.now())
