@@ -8,7 +8,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 object DeactivateDialog {
   val id = getClass.getSimpleName
-  val statusEventBus = new EventBus[String]
+  val statusEvents = new EventBus[String]
 
   def apply(context: Context): Div =
     div( idAttr(id), cls("w3-modal"),
@@ -16,7 +16,7 @@ object DeactivateDialog {
         div( cls("w3-modal-content"),
           div( cls("w3-panel w3-indigo"),
             label( cls("w3-left-align"), "Status:" ),
-            child.text <-- statusEventBus.events
+            child.text <-- statusEvents.events.toSignal("")
           ),
           div( cls("w3-row w3-margin"),
             div( cls("w3-col"), width("15%"),
@@ -56,12 +56,12 @@ object DeactivateDialog {
                 ServerProxy.post(context.deactivateUrl, command.license, command).foreach {
                   case Right(event) => event match {
                     case deactivated: LicenseeDeactivated =>
-                      statusEventBus.emit( s"Success: $deactivated" )
+                      statusEvents.emit( s"Success: $deactivated" )
                       context.licensee.set( Some(deactivated.licensee) )
                       context.displayToNone(id)
-                    case _ => statusEventBus.emit( s"Invalid: $event" )
+                    case _ => statusEvents.emit( s"Invalid: $event" )
                   }
-                  case Left(fault) => statusEventBus.emit( s"Failure: $fault" )
+                  case Left(fault) => statusEvents.emit( s"Failure: $fault" )
                 }
               },
               "Deactivate"

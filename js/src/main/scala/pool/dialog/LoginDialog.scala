@@ -8,7 +8,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 object LoginDialog {
   val id = getClass.getSimpleName
-  val statusEventBus = new EventBus[String]
+  val statusEvents = new EventBus[String]
 
   def apply(context: Context): Div =
     div( idAttr(id), cls("w3-modal"),
@@ -16,7 +16,7 @@ object LoginDialog {
         div( cls("w3-modal-content"),
           div( cls("w3-panel w3-indigo"),
             label( cls("w3-left-align"), "Status:" ),
-            child.text <-- statusEventBus.events
+            child.text <-- statusEvents.events.toSignal("")
           ),
           div( cls("w3-row w3-margin"),
             div( cls("w3-col"), width("15%"),
@@ -45,12 +45,15 @@ object LoginDialog {
                 ServerProxy.post(context.signinUrl, Licensee.emptyLicense, command).foreach {
                   case Right(event) => event match {
                     case signedin: SignedIn =>
-                      statusEventBus.emit( s"Success: $signedin" )
+                      println( s"Success: $signedin" )
+                      statusEvents.emit( s"Success: $signedin" )
                       context.licensee.set( Some(signedin.licensee) )
                       context.displayToNone(id)
-                    case _ => statusEventBus.emit( s"Invalid: $event" )
+                    case _ => statusEvents.emit( s"Invalid: $event" )
                   }
-                  case Left(fault) => statusEventBus.emit( s"Failure: $fault" )
+                  case Left(fault) =>
+                    println( s"Failure: $fault" )
+                    statusEvents.emit( s"Failure: $fault" )
                 }
               },
               "Login"

@@ -8,7 +8,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 object RegisterDialog {
   val id = getClass.getSimpleName
-  val statusEventBus = new EventBus[String]
+  val statusEvents = new EventBus[String]
 
   def apply(context: Context): Div =
     div( idAttr(id), cls("w3-modal"),
@@ -16,7 +16,7 @@ object RegisterDialog {
         div( cls("w3-modal-content"),
           div( cls("w3-panel w3-indigo"),
             label( cls("w3-left-align"), "Status:" ),
-            child.text <-- statusEventBus.events
+            child.text <-- statusEvents.events.toSignal("")
           ),
           div( cls("w3-row w3-margin"),
             div( cls("w3-col"), width("15%"),
@@ -35,15 +35,15 @@ object RegisterDialog {
                 ServerProxy.post(context.signupUrl, Licensee.emptyLicense, command).foreach {
                   case Right(event) => event match {
                     case signedup: SignedUp =>
-                      println(s"Success: $signedup")
-                      statusEventBus.emit( s"Success: $signedup" )
+                      println( s"Success: $signedup" )
+                      statusEvents.emit( s"Success: $signedup" )
                       context.licensee.set( Some(signedup.licensee) )
                       context.displayToNone(id)
-                    case _ => statusEventBus.emit( s"Invalid: $event" )
+                    case _ => statusEvents.emit( s"Invalid: $event" )
                   }
                   case Left(fault) =>
-                    println(s"Failure: $fault")
-                    statusEventBus.emit( s"Failure: $fault" )
+                    println( s"Failure: $fault" )
+                    statusEvents.emit( s"Failure: $fault" )
                 }
                },
               "Register"
