@@ -8,14 +8,13 @@ import scala.util.{Failure, Success}
 
 object DeactivateDialog {
   val id = getClass.getSimpleName
-  val errorEvents = new EventBus[String]
 
   def apply(context: Context): Div =
     div(idAttr(id), cls("w3-modal"),
       div(cls("w3-container"),
         div(cls("w3-modal-content"),
           div(cls("w3-panel w3-indigo"),
-            child.text <-- errorEvents.events
+            child.text <-- context.errors.events
           ),
           div(cls("w3-row w3-margin"),
             div(cls("w3-col"), width("15%"),
@@ -60,15 +59,15 @@ object DeactivateDialog {
                         println(s"Success: $deactivated")
                         context.licensee.set(Some(deactivated.licensee))
                         context.displayToNone(id)
-                      case _ => errorEvents.emit(s"Invalid: $event")
+                      case _ => context.errors.emit(s"Invalid: $event")
                     }
                     case Left(fault) =>
                       println(s"Fault: $fault")
-                      errorEvents.emit(s"Fault: $fault")
+                      context.errors.emit(s"Fault: $fault")
                   }
                   case Failure(failure) =>
                     println(s"Failure: $failure")
-                    errorEvents.emit(s"Failure: $failure")
+                    context.errors.emit(s"Failure: $failure")
                 }
               },
               "Deactivate"

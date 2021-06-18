@@ -10,6 +10,8 @@ case class Context(publicUrl: String, apiUrl: String) extends Product with Seria
   val license: Var[String] = Var("")
   val licensee: Var[Option[Licensee]] = Var(None)
 
+  val errors = new EventBus[String]
+
   val signupUrl = s"$publicUrl/signup"
   val signinUrl = s"$publicUrl/signin"
   val deactivateUrl = s"$publicUrl/deactivatelicensee"
