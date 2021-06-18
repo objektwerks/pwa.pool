@@ -11,27 +11,27 @@ object RegisterDialog {
   val statusEvents = new EventBus[String]
 
   def apply(context: Context): Div =
-    div( idAttr(id), cls("w3-modal"),
-      div( cls("w3-container"),
-        div( cls("w3-modal-content"),
-          div( cls("w3-panel w3-indigo"),
+    div(idAttr(id), cls("w3-modal"),
+      div(cls("w3-container"),
+        div(cls("w3-modal-content"),
+          div(cls("w3-panel w3-indigo"),
             child.text <-- statusEvents.events.toSignal("")
           ),
-          div( cls("w3-row w3-margin"),
-            div( cls("w3-col"), width("15%"),
-              label( cls("w3-left-align w3-text-indigo"), "Email:" )
+          div(cls("w3-row w3-margin"),
+            div(cls("w3-col"), width("15%"),
+              label(cls("w3-left-align w3-text-indigo"), "Email:")
             ),
-            div( cls("w3-col"), width("85%"),
-              input( cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("email"), required(true), autoFocus(true),
+            div(cls("w3-col"), width("85%"),
+              input(cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("email"), required(true), autoFocus(true),
                 onChange.mapToValue.filter(_.nonEmpty) --> context.email
               )
             )
           ),
-          div( cls("w3-row w3-margin"),
-            button( cls("w3-btn w3-text-indigo"),
-              onClick --> {_ =>
+          div(cls("w3-row w3-margin"),
+            button(cls("w3-btn w3-text-indigo"),
+              onClick --> { _ =>
                 val command = SignUp(context.email.now())
-                println( s"Command: $command" )
+                println(s"Command: $command")
                 ServerProxy.post(context.signupUrl, Licensee.emptyLicense, command).onComplete {
                   case Success(either) => either match {
                     case Right(event) => event match {
@@ -53,8 +53,8 @@ object RegisterDialog {
               },
               "Register"
             ),
-            button( cls("w3-btn w3-text-indigo"),
-              onClick --> (_ => context.displayToNone(id) ),
+            button(cls("w3-btn w3-text-indigo"),
+              onClick --> (_ => context.displayToNone(id)),
               "Cancel"
             )
           )

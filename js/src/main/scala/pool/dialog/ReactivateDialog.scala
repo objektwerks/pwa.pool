@@ -1,73 +1,81 @@
 package pool.dialog
 
 import com.raquo.laminar.api.L._
-
-import pool.{Context, ReactivateLicensee, LicenseeReactivated, ServerProxy}
+import pool.{Context, LicenseeReactivated, ReactivateLicensee, ServerProxy}
 
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.util.{Failure, Success}
 
 object ReactivateDialog {
   val id = getClass.getSimpleName
   val statusEvents = new EventBus[String]
 
   def apply(context: Context): Div =
-    div( idAttr(id), cls("w3-modal"),
-      div( cls("w3-container"),
-        div( cls("w3-modal-content"),
-          div( cls("w3-panel w3-indigo"),
-            label( cls("w3-left-align"), "Status:" ),
+    div(idAttr(id), cls("w3-modal"),
+      div(cls("w3-container"),
+        div(cls("w3-modal-content"),
+          div(cls("w3-panel w3-indigo"),
             child.text <-- statusEvents.events.toSignal("")
           ),
-          div( cls("w3-row w3-margin"),
-            div( cls("w3-col"), width("15%"),
-              label( cls("w3-left-align w3-text-indigo"), "License:" )
+          div(cls("w3-row w3-margin"),
+            div(cls("w3-col"), width("15%"),
+              label(cls("w3-left-align w3-text-indigo"), "License:")
             ),
-            div( cls("w3-col"), width("85%"),
-              input( cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("text"),
+            div(cls("w3-col"), width("85%"),
+              input(cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("text"),
                 minLength(36), maxLength(36), required(true), autoFocus(true),
                 onChange.mapToValue.filter(_.nonEmpty) --> context.license
               )
             )
           ),
-          div( cls("w3-row w3-margin"),
-            div( cls("w3-col"), width("15%"),
-              label( cls("w3-left-align w3-text-indigo"), "Email:" )
+          div(cls("w3-row w3-margin"),
+            div(cls("w3-col"), width("15%"),
+              label(cls("w3-left-align w3-text-indigo"), "Email:")
             ),
-            div( cls("w3-col"), width("85%"),
-              input( cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("email"), required(true),
+            div(cls("w3-col"), width("85%"),
+              input(cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("email"), required(true),
                 onChange.mapToValue.filter(_.nonEmpty) --> context.email
               )
             )
           ),
-          div( cls("w3-row w3-margin"),
-            div( cls("w3-col"), width("15%"),
-              label( cls("w3-left-align w3-text-indigo"), "Pin:" )
+          div(cls("w3-row w3-margin"),
+            div(cls("w3-col"), width("15%"),
+              label(cls("w3-left-align w3-text-indigo"), "Pin:")
             ),
-            div( cls("w3-col"), width("85%"),
-              input( cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("number"), required(true),
+            div(cls("w3-col"), width("85%"),
+              input(cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("number"), required(true),
                 onChange.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> context.pin
               )
             )
           ),
-          div( cls("w3-row w3-margin"),
-            button( cls("w3-btn w3-text-indigo"),
-              onClick --> {_ =>
+          div(cls("w3-row w3-margin"),
+            button(cls("w3-btn w3-text-indigo"),
+              onClick --> { _ =>
                 val command = ReactivateLicensee(context.license.now(), context.email.now(), context.pin.now())
-                ServerProxy.post(context.reactivateUrl, command.license, command).foreach {
-                  case Right(event) => event match {
-                    case reactivated: LicenseeReactivated =>
-                      statusEvents.emit( s"Success: $reactivated" )
-                      context.licensee.set( Some(reactivated.licensee) )
-                      context.displayToNone(id)
-                    case _ => statusEvents.emit( s"Invalid: $event" )
+                println(s"Command: $command")
+                ServerProxy.post(context.reactivateUrl, command.license, command).onComplete {
+                  case Success(either) => either match {
+                    case Right(event) => event match {
+                      case reactivated: LicenseeReactivated =>
+                        println(s"Success: $reactivated")
+                        statusEvents.emit(s"Success: $reactivated")
+                        context.licensee.set(Some(reactivated.licensee))
+                        context.displayToNone(id)
+                      case _ => statusEvents.emit(s"Invalid: $event")
+                    }
+                    case Left(fault) =>
+                      println(s"Fault: $fault")
+                      statusEvents.emit(s"Fault: $fault")
                   }
-                  case Left(fault) => statusEvents.emit( s"Failure: $fault" )
+                  case Failure(failure) =>
+                    println(s"Failure: $failure")
+                    statusEvents.emit(s"Failure: $failure")
                 }
               },
               "Reactivate"
             ),
-            button( cls("w3-btn w3-text-indigo"),
-              onClick --> (_ => context.displayToNone(id) ),
+            button(cls("w3-btn w3-text-indigo"),
+              onClick --> (_ => context.displayToNone(id)),
               "Cancel"
             )
           )
