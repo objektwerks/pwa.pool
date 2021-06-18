@@ -17,7 +17,7 @@ final case class Licensee(license: String,
 object Licensee {
   def apply(email: String): Licensee = Licensee(
     license = UUID.randomUUID.toString.toLowerCase,
-    email: String,
+    email = email,
     pin = Math.abs(Random.nextInt()),
     activated = DateTime.currentDate,
     deactivated = 0
