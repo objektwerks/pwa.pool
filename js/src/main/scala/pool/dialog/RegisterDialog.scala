@@ -45,9 +45,9 @@ object RegisterDialog {
                       println(s"Fault: $fault")
                       errors.emit(s"Fault: $fault")
                   }
-                  case Failure(fault) =>
-                    println(s"Failure: $fault")
-                    errors.emit(s"Failure: $fault")
+                  case Failure(failure) =>
+                    println(s"Failure: $failure")
+                    errors.emit(s"Failure: $failure")
                 }
               },
               "Register"
