@@ -1,10 +1,10 @@
 package pool.dialog
 
 import com.raquo.laminar.api.L._
-
 import pool.{Context, Licensee, ServerProxy, SignIn, SignedIn}
 
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.util.{Failure, Success}
 
 object LoginDialog {
   val id = getClass.getSimpleName
@@ -15,7 +15,6 @@ object LoginDialog {
       div( cls("w3-container"),
         div( cls("w3-modal-content"),
           div( cls("w3-panel w3-indigo"),
-            label( cls("w3-left-align"), "Status:" ),
             child.text <-- statusEvents.events.toSignal("")
           ),
           div( cls("w3-row w3-margin"),
@@ -42,18 +41,24 @@ object LoginDialog {
             button( cls("w3-btn w3-text-indigo"),
               onClick --> {_ =>
                 val command = SignIn(context.email.now(), context.pin.now())
-                ServerProxy.post(context.signinUrl, Licensee.emptyLicense, command).foreach {
-                  case Right(event) => event match {
-                    case signedin: SignedIn =>
-                      println( s"Success: $signedin" )
-                      statusEvents.emit( s"Success: $signedin" )
-                      context.licensee.set( Some(signedin.licensee) )
-                      context.displayToNone(id)
-                    case _ => statusEvents.emit( s"Invalid: $event" )
+                println( s"Command: $command" )
+                ServerProxy.post(context.signinUrl, Licensee.emptyLicense, command).onComplete {
+                  case Success(either) => either match {
+                    case Right(event) => event match {
+                      case signedin: SignedIn =>
+                        println( s"Success: $signedin" )
+                        statusEvents.emit( s"Success: $signedin" )
+                        context.licensee.set( Some(signedin.licensee) )
+                        context.displayToNone(id)
+                      case _ => statusEvents.emit( s"Invalid: $event" )
+                    }
+                    case Left(fault) =>
+                      println( s"Fault: $fault" )
+                      statusEvents.emit( s"Fault: $fault" )
                   }
-                  case Left(fault) =>
-                    println( s"Failure: $fault" )
-                    statusEvents.emit( s"Failure: $fault" )
+                  case Failure(failure) =>
+                    println(s"Failure: $failure")
+                    statusEvents.emit(s"Failure: $failure")
                 }
               },
               "Login"
