@@ -14,7 +14,7 @@ object ReactivateDialog {
     div(idAttr(id), cls("w3-modal"),
       div(cls("w3-container"),
         div(cls("w3-modal-content"),
-          div(cls("w3-panel w3-indigo"),
+          div(cls("w3-panel w3-red"),
             child.text <-- errors.events
           ),
           div(cls("w3-row w3-margin"),
