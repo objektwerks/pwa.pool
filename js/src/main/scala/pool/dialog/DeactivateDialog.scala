@@ -57,7 +57,7 @@ object DeactivateDialog {
                   case Success(either) => either match {
                     case Right(event) => event match {
                       case deactivated: LicenseeDeactivated =>
-                        println(s"Success: $deactivated")
+                        println(s"Success: $event")
                         context.licensee.set(Some(deactivated.licensee))
                         context.displayToNone(id)
                       case _ => errors.emit(s"Invalid: $event")

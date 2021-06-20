@@ -36,7 +36,7 @@ object RegisterDialog {
                   case Success(either) => either match {
                     case Right(event) => event match {
                       case signedup: SignedUp =>
-                        println(s"Success: $signedup")
+                        println(s"Success: $event")
                         context.licensee.set(Some(signedup.licensee))
                         context.displayToNone(id)
                       case _ => errors.emit(s"Invalid: $event")

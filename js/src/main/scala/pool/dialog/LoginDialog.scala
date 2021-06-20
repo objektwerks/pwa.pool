@@ -46,7 +46,7 @@ object LoginDialog {
                   case Success(either) => either match {
                     case Right(event) => event match {
                       case signedin: SignedIn =>
-                        println(s"Success: $signedin")
+                        println(s"Success: $event")
                         context.licensee.set(Some(signedin.licensee))
                         context.displayToNone(id)
                       case _ => errors.emit(s"Invalid: $event")
