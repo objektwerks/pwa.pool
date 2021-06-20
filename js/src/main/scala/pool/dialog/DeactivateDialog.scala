@@ -2,6 +2,7 @@ package pool.dialog
 
 import com.raquo.laminar.api.L._
 
+import pool.menu.HomeMenu
 import pool.{Context, DeactivateLicensee, LicenseeDeactivated, ServerProxy}
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -60,6 +61,8 @@ object DeactivateDialog {
                       case deactivated: LicenseeDeactivated =>
                         println(s"Success: $event")
                         context.licensee.set(Some(deactivated.licensee))
+                        context.hide(HomeMenu.deactivateId)
+                        context.show(HomeMenu.reactivateId)
                         context.hide(id)
                       case _ => errors.emit(s"Invalid: $event")
                     }

@@ -2,6 +2,7 @@ package pool.dialog
 
 import com.raquo.laminar.api.L._
 
+import pool.menu.HomeMenu
 import pool.{Context, Licensee, ServerProxy, SignUp, SignedUp}
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -39,6 +40,7 @@ object RegisterDialog {
                       case signedup: SignedUp =>
                         println(s"Success: $event")
                         context.licensee.set(Some(signedup.licensee))
+                        context.hide(HomeMenu.registerId)
                         context.hide(id)
                       case _ => errors.emit(s"Invalid: $event")
                     }
