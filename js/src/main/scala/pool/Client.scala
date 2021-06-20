@@ -1,11 +1,9 @@
 package pool
 
 import com.raquo.laminar.api.L._
-
 import org.scalajs.dom._
-
 import pool.dialog.{DeactivateDialog, LoginDialog, ReactivateDialog, RegisterDialog}
-import pool.menu.CommandMenu
+import pool.menu.{HomeMenu, PoolsMenu}
 import pool.view.PoolsView
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -19,12 +17,8 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
 
   val context = Context(publicUrl, apiUrl)
   val container = Container(
-    CommandMenu(
-      RegisterDialog(context),
-      LoginDialog(context),
-      DeactivateDialog(context),
-      ReactivateDialog(context)
-    ),
+    HomeMenu(RegisterDialog(context), LoginDialog(context)),
+    PoolsMenu(DeactivateDialog(context), ReactivateDialog(context)),
     PoolsView(context)
   )
   render(document.getElementById("content"), container)
