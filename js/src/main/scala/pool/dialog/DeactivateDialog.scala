@@ -1,6 +1,7 @@
 package pool.dialog
 
 import com.raquo.laminar.api.L._
+
 import pool.{Context, DeactivateLicensee, LicenseeDeactivated, ServerProxy}
 
 import scala.concurrent.ExecutionContext.Implicits.global

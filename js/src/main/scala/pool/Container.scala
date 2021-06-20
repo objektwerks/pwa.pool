@@ -6,11 +6,9 @@ object Container {
   val id = getClass.getSimpleName
 
   def apply(homeMenu: Div,
-            poolsMenu: Div,
             poolsView: Div): Div =
     div(idAttr(id), cls("w3-container"),
       homeMenu,
-      poolsMenu,
       poolsView
     )
 }
