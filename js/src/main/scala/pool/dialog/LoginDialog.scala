@@ -50,8 +50,8 @@ object LoginDialog {
                       case signedin: SignedIn =>
                         println(s"Success: $event")
                         context.licensee.set(Some(signedin.licensee))
-                        context.displayToBlock(PoolsView.id)
-                        context.displayToNone(id)
+                        context.show(PoolsView.id)
+                        context.hide(id)
                       case _ => errors.emit(s"Invalid: $event")
                     }
                     case Left(fault) =>
@@ -66,7 +66,7 @@ object LoginDialog {
               "Login"
             ),
             button(cls("w3-btn w3-text-indigo"),
-              onClick --> (_ => context.displayToNone(id)),
+              onClick --> (_ => context.hide(id)),
               "Cancel"
             )
           )

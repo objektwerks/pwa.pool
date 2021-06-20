@@ -18,7 +18,7 @@ case class Context(publicUrl: String, apiUrl: String) extends Product with Seria
   val poolsAddUrl = s"$apiUrl/pools/add"
   val poolsUpdateUrl = s"$apiUrl/pools/update"
 
-  def displayToBlock(id: String): Unit = document.getElementById(id).setAttribute("style", "display: block")
+  def show(id: String): Unit = document.getElementById(id).setAttribute("style", "display: block")
 
-  def displayToNone(id: String): Unit = document.getElementById(id).setAttribute("style", "display: none")
+  def hide(id: String): Unit = document.getElementById(id).setAttribute("style", "display: none")
 }

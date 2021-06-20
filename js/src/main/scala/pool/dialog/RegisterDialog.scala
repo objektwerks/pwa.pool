@@ -39,7 +39,7 @@ object RegisterDialog {
                       case signedup: SignedUp =>
                         println(s"Success: $event")
                         context.licensee.set(Some(signedup.licensee))
-                        context.displayToNone(id)
+                        context.hide(id)
                       case _ => errors.emit(s"Invalid: $event")
                     }
                     case Left(fault) =>
@@ -54,7 +54,7 @@ object RegisterDialog {
               "Register"
             ),
             button(cls("w3-btn w3-text-indigo"),
-              onClick --> (_ => context.displayToNone(id)),
+              onClick --> (_ => context.hide(id)),
               "Cancel"
             )
           )
