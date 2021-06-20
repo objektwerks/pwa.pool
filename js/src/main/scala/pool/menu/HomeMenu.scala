@@ -27,6 +27,8 @@ object HomeMenu {
         onClick --> (_ => reactivateDialog.amend(display("block"))),
         "Reactivate"),
       registerDialog,
-      loginDialog
+      loginDialog,
+      deactivateDialog,
+      reactivateDialog
     )
 }
