@@ -8,7 +8,7 @@ case class Context(publicUrl: String, apiUrl: String) extends Product with Seria
   val email: Var[String] = Var("")
   val pin: Var[Int] = Var(0)
   val license: Var[String] = Var("")
-  val licensee: Var[Option[Licensee]] = Var(None)
+  val licensee: Var[Licensee] = Var(Licensee.emptyLicensee)
 
   val signupUrl = s"$publicUrl/signup"
   val signinUrl = s"$publicUrl/signin"
@@ -19,6 +19,5 @@ case class Context(publicUrl: String, apiUrl: String) extends Product with Seria
   val poolsUpdateUrl = s"$apiUrl/pools/update"
 
   def show(id: String): Unit = document.getElementById(id).setAttribute("style", "display: block")
-
   def hide(id: String): Unit = document.getElementById(id).setAttribute("style", "display: none")
 }

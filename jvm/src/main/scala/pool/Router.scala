@@ -59,7 +59,7 @@ class Router(store: Store, cache: LicenseeCache, emailer: ActorRef) extends Cors
       entity(as[SignUp]) { signup =>
         if (signup.isValid) {
           implicit val timeout = new Timeout(10, TimeUnit.SECONDS)
-          val licensee = Licensee(email = signup.emailAddress)
+          val licensee = Licensee(email = signup.email)
           onSuccess( emailer ? SendEmail(licensee) ) {
             case Some(_) => onSuccess(signUp(licensee)) {
               licensee => complete(OK -> SignedUp(licensee))
@@ -74,12 +74,12 @@ class Router(store: Store, cache: LicenseeCache, emailer: ActorRef) extends Cors
     post {
       entity(as[SignIn]) { signin =>
         if (signin.isValid) {
-          onSuccess(signIn(signin.emailAddress, signin.pin)) {
+          onSuccess(signIn(signin.email, signin.pin)) {
             case Some(licensee) =>
               cacheLicensee(licensee)
               complete(OK -> SignedIn(licensee))
             case None =>
-              val cause = s"*** Unauthorized email address: ${signin.emailAddress} and/or pin: ${signin.pin}"
+              val cause = s"*** Unauthorized email address: ${signin.email} and/or pin: ${signin.pin}"
               complete(Unauthorized -> onUnauthorized(cause))
           }
         } else complete(BadRequest -> onInvalid(signin))
@@ -90,12 +90,12 @@ class Router(store: Store, cache: LicenseeCache, emailer: ActorRef) extends Cors
     post {
       entity(as[DeactivateLicensee]) { deactivatelicensee =>
         if (deactivatelicensee.isValid) {
-          onSuccess(deactivateLicensee(deactivatelicensee.license, deactivatelicensee.emailAddress, deactivatelicensee.pin, DateTime.currentDate)) {
+          onSuccess(deactivateLicensee(deactivatelicensee.license, deactivatelicensee.email, deactivatelicensee.pin, DateTime.currentDate)) {
             case Some(licensee) =>
               decacheLicensee(licensee)
               complete(OK -> LicenseeDeactivated(licensee))
             case None =>
-              val cause = s"*** Unauthorized license: ${deactivatelicensee.license} and/or email address: ${deactivatelicensee.emailAddress} and/or pin: ${deactivatelicensee.pin}"
+              val cause = s"*** Unauthorized license: ${deactivatelicensee.license} and/or email address: ${deactivatelicensee.email} and/or pin: ${deactivatelicensee.pin}"
               complete(Unauthorized -> onUnauthorized(cause))
           }
         } else complete(BadRequest -> onInvalid(deactivatelicensee))
@@ -106,11 +106,11 @@ class Router(store: Store, cache: LicenseeCache, emailer: ActorRef) extends Cors
     post {
       entity(as[ReactivateLicensee]) { reactivatelicensee =>
         if (reactivatelicensee.isValid) {
-          onSuccess(reactivateLicensee(reactivatelicensee.license, reactivatelicensee.emailAddress, reactivatelicensee.pin, DateTime.currentDate)) {
+          onSuccess(reactivateLicensee(reactivatelicensee.license, reactivatelicensee.email, reactivatelicensee.pin, DateTime.currentDate)) {
             case Some(licensee) =>
               complete(OK -> LicenseeReactivated(licensee))
             case None =>
-              val cause = s"*** Unauthorized license: ${reactivatelicensee.license} and/or email address: ${reactivatelicensee.emailAddress} and/or pin: ${reactivatelicensee.pin}"
+              val cause = s"*** Unauthorized license: ${reactivatelicensee.license} and/or email address: ${reactivatelicensee.email} and/or pin: ${reactivatelicensee.pin}"
               complete(Unauthorized -> onUnauthorized(cause))
           }
         } else complete(BadRequest -> onInvalid(reactivatelicensee))

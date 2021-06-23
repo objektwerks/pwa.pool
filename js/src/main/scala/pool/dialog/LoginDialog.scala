@@ -50,10 +50,10 @@ object LoginDialog {
                     case Right(event) => event match {
                       case signedin: SignedIn =>
                         println(s"Success: $event")
-                        context.licensee.set(Some(signedin.licensee))
+                        context.licensee.set(signedin.licensee)
                         context.hide(HomeMenu.registerId)
                         context.hide(HomeMenu.loginId)
-                        context.show(HomeMenu.deactivateId)
+                        context.show(HomeMenu.accountId)
                         context.show(PoolsView.id)
                         context.hide(id)
                       case _ => errors.emit(s"Invalid: $event")

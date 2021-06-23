@@ -4,7 +4,7 @@ import com.raquo.laminar.api.L._
 
 import org.scalajs.dom._
 
-import pool.dialog.{DeactivateDialog, LoginDialog, ReactivateDialog, RegisterDialog}
+import pool.dialog.{AccountDialog, LoginDialog, RegisterDialog}
 import pool.menu.HomeMenu
 import pool.view.PoolsView
 
@@ -22,8 +22,7 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
     HomeMenu(
       RegisterDialog(context),
       LoginDialog(context),
-      DeactivateDialog(context),
-      ReactivateDialog(context)
+      AccountDialog(context)
     ),
     PoolsView(context)
   )

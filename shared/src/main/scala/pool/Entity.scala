@@ -22,6 +22,13 @@ object Licensee {
     activated = DateTime.currentDate,
     deactivated = 0
   )
+  val emptyLicensee = Licensee(
+    license = "",
+    email = "",
+    pin = 0,
+    activated = 0,
+    deactivated = 0
+  )
   val emptyLicense = ""
   val headerLicenseKey = "license"
 }
