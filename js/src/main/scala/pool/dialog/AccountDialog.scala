@@ -11,6 +11,8 @@ import scala.util.{Failure, Success}
 object AccountDialog {
   val id = getClass.getSimpleName
   val errors = new EventBus[String]
+  val deactivateId = id + "deactivate"
+  val reactivateId = id + "reactivate"
 
   def apply(context: Context): Div =
     div(idAttr(id), cls("w3-modal"),
@@ -60,7 +62,7 @@ object AccountDialog {
               label(cls("w3-left-align w3-text-indigo"), context.licensee.now().deactivated)
             )
           ),
-          div(cls("w3-row w3-margin"),
+          div(idAttr(deactivateId), cls("w3-row w3-margin"),
             button(cls("w3-btn w3-text-indigo"),
               onClick --> { _ =>
                 val command = DeactivateLicensee(context.license.now(), context.email.now(), context.pin.now())
@@ -86,7 +88,7 @@ object AccountDialog {
               },
               "Deactivate"
             ),
-            div(cls("w3-row w3-margin"),
+            div(idAttr(reactivateId), cls("w3-row w3-margin"),
               button(cls("w3-btn w3-text-indigo"),
                 onClick --> { _ =>
                   val command = ReactivateLicensee(context.license.now(), context.email.now(), context.pin.now())

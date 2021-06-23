@@ -20,6 +20,7 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
   val context = Context(publicUrl, apiUrl)
   val container = Container(
     HomeMenu(
+      context,
       RegisterDialog(context),
       LoginDialog(context),
       AccountDialog(context)
