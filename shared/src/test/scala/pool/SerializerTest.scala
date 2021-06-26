@@ -9,9 +9,17 @@ class SerializerTest extends AnyFunSuite with Matchers {
 
   test("licensee") {
     val licensee = Licensee("test@test.com")
-    val licenseeAsJson = write(licensee)
+    val licenseeJson = write(licensee)
     println(licensee)
-    println(licenseeAsJson)
-    licensee shouldBe read[Licensee](licenseeAsJson)
+    println(licenseeJson)
+    licensee shouldBe read[Licensee](licenseeJson)
+  }
+
+  test("pool") {
+    val pool = Pool(id = 0, license = "abc123", name = "pool", built = 1991, lat = 26.85, lon = 82.29, volume = 10000)
+    val poolJson = write(pool)
+    println(pool)
+    println(poolJson)
+    pool shouldBe read[Pool](poolJson)
   }
 }

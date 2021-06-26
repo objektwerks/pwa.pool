@@ -35,7 +35,7 @@ object Licensee {
 
 final case class License(key: String) extends Entity
 
-final case class Pool(id: Int = 0,
+final case class Pool(id: Int,
                       license: String,
                       name: String,
                       built: Int,
