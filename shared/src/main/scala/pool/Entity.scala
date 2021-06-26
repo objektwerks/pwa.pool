@@ -37,6 +37,7 @@ final case class License(key: String) extends Entity
 
 final case class Pool(id: Int = 0,
                       license: String,
+                      name: String,
                       built: Int,
                       lat: Double,
                       lon: Double,
