@@ -12,6 +12,7 @@ CREATE TABLE licensee (
 CREATE TABLE pool (
   id SERIAL PRIMARY KEY,
   license VARCHAR(36) REFERENCES licensee(license),
+  name VARCHAR(24) NOT NULL,
   built INT NOT NULL,
   lat NUMERIC(8, 6) NOT NULL,
   lon NUMERIC(9, 6) NOT NULL,
