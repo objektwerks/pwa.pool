@@ -9,6 +9,7 @@ case class Context(publicUrl: String, apiUrl: String) extends Product with Seria
   val pin: Var[Int] = Var(0)
   val license: Var[String] = Var("")
   val licensee: Var[Licensee] = Var(Licensee.emptyLicensee)
+  val pools: Var[Pools] = Var(Pools(Seq.empty[Pool]))
 
   val signupUrl = s"$publicUrl/signup"
   val signinUrl = s"$publicUrl/signin"
