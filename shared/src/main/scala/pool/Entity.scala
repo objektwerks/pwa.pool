@@ -43,7 +43,7 @@ final case class Pool(id: Int = 0,
                       lon: Double,
                       volume: Int) extends Entity
 
-final case class PoolId(id: Int = 0) extends Entity
+final case class PoolId(id: Int) extends Entity
 
 final case class Surface(id: Int = 0,
                          poolId: Int,
