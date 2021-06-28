@@ -3,41 +3,41 @@ package pool
 object Validators {
   implicit class StringOps(val value: String) {
     def isLicense: Boolean = if (value.nonEmpty) value.length == 36 else false
-    def isEmailAddress: Boolean = value.nonEmpty && value.length >=3 && value.contains("@")
+    def isEmail: Boolean = value.nonEmpty && value.length >=3 && value.contains("@")
   }
 
   implicit class SignUpOps(val signup: SignUp) {
-    def isValid: Boolean = signup.email.isEmailAddress
+    def isValid: Boolean = signup.email.isEmail
   }
 
   implicit class SignInOps(val signin: SignIn) {
-    def isValid: Boolean = signin.email.isEmailAddress && signin.pin > 0
+    def isValid: Boolean = signin.email.isEmail && signin.pin > 0
   }
 
   implicit class DeactivateLicenseeOps(val deactivateLicensee: DeactivateLicensee) {
     def isValid: Boolean =
       deactivateLicensee.license.isLicense &&
-      deactivateLicensee.email.isEmailAddress &&
+      deactivateLicensee.email.isEmail &&
       deactivateLicensee.pin > 0
   }
 
   implicit class ReactivateLicenseeOps(val reactivateLicensee: ReactivateLicensee) {
     def isValid: Boolean =
       reactivateLicensee.license.isLicense &&
-      reactivateLicensee.email.isEmailAddress &&
+      reactivateLicensee.email.isEmail &&
       reactivateLicensee.pin > 0
   }
 
   implicit class LicenseeOps(val licensee: Licensee) {
     def isActivated: Boolean =
       licensee.license.isLicense &&
-      licensee.email.isEmailAddress &&
+      licensee.email.isEmail &&
       licensee.pin > 0 &&
       licensee.activated > 0 &&
       licensee.deactivated == 0
     def isDeactivated: Boolean =
       licensee.license.isLicense &&
-      licensee.email.isEmailAddress &&
+      licensee.email.isEmail &&
       licensee.pin > 0 &&
       licensee.activated > 0 &&
       licensee.deactivated > 0
