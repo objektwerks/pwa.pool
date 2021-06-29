@@ -16,9 +16,7 @@ object RegisterDialog {
     div(idAttr(id), cls("w3-modal"),
       div(cls("w3-container"),
         div(cls("w3-modal-content"),
-          header(cls("w3-container w3-indigo"),
-            h3("Register")
-          ),
+          p(cls("w3-indigo"), "Register"),
           div(cls("w3-panel w3-red"),
             child.text <-- errors.events
           ),
