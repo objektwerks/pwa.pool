@@ -23,55 +23,51 @@ object AccountDialog {
             child.text <-- errors.events
           ),
           div(cls("w3-row w3-margin"),
-            div(cls("w3-col"), width("15%"),
+            div(cls("w3-col"), width("25%"),
               label(cls("w3-left-align w3-text-indigo"), "License:")
             ),
-            div(cls("w3-col"), width("85%"),
+            div(cls("w3-col"), width("75%"),
               input(cls("w3-left-align w3-text-indigo"), typ("text"), readOnly(true),
-                child.text <-- context.licensee.signal.map(_.license))
+                value <-- context.licensee.signal.map(_.license))
             )
           ),
           div(cls("w3-row w3-margin"),
-            div(cls("w3-col"), width("15%"),
+            div(cls("w3-col"), width("25%"),
               label(cls("w3-left-align w3-text-indigo"), "Email:")
             ),
-            div(cls("w3-col"), width("85%"),
+            div(cls("w3-col"), width("75%"),
               input(cls("w3-left-align w3-text-indigo"), typ("text"), readOnly(true),
-                child.text <-- context.licensee.signal.map(_.email))
+                value <-- context.licensee.signal.map(_.email))
             )
           ),
           div(cls("w3-row w3-margin"),
-            div(cls("w3-col"), width("15%"),
+            div(cls("w3-col"), width("25%"),
               label(cls("w3-left-align w3-text-indigo"), "Pin:")
             ),
-            div(cls("w3-col"), width("85%"),
+            div(cls("w3-col"), width("75%"),
               input(cls("w3-left-align w3-text-indigo"), typ("text"), readOnly(true),
-                child.text <-- context.licensee.signal.map(_.pin))
+                value <-- context.licensee.signal.map(_.pin.toString))
             )
           ),
           div(cls("w3-row w3-margin"),
-            div(cls("w3-col"), width("15%"),
+            div(cls("w3-col"), width("25%"),
               label(cls("w3-left-align w3-text-indigo"), "Activated:")
             ),
-            div(cls("w3-col"), width("85%"),
+            div(cls("w3-col"), width("75%"),
               input(cls("w3-left-align w3-text-indigo"), typ("text"), readOnly(true),
-                child.text <-- context.licensee.signal.map(_.activated))
+                value <-- context.licensee.signal.map(_.activated.toString))
             )
           ),
           div(cls("w3-row w3-margin"),
-            div(cls("w3-col"), width("15%"),
+            div(cls("w3-col"), width("25%"),
               label(cls("w3-left-align w3-text-indigo"), "Deactivated:")
             ),
-            div(cls("w3-col"), width("85%"),
+            div(cls("w3-col"), width("75%"),
               input(cls("w3-left-align w3-text-indigo"), typ("text"), readOnly(true),
-                child.text <-- context.licensee.signal.map(_.deactivated))
+                value <-- context.licensee.signal.map(_.deactivated.toString))
             )
           ),
           div(cls("w3-row w3-margin"),
-            button(cls("w3-btn w3-text-indigo"),
-              onClick --> (_ => context.hide(id)),
-              "Cancel"
-            ),
             button(idAttr(deactivateId), cls("w3-btn w3-text-indigo"),
               onClick --> { _ =>
                 val command = DeactivateLicensee(context.license.now(), context.email.now(), context.pin.now())
@@ -121,6 +117,10 @@ object AccountDialog {
                 }
               },
               "Reactivate"
+            ),
+            button(cls("w3-btn w3-text-indigo"),
+              onClick --> (_ => context.hide(id)),
+              "Cancel"
             )
           )
         )
