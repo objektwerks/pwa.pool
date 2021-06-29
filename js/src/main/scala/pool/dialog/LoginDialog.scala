@@ -43,8 +43,8 @@ object LoginDialog {
               )
             )
           ),
-          div(cls("w3-row w3-margin"),
-            button(cls("w3-btn w3-text-indigo"),
+          div(cls("w3-bar"),
+            button(cls("w3-bar-item w3-button w3-margin w3-text-indigo"),
               onClick --> { _ =>
                 val command = SignIn(context.email.now(), context.pin.now())
                 println(s"Command: $command")
@@ -72,7 +72,7 @@ object LoginDialog {
               },
               "Login"
             ),
-            button(cls("w3-btn w3-text-indigo"),
+            button(cls("w3-bar-item w3-button w3-margin w3-text-indigo"),
               onClick --> (_ => context.hide(id)),
               "Cancel"
             )
