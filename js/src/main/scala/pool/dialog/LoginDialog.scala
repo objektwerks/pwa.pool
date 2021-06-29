@@ -17,9 +17,7 @@ object LoginDialog {
     div(idAttr(id), cls("w3-modal"),
       div(cls("w3-container"),
         div(cls("w3-modal-content"),
-          header(cls("w3-container w3-indigo"),
-            h3("Login")
-          ),
+          p(cls("w3-indigo"), "Login"),
           div(cls("w3-panel w3-red"),
             child.text <-- errors.events
           ),
