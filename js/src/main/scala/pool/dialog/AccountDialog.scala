@@ -69,8 +69,8 @@ object AccountDialog {
                 value <-- context.licensee.signal.map(_.deactivated.toString))
             )
           ),
-          div(cls("w3-row w3-margin"),
-            button(idAttr(deactivateId), cls("w3-btn w3-text-indigo"),
+          div(cls("w3-bar"),
+            button(idAttr(deactivateId), cls("w3-bar-item w3-button w3-margin w3-text-indigo"),
               onClick --> { _ =>
                 val command = DeactivateLicensee(context.license.now(), context.email.now(), context.pin.now())
                 println(s"Command: $command")
@@ -95,7 +95,7 @@ object AccountDialog {
               },
               "Deactivate"
             ),
-            button(idAttr(reactivateId), cls("w3-btn w3-text-indigo"),
+            button(idAttr(reactivateId), cls("w3-bar-item w3-button w3-margin w3-text-indigo"),
               onClick --> { _ =>
                 val command = ReactivateLicensee(context.license.now(), context.email.now(), context.pin.now())
                 println(s"Command: $command")
@@ -120,7 +120,7 @@ object AccountDialog {
               },
               "Reactivate"
             ),
-            button(cls("w3-btn w3-text-indigo"),
+            button(cls("w3-bar-item w3-button w3-margin w3-text-indigo"),
               onClick --> (_ => context.hide(id)),
               "Cancel"
             )
