@@ -27,7 +27,8 @@ object AccountDialog {
               label(cls("w3-left-align w3-text-indigo"), "License:")
             ),
             div(cls("w3-col"), width("85%"),
-              label(cls("w3-left-align w3-text-indigo"), context.licensee.now().license)
+              input(cls("w3-left-align w3-text-indigo"), typ("text"), readOnly(true),
+                child.text <-- context.licensee.signal.map(_.license))
             )
           ),
           div(cls("w3-row w3-margin"),
@@ -35,8 +36,8 @@ object AccountDialog {
               label(cls("w3-left-align w3-text-indigo"), "Email:")
             ),
             div(cls("w3-col"), width("85%"),
-              label(cls("w3-left-align w3-text-indigo"), context.licensee.now().email)
-
+              input(cls("w3-left-align w3-text-indigo"), typ("text"), readOnly(true),
+                child.text <-- context.licensee.signal.map(_.email))
             )
           ),
           div(cls("w3-row w3-margin"),
@@ -44,7 +45,8 @@ object AccountDialog {
               label(cls("w3-left-align w3-text-indigo"), "Pin:")
             ),
             div(cls("w3-col"), width("85%"),
-              label(cls("w3-left-align w3-text-indigo"), context.licensee.now().pin)
+              input(cls("w3-left-align w3-text-indigo"), typ("text"), readOnly(true),
+                child.text <-- context.licensee.signal.map(_.pin))
             )
           ),
           div(cls("w3-row w3-margin"),
@@ -52,7 +54,8 @@ object AccountDialog {
               label(cls("w3-left-align w3-text-indigo"), "Activated:")
             ),
             div(cls("w3-col"), width("85%"),
-              label(cls("w3-left-align w3-text-indigo"), context.licensee.now().activated)
+              input(cls("w3-left-align w3-text-indigo"), typ("text"), readOnly(true),
+                child.text <-- context.licensee.signal.map(_.activated))
             )
           ),
           div(cls("w3-row w3-margin"),
@@ -60,11 +63,16 @@ object AccountDialog {
               label(cls("w3-left-align w3-text-indigo"), "Deactivated:")
             ),
             div(cls("w3-col"), width("85%"),
-              label(cls("w3-left-align w3-text-indigo"), context.licensee.now().deactivated)
+              input(cls("w3-left-align w3-text-indigo"), typ("text"), readOnly(true),
+                child.text <-- context.licensee.signal.map(_.deactivated))
             )
           ),
-          div(idAttr(deactivateId), cls("w3-row w3-margin"),
+          div(cls("w3-row w3-margin"),
             button(cls("w3-btn w3-text-indigo"),
+              onClick --> (_ => context.hide(id)),
+              "Cancel"
+            ),
+            button(idAttr(deactivateId), cls("w3-btn w3-text-indigo"),
               onClick --> { _ =>
                 val command = DeactivateLicensee(context.license.now(), context.email.now(), context.pin.now())
                 println(s"Command: $command")
@@ -89,39 +97,33 @@ object AccountDialog {
               },
               "Deactivate"
             ),
-            div(idAttr(reactivateId), cls("w3-row w3-margin"),
-              button(cls("w3-btn w3-text-indigo"),
-                onClick --> { _ =>
-                  val command = ReactivateLicensee(context.license.now(), context.email.now(), context.pin.now())
-                  println(s"Command: $command")
-                  ServerProxy.post(context.reactivateUrl, command.license, command).onComplete {
-                    case Success(either) => either match {
-                      case Right(event) => event match {
-                        case reactivated: LicenseeReactivated =>
-                          println(s"Success: $event")
-                          context.licensee.set(reactivated.licensee)
-                          context.hide(HomeMenu.accountId)
-                          context.hide(id)
-                        case _ => errors.emit(s"Invalid: $event")
-                      }
-                      case Left(fault) =>
-                        println(s"Fault: $fault")
-                        errors.emit(s"Fault: $fault")
+            button(idAttr(reactivateId), cls("w3-btn w3-text-indigo"),
+              onClick --> { _ =>
+                val command = ReactivateLicensee(context.license.now(), context.email.now(), context.pin.now())
+                println(s"Command: $command")
+                ServerProxy.post(context.reactivateUrl, command.license, command).onComplete {
+                  case Success(either) => either match {
+                    case Right(event) => event match {
+                      case reactivated: LicenseeReactivated =>
+                        println(s"Success: $event")
+                        context.licensee.set(reactivated.licensee)
+                        context.hide(HomeMenu.accountId)
+                        context.hide(id)
+                      case _ => errors.emit(s"Invalid: $event")
                     }
-                    case Failure(failure) =>
-                      println(s"Failure: $failure")
-                      errors.emit(s"Failure: $failure")
+                    case Left(fault) =>
+                      println(s"Fault: $fault")
+                      errors.emit(s"Fault: $fault")
                   }
-                },
-                "Reactivate"
-              ),
-            button(cls("w3-btn w3-text-indigo"),
-              onClick --> (_ => context.hide(id)),
-              "Cancel"
+                  case Failure(failure) =>
+                    println(s"Failure: $failure")
+                    errors.emit(s"Failure: $failure")
+                }
+              },
+              "Reactivate"
             )
           )
         )
       )
     )
-  )
 }
