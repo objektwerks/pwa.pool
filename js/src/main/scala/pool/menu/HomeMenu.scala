@@ -16,7 +16,7 @@ object HomeMenu {
             registerDialog: Div,
             loginDialog: Div,
             accountDialog: Div): Div =
-    div(idAttr(id), cls("w3-bar w3-white w3-text-indigo"),
+    div(idAttr(id), cls("w3-bar w3-margin w3-white w3-text-indigo"),
       a(idAttr(registerId), href("#"), cls("w3-bar-item w3-button"),
         onClick --> (_ => registerDialog.amend(display("block"))),
         "Register"),
