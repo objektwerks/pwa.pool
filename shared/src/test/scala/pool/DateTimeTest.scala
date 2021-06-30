@@ -1,9 +1,10 @@
 package pool
 
-import java.time.{LocalDate, LocalTime}
+import java.time._
 
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
+
 import pool.DateTime._
 
 class DateTimeTest extends AnyFunSuite with Matchers {

@@ -1,11 +1,10 @@
 package pool
 
-import java.time.{LocalDate, LocalTime}
-import java.time.format.DateTimeFormatter
+import java.time._
 
 object DateTime {
-  val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-  val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
+  val dateFormatter = format.DateTimeFormatter.ofPattern("yyyy-MM-dd")
+  val timeFormatter = format.DateTimeFormatter.ofPattern("HH:mm")
 
   def currentDate: Int = localDateToInt(LocalDate.now)
 
