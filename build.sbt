@@ -27,6 +27,7 @@ lazy val shared = crossProject(JSPlatform, JVMPlatform)
   .settings(
     libraryDependencies ++= Seq(
       "com.lihaoyi" %% "upickle" % upickleVersion,
+      "io.github.cquiroz" %% "scala-java-time" % "2.3.0",
       "org.scalatest" %% "scalatest" % scalaTestVersion % Test
     )
   )
@@ -46,7 +47,7 @@ lazy val js = (project in file("js"))
     libraryDependencies ++= Seq(
       "com.raquo" %%% "laminar" % "0.13.0",
       "com.lihaoyi" %%% "upickle" % upickleVersion,
-      "io.github.cquiroz" %%% "scala-java-time" % "2.2.1"
+      "io.github.cquiroz" %%% "scala-java-time" % "2.3.0"
     ),
     Compile / fastLinkJS / scalaJSLinkerOutputDirectory := target.value / public / "js",
     Compile / fullLinkJS / scalaJSLinkerOutputDirectory := target.value / public / "js",
