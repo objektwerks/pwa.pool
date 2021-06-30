@@ -8,9 +8,9 @@ import pool.dialog.{AccountDialog, LoginDialog, RegisterDialog}
 
 object HomeMenu {
   val id = getClass.getSimpleName
-  val registerId = id + RegisterDialog.id
-  val loginId = id + LoginDialog.id
-  val accountId = id + AccountDialog.id
+  val registerId = id + "-" + RegisterDialog.id
+  val loginId = id + "-" + LoginDialog.id
+  val accountId = id + "-" + AccountDialog.id
 
   def apply(context: Context,
             registerDialog: Div,
