@@ -89,7 +89,7 @@ class RouterTest extends AnyWordSpec with BeforeAndAfterAll with Matchers with S
 
   "signin" should {
     "post to signedin" in {
-      Post("/signin", SignIn(licensee.email, licensee.pin)) ~> router.routes ~> check {
+      Post("/signin", SignIn(licensee.pin)) ~> router.routes ~> check {
         status shouldBe OK
         responseAs[SignedIn].licensee shouldEqual licensee
         licensee.isActivated shouldBe true
@@ -379,20 +379,18 @@ class RouterTest extends AnyWordSpec with BeforeAndAfterAll with Matchers with S
 
   "deactivatelicensee" should {
     "post to licensee deactivated" in {
-      Post("/deactivatelicensee", DeactivateLicensee(licensee.license, licensee.email, licensee.pin)) ~> router.routes ~> check {
+      Post("/deactivatelicensee", DeactivateLicensee(licensee.license)) ~> router.routes ~> check {
         status shouldBe OK
-        licensee = responseAs[LicenseeDeactivated].licensee
-        licensee.isDeactivated shouldBe true
+        responseAs[LicenseeDeactivated].licensee.isDeactivated shouldBe true
       }
     }
   }
 
   "reactivatelicensee" should {
     "post to licensee reactivated" in {
-      Post("/reactivatelicensee", ReactivateLicensee(licensee.license, licensee.email, licensee.pin)) ~> router.routes ~> check {
+      Post("/reactivatelicensee", ReactivateLicensee(licensee.license)) ~> router.routes ~> check {
         status shouldBe OK
-        licensee = responseAs[LicenseeReactivated].licensee
-        licensee.isActivated shouldBe true
+        responseAs[LicenseeReactivated].licensee.isActivated shouldBe true
       }
     }
   }
