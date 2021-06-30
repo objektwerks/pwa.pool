@@ -11,8 +11,8 @@ import scala.util.{Failure, Success}
 object AccountDialog {
   val id = getClass.getSimpleName
   val errors = new EventBus[String]
-  val deactivateId = id + "deactivate"
-  val reactivateId = id + "reactivate"
+  val deactivateId = id + "-deactivate"
+  val reactivateId = id + "-reactivate"
 
   def apply(context: Context): Div =
     div(idAttr(id), cls("w3-modal"),
@@ -29,7 +29,7 @@ object AccountDialog {
               label(cls("w3-left-align w3-text-indigo"), "License:")
             ),
             div(cls("w3-col"), width("75%"),
-              input(cls("w3-left-align w3-text-indigo"), typ("text"), readOnly(true),
+              input(cls("w3-input w3-text-indigo"), typ("text"), readOnly(true),
                 value <-- context.licensee.signal.map(_.license))
             )
           ),
@@ -38,7 +38,7 @@ object AccountDialog {
               label(cls("w3-left-align w3-text-indigo"), "Email:")
             ),
             div(cls("w3-col"), width("75%"),
-              input(cls("w3-left-align w3-text-indigo"), typ("text"), readOnly(true),
+              input(cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("text"), readOnly(true),
                 value <-- context.licensee.signal.map(_.email))
             )
           ),
@@ -47,7 +47,7 @@ object AccountDialog {
               label(cls("w3-left-align w3-text-indigo"), "Pin:")
             ),
             div(cls("w3-col"), width("75%"),
-              input(cls("w3-left-align w3-text-indigo"), typ("text"), readOnly(true),
+              input(cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("text"), readOnly(true),
                 value <-- context.licensee.signal.map(_.pin.toString))
             )
           ),
@@ -56,7 +56,7 @@ object AccountDialog {
               label(cls("w3-left-align w3-text-indigo"), "Activated:")
             ),
             div(cls("w3-col"), width("75%"),
-              input(cls("w3-left-align w3-text-indigo"), typ("text"), readOnly(true),
+              input(cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("text"), readOnly(true),
                 value <-- context.licensee.signal.map(_.activated.toString))
             )
           ),
@@ -65,14 +65,14 @@ object AccountDialog {
               label(cls("w3-left-align w3-text-indigo"), "Deactivated:")
             ),
             div(cls("w3-col"), width("75%"),
-              input(cls("w3-left-align w3-text-indigo"), typ("text"), readOnly(true),
+              input(cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("text"), readOnly(true),
                 value <-- context.licensee.signal.map(_.deactivated.toString))
             )
           ),
           div(cls("w3-bar"),
             button(idAttr(deactivateId), cls("w3-bar-item w3-button w3-margin w3-text-indigo"),
               onClick --> { _ =>
-                val command = DeactivateLicensee(context.license.now(), context.email.now(), context.pin.now())
+                val command = DeactivateLicensee(context.licensee.now().license)
                 println(s"Command: $command")
                 ServerProxy.post(context.deactivateUrl, command.license, command).onComplete {
                   case Success(either) => either match {
@@ -97,7 +97,7 @@ object AccountDialog {
             ),
             button(idAttr(reactivateId), cls("w3-bar-item w3-button w3-margin w3-text-indigo"),
               onClick --> { _ =>
-                val command = ReactivateLicensee(context.license.now(), context.email.now(), context.pin.now())
+                val command = ReactivateLicensee(context.licensee.now().license)
                 println(s"Command: $command")
                 ServerProxy.post(context.reactivateUrl, command.license, command).onComplete {
                   case Success(either) => either match {
