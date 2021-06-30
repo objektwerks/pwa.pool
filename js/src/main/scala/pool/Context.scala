@@ -5,12 +5,11 @@ import com.raquo.laminar.api.L._
 import org.scalajs.dom.document
 
 case class Context(publicUrl: String, apiUrl: String) extends Product with Serializable {
-  val email: Var[String] = Var("")
-  val pin: Var[Int] = Var(0)
-  val license: Var[String] = Var("")
-  val licensee: Var[Licensee] = Var(Licensee.emptyLicensee)
-  val pools: Var[Pools] = Var(Pools(Seq.empty[Pool]))
-  val poolId: Var[PoolId] = Var(PoolId(0))
+  val email = Var("")
+  val pin = Var(0)
+  val licensee = Var(Licensee.emptyLicensee)
+  val pools = Var(Pools(Seq.empty[Pool]))
+  val poolId = Var(PoolId(0))
 
   val signupUrl = s"$publicUrl/signup"
   val signinUrl = s"$publicUrl/signin"
