@@ -25,16 +25,6 @@ object LoginDialog {
           ),
           div(cls("w3-row w3-margin"),
             div(cls("w3-col"), width("15%"),
-              label(cls("w3-left-align w3-text-indigo"), "Email:")
-            ),
-            div(cls("w3-col"), width("85%"),
-              input(cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("email"), required(true), autoFocus(true),
-                onChange.mapToValue.filter(_.nonEmpty) --> context.email
-              )
-            )
-          ),
-          div(cls("w3-row w3-margin"),
-            div(cls("w3-col"), width("15%"),
               label(cls("w3-left-align w3-text-indigo"), "Pin:")
             ),
             div(cls("w3-col"), width("85%"),
@@ -46,7 +36,7 @@ object LoginDialog {
           div(cls("w3-bar"),
             button(cls("w3-bar-item w3-button w3-margin w3-text-indigo"),
               onClick --> { _ =>
-                val command = SignIn(context.email.now(), context.pin.now())
+                val command = SignIn(context.pin.now())
                 println(s"Command: $command")
                 ServerProxy.post(context.signinUrl, Licensee.emptyLicense, command).onComplete {
                   case Success(either) => either match {
