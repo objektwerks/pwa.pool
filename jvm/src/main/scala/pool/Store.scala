@@ -22,38 +22,32 @@ class Store(conf: Config)(implicit ec: ExecutionContext) {
     }
   }
 
-  def signIn(emailAddress: String, pin: Int): Future[Option[Licensee]] =
+  def signIn(pin: Int): Future[Option[Licensee]] =
     run(
       query[Licensee]
-        .filter(_.email == lift(emailAddress))
         .filter(_.pin == lift(pin))
         .filter(_.activated > 0)
         .filter(_.deactivated == 0)
     ).map(result => result.headOption)
 
-  def deactivateLicensee(license: String, emailAddress: String, pin: Int, deactivatedDate: Int): Future[Option[Licensee]] = {
+  def deactivateLicensee(license: String): Future[Option[Licensee]] = {
     ctx.transaction { implicit ec =>
       run( query[Licensee]
         .filter(_.license == lift(license))
-        .filter(_.email == lift(emailAddress))
-        .filter(_.pin == lift(pin))
-        .filter(_.activated > 0)
         .filter(_.deactivated == 0)
-        .update(_.deactivated -> lift(deactivatedDate))
+        .update(_.deactivated -> lift(DateTime.currentDate))
       )
     }
     getLicensee(license)
   }
 
-  def reactivateLicensee(license: String, emailAddress: String, pin: Int, activatedDate: Int): Future[Option[Licensee]] = {
+  def reactivateLicensee(license: String): Future[Option[Licensee]] = {
     ctx.transaction { implicit ec =>
       run( query[Licensee]
         .filter(_.license == lift(license))
-        .filter(_.email == lift(emailAddress))
-        .filter(_.pin == lift(pin))
-        .filter(_.activated > 0)
-        .filter(_.deactivated > 0)
-        .update(_.activated -> lift(activatedDate), _.deactivated -> lift(0))
+        .filter(_.deactivated != 0)
+        .update(_.activated -> lift(DateTime.currentDate),
+                _.deactivated -> lift(0))
       )
     }
     getLicensee(license)
