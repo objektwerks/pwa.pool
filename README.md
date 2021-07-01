@@ -80,30 +80,31 @@ Package
 
 Licensee Scenarios
 ------------------
-* SignUp( emailAddress ) => SignedUp( licensee ) & Email( emailAddress, license, pin )
-* SignIn( emailAddress, pin ) => SignedIn( licensee )
-* DeactivateLicensee( license, emailAddress, pin ) => LicenseeDeactivated( licensee )
-* ReactivateLicensee( license, emailAddress, pin ) => LicenseeReactivated( licensee )
+* SignUp( email ) => SignedUp( licensee )
+* SignIn( pin ) => SignedIn( licensee )
+* DeactivateLicensee( license ) => LicenseeDeactivated( licensee )
+* ReactivateLicensee( license ) => LicenseeReactivated( licensee )
+
+Dialogs
+-------
+* Register ( email )
+* Login ( pin )
+* Account ( license, email, pin, activated, deactivated )
 
 Panes
 -----
->All panes, less Licensee panes, will include list, add and update features.
-1. Licensee
-    * SignUp ( emailAddress )
-    * SignIn ( emailAddress, pin )
-    * DeactivateLicensee ( license, emailAddress, pin )
-    * ReactivateLicensee ( license, emailAddress, pin )
-2. Pool
+>All panes will include list, add and update features.
+1. Pool
     * Pools -> Pool
     * Surfaces -> Surface
     * Pumps -> Pump
     * Timers -> Timer -> TimerSettings
     * Heaters -> Heater -> HeaterSettings -> HeaterSetting
-3. Maintenance
+2. Maintenance
     * Measurments -> Measurement **
     * Cleanings -> Cleaning **
     * Chemicals -> Chemical **
-4. Expenses
+3. Expenses
     * Supplies -> Supply **
     * Repairs -> Repair **
 
@@ -138,7 +139,7 @@ Client
 Object Model
 ------------
 * Licensee(license, emailAddress, pin, created, activated, deactivated)
-* Pool(id, license, built, lat, lon, volume)
+* Pool(id, license, name, built, lat, lon, volume)
 * Surface(id, poolId, installed, kind)
 * Pump(id, poolId, installed, model)
 * Timer(id, poolId, installed, model)
