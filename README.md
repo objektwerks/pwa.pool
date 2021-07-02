@@ -10,9 +10,12 @@ Install
 
 Requirements
 ------------
->Provide valid:
-1. Postgresql configuration in (1) server.conf and (2) test.server.conf
-2. SMTP configuration in (1) server.conf and (2) test.server.conf
+>Provide valid configuration for:
+1. Postgresql
+2. SMTP
+>in these conf files:
+1. jvm/src/it/resources/test.server.conf
+2. jvm/src/main/resoures/server.conf
 
 Bundling
 --------
