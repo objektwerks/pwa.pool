@@ -78,8 +78,13 @@ Package
 1. sbt js/clean fullLinkJS
 2. sbt js/universal:packageZipTarball
 
-Account Scenarios
------------------
+Client
+------
+* Command => Event | Fault
+* Entity  => State | Fault
+
+Account
+-------
 * Register( email ) => Registered( account )
 * Login( pin ) => LoggedIn( account )
 * Deactivate( license ) => Deactivated( account )
@@ -129,12 +134,6 @@ Rest
 * /chemicals       /add   /update
 * /supplies        /add   /update
 * /repairs         /add   /update
-
-
-Client
-------
-* Command => Event | Fault
-* Entity  => State | Fault
 
 Object Model
 ------------
