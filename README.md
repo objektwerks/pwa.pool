@@ -1,6 +1,6 @@
 PWA Pool App
 ------------
->Pool maintenance PWA app using Akka-Http, Quill, uPickle, ScalaJs, Laminar and Postgresql.
+>PWA Pool maintenance app using Akka-Http, Quill, uPickle, ScalaJs, Laminar and Postgresql.
 
 Install
 -------
