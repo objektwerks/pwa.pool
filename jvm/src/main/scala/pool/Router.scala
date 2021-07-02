@@ -56,33 +56,33 @@ class Router(store: Store, cache: LicenseeCache, emailer: ActorRef) extends Cors
   }
   val register = path("register") {
     post {
-      entity(as[Register]) { signup =>
-        if (signup.isValid) {
+      entity(as[Register]) { register =>
+        if (register.isValid) {
           implicit val timeout = new Timeout(10, TimeUnit.SECONDS)
-          val licensee = Licensee(email = signup.email)
+          val licensee = Licensee(email = register.email)
           onSuccess( emailer ? SendEmail(licensee) ) {
             case Some(_) => onSuccess(signUp(licensee)) {
               licensee => complete(OK -> Registered(licensee))
             }
-            case _ => complete(BadRequest -> onInvalid(signup))
+            case _ => complete(BadRequest -> onInvalid(register))
           }
-        } else complete(BadRequest -> onInvalid(signup))
+        } else complete(BadRequest -> onInvalid(register))
       }
     }
   }
   val login = path("login") {
     post {
-      entity(as[Login]) { signin =>
-        if (signin.isValid) {
-          onSuccess(signIn(signin.pin)) {
+      entity(as[Login]) { login =>
+        if (login.isValid) {
+          onSuccess(signIn(login.pin)) {
             case Some(licensee) =>
               cacheLicensee(licensee)
               complete(OK -> LoggedIn(licensee))
             case None =>
-              val cause = s"*** Unauthorized pin: ${signin.pin}"
+              val cause = s"*** Unauthorized pin: ${login.pin}"
               complete(Unauthorized -> onUnauthorized(cause))
           }
-        } else complete(BadRequest -> onInvalid(signin))
+        } else complete(BadRequest -> onInvalid(login))
       }
     }
   }
