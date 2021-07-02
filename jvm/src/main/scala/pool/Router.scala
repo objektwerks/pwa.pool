@@ -26,24 +26,24 @@ class Router(store: Store, cache: AccountCache, emailer: ActorRef) extends CorsH
   import cache._
   import store._
 
-  val logger = LoggerFactory.getLogger(Router.getClass)
+  val logger = LoggerFactory.getLogger(getClass)
 
-  val onUnauthorized = (cause: String) => {
+  val onUnauthorizedRequestHandler = (cause: String) => {
     logger.error(cause)
     addFault(Fault(cause, Unauthorized.intValue))
   }
 
-  val onInvalid = (serializable: Serializable) => {
+  val onInvalidRequestHandler = (serializable: Serializable) => {
     val cause = s"*** Invalid: $serializable"
     logger.error(cause)
     addFault(Fault(cause, BadRequest.intValue))
   }
 
-  implicit val onException = ExceptionHandler {
+  implicit val onExceptionHandler = ExceptionHandler {
     case NonFatal(error) =>
       extractRequestContext { context =>
         val cause = s"*** Handling ${context.request.uri} failed: ${error.getMessage}"
-        logger.error(cause, error)
+        logger.error(cause)
         context.request.discardEntityBytes(context.materializer)
         complete(InternalServerError -> addFault(Fault(cause)))
       }
@@ -64,9 +64,9 @@ class Router(store: Store, cache: AccountCache, emailer: ActorRef) extends CorsH
             case Some(_) => onSuccess(registerAccount(licensee)) {
               licensee => complete(OK -> Registered(licensee))
             }
-            case _ => complete(BadRequest -> onInvalid(register))
+            case _ => complete(BadRequest -> onInvalidRequestHandler(register))
           }
-        } else complete(BadRequest -> onInvalid(register))
+        } else complete(BadRequest -> onInvalidRequestHandler(register))
       }
     }
   }
@@ -80,9 +80,9 @@ class Router(store: Store, cache: AccountCache, emailer: ActorRef) extends CorsH
               complete(OK -> LoggedIn(account))
             case None =>
               val cause = s"*** Unauthorized pin: ${login.pin}"
-              complete(Unauthorized -> onUnauthorized(cause))
+              complete(Unauthorized -> onUnauthorizedRequestHandler(cause))
           }
-        } else complete(BadRequest -> onInvalid(login))
+        } else complete(BadRequest -> onInvalidRequestHandler(login))
       }
     }
   }
@@ -96,9 +96,9 @@ class Router(store: Store, cache: AccountCache, emailer: ActorRef) extends CorsH
               complete(OK -> Deactivated(account))
             case None =>
               val cause = s"*** Unauthorized license: ${deactivate.license}"
-              complete(Unauthorized -> onUnauthorized(cause))
+              complete(Unauthorized -> onUnauthorizedRequestHandler(cause))
           }
-        } else complete(BadRequest -> onInvalid(deactivate))
+        } else complete(BadRequest -> onInvalidRequestHandler(deactivate))
       }
     }
   }
@@ -111,9 +111,9 @@ class Router(store: Store, cache: AccountCache, emailer: ActorRef) extends CorsH
               complete(OK -> Reactivated(licensee))
             case None =>
               val cause = s"*** Unauthorized license: ${reactivate.license}"
-              complete(Unauthorized -> onUnauthorized(cause))
+              complete(Unauthorized -> onUnauthorizedRequestHandler(cause))
           }
-        } else complete(BadRequest -> onInvalid(reactivate))
+        } else complete(BadRequest -> onInvalidRequestHandler(reactivate))
       }
     }
   }
@@ -123,7 +123,7 @@ class Router(store: Store, cache: AccountCache, emailer: ActorRef) extends CorsH
         if (license.isValid) onSuccess(listPools(license.key)) { pools => complete(OK -> Pools(pools)) }
         else {
           val cause = s"*** Unauthorized license: $license"
-          complete(Unauthorized -> onUnauthorized(cause))
+          complete(Unauthorized -> onUnauthorizedRequestHandler(cause))
         }
       }
     }
@@ -131,14 +131,14 @@ class Router(store: Store, cache: AccountCache, emailer: ActorRef) extends CorsH
     post {
       entity(as[Pool]) { pool =>
         if (pool.isValid) onSuccess(addPool(pool)) { id => complete(OK -> Id(id)) }
-        else complete(BadRequest -> onInvalid(pool))
+        else complete(BadRequest -> onInvalidRequestHandler(pool))
       }
     }
   } ~ pathSuffix("update") {
     post {
       entity(as[Pool]) { pool =>
         if (pool.isValid) onSuccess(updatePool(pool)) { count => complete(OK -> Count(count)) }
-        else complete(BadRequest -> onInvalid(pool))
+        else complete(BadRequest -> onInvalidRequestHandler(pool))
       }
     }
   }
@@ -146,21 +146,21 @@ class Router(store: Store, cache: AccountCache, emailer: ActorRef) extends CorsH
     post {
       entity(as[PoolId]) { poolId =>
         if (poolId.isValid) onSuccess(listSurfaces(poolId.id)) { surfaces => complete(OK -> Surfaces(surfaces)) }
-        else complete(BadRequest -> onInvalid(poolId))
+        else complete(BadRequest -> onInvalidRequestHandler(poolId))
       }
     }
   } ~ pathSuffix("add") {
     post {
       entity(as[Surface]) { surface =>
         if (surface.isValid) onSuccess(addSurface(surface)) { id => complete(OK -> Id(id)) }
-        else complete(BadRequest -> onInvalid(surface))
+        else complete(BadRequest -> onInvalidRequestHandler(surface))
       }
     }
   } ~ pathSuffix("update") {
     post {
       entity(as[Surface]) { surface =>
         if (surface.isValid) onSuccess(updateSurface(surface)) { count => complete(OK -> Count(count)) }
-        else complete(BadRequest -> onInvalid(surface))
+        else complete(BadRequest -> onInvalidRequestHandler(surface))
       }
     }
   }
@@ -168,21 +168,21 @@ class Router(store: Store, cache: AccountCache, emailer: ActorRef) extends CorsH
     post {
       entity(as[PoolId]) { poolId =>
         if (poolId.isValid) onSuccess(listPumps(poolId.id)) { pumps => complete(OK -> Pumps(pumps)) }
-        else complete(BadRequest -> onInvalid(poolId))
+        else complete(BadRequest -> onInvalidRequestHandler(poolId))
       }
     }
   } ~ pathSuffix("add") {
     post {
       entity(as[Pump]) { pump =>
         if (pump.isValid) onSuccess(addPump(pump)) { id => complete(OK -> Id(id)) }
-        else complete(BadRequest -> onInvalid(pump))
+        else complete(BadRequest -> onInvalidRequestHandler(pump))
       }
     }
   } ~ pathSuffix("update") {
     post {
       entity(as[Pump]) { pump =>
         if (pump.isValid) onSuccess(updatePump(pump)) { count => complete(OK -> Count(count)) }
-        else complete(BadRequest -> onInvalid(pump))
+        else complete(BadRequest -> onInvalidRequestHandler(pump))
       }
     }
   }
@@ -190,21 +190,21 @@ class Router(store: Store, cache: AccountCache, emailer: ActorRef) extends CorsH
     post {
       entity(as[PoolId]) { poolId =>
         if (poolId.isValid) onSuccess(listTimers(poolId.id)) { timers => complete(OK -> Timers(timers)) }
-        else complete(BadRequest -> onInvalid(poolId))
+        else complete(BadRequest -> onInvalidRequestHandler(poolId))
       }
     }
   } ~ pathSuffix("add") {
     post {
       entity(as[Timer]) { timer =>
         if (timer.isValid) onSuccess(addTimer(timer)) { id => complete(OK -> Id(id)) }
-        else complete(BadRequest -> onInvalid(timer))
+        else complete(BadRequest -> onInvalidRequestHandler(timer))
       }
     }
   } ~ pathSuffix("update") {
     post {
       entity(as[Timer]) { timer =>
         if (timer.isValid) onSuccess(updateTimer(timer)) { count => complete(OK -> Count(count)) }
-        else complete(BadRequest -> onInvalid(timer))
+        else complete(BadRequest -> onInvalidRequestHandler(timer))
       }
     }
   }
@@ -212,21 +212,21 @@ class Router(store: Store, cache: AccountCache, emailer: ActorRef) extends CorsH
     post {
       entity(as[TimerId]) { timerId =>
         if (timerId.isValid) onSuccess(listTimerSettings(timerId.id)) { timersettings => complete(OK -> TimerSettings(timersettings)) }
-        else complete(BadRequest -> onInvalid(timerId))
+        else complete(BadRequest -> onInvalidRequestHandler(timerId))
       }
     }
   } ~ pathSuffix("add") {
     post {
       entity(as[TimerSetting]) { timerSetting =>
         if (timerSetting.isValid) onSuccess(addTimerSetting(timerSetting)) { id => complete(OK -> Id(id)) }
-        else complete(BadRequest -> onInvalid(timerSetting))
+        else complete(BadRequest -> onInvalidRequestHandler(timerSetting))
       }
     }
   } ~ pathSuffix("update") {
     post {
       entity(as[TimerSetting]) { timerSetting =>
         if (timerSetting.isValid) onSuccess(updateTimerSetting(timerSetting)) { count => complete(OK -> Count(count)) }
-        else complete(BadRequest -> onInvalid(timerSetting))
+        else complete(BadRequest -> onInvalidRequestHandler(timerSetting))
       }
     }
   }
@@ -234,21 +234,21 @@ class Router(store: Store, cache: AccountCache, emailer: ActorRef) extends CorsH
     post {
       entity(as[PoolId]) { poolId =>
         if (poolId.isValid) onSuccess(listHeaters(poolId.id)) { heaters => complete(OK -> Heaters(heaters)) }
-        else complete(BadRequest -> onInvalid(poolId))
+        else complete(BadRequest -> onInvalidRequestHandler(poolId))
       }
     }
   } ~ pathSuffix("add") {
     post {
       entity(as[Heater]) { heater =>
         if (heater.isValid) onSuccess(addHeater(heater)) { id => complete(OK -> Id(id)) }
-        else complete(BadRequest -> onInvalid(heater))
+        else complete(BadRequest -> onInvalidRequestHandler(heater))
       }
     }
   } ~ pathSuffix("update") {
     post {
       entity(as[Heater]) { heater =>
         if (heater.isValid) onSuccess(updateHeater(heater)) { count => complete(OK -> Count(count)) }
-        else complete(BadRequest -> onInvalid(heater))
+        else complete(BadRequest -> onInvalidRequestHandler(heater))
       }
     }
   }
@@ -256,21 +256,21 @@ class Router(store: Store, cache: AccountCache, emailer: ActorRef) extends CorsH
     post {
       entity(as[HeaterId]) { heaterId =>
         if (heaterId.isValid) onSuccess(listHeaterSettings(heaterId.id)) { heaterSettings => complete(OK -> HeaterSettings(heaterSettings)) }
-        else complete(BadRequest -> onInvalid(heaterId))
+        else complete(BadRequest -> onInvalidRequestHandler(heaterId))
       }
     }
   } ~ pathSuffix("add") {
     post {
       entity(as[HeaterSetting]) { heaterSetting =>
         if (heaterSetting.isValid) onSuccess(addHeaterSetting(heaterSetting)) { id => complete(OK -> Id(id)) }
-        else complete(BadRequest -> onInvalid(heaterSetting))
+        else complete(BadRequest -> onInvalidRequestHandler(heaterSetting))
       }
     }
   } ~ pathSuffix("update") {
     post {
       entity(as[HeaterSetting]) { heaterSetting =>
         if (heaterSetting.isValid) onSuccess(updateHeaterSetting(heaterSetting)) { count => complete(OK -> Count(count)) }
-        else complete(BadRequest -> onInvalid(heaterSetting))
+        else complete(BadRequest -> onInvalidRequestHandler(heaterSetting))
       }
     }
   }
@@ -278,21 +278,21 @@ class Router(store: Store, cache: AccountCache, emailer: ActorRef) extends CorsH
     post {
       entity(as[PoolId]) { poolId =>
         if (poolId.isValid) onSuccess(listMeasurements(poolId.id)) { measurements => complete(OK -> Measurements(measurements)) }
-        else complete(BadRequest -> onInvalid(poolId))
+        else complete(BadRequest -> onInvalidRequestHandler(poolId))
       }
     }
   } ~ pathSuffix("add") {
     post {
       entity(as[Measurement]) { measurement =>
         if (measurement.isValid) onSuccess(addMeasurement(measurement)) { id => complete(OK -> Id(id)) }
-        else complete(BadRequest -> onInvalid(measurement))
+        else complete(BadRequest -> onInvalidRequestHandler(measurement))
       }
     }
   } ~ pathSuffix("update") {
     post {
       entity(as[Measurement]) { measurement =>
         if (measurement.isValid) onSuccess(updateMeasurement(measurement)) { count => complete(OK -> Count(count)) }
-        else complete(BadRequest -> onInvalid(measurement))
+        else complete(BadRequest -> onInvalidRequestHandler(measurement))
       }
     }
   }
@@ -300,21 +300,21 @@ class Router(store: Store, cache: AccountCache, emailer: ActorRef) extends CorsH
     post {
       entity(as[PoolId]) { poolId =>
         if (poolId.isValid) onSuccess(listCleanings(poolId.id)) { cleanings => complete(OK -> Cleanings(cleanings)) }
-        else complete(BadRequest -> onInvalid(poolId))
+        else complete(BadRequest -> onInvalidRequestHandler(poolId))
       }
     }
   } ~ pathSuffix("add") {
     post {
       entity(as[Cleaning]) { cleaning =>
         if (cleaning.isValid) onSuccess(addCleaning(cleaning)) { id => complete(OK -> Id(id)) }
-        else complete(BadRequest -> onInvalid(cleaning))
+        else complete(BadRequest -> onInvalidRequestHandler(cleaning))
       }
     }
   } ~ pathSuffix("update") {
     post {
       entity(as[Cleaning]) { cleaning =>
         if (cleaning.isValid) onSuccess(updateCleaning(cleaning)) { count => complete(OK -> Count(count)) }
-        else complete(BadRequest -> onInvalid(cleaning))
+        else complete(BadRequest -> onInvalidRequestHandler(cleaning))
       }
     }
   }
@@ -322,21 +322,21 @@ class Router(store: Store, cache: AccountCache, emailer: ActorRef) extends CorsH
     post {
       entity(as[PoolId]) { poolId =>
         if (poolId.isValid) onSuccess(listChemicals(poolId.id)) { chemicals => complete(OK -> Chemicals(chemicals)) }
-        else complete(BadRequest -> onInvalid(poolId))
+        else complete(BadRequest -> onInvalidRequestHandler(poolId))
       }
     }
   } ~ pathSuffix("add") {
     post {
       entity(as[Chemical]) { chemical =>
         if (chemical.isValid) onSuccess(addChemical(chemical)) { id => complete(OK -> Id(id)) }
-        else complete(BadRequest -> onInvalid(chemical))
+        else complete(BadRequest -> onInvalidRequestHandler(chemical))
       }
     }
   } ~ pathSuffix("update") {
     post {
       entity(as[Chemical]) { chemical =>
         if (chemical.isValid) onSuccess(updateChemical(chemical)) { count => complete(OK -> Count(count)) }
-        else complete(BadRequest -> onInvalid(chemical))
+        else complete(BadRequest -> onInvalidRequestHandler(chemical))
       }
     }
   }
@@ -344,21 +344,21 @@ class Router(store: Store, cache: AccountCache, emailer: ActorRef) extends CorsH
     post {
       entity(as[PoolId]) { poolId =>
         if (poolId.isValid) onSuccess(listSupplies(poolId.id)) { supplies => complete(OK -> Supplies(supplies)) }
-        else complete(BadRequest -> onInvalid(poolId))
+        else complete(BadRequest -> onInvalidRequestHandler(poolId))
       }
     }
   } ~ pathSuffix("add") {
     post {
       entity(as[Supply]) { supply =>
         if (supply.isValid) onSuccess(addSupply(supply)) { id => complete(OK -> Id(id)) }
-        else complete(BadRequest -> onInvalid(supply))
+        else complete(BadRequest -> onInvalidRequestHandler(supply))
       }
     }
   } ~ pathSuffix("update") {
     post {
       entity(as[Supply]) { supply =>
         if (supply.isValid) onSuccess(updateSupply(supply)) { count => complete(OK -> Count(count)) }
-        else complete(BadRequest -> onInvalid(supply))
+        else complete(BadRequest -> onInvalidRequestHandler(supply))
       }
     }
   }
@@ -366,21 +366,21 @@ class Router(store: Store, cache: AccountCache, emailer: ActorRef) extends CorsH
     post {
       entity(as[PoolId]) { poolId =>
         if (poolId.isValid) onSuccess(listRepairs(poolId.id)) { repairs => complete(OK -> Repairs(repairs)) }
-        else complete(BadRequest -> onInvalid(poolId))
+        else complete(BadRequest -> onInvalidRequestHandler(poolId))
       }
     }
   } ~ pathSuffix("add") {
     post {
       entity(as[Repair]) { repair =>
         if (repair.isValid) onSuccess(addRepair(repair)) { id => complete(OK -> Id(id)) }
-        else complete(BadRequest -> onInvalid(repair))
+        else complete(BadRequest -> onInvalidRequestHandler(repair))
       }
     }
   } ~ pathSuffix("update") {
     post {
       entity(as[Repair]) { repair =>
         if (repair.isValid) onSuccess(updateRepair(repair)) { count => complete(OK -> Count(count)) }
-        else complete(BadRequest -> onInvalid(repair))
+        else complete(BadRequest -> onInvalidRequestHandler(repair))
       }
     }
   }
@@ -397,7 +397,7 @@ class Router(store: Store, cache: AccountCache, emailer: ActorRef) extends CorsH
       if (isActivated) route
       else {
         val cause = s"*** License is not activated: $license"
-        complete(Unauthorized -> onUnauthorized(cause))
+        complete(Unauthorized -> onUnauthorizedRequestHandler(cause))
       }
     }
   }
