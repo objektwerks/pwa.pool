@@ -79,7 +79,6 @@ object AccountDialog {
                       case deactivated: LicenseeDeactivated =>
                         println(s"Success: $event")
                         context.licensee.set(deactivated.licensee)
-                        context.hide(HomeMenu.accountMenuItemId)
                         context.hide(id)
                       case _ => errors.emit(s"Invalid: $event")
                     }
@@ -104,7 +103,6 @@ object AccountDialog {
                       case reactivated: LicenseeReactivated =>
                         println(s"Success: $event")
                         context.licensee.set(reactivated.licensee)
-                        context.hide(HomeMenu.accountMenuItemId)
                         context.hide(id)
                       case _ => errors.emit(s"Invalid: $event")
                     }
