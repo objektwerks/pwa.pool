@@ -59,7 +59,7 @@ class Router(store: Store, cache: AccountCache, emailer: ActorRef) extends CorsH
       entity(as[Register]) { register =>
         if (register.isValid) {
           implicit val timeout = new Timeout(10, TimeUnit.SECONDS)
-          val licensee = Account(email = register.email)
+          val licensee = Account(register.email)
           onSuccess( emailer ? SendEmail(licensee) ) {
             case Some(_) => onSuccess(registerAccount(licensee)) {
               licensee => complete(OK -> Registered(licensee))
