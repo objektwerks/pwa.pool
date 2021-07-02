@@ -43,7 +43,7 @@ object RegisterDialog {
                       case signedup: SignedUp =>
                         println(s"Success: $event")
                         context.licensee.set(signedup.licensee)
-                        context.hide(HomeMenu.registerId)
+                        context.hide(HomeMenu.registerMenuItemId)
                         context.hide(id)
                       case _ => errors.emit(s"Invalid: $event")
                     }
