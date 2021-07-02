@@ -2,7 +2,7 @@ package pool
 
 sealed trait Command extends Product with Serializable
 
-final case class SignUp(email: String) extends Command
+final case class Register(email: String) extends Command
 
 final case class SignIn(pin: Int) extends Command
 

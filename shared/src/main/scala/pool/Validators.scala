@@ -6,8 +6,8 @@ object Validators {
     def isEmail: Boolean = value.nonEmpty && value.length >=3 && value.contains("@")
   }
 
-  implicit class SignUpOps(val signup: SignUp) {
-    def isValid: Boolean = signup.email.isEmail
+  implicit class RegisterOps(val register: Register) {
+    def isValid: Boolean = register.email.isEmail
   }
 
   implicit class SignInOps(val signin: SignIn) {

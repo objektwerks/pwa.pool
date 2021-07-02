@@ -3,7 +3,7 @@ package pool.dialog
 import com.raquo.laminar.api.L._
 
 import pool.menu.HomeMenu
-import pool.{Context, Licensee, ServerProxy, SignUp, SignedUp}
+import pool.{Context, Licensee, ServerProxy, Register, Registered}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Failure, Success}
@@ -35,12 +35,12 @@ object RegisterDialog {
           div(cls("w3-bar"),
             button(cls("w3-bar-item w3-button w3-margin w3-text-indigo"),
               onClick --> { _ =>
-                val command = SignUp(context.email.now())
+                val command = Register(context.email.now())
                 println(s"Command: $command")
                 ServerProxy.post(context.registerUrl, Licensee.emptyLicense, command).onComplete {
                   case Success(either) => either match {
                     case Right(event) => event match {
-                      case signedup: SignedUp =>
+                      case signedup: Registered =>
                         println(s"Success: $event")
                         context.licensee.set(signedup.licensee)
                         context.hide(HomeMenu.registerMenuItemId)
