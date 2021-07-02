@@ -44,9 +44,9 @@ object LoginDialog {
                       case signedin: SignedIn =>
                         println(s"Success: $event")
                         context.licensee.set(signedin.licensee)
-                        context.hide(HomeMenu.registerId)
-                        context.hide(HomeMenu.loginId)
-                        context.show(HomeMenu.accountId)
+                        context.hide(HomeMenu.registerMenuItemId)
+                        context.hide(HomeMenu.loginMenuItemId)
+                        context.show(HomeMenu.accountMenuItemId)
                         context.show(PoolsView.id)
                         context.hide(id)
                       case _ => errors.emit(s"Invalid: $event")
