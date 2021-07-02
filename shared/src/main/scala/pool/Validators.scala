@@ -14,12 +14,12 @@ object Validators {
     def isValid: Boolean = login.pin > 0
   }
 
-  implicit class DeactivateLicenseeOps(val deactivateLicensee: DeactivateLicensee) {
-    def isValid: Boolean = deactivateLicensee.license.isLicense
+  implicit class DeactivateOps(val deactivate: Deactivate) {
+    def isValid: Boolean = deactivate.license.isLicense
   }
 
-  implicit class ReactivateLicenseeOps(val reactivateLicensee: ReactivateLicensee) {
-    def isValid: Boolean = reactivateLicensee.license.isLicense
+  implicit class ReactivateOps(val reactivate: Reactivate) {
+    def isValid: Boolean = reactivate.license.isLicense
   }
 
   implicit class LicenseeOps(val licensee: Licensee) {

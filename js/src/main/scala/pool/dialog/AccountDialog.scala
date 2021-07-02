@@ -2,7 +2,7 @@ package pool.dialog
 
 import com.raquo.laminar.api.L._
 
-import pool.{Context, DeactivateLicensee, Licensee, LicenseeDeactivated, LicenseeReactivated, ReactivateLicensee, ServerProxy}
+import pool.{Context, Deactivate, Licensee, Deactivated, Reactivated, Reactivate, ServerProxy}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Failure, Success}
@@ -71,12 +71,12 @@ object AccountDialog {
           div(cls("w3-bar"),
             button(idAttr(deactivateButtonId), cls("w3-bar-item w3-button w3-margin w3-text-indigo"),
               onClick --> { _ =>
-                val command = DeactivateLicensee(context.licensee.now().license)
+                val command = Deactivate(context.licensee.now().license)
                 println(s"Command: $command")
                 ServerProxy.post(context.deactivateUrl, Licensee.emptyLicense, command).onComplete {
                   case Success(either) => either match {
                     case Right(event) => event match {
-                      case deactivated: LicenseeDeactivated =>
+                      case deactivated: Deactivated =>
                         println(s"Success: $event")
                         context.licensee.set(deactivated.licensee)
                         context.hide(id)
@@ -95,12 +95,12 @@ object AccountDialog {
             ),
             button(idAttr(reactivateButtonId), cls("w3-bar-item w3-button w3-margin w3-text-indigo"),
               onClick --> { _ =>
-                val command = ReactivateLicensee(context.licensee.now().license)
+                val command = Reactivate(context.licensee.now().license)
                 println(s"Command: $command")
                 ServerProxy.post(context.reactivateUrl, Licensee.emptyLicense, command).onComplete {
                   case Success(either) => either match {
                     case Right(event) => event match {
-                      case reactivated: LicenseeReactivated =>
+                      case reactivated: Reactivated =>
                         println(s"Success: $event")
                         context.licensee.set(reactivated.licensee)
                         context.hide(id)

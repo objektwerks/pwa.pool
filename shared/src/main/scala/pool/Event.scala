@@ -6,6 +6,6 @@ final case class Registered(licensee: Licensee) extends Event
 
 final case class LoggedIn(licensee: Licensee) extends Event
 
-final case class LicenseeDeactivated(licensee: Licensee) extends Event
+final case class Deactivated(licensee: Licensee) extends Event
 
-final case class LicenseeReactivated(licensee: Licensee) extends Event
+final case class Reactivated(licensee: Licensee) extends Event

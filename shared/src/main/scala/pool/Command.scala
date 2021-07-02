@@ -6,6 +6,6 @@ final case class Register(email: String) extends Command
 
 final case class Login(pin: Int) extends Command
 
-final case class DeactivateLicensee(license: String) extends Command
+final case class Deactivate(license: String) extends Command
 
-final case class ReactivateLicensee(license: String) extends Command
+final case class Reactivate(license: String) extends Command

@@ -13,8 +13,8 @@ case class Context(publicUrl: String, apiUrl: String) extends Product with Seria
 
   val registerUrl = s"$publicUrl/register"
   val loginUrl = s"$publicUrl/login"
-  val deactivateUrl = s"$publicUrl/deactivatelicensee"
-  val reactivateUrl = s"$publicUrl/reactivatelicensee"
+  val deactivateUrl = s"$publicUrl/deactivate"
+  val reactivateUrl = s"$publicUrl/reactivate"
   val poolsUrl = s"$apiUrl/pools"
   val poolsAddUrl = s"$apiUrl/pools/add"
   val poolsUpdateUrl = s"$apiUrl/pools/update"

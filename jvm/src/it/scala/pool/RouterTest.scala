@@ -377,20 +377,20 @@ class RouterTest extends AnyWordSpec with BeforeAndAfterAll with Matchers with S
     }
   }
 
-  "deactivatelicensee" should {
-    "post to licensee deactivated" in {
-      Post("/deactivatelicensee", DeactivateLicensee(licensee.license)) ~> router.routes ~> check {
+  "deactivate" should {
+    "post to deactivated" in {
+      Post("/deactivate", Deactivate(licensee.license)) ~> router.routes ~> check {
         status shouldBe OK
-        responseAs[LicenseeDeactivated].licensee.isDeactivated shouldBe true
+        responseAs[Deactivated].licensee.isDeactivated shouldBe true
       }
     }
   }
 
-  "reactivatelicensee" should {
-    "post to licensee reactivated" in {
-      Post("/reactivatelicensee", ReactivateLicensee(licensee.license)) ~> router.routes ~> check {
+  "reactivate" should {
+    "post to reactivated" in {
+      Post("/reactivate", Reactivate(licensee.license)) ~> router.routes ~> check {
         status shouldBe OK
-        responseAs[LicenseeReactivated].licensee.isActivated shouldBe true
+        responseAs[Reactivated].licensee.isActivated shouldBe true
       }
     }
   }

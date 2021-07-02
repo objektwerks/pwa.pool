@@ -86,34 +86,34 @@ class Router(store: Store, cache: LicenseeCache, emailer: ActorRef) extends Cors
       }
     }
   }
-  val deactivatelicensee = path("deactivatelicensee") {
+  val deactivate = path("deactivate") {
     post {
-      entity(as[DeactivateLicensee]) { deactivatelicensee =>
-        if (deactivatelicensee.isValid) {
-          onSuccess(deactivateLicensee(deactivatelicensee.license)) {
+      entity(as[Deactivate]) { deactivate =>
+        if (deactivate.isValid) {
+          onSuccess(deactivateLicensee(deactivate.license)) {
             case Some(licensee) =>
               decacheLicensee(licensee)
-              complete(OK -> LicenseeDeactivated(licensee))
+              complete(OK -> Deactivated(licensee))
             case None =>
-              val cause = s"*** Unauthorized license: ${deactivatelicensee.license}"
+              val cause = s"*** Unauthorized license: ${deactivate.license}"
               complete(Unauthorized -> onUnauthorized(cause))
           }
-        } else complete(BadRequest -> onInvalid(deactivatelicensee))
+        } else complete(BadRequest -> onInvalid(deactivate))
       }
     }
   }
-  val reactivatelicensee = path("reactivatelicensee") {
+  val reactivate = path("reactivate") {
     post {
-      entity(as[ReactivateLicensee]) { reactivatelicensee =>
-        if (reactivatelicensee.isValid) {
-          onSuccess(reactivateLicensee(reactivatelicensee.license)) {
+      entity(as[Reactivate]) { reactivate =>
+        if (reactivate.isValid) {
+          onSuccess(reactivateLicensee(reactivate.license)) {
             case Some(licensee) =>
-              complete(OK -> LicenseeReactivated(licensee))
+              complete(OK -> Reactivated(licensee))
             case None =>
-              val cause = s"*** Unauthorized license: ${reactivatelicensee.license}"
+              val cause = s"*** Unauthorized license: ${reactivate.license}"
               complete(Unauthorized -> onUnauthorized(cause))
           }
-        } else complete(BadRequest -> onInvalid(reactivatelicensee))
+        } else complete(BadRequest -> onInvalid(reactivate))
       }
     }
   }
@@ -385,7 +385,7 @@ class Router(store: Store, cache: LicenseeCache, emailer: ActorRef) extends Cors
     }
   }
 
-  val public = now ~ register ~ login ~ deactivatelicensee ~ reactivatelicensee
+  val public = now ~ register ~ login ~ deactivate ~ reactivate
 
   val api = pathPrefix("api" / "v1" / "pool") {
     pools ~ surfaces ~ pumps ~ timers ~ timersettings ~ heaters ~ heatersettings ~
