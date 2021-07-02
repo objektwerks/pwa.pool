@@ -78,12 +78,12 @@ Package
 1. sbt js/clean fullLinkJS
 2. sbt js/universal:packageZipTarball
 
-Licensee Scenarios
-------------------
-* SignUp( email ) => SignedUp( licensee )
-* SignIn( pin ) => SignedIn( licensee )
-* DeactivateLicensee( license ) => LicenseeDeactivated( licensee )
-* ReactivateLicensee( license ) => LicenseeReactivated( licensee )
+Account Scenarios
+-----------------
+* Register( email ) => Registered( account )
+* Login( pin ) => LoggedIn( account )
+* Deactivate( license ) => Deactivated( account )
+* Reactivate( license ) => Reactivated( account )
 
 Dialogs
 -------
