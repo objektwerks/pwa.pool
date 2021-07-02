@@ -14,7 +14,7 @@ object PoolsView {
       ul(idAttr("pools"), cls("w3-ul w3-hoverable")),
       div(cls("w3-bar"),
         button(cls("w3-bar-item w3-button w3-margin w3-text-indigo"), "Add"),
-        button(cls("w3-bar-item w3-button w3-margin w3-text-indigo"), "Update")
+        button(cls("w3-bar-item w3-button w3-margin w3-text-indigo"), "Edit")
       )
     )
   }
