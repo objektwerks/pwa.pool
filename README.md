@@ -111,10 +111,12 @@ Panes
 
 Rest
 ----
->Public server url: ""
->API url: /api/v1/pool
+>Public url: /
 * /register
 * /login
+* /deactivate
+* /reactivate
+>API url: /api/v1/pool 
 * /pools           /add   /update
 * /surfaces        /add   /update
 * /pumps           /add   /update
@@ -127,8 +129,7 @@ Rest
 * /chemicals       /add   /update
 * /supplies        /add   /update
 * /repairs         /add   /update
-* /deactivate
-* /reactivate
+
 
 Client
 ------
