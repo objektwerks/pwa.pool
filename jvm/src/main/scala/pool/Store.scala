@@ -14,48 +14,47 @@ class Store(conf: Config)(implicit ec: ExecutionContext) {
   implicit val ctx = new PostgresAsyncContext(SnakeCase, conf.getConfig("quill.ctx"))
   import ctx._
 
-  def registerLicensee(licensee: Licensee): Future[Licensee] = {
+  def registerAccount(account: Account): Future[Account] =
     ctx.transaction { implicit ec =>
-      run(query[Licensee]
-        .insert(lift(licensee)))
-        .map(_ => licensee)
+      run(query[Account]
+        .insert(lift(account)))
+        .map(_ => account)
     }
-  }
 
-  def loginLicensee(pin: Int): Future[Option[Licensee]] =
+  def loginAccount(pin: Int): Future[Option[Account]] =
     run(
-      query[Licensee]
+      query[Account]
         .filter(_.pin == lift(pin))
         .filter(_.activated > 0)
         .filter(_.deactivated == 0)
     ).map(result => result.headOption)
 
-  def deactivateLicensee(license: String): Future[Option[Licensee]] = {
+  def deactivateAccount(license: String): Future[Option[Account]] = {
     ctx.transaction { implicit ec =>
-      run( query[Licensee]
+      run( query[Account]
         .filter(_.license == lift(license))
         .filter(_.deactivated == 0)
         .update(_.deactivated -> lift(DateTime.currentDate))
       )
     }
-    getLicensee(license)
+    getAccount(license)
   }
 
-  def reactivateLicensee(license: String): Future[Option[Licensee]] = {
+  def reactivateAccount(license: String): Future[Option[Account]] = {
     ctx.transaction { implicit ec =>
-      run( query[Licensee]
+      run( query[Account]
         .filter(_.license == lift(license))
         .filter(_.deactivated != 0)
         .update(_.activated -> lift(DateTime.currentDate),
                 _.deactivated -> lift(0))
       )
     }
-    getLicensee(license)
+    getAccount(license)
   }
 
-  def getLicensee(license: String): Future[Option[Licensee]] =
+  def getAccount(license: String): Future[Option[Account]] =
     run(
-      query[Licensee]
+      query[Account]
         .filter(_.license == lift(license))
     ).map(result => result.headOption)
 

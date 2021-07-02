@@ -2,7 +2,7 @@ package pool.dialog
 
 import com.raquo.laminar.api.L._
 
-import pool.{Context, Deactivate, Licensee, Deactivated, Reactivated, Reactivate, ServerProxy}
+import pool.{Context, Deactivate, Account, Deactivated, Reactivated, Reactivate, ServerProxy}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Failure, Success}
@@ -29,7 +29,7 @@ object AccountDialog {
             ),
             div(cls("w3-col"), width("75%"),
               input(cls("w3-input w3-text-indigo"), typ("text"), readOnly(true),
-                value <-- context.licensee.signal.map(_.license))
+                value <-- context.account.signal.map(_.license))
             )
           ),
           div(cls("w3-row w3-margin"),
@@ -38,7 +38,7 @@ object AccountDialog {
             ),
             div(cls("w3-col"), width("75%"),
               input(cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("text"), readOnly(true),
-                value <-- context.licensee.signal.map(_.email))
+                value <-- context.account.signal.map(_.email))
             )
           ),
           div(cls("w3-row w3-margin"),
@@ -47,7 +47,7 @@ object AccountDialog {
             ),
             div(cls("w3-col"), width("75%"),
               input(cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("text"), readOnly(true),
-                value <-- context.licensee.signal.map(_.pin.toString))
+                value <-- context.account.signal.map(_.pin.toString))
             )
           ),
           div(cls("w3-row w3-margin"),
@@ -56,7 +56,7 @@ object AccountDialog {
             ),
             div(cls("w3-col"), width("75%"),
               input(cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("text"), readOnly(true),
-                value <-- context.licensee.signal.map(_.activated.toString))
+                value <-- context.account.signal.map(_.activated.toString))
             )
           ),
           div(cls("w3-row w3-margin"),
@@ -65,20 +65,20 @@ object AccountDialog {
             ),
             div(cls("w3-col"), width("75%"),
               input(cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("text"), readOnly(true),
-                value <-- context.licensee.signal.map(_.deactivated.toString))
+                value <-- context.account.signal.map(_.deactivated.toString))
             )
           ),
           div(cls("w3-bar"),
             button(idAttr(deactivateButtonId), cls("w3-bar-item w3-button w3-margin w3-text-indigo"),
               onClick --> { _ =>
-                val command = Deactivate(context.licensee.now().license)
+                val command = Deactivate(context.account.now().license)
                 println(s"Command: $command")
-                ServerProxy.post(context.deactivateUrl, Licensee.emptyLicense, command).onComplete {
+                ServerProxy.post(context.deactivateUrl, Account.emptyLicense, command).onComplete {
                   case Success(either) => either match {
                     case Right(event) => event match {
                       case deactivated: Deactivated =>
                         println(s"Success: $event")
-                        context.licensee.set(deactivated.licensee)
+                        context.account.set(deactivated.account)
                         context.hide(id)
                       case _ => errors.emit(s"Invalid: $event")
                     }
@@ -95,14 +95,14 @@ object AccountDialog {
             ),
             button(idAttr(reactivateButtonId), cls("w3-bar-item w3-button w3-margin w3-text-indigo"),
               onClick --> { _ =>
-                val command = Reactivate(context.licensee.now().license)
+                val command = Reactivate(context.account.now().license)
                 println(s"Command: $command")
-                ServerProxy.post(context.reactivateUrl, Licensee.emptyLicense, command).onComplete {
+                ServerProxy.post(context.reactivateUrl, Account.emptyLicense, command).onComplete {
                   case Success(either) => either match {
                     case Right(event) => event match {
                       case reactivated: Reactivated =>
                         println(s"Success: $event")
-                        context.licensee.set(reactivated.licensee)
+                        context.account.set(reactivated.account)
                         context.hide(id)
                       case _ => errors.emit(s"Invalid: $event")
                     }

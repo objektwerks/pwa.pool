@@ -6,23 +6,23 @@ import scala.util.Random
 
 sealed trait Entity extends Product with Serializable
 
-final case class Licensee(license: String,
-                          email: String,
-                          pin: Int,
-                          activated: Int,
-                          deactivated: Int) extends Entity {
+final case class Account(license: String,
+                         email: String,
+                         pin: Int,
+                         activated: Int,
+                         deactivated: Int) extends Entity {
   def toLicense: License = License(license)
 }
 
-object Licensee {
-  def apply(email: String): Licensee = Licensee(
+object Account {
+  def apply(email: String): Account = Account(
     license = UUID.randomUUID.toString.toLowerCase,
     email = email,
     pin = Math.abs(Random.nextInt()),
     activated = DateTime.currentDate,
     deactivated = 0
   )
-  val emptyLicensee = Licensee(
+  val emptyAccount = Account(
     license = "",
     email = "",
     pin = 0,

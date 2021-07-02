@@ -8,7 +8,7 @@ import jodd.mail.{Email, MailServer, SendMailSession, SmtpServer}
 
 import scala.util.control.NonFatal
 
-case class SendEmail(licensee: Licensee) extends Product with Serializable
+case class SendEmail(licensee: Account) extends Product with Serializable
 
 class Emailer(conf: Config) extends Actor with ActorLogging {
   private val smtpServer: SmtpServer = MailServer.create()
@@ -26,7 +26,7 @@ class Emailer(conf: Config) extends Actor with ActorLogging {
   private val instructions = conf.getString("email.instructions")
   private val retries = conf.getInt("email.retries")
 
-  private def buildEmail(licensee: Licensee): Email = {
+  private def buildEmail(licensee: Account): Email = {
     val html = s"""
                   |<!DOCTYPE html>
                   |<html lang="en">
@@ -50,7 +50,7 @@ class Emailer(conf: Config) extends Actor with ActorLogging {
       .htmlMessage(html, "UTF-8")
   }
 
-  private def sendEmail(licensee: Licensee): Option[String] = {
+  private def sendEmail(licensee: Account): Option[String] = {
     var session: SendMailSession = null
     var messageId: Option[String] = None
     try {

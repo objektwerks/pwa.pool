@@ -7,13 +7,13 @@ class SerializerTest extends AnyFunSuite with Matchers {
   import upickle.default._
   import Serializers._
 
-  test("licensee") {
-    val licensee = Licensee("test@test.com")
-    val licenseeJson = write(licensee)
-    println(licensee)
-    println(licenseeJson)
-    println(read[Licensee](licenseeJson))
-    licensee shouldBe read[Licensee](licenseeJson)
+  test("account") {
+    val account = Account("test@test.com")
+    val accountJson = write(account)
+    println(account)
+    println(accountJson)
+    println(read[Account](accountJson))
+    account shouldBe read[Account](accountJson)
   }
 
   test("pool") {

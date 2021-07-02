@@ -15,10 +15,10 @@ import org.slf4j.LoggerFactory
 import scala.util.control.NonFatal
 
 object Router {
-  def apply(store: Store, cache: LicenseeCache, emailer: ActorRef): Router = new Router(store, cache, emailer)
+  def apply(store: Store, cache: AccountCache, emailer: ActorRef): Router = new Router(store, cache, emailer)
 }
 
-class Router(store: Store, cache: LicenseeCache, emailer: ActorRef) extends CorsHandler {
+class Router(store: Store, cache: AccountCache, emailer: ActorRef) extends CorsHandler {
   import de.heikoseeberger.akkahttpupickle.UpickleSupport._
   import Serializers._
   import Validators._
@@ -59,9 +59,9 @@ class Router(store: Store, cache: LicenseeCache, emailer: ActorRef) extends Cors
       entity(as[Register]) { register =>
         if (register.isValid) {
           implicit val timeout = new Timeout(10, TimeUnit.SECONDS)
-          val licensee = Licensee(email = register.email)
+          val licensee = Account(email = register.email)
           onSuccess( emailer ? SendEmail(licensee) ) {
-            case Some(_) => onSuccess(registerLicensee(licensee)) {
+            case Some(_) => onSuccess(registerAccount(licensee)) {
               licensee => complete(OK -> Registered(licensee))
             }
             case _ => complete(BadRequest -> onInvalid(register))
@@ -74,10 +74,10 @@ class Router(store: Store, cache: LicenseeCache, emailer: ActorRef) extends Cors
     post {
       entity(as[Login]) { login =>
         if (login.isValid) {
-          onSuccess(loginLicensee(login.pin)) {
-            case Some(licensee) =>
-              cacheLicensee(licensee)
-              complete(OK -> LoggedIn(licensee))
+          onSuccess(loginAccount(login.pin)) {
+            case Some(account) =>
+              cacheAccount(account)
+              complete(OK -> LoggedIn(account))
             case None =>
               val cause = s"*** Unauthorized pin: ${login.pin}"
               complete(Unauthorized -> onUnauthorized(cause))
@@ -90,10 +90,10 @@ class Router(store: Store, cache: LicenseeCache, emailer: ActorRef) extends Cors
     post {
       entity(as[Deactivate]) { deactivate =>
         if (deactivate.isValid) {
-          onSuccess(deactivateLicensee(deactivate.license)) {
-            case Some(licensee) =>
-              decacheLicensee(licensee)
-              complete(OK -> Deactivated(licensee))
+          onSuccess(deactivateAccount(deactivate.license)) {
+            case Some(account) =>
+              decacheAccount(account)
+              complete(OK -> Deactivated(account))
             case None =>
               val cause = s"*** Unauthorized license: ${deactivate.license}"
               complete(Unauthorized -> onUnauthorized(cause))
@@ -106,7 +106,7 @@ class Router(store: Store, cache: LicenseeCache, emailer: ActorRef) extends Cors
     post {
       entity(as[Reactivate]) { reactivate =>
         if (reactivate.isValid) {
-          onSuccess(reactivateLicensee(reactivate.license)) {
+          onSuccess(reactivateAccount(reactivate.license)) {
             case Some(licensee) =>
               complete(OK -> Reactivated(licensee))
             case None =>
@@ -392,8 +392,8 @@ class Router(store: Store, cache: LicenseeCache, emailer: ActorRef) extends Cors
       measurements ~ cleanings ~ chemicals ~ supplies ~ repairs
   }
 
-  val secure = (route: Route) => headerValueByName(Licensee.headerLicenseKey) { license =>
-    onSuccess(isLicenseActivated(license)) { isActivated =>
+  val secure = (route: Route) => headerValueByName(Account.headerLicenseKey) { license =>
+    onSuccess(isAccountActive(license)) { isActivated =>
       if (isActivated) route
       else {
         val cause = s"*** License is not activated: $license"

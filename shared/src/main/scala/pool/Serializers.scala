@@ -25,7 +25,7 @@ import scala.annotation.nowarn
     registeredRW, loggedInRW, deactivatedRW, reactivatedRW
   )
 
-  implicit val licenseeRW: ReadWriter[Licensee] = macroRW
+  implicit val accountRW: ReadWriter[Account] = macroRW
   implicit val licenseRW: ReadWriter[License] = macroRW
   implicit val poolRW: ReadWriter[Pool] = macroRW
   implicit val poolIdRW: ReadWriter[PoolId] = macroRW
@@ -44,7 +44,7 @@ import scala.annotation.nowarn
   implicit val repairRW: ReadWriter[Repair] = macroRW
 
   implicit val entityRW: ReadWriter[Entity] = ReadWriter.merge(
-    licenseeRW, licenseRW, poolRW, poolIdRW, surfaceRW, pumpRW, timerRW, timerIdRW, timerSettingRW,
+    accountRW, licenseRW, poolRW, poolIdRW, surfaceRW, pumpRW, timerRW, timerIdRW, timerSettingRW,
     heaterRW, heaterIdRW, heaterSettingRW, measurementRW, cleaningRW, chemicalRW, supplyRW, repairRW
   )
 

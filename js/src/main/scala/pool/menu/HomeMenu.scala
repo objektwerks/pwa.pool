@@ -29,7 +29,7 @@ object HomeMenu {
       a(idAttr(accountMenuItemId), href("#"), cls("w3-bar-item w3-button"), display("none"),
         onClick --> { _ =>
           accountDialog.amend(display("block"))
-          if (context.licensee.now().deactivated == 0) {
+          if (context.account.now().deactivated == 0) {
             context.show(AccountDialog.deactivateButtonId)
             context.hide(AccountDialog.reactivateButtonId)
           } else {

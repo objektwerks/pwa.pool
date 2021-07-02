@@ -29,7 +29,7 @@ class RouterTest extends AnyWordSpec with BeforeAndAfterAll with Matchers with S
   implicit val timeout = RouteTestTimeout(10.seconds dilated)
 
   val store = Store(conf)
-  val cache = LicenseeCache(store)
+  val cache = AccountCache(store)
   val emailer = system.actorOf(Props(classOf[Emailer], conf), name = "emailer")
   val router = Router(store, cache, emailer)
   val host = conf.getString("server.host")
@@ -61,7 +61,7 @@ class RouterTest extends AnyWordSpec with BeforeAndAfterAll with Matchers with S
   import Serializers._
   import Validators._
 
-  var licensee: Licensee = _
+  var account: Account = _
   var licenseHeader: RawHeader = _
   var poolid: PoolId = _
   var timerid: TimerId = _
@@ -80,26 +80,26 @@ class RouterTest extends AnyWordSpec with BeforeAndAfterAll with Matchers with S
     "post to registered" in {
       Post("/register", Register(email = conf.getString("email.from"))) ~> router.routes ~> check {
         status shouldBe OK
-        licensee = responseAs[Registered].licensee
-        licenseHeader = RawHeader(Licensee.headerLicenseKey, licensee.license)
-        licensee.isActivated shouldBe true
+        account = responseAs[Registered].account
+        licenseHeader = RawHeader(Account.headerLicenseKey, account.license)
+        account.isActivated shouldBe true
       }
     }
   }
 
   "login" should {
     "post to loggedin" in {
-      Post("/login", Login(licensee.pin)) ~> router.routes ~> check {
+      Post("/login", Login(account.pin)) ~> router.routes ~> check {
         status shouldBe OK
-        responseAs[LoggedIn].licensee shouldEqual licensee
-        licensee.isActivated shouldBe true
+        responseAs[LoggedIn].account shouldEqual account
+        account.isActivated shouldBe true
       }
     }
   }
 
   "pools" should {
     "post to id, count, pools" in {
-      var pool = Pool(license = licensee.license, name = "pool-a", built = localDateToInt(1991, 3, 13), lat = 26.862631, lon = -82.288834, volume = 10000)
+      var pool = Pool(license = account.license, name = "pool-a", built = localDateToInt(1991, 3, 13), lat = 26.862631, lon = -82.288834, volume = 10000)
       Post(apiUrl + "/pools/add", pool) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         pool = pool.copy(id = responseAs[Id].id)
@@ -111,7 +111,7 @@ class RouterTest extends AnyWordSpec with BeforeAndAfterAll with Matchers with S
         status shouldBe OK
         responseAs[Count].count shouldEqual 1
       }
-      Post(apiUrl + "/pools", licensee.toLicense) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post(apiUrl + "/pools", account.toLicense) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         responseAs[Pools].pools.length shouldEqual 1
       }
@@ -379,18 +379,18 @@ class RouterTest extends AnyWordSpec with BeforeAndAfterAll with Matchers with S
 
   "deactivate" should {
     "post to deactivated" in {
-      Post("/deactivate", Deactivate(licensee.license)) ~> router.routes ~> check {
+      Post("/deactivate", Deactivate(account.license)) ~> router.routes ~> check {
         status shouldBe OK
-        responseAs[Deactivated].licensee.isDeactivated shouldBe true
+        responseAs[Deactivated].account.isDeactivated shouldBe true
       }
     }
   }
 
   "reactivate" should {
     "post to reactivated" in {
-      Post("/reactivate", Reactivate(licensee.license)) ~> router.routes ~> check {
+      Post("/reactivate", Reactivate(account.license)) ~> router.routes ~> check {
         status shouldBe OK
-        responseAs[Reactivated].licensee.isActivated shouldBe true
+        responseAs[Reactivated].account.isActivated shouldBe true
       }
     }
   }

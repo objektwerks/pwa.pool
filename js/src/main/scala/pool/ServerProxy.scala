@@ -17,7 +17,7 @@ object ServerProxy {
   )
 
   def headers(license: String): Map[String, String] =
-    if (license.nonEmpty) headers + ( Licensee.headerLicenseKey -> license )
+    if (license.nonEmpty) headers + ( Account.headerLicenseKey -> license )
     else headers
 
   def post(url: String): Future[String] =
