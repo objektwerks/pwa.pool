@@ -93,7 +93,6 @@ Dialogs
 
 Panes
 -----
->All panes will include list, add and update features.
 1. Pool
     * Pools -> Pool
     * Surfaces -> Surface
@@ -112,10 +111,10 @@ Panes
 
 Rest
 ----
->Root server url: ""
->Root api url: /api/v1/pool
-* /signup
-* /signin
+>Public server url: ""
+>API url: /api/v1/pool
+* /register
+* /login
 * /pools           /add   /update
 * /surfaces        /add   /update
 * /pumps           /add   /update
@@ -128,8 +127,8 @@ Rest
 * /chemicals       /add   /update
 * /supplies        /add   /update
 * /repairs         /add   /update
-* /deactivatelicensee
-* /reactivatelicensee
+* /deactivate
+* /reactivate
 
 Client
 ------
@@ -138,7 +137,7 @@ Client
 
 Object Model
 ------------
-* Licensee(license, emailAddress, pin, created, activated, deactivated)
+* Account(license, email, pin, activated, deactivated)
 * Pool(id, license, name, built, lat, lon, volume)
 * Surface(id, poolId, installed, kind)
 * Pump(id, poolId, installed, model)
@@ -155,7 +154,7 @@ Object Model
 
 Relational Model
 ----------------
-* Licensee 1 ---> * Pool
+* Account 1 ---> * Pool
 * Pool 1 ---> * Surface | Pump | Timer | Heater | Measurement | Cleaning | Chemical | Supply | Repair
 * Timer 1 ---> * TimerSetting
 * Heater 1 ---> * HeaterSetting
