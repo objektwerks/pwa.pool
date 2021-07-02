@@ -37,7 +37,7 @@ object RegisterDialog {
               onClick --> { _ =>
                 val command = SignUp(context.email.now())
                 println(s"Command: $command")
-                ServerProxy.post(context.signupUrl, Licensee.emptyLicense, command).onComplete {
+                ServerProxy.post(context.registerUrl, Licensee.emptyLicense, command).onComplete {
                   case Success(either) => either match {
                     case Right(event) => event match {
                       case signedup: SignedUp =>

@@ -11,8 +11,8 @@ case class Context(publicUrl: String, apiUrl: String) extends Product with Seria
   val pools = Var(Pools(Seq.empty[Pool]))
   val poolId = Var(PoolId(0))
 
-  val signupUrl = s"$publicUrl/signup"
-  val signinUrl = s"$publicUrl/signin"
+  val registerUrl = s"$publicUrl/register"
+  val loginUrl = s"$publicUrl/login"
   val deactivateUrl = s"$publicUrl/deactivatelicensee"
   val reactivateUrl = s"$publicUrl/reactivatelicensee"
   val poolsUrl = s"$apiUrl/pools"

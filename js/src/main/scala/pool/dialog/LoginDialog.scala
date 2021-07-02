@@ -38,7 +38,7 @@ object LoginDialog {
               onClick --> { _ =>
                 val command = SignIn(context.pin.now())
                 println(s"Command: $command")
-                ServerProxy.post(context.signinUrl, Licensee.emptyLicense, command).onComplete {
+                ServerProxy.post(context.loginUrl, Licensee.emptyLicense, command).onComplete {
                   case Success(either) => either match {
                     case Right(event) => event match {
                       case signedin: SignedIn =>
