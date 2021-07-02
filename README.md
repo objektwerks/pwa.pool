@@ -99,18 +99,18 @@ Dialogs
 Views
 -----
 1. Pool
-    * Pools -> Pool
-    * Surfaces -> Surface
-    * Pumps -> Pump
-    * Timers -> Timer -> TimerSettings
-    * Heaters -> Heater -> HeaterSettings -> HeaterSetting
+   * Pools -> Pool
+   * Surfaces -> Surface
+   * Pumps -> Pump
+   * Timers -> Timer -> TimerSettings
+   * Heaters -> Heater -> HeaterSettings -> HeaterSetting
 2. Maintenance
-    * Measurments -> Measurement **
-    * Cleanings -> Cleaning **
-    * Chemicals -> Chemical **
+   * Measurments -> Measurement **
+   * Cleanings -> Cleaning **
+   * Chemicals -> Chemical **
 3. Expenses
-    * Supplies -> Supply **
-    * Repairs -> Repair **
+   * Supplies -> Supply **
+   * Repairs -> Repair **
 
 ** Charts -> measurements, cleanings, chemicals, supplies and repairs.
 
