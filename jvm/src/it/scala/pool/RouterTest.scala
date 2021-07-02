@@ -89,9 +89,9 @@ class RouterTest extends AnyWordSpec with BeforeAndAfterAll with Matchers with S
 
   "login" should {
     "post to signedin" in {
-      Post("/login", SignIn(licensee.pin)) ~> router.routes ~> check {
+      Post("/login", Login(licensee.pin)) ~> router.routes ~> check {
         status shouldBe OK
-        responseAs[SignedIn].licensee shouldEqual licensee
+        responseAs[LoggedIn].licensee shouldEqual licensee
         licensee.isActivated shouldBe true
       }
     }

@@ -4,7 +4,7 @@ import com.raquo.laminar.api.L._
 
 import pool.menu.HomeMenu
 import pool.view.PoolsView
-import pool.{Context, Licensee, ServerProxy, SignIn, SignedIn}
+import pool.{Context, Licensee, ServerProxy, Login, LoggedIn}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Failure, Success}
@@ -36,14 +36,14 @@ object LoginDialog {
           div(cls("w3-bar"),
             button(cls("w3-bar-item w3-button w3-margin w3-text-indigo"),
               onClick --> { _ =>
-                val command = SignIn(context.pin.now())
+                val command = Login(context.pin.now())
                 println(s"Command: $command")
                 ServerProxy.post(context.loginUrl, Licensee.emptyLicense, command).onComplete {
                   case Success(either) => either match {
                     case Right(event) => event match {
-                      case signedin: SignedIn =>
+                      case loggedin: LoggedIn =>
                         println(s"Success: $event")
-                        context.licensee.set(signedin.licensee)
+                        context.licensee.set(loggedin.licensee)
                         context.hide(HomeMenu.registerMenuItemId)
                         context.hide(HomeMenu.loginMenuItemId)
                         context.show(HomeMenu.accountMenuItemId)

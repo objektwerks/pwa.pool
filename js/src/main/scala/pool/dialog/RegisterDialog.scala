@@ -40,9 +40,9 @@ object RegisterDialog {
                 ServerProxy.post(context.registerUrl, Licensee.emptyLicense, command).onComplete {
                   case Success(either) => either match {
                     case Right(event) => event match {
-                      case signedup: Registered =>
+                      case registered: Registered =>
                         println(s"Success: $event")
-                        context.licensee.set(signedup.licensee)
+                        context.licensee.set(registered.licensee)
                         context.hide(HomeMenu.registerMenuItemId)
                         context.hide(id)
                       case _ => errors.emit(s"Invalid: $event")

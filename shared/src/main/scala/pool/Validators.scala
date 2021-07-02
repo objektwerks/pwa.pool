@@ -10,8 +10,8 @@ object Validators {
     def isValid: Boolean = register.email.isEmail
   }
 
-  implicit class SignInOps(val signin: SignIn) {
-    def isValid: Boolean = signin.pin > 0
+  implicit class LoginOps(val login: Login) {
+    def isValid: Boolean = login.pin > 0
   }
 
   implicit class DeactivateLicenseeOps(val deactivateLicensee: DeactivateLicensee) {

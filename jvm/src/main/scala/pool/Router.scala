@@ -72,12 +72,12 @@ class Router(store: Store, cache: LicenseeCache, emailer: ActorRef) extends Cors
   }
   val login = path("login") {
     post {
-      entity(as[SignIn]) { signin =>
+      entity(as[Login]) { signin =>
         if (signin.isValid) {
           onSuccess(signIn(signin.pin)) {
             case Some(licensee) =>
               cacheLicensee(licensee)
-              complete(OK -> SignedIn(licensee))
+              complete(OK -> LoggedIn(licensee))
             case None =>
               val cause = s"*** Unauthorized pin: ${signin.pin}"
               complete(Unauthorized -> onUnauthorized(cause))

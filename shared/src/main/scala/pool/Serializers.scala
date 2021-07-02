@@ -8,21 +8,21 @@ import scala.annotation.nowarn
   implicit val faultRW: ReadWriter[Fault] = macroRW
 
   implicit val registerRW: ReadWriter[Register] = macroRW
-  implicit val signinRW: ReadWriter[SignIn] = macroRW
+  implicit val loginRW: ReadWriter[Login] = macroRW
   implicit val deactivateLicenseeRW: ReadWriter[DeactivateLicensee] = macroRW
   implicit val reactivateLicenseeRW: ReadWriter[ReactivateLicensee] = macroRW
 
   implicit val commandRW: ReadWriter[Command] = ReadWriter.merge(
-    registerRW, signinRW, deactivateLicenseeRW, reactivateLicenseeRW
+    registerRW, loginRW, deactivateLicenseeRW, reactivateLicenseeRW
   )
 
-  implicit val signedUpRW: ReadWriter[Registered] = macroRW
-  implicit val signedInRW: ReadWriter[SignedIn] = macroRW
+  implicit val registeredRW: ReadWriter[Registered] = macroRW
+  implicit val loggedInRW: ReadWriter[LoggedIn] = macroRW
   implicit val licenseeDeactivatedRW: ReadWriter[LicenseeDeactivated] = macroRW
   implicit val licenseeReactivatedRW: ReadWriter[LicenseeReactivated] = macroRW
 
   implicit val eventRW: ReadWriter[Event] = ReadWriter.merge(
-    signedUpRW, signedInRW, licenseeDeactivatedRW, licenseeReactivatedRW
+    registeredRW, loggedInRW, licenseeDeactivatedRW, licenseeReactivatedRW
   )
 
   implicit val licenseeRW: ReadWriter[Licensee] = macroRW
