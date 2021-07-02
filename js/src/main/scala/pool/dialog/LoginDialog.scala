@@ -3,7 +3,6 @@ package pool.dialog
 import com.raquo.laminar.api.L._
 
 import pool.menu.HomeMenu
-import pool.view.PoolsView
 import pool.{Context, Account, ServerProxy, Login, LoggedIn}
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -47,7 +46,7 @@ object LoginDialog {
                         context.hide(HomeMenu.registerMenuItemId)
                         context.hide(HomeMenu.loginMenuItemId)
                         context.show(HomeMenu.accountMenuItemId)
-                        context.show(PoolsView.id)
+                        context.show(HomeMenu.poolsMenuItemId)
                         context.hide(id)
                       case _ => errors.emit(s"Invalid: $event")
                     }

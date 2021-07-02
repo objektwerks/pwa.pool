@@ -4,12 +4,14 @@ import com.raquo.laminar.api.L._
 
 import pool.Context
 import pool.dialog.{AccountDialog, LoginDialog, RegisterDialog}
+import pool.view.PoolsView
 
 object HomeMenu {
   val id = getClass.getSimpleName
   val registerMenuItemId = id + "-" + RegisterDialog.id
   val loginMenuItemId = id + "-" + LoginDialog.id
   val accountMenuItemId = id + "-" + AccountDialog.id
+  val poolsMenuItemId = id + "-" + PoolsView.id
 
   def apply(context: Context,
             registerDialog: Div,
@@ -20,12 +22,14 @@ object HomeMenu {
         onClick --> { _ =>
           registerDialog.amend(display("block"))
         },
-        "Register"),
+        "Register"
+      ),
       a(idAttr(loginMenuItemId), href("#"), cls("w3-bar-item w3-button"),
         onClick --> { _ =>
           loginDialog.amend(display("block"))
         },
-        "Login"),
+        "Login"
+      ),
       a(idAttr(accountMenuItemId), href("#"), cls("w3-bar-item w3-button"), display("none"),
         onClick --> { _ =>
           accountDialog.amend(display("block"))
@@ -37,7 +41,15 @@ object HomeMenu {
             context.show(AccountDialog.reactivateButtonId)
           }
         },
-        "Account"),
+        "Account"
+      ),
+      a(idAttr(poolsMenuItemId), href("#"), cls("w3-bar-item w3-button"), display("none"),
+        onClick --> { _ =>
+          // Todo: load pools
+          context.show(PoolsView.id)
+        },
+        "Pools"
+      ),
       registerDialog,
       loginDialog,
       accountDialog
