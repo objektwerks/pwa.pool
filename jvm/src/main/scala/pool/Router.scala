@@ -54,7 +54,7 @@ class Router(store: Store, cache: LicenseeCache, emailer: ActorRef) extends Cors
       complete(OK -> Instant.now.toString)
     }
   }
-  val signup = path("signup") {
+  val register = path("register") {
     post {
       entity(as[SignUp]) { signup =>
         if (signup.isValid) {
@@ -70,7 +70,7 @@ class Router(store: Store, cache: LicenseeCache, emailer: ActorRef) extends Cors
       }
     }
   }
-  val signin = path("signin") {
+  val login = path("login") {
     post {
       entity(as[SignIn]) { signin =>
         if (signin.isValid) {
@@ -385,7 +385,7 @@ class Router(store: Store, cache: LicenseeCache, emailer: ActorRef) extends Cors
     }
   }
 
-  val public = now ~ signup ~ signin ~ deactivatelicensee ~ reactivatelicensee
+  val public = now ~ register ~ login ~ deactivatelicensee ~ reactivatelicensee
 
   val api = pathPrefix("api" / "v1" / "pool") {
     pools ~ surfaces ~ pumps ~ timers ~ timersettings ~ heaters ~ heatersettings ~
