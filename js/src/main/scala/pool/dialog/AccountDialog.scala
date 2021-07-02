@@ -10,9 +10,9 @@ import scala.util.{Failure, Success}
 
 object AccountDialog {
   val id = getClass.getSimpleName
+  val deactivateButtonId = id + "-deactivate-button"
+  val reactivateButtonId = id + "-reactivate-button"
   val errors = new EventBus[String]
-  val deactivateId = id + "-deactivate"
-  val reactivateId = id + "-reactivate"
 
   def apply(context: Context): Div =
     div(idAttr(id), cls("w3-modal"),
@@ -70,7 +70,7 @@ object AccountDialog {
             )
           ),
           div(cls("w3-bar"),
-            button(idAttr(deactivateId), cls("w3-bar-item w3-button w3-margin w3-text-indigo"),
+            button(idAttr(deactivateButtonId), cls("w3-bar-item w3-button w3-margin w3-text-indigo"),
               onClick --> { _ =>
                 val command = DeactivateLicensee(context.licensee.now().license)
                 println(s"Command: $command")
@@ -80,7 +80,7 @@ object AccountDialog {
                       case deactivated: LicenseeDeactivated =>
                         println(s"Success: $event")
                         context.licensee.set(deactivated.licensee)
-                        context.hide(HomeMenu.accountId)
+                        context.hide(HomeMenu.accountMenuItemId)
                         context.hide(id)
                       case _ => errors.emit(s"Invalid: $event")
                     }
@@ -95,7 +95,7 @@ object AccountDialog {
               },
               "Deactivate"
             ),
-            button(idAttr(reactivateId), cls("w3-bar-item w3-button w3-margin w3-text-indigo"),
+            button(idAttr(reactivateButtonId), cls("w3-bar-item w3-button w3-margin w3-text-indigo"),
               onClick --> { _ =>
                 val command = ReactivateLicensee(context.licensee.now().license)
                 println(s"Command: $command")
@@ -105,7 +105,7 @@ object AccountDialog {
                       case reactivated: LicenseeReactivated =>
                         println(s"Success: $event")
                         context.licensee.set(reactivated.licensee)
-                        context.hide(HomeMenu.accountId)
+                        context.hide(HomeMenu.accountMenuItemId)
                         context.hide(id)
                       case _ => errors.emit(s"Invalid: $event")
                     }
