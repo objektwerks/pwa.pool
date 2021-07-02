@@ -1,7 +1,7 @@
 DROP SCHEMA PUBLIC CASCADE;
 CREATE SCHEMA PUBLIC;
 
-CREATE TABLE licensee (
+CREATE TABLE account (
   license VARCHAR(36) PRIMARY KEY,
   email VARCHAR NOT NULL,
   pin INT NOT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE licensee (
 
 CREATE TABLE pool (
   id SERIAL PRIMARY KEY,
-  license VARCHAR(36) REFERENCES licensee(license),
+  license VARCHAR(36) REFERENCES account(license),
   name VARCHAR(24) NOT NULL,
   built INT NOT NULL,
   lat NUMERIC(8, 6) NOT NULL,
