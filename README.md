@@ -8,8 +8,8 @@ Install
 2. brew install node
 3. npm install jsdom
 
-Requirements
-------------
+Configuration
+-------------
 >Provide valid configuration for:
 1. Postgresql
 2. SMTP
