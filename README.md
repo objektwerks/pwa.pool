@@ -96,7 +96,7 @@ Dialogs
 * Login ( pin )
 * Account ( license, email, pin, activated, deactivated )
 
-Panes
+Views
 -----
 1. Pool
     * Pools -> Pool
