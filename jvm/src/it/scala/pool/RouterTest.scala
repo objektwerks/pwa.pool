@@ -76,9 +76,9 @@ class RouterTest extends AnyWordSpec with BeforeAndAfterAll with Matchers with S
     }
   }
 
-  "signup" should {
+  "register" should {
     "post to signedup" in {
-      Post("/signup", SignUp(email = conf.getString("email.from"))) ~> router.routes ~> check {
+      Post("/register", SignUp(email = conf.getString("email.from"))) ~> router.routes ~> check {
         status shouldBe OK
         licensee = responseAs[SignedUp].licensee
         licenseHeader = RawHeader(Licensee.headerLicenseKey, licensee.license)
@@ -87,9 +87,9 @@ class RouterTest extends AnyWordSpec with BeforeAndAfterAll with Matchers with S
     }
   }
 
-  "signin" should {
+  "login" should {
     "post to signedin" in {
-      Post("/signin", SignIn(licensee.pin)) ~> router.routes ~> check {
+      Post("/login", SignIn(licensee.pin)) ~> router.routes ~> check {
         status shouldBe OK
         responseAs[SignedIn].licensee shouldEqual licensee
         licensee.isActivated shouldBe true
@@ -355,9 +355,9 @@ class RouterTest extends AnyWordSpec with BeforeAndAfterAll with Matchers with S
     }
   }
 
-  "invalid" should {
+  "invalid register" should {
     "post to signedup, fault" in {
-      Post("/signup", SignUp(email = "invalid.email")) ~> router.routes ~> check {
+      Post("/register", SignUp(email = "invalid.email")) ~> router.routes ~> check {
         status shouldBe BadRequest
         val fault = responseAs[Fault]
         fault.cause.nonEmpty shouldBe true
