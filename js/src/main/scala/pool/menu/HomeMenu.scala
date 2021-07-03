@@ -45,7 +45,7 @@ object HomeMenu {
       ),
       a(idAttr(poolsMenuItemId), href("#"), cls("w3-bar-item w3-button"), display("none"),
         onClick --> { _ =>
-          // Todo: load pools
+          PoolsView.pools(context)
           context.show(PoolsView.id)
         },
         "Pools"
