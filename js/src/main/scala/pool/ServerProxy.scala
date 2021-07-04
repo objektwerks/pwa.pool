@@ -35,7 +35,7 @@ object ServerProxy {
         case 400 | 401 | 500 => toFault(xhr.responseText)
         case _ => Left( log(xhr.statusText, xhr.status) )
       }
-    }.recover { case error => Left( log(error.getMessage) ) }
+    }.recover { case error => Left( log(error) ) }
 
   def post(url: String, license: String, entity: Entity): Future[Either[Fault, State]] =
     Ajax.post(url = url, headers = headers(license), data = write[Entity](entity)).map { xhr =>
@@ -44,13 +44,15 @@ object ServerProxy {
         case 400 | 401 | 500 => toFault(xhr.responseText)
         case _ => Left( log(xhr.statusText, xhr.status) )
       }
-    }.recover { case error => Left( log(error.getMessage) ) }
+    }.recover { case error => Left( log(error) ) }
 
   def toFault(responseText: String): Left[Fault, Nothing] =
-    Try(read[Fault](responseText))
-      .fold(error => Left(log(error)), fault => Left(fault))
+    Try(read[Fault](responseText)).fold(error => Left(log(error)), fault => Left(fault))
 
-  def log(error: Throwable): Fault = log(error.getMessage)
+  def log(error: Throwable): Fault = {
+    console.error(error.printStackTrace())
+    log(error.getMessage)
+  }
 
   def log(statusText: String, status: Int = 500): Fault = {
     val fault = Fault(statusText, status)
