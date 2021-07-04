@@ -9,7 +9,7 @@ class SerializerTest extends AnyFunSuite with Matchers {
 
   test("account") {
     val account = Account("test@test.com")
-    val accountJson = write(account)
+    val accountJson = write[Account](account)
     println(account)
     println(accountJson)
     println(read[Account](accountJson))
@@ -18,7 +18,7 @@ class SerializerTest extends AnyFunSuite with Matchers {
 
   test("pool") {
     val pool = Pool(license = "abc123", name = "pool", built = 1991, lat = 26.85, lon = 82.29, volume = 10000)
-    val poolJson = write(pool)
+    val poolJson = write[Pool](pool)
     println(pool)
     println(poolJson)
     println(read[Pool](poolJson))
