@@ -32,23 +32,28 @@ object ServerProxy {
     Ajax.post(url = url, headers = headers(license), data = write[Command](command)).map { xhr =>
       xhr.status match {
         case 200 => Try(read[Event](xhr.responseText)).fold(error => Left(log(error)), event => Right(event))
-        case 400 | 401 | 500 => Try(read[Fault](xhr.responseText)).fold(error => Left(log(error)), fault => Left(fault))
-        case _ => Left( log(Fault(xhr.statusText, xhr.status)) )
+        case 400 | 401 | 500 => toFault(xhr.responseText)
+        case _ => Left( log(xhr.statusText, xhr.status) )
       }
-    }.recover { case error => Left( log(Fault(cause = error.getMessage)) ) }
+    }.recover { case error => Left( log(error.getMessage) ) }
 
   def post(url: String, license: String, entity: Entity): Future[Either[Fault, State]] =
     Ajax.post(url = url, headers = headers(license), data = write[Entity](entity)).map { xhr =>
       xhr.status match {
         case 200 => Try(read[State](xhr.responseText)).fold(error => Left(log(error)), state => Right(state))
-        case 400 | 401 | 500 => Try(read[Fault](xhr.responseText)).fold(error => Left(log(error)), fault => Left(fault))
-        case _ => Left( log(Fault(xhr.statusText, xhr.status)) )
+        case 400 | 401 | 500 => toFault(xhr.responseText)
+        case _ => Left( log(xhr.statusText, xhr.status) )
       }
-    }.recover { case error => Left( log(Fault(cause = error.getMessage)) ) }
+    }.recover { case error => Left( log(error.getMessage) ) }
 
-  def log(error: Throwable): Fault = log(Fault(error.getMessage))
+  def toFault(responseText: String): Left[Fault, Nothing] =
+    Try(read[Fault](responseText))
+      .fold(error => Left(log(error)), fault => Left(fault))
 
-  def log(fault: Fault): Fault = {
+  def log(error: Throwable): Fault = log(error.getMessage)
+
+  def log(statusText: String, status: Int = 500): Fault = {
+    val fault = Fault(statusText, status)
     console.error(fault.toString)
     fault
   }
