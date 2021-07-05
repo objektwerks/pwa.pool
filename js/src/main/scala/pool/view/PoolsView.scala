@@ -18,7 +18,7 @@ object PoolsView {
   def pools(context: Context): Unit = {
     val license = License(context.account.now().license)
     val response = ServerProxy.post(context.poolsUrl, license.key, license)
-    Handler.handle(context, errors, response, handler)
+    Handler.onState(context, errors, response, handler)
   }
 
   def apply(context: Context): Div = {
