@@ -1,34 +1,24 @@
 package pool.view
 
 import com.raquo.laminar.api.L._
-import pool.{Context, License, Pools, ServerProxy}
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.util.{Failure, Success}
+import pool._
 
 object PoolsView {
   val id = getClass.getSimpleName
   val errors = new EventBus[String]
 
+  def handler(context: Context, errors: EventBus[String], state: State): Unit = {
+    state match {
+      case pools: Pools => context.pools.set(pools)
+      case _ => errors.emit(s"Invalid: $state")
+    }
+  }
+
   def pools(context: Context): Unit = {
     val license = License(context.account.now().license)
-    println(s"Entity: $license")
-    ServerProxy.post(context.poolsUrl, license.key, license).onComplete {
-      case Success(either) => either match {
-        case Right(state) => state match {
-          case pools: Pools =>
-            println(s"Success: $state")
-            context.pools.set(pools)
-          case _ => errors.emit(s"Invalid: $state")
-        }
-        case Left(fault) =>
-          println(s"Fault: $fault")
-          errors.emit(s"Fault: $fault")
-      }
-      case Failure(failure) =>
-        println(s"Failure: $failure")
-        errors.emit(s"Failure: $failure")
-    }
+    val response = ServerProxy.post(context.poolsUrl, license.key, license)
+    Handler.handle(context, errors, response, handler)
   }
 
   def apply(context: Context): Div = {
