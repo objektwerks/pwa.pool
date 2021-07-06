@@ -3,7 +3,8 @@ package pool.dialog
 import com.raquo.laminar.api.L._
 
 import pool.menu.HomeMenu
-import pool.{Context, Account, ServerProxy, Login, LoggedIn}
+import pool.proxy.CommandProxy
+import pool.{Account, Context, LoggedIn, Login}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Failure, Success}
@@ -37,7 +38,7 @@ object LoginDialog {
               onClick --> { _ =>
                 val command = Login(context.pin.now())
                 println(s"Command: $command")
-                ServerProxy.post(context.loginUrl, Account.emptyLicense, command).onComplete {
+                CommandProxy.post(context.loginUrl, Account.emptyLicense, command).onComplete {
                   case Success(either) => either match {
                     case Right(event) => event match {
                       case loggedin: LoggedIn =>

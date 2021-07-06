@@ -2,7 +2,8 @@ package pool.dialog
 
 import com.raquo.laminar.api.L._
 
-import pool.{Context, Deactivate, Account, Deactivated, Reactivated, Reactivate, ServerProxy}
+import pool.proxy.CommandProxy
+import pool._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Failure, Success}
@@ -73,7 +74,7 @@ object AccountDialog {
               onClick --> { _ =>
                 val command = Deactivate(context.account.now().license)
                 println(s"Command: $command")
-                ServerProxy.post(context.deactivateUrl, Account.emptyLicense, command).onComplete {
+                CommandProxy.post(context.deactivateUrl, Account.emptyLicense, command).onComplete {
                   case Success(either) => either match {
                     case Right(event) => event match {
                       case deactivated: Deactivated =>
@@ -97,7 +98,7 @@ object AccountDialog {
               onClick --> { _ =>
                 val command = Reactivate(context.account.now().license)
                 println(s"Command: $command")
-                ServerProxy.post(context.reactivateUrl, Account.emptyLicense, command).onComplete {
+                CommandProxy.post(context.reactivateUrl, Account.emptyLicense, command).onComplete {
                   case Success(either) => either match {
                     case Right(event) => event match {
                       case reactivated: Reactivated =>

@@ -1,7 +1,8 @@
-package pool
+package pool.proxy
 
 import org.scalajs.dom.console
 import org.scalajs.dom.ext.Ajax
+import pool._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future

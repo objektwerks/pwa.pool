@@ -3,7 +3,8 @@ package pool.dialog
 import com.raquo.laminar.api.L._
 
 import pool.menu.HomeMenu
-import pool.{Context, Account, ServerProxy, Register, Registered}
+import pool.proxy.CommandProxy
+import pool.{Account, Context, Register, Registered}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Failure, Success}
@@ -37,7 +38,7 @@ object RegisterDialog {
               onClick --> { _ =>
                 val command = Register(context.email.now())
                 println(s"Command: $command")
-                ServerProxy.post(context.registerUrl, Account.emptyLicense, command).onComplete {
+                CommandProxy.post(context.registerUrl, Account.emptyLicense, command).onComplete {
                   case Success(either) => either match {
                     case Right(event) => event match {
                       case registered: Registered =>
