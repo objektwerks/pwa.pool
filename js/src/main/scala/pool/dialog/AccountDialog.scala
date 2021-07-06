@@ -2,17 +2,27 @@ package pool.dialog
 
 import com.raquo.laminar.api.L._
 
-import pool.proxy.CommandProxy
 import pool._
-
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.util.{Failure, Success}
+import pool.handler.EventHandler
+import pool.proxy.CommandProxy
 
 object AccountDialog {
   val id = getClass.getSimpleName
   val deactivateButtonId = id + "-deactivate-button"
   val reactivateButtonId = id + "-reactivate-button"
   val errors = new EventBus[String]
+
+  def handler(context: Context, errors: EventBus[String], event: Event): Unit = {
+    event match {
+      case deactivated: Deactivated =>
+        context.account.set(deactivated.account)
+        context.hide(id)
+      case reactivated: Reactivated =>
+        context.account.set(reactivated.account)
+        context.hide(id)
+      case _ => errors.emit(s"Invalid: $event")
+    }
+  }
 
   def apply(context: Context): Div =
     div(idAttr(id), cls("w3-modal"),
@@ -73,48 +83,16 @@ object AccountDialog {
             button(idAttr(deactivateButtonId), cls("w3-bar-item w3-button w3-margin w3-text-indigo"),
               onClick --> { _ =>
                 val command = Deactivate(context.account.now().license)
-                println(s"Command: $command")
-                CommandProxy.post(context.deactivateUrl, Account.emptyLicense, command).onComplete {
-                  case Success(either) => either match {
-                    case Right(event) => event match {
-                      case deactivated: Deactivated =>
-                        println(s"Success: $event")
-                        context.account.set(deactivated.account)
-                        context.hide(id)
-                      case _ => errors.emit(s"Invalid: $event")
-                    }
-                    case Left(fault) =>
-                      println(s"Fault: $fault")
-                      errors.emit(s"Fault: $fault")
-                  }
-                  case Failure(failure) =>
-                    println(s"Failure: $failure")
-                    errors.emit(s"Failure: $failure")
-                }
+                val response = CommandProxy.post(context.deactivateUrl, Account.emptyLicense, command)
+                EventHandler.handle(context, errors, response, handler)
               },
               "Deactivate"
             ),
             button(idAttr(reactivateButtonId), cls("w3-bar-item w3-button w3-margin w3-text-indigo"),
               onClick --> { _ =>
                 val command = Reactivate(context.account.now().license)
-                println(s"Command: $command")
-                CommandProxy.post(context.reactivateUrl, Account.emptyLicense, command).onComplete {
-                  case Success(either) => either match {
-                    case Right(event) => event match {
-                      case reactivated: Reactivated =>
-                        println(s"Success: $event")
-                        context.account.set(reactivated.account)
-                        context.hide(id)
-                      case _ => errors.emit(s"Invalid: $event")
-                    }
-                    case Left(fault) =>
-                      println(s"Fault: $fault")
-                      errors.emit(s"Fault: $fault")
-                  }
-                  case Failure(failure) =>
-                    println(s"Failure: $failure")
-                    errors.emit(s"Failure: $failure")
-                }
+                val response = CommandProxy.post(context.reactivateUrl, Account.emptyLicense, command)
+                EventHandler.handle(context, errors, response, handler)
               },
               "Reactivate"
             ),
