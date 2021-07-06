@@ -2,16 +2,24 @@ package pool.dialog
 
 import com.raquo.laminar.api.L._
 
+import pool.handler.EventHandler
 import pool.menu.HomeMenu
 import pool.proxy.CommandProxy
-import pool.{Account, Context, Register, Registered}
-
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.util.{Failure, Success}
+import pool._
 
 object RegisterDialog {
   val id = getClass.getSimpleName
   val errors = new EventBus[String]
+
+  def handler(context: Context, errors: EventBus[String], event: Event): Unit = {
+    event match {
+      case registered: Registered =>
+        context.account.set(registered.account)
+        context.hide(HomeMenu.registerMenuItemId)
+        context.hide(id)
+      case _ => errors.emit(s"Invalid: $event")
+    }
+  }
 
   def apply(context: Context): Div =
     div(idAttr(id), cls("w3-modal"),
@@ -37,25 +45,8 @@ object RegisterDialog {
             button(cls("w3-bar-item w3-button w3-margin w3-text-indigo"),
               onClick --> { _ =>
                 val command = Register(context.email.now())
-                println(s"Command: $command")
-                CommandProxy.post(context.registerUrl, Account.emptyLicense, command).onComplete {
-                  case Success(either) => either match {
-                    case Right(event) => event match {
-                      case registered: Registered =>
-                        println(s"Success: $event")
-                        context.account.set(registered.account)
-                        context.hide(HomeMenu.registerMenuItemId)
-                        context.hide(id)
-                      case _ => errors.emit(s"Invalid: $event")
-                    }
-                    case Left(fault) =>
-                      println(s"Fault: $fault")
-                      errors.emit(s"Fault: $fault")
-                  }
-                  case Failure(failure) =>
-                    println(s"Failure: $failure")
-                    errors.emit(s"Failure: $failure")
-                }
+                val response = CommandProxy.post(context.registerUrl, Account.emptyLicense, command)
+                EventHandler.handle(context, errors, response, handler)
               },
               "Register"
             ),
