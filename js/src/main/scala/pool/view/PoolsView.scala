@@ -13,6 +13,8 @@ object PoolsView {
   def handler(context: Context, errors: EventBus[String], state: State): Unit = {
     state match {
       case pools: Pools => context.pools.set(pools)
+      case id: Id => println(s"Todo Id: $id for add pool.")
+      case count: Count => println(s"Todo Count: $count for update pool.")
       case _ => errors.emit(s"Invalid: $state")
     }
   }
