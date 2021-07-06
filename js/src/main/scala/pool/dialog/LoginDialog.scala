@@ -2,16 +2,27 @@ package pool.dialog
 
 import com.raquo.laminar.api.L._
 
+import pool.handler.EventHandler
 import pool.menu.HomeMenu
 import pool.proxy.CommandProxy
-import pool.{Account, Context, LoggedIn, Login}
-
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.util.{Failure, Success}
+import pool._
 
 object LoginDialog {
   val id = getClass.getSimpleName
   val errors = new EventBus[String]
+
+  def handler(context: Context, errors: EventBus[String], event: Event): Unit = {
+    event match {
+      case loggedin: LoggedIn =>
+        context.account.set(loggedin.account)
+        context.hide(HomeMenu.registerMenuItemId)
+        context.hide(HomeMenu.loginMenuItemId)
+        context.show(HomeMenu.accountMenuItemId)
+        context.show(HomeMenu.poolsMenuItemId)
+        context.hide(id)
+      case _ => errors.emit(s"Invalid: $event")
+    }
+  }
 
   def apply(context: Context): Div =
     div(idAttr(id), cls("w3-modal"),
@@ -37,28 +48,8 @@ object LoginDialog {
             button(cls("w3-bar-item w3-button w3-margin w3-text-indigo"),
               onClick --> { _ =>
                 val command = Login(context.pin.now())
-                println(s"Command: $command")
-                CommandProxy.post(context.loginUrl, Account.emptyLicense, command).onComplete {
-                  case Success(either) => either match {
-                    case Right(event) => event match {
-                      case loggedin: LoggedIn =>
-                        println(s"Success: $event")
-                        context.account.set(loggedin.account)
-                        context.hide(HomeMenu.registerMenuItemId)
-                        context.hide(HomeMenu.loginMenuItemId)
-                        context.show(HomeMenu.accountMenuItemId)
-                        context.show(HomeMenu.poolsMenuItemId)
-                        context.hide(id)
-                      case _ => errors.emit(s"Invalid: $event")
-                    }
-                    case Left(fault) =>
-                      println(s"Fault: $fault")
-                      errors.emit(s"Fault: $fault")
-                  }
-                  case Failure(failure) =>
-                    println(s"Failure: $failure")
-                    errors.emit(s"Failure: $failure")
-                }
+                val response = CommandProxy.post(context.loginUrl, Account.emptyLicense, command)
+                EventHandler.handle(context, errors, response, handler)
               },
               "Login"
             ),
