@@ -6,7 +6,7 @@ import pool.{Account, Fault, Serializers}
 
 import scala.util.Try
 
-trait Proxy {
+abstract class Proxy {
   import Serializers._
   import upickle.default._
 
