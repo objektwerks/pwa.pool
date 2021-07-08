@@ -1,6 +1,7 @@
 package pool
 
 import com.raquo.laminar.api.L._
+
 import org.scalajs.dom._
 
 import pool.dialog.{AccountDialog, LoginDialog, RegisterDialog}
