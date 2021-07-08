@@ -86,6 +86,11 @@ Client
 * Command => Event | Fault
 * Entity  => State | Fault
 
+Proxy
+-----
+* CommandProxy => EventHandler
+* EntityProxy => StateHandler
+
 Account
 -------
 * Register( email ) => Registered( account )
