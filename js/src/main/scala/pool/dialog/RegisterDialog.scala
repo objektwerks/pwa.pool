@@ -44,9 +44,11 @@ object RegisterDialog {
           div(cls("w3-bar"),
             button(cls("w3-bar-item w3-button w3-margin w3-text-indigo"),
               onClick --> { _ =>
+                context.cursorWait(id)
                 val command = Register(context.email.now())
                 val response = CommandProxy.post(context.registerUrl, Account.emptyLicense, command)
                 EventHandler.handle(context, errors, response, handler)
+                context.cursorDefault(id)
               },
               "Register"
             ),
