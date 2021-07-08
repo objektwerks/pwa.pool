@@ -21,4 +21,7 @@ case class Context(publicUrl: String, apiUrl: String) extends Product with Seria
 
   def show(id: String): Unit = document.getElementById(id).setAttribute("style", "display: block")
   def hide(id: String): Unit = document.getElementById(id).setAttribute("style", "display: none")
+
+  def cursorWait(id: String): Unit = document.getElementById(id).setAttribute("style", "cursor: wait")
+  def cursorDefault(id: String): Unit = document.getElementById(id).setAttribute("style", "cursor: default")
 }
