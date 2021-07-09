@@ -28,8 +28,8 @@ abstract class Proxy {
     log(error.getMessage)
   }
 
-  def log(statusText: String, status: Int = 500): Fault = {
-    val fault = Fault(code = status, cause = statusText)
+  def log(statusText: String, statusCode: Int = 500): Fault = {
+    val fault = Fault(code = statusCode, cause = statusText)
     console.error(fault.toString)
     fault
   }
