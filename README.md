@@ -158,7 +158,7 @@ Object Model
 * Chemical(id, poolId, added, chemical, amount, unit)
 * Supply(id, poolId, purchased, cost, supply, amount, unit)
 * Repair(id, poolId, repaired, cost, repair)
-* Fault(id, message, code, dateOf, timeOf, nanoOf)
+* Fault(id, dateOf, timeOf, code, cause)
 
 Relational Model
 ----------------
