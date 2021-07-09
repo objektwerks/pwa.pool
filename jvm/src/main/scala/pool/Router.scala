@@ -29,12 +29,13 @@ class Router(store: Store, cache: AccountCache, emailer: ActorRef) extends CorsH
   val logger = LoggerFactory.getLogger(getClass)
 
   val onUnauthorizedRequestHandler = (cause: String) => {
-    logger.error(cause)
-    addFault(Fault(code = Unauthorized.intValue, cause = cause))
+    val error = s"*** Unauthorized Request: $cause"
+    logger.error(error)
+    addFault(Fault(code = Unauthorized.intValue, cause = error))
   }
 
   val onBadRequestHandler = (serializable: Serializable) => {
-    val cause = s"*** Invalid: $serializable"
+    val cause = s"*** Bad Request: $serializable"
     logger.error(cause)
     addFault(Fault(code = BadRequest.intValue, cause = cause))
   }
@@ -42,7 +43,7 @@ class Router(store: Store, cache: AccountCache, emailer: ActorRef) extends CorsH
   implicit val onExceptionHandler = ExceptionHandler {
     case NonFatal(error) =>
       extractRequestContext { context =>
-        val cause = s"*** Handling ${context.request.uri} failed: ${error.getMessage}"
+        val cause = s"*** Exception: on - ${context.request.uri} with - ${error.getMessage}"
         logger.error(cause)
         context.request.discardEntityBytes(context.materializer)
         complete(InternalServerError -> addFault(Fault(cause = cause)))
