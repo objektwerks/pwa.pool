@@ -287,10 +287,12 @@ class Store(conf: Config)(implicit ec: ExecutionContext) {
   }
 
   def addFault(fault: Fault): Fault = {
-    ctx.transaction { implicit ec =>
+    val future: Future[Int] = ctx.transaction { implicit ec =>
       run( query[Fault]
-        .insert(lift(fault)) )
+        .insert(lift(fault))
+        .returningGenerated(_.id) )
     }
+    future.foreach(id => fault.copy(id = id))
     fault
   }
 }

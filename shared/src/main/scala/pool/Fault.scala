@@ -1,7 +1,7 @@
 package pool
 
-final case class Fault(cause: String,
-                       code: Int = 500,
+final case class Fault(id: Int = 0,
                        dateOf: Int = DateTime.currentDate,
                        timeOf: Int = DateTime.currentTime,
-                       nanoOf: Long = System.nanoTime) extends Product with Serializable
+                       code: Int = 500,
+                       cause: String) extends Product with Serializable
