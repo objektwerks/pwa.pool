@@ -118,9 +118,10 @@ CREATE TABLE repair (
 );
 
 CREATE TABLE fault (
-  id SERIAL PRIMARY KEY,
   date_of INT NOT NULL,
-  time_of SMALLINT NOT NULL,
+  time_of INT NOT NULL,
+  nano_of Int NOT NULL,
   code INT NOT NULL,
-  cause VARCHAR NOT NULL
+  cause VARCHAR NOT NULL,
+  PRIMARY KEY (date_of, time_of, nano_of)
 );

@@ -47,4 +47,6 @@ object DateTime {
     }
     LocalTime.of(hh.toInt, mm.toInt).format(timeFormatter)
   }
+
+  def nano: Int = Instant.now().getNano
 }
