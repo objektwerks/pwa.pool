@@ -36,8 +36,8 @@ class Emailer(conf: Config) extends Actor with ActorLogging {
                   |</head>
                   |<body>
                   |<p>$message</p>
-                  |<p>$email ${licensee.email}</p>
                   |<p>$lic ${licensee.license}</p>
+                  |<p>$email ${licensee.email}</p>
                   |<p>$pin ${licensee.pin}</p>
                   |<p>$instructions</p>
                   |</body>
