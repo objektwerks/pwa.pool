@@ -29,9 +29,9 @@ class Router(store: Store, cache: AccountCache, emailer: ActorRef) extends CorsH
   val logger = LoggerFactory.getLogger(getClass)
 
   val onUnauthorizedRequestHandler = (cause: String) => {
-    val error = s"*** Unauthorized Request: $cause"
-    logger.error(error)
-    addFault(Fault(code = Unauthorized.intValue, cause = error))
+    val fault = Fault(code = Unauthorized.intValue, cause = s"*** Unauthorized Request: $cause")
+    logger.error(fault.toString())
+    addFault(fault)
   }
 
   val onBadRequestHandler = (serializable: Serializable) => {
