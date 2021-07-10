@@ -23,13 +23,12 @@ class Router(store: Store, cache: AccountCache, emailer: ActorRef) extends CorsH
   import Serializers._
   import Validators._
   import StatusCodes._
-  import cache._
   import store._
 
   val logger = LoggerFactory.getLogger(getClass)
 
   val onUnauthorizedRequestHandler = (cause: String) => {
-    val fault = Fault(code = Unauthorized.intValue, cause = s"*** Unauthorized Request: $cause")
+    val fault = Fault(code = Unauthorized.intValue, cause = cause)
     logger.error(fault.toString)
     addFault(fault)
   }
@@ -77,7 +76,7 @@ class Router(store: Store, cache: AccountCache, emailer: ActorRef) extends CorsH
         if (login.isValid) {
           onSuccess(loginAccount(login.pin)) {
             case Some(account) =>
-              cacheAccount(account)
+              cache.cacheAccount(account)
               complete(OK -> LoggedIn(account))
             case None =>
               val cause = s"*** Unauthorized pin: ${login.pin}"
@@ -93,7 +92,7 @@ class Router(store: Store, cache: AccountCache, emailer: ActorRef) extends CorsH
         if (deactivate.isValid) {
           onSuccess(deactivateAccount(deactivate.license)) {
             case Some(account) =>
-              decacheAccount(account)
+              cache.decacheAccount(account)
               complete(OK -> Deactivated(account))
             case None =>
               val cause = s"*** Unauthorized license: ${deactivate.license}"
@@ -394,10 +393,10 @@ class Router(store: Store, cache: AccountCache, emailer: ActorRef) extends CorsH
   }
 
   val secure = (route: Route) => headerValueByName(Account.headerLicenseKey) { license =>
-    onSuccess(isAccountActived(license)) { isActivated =>
+    onSuccess(cache.isAccountActived(license)) { isActivated =>
       if (isActivated) route
       else {
-        val cause = s"*** License is not activated: $license"
+        val cause = s"*** Unauthorized license is not activated: $license"
         complete(Unauthorized -> onUnauthorizedRequestHandler(cause))
       }
     }
