@@ -43,10 +43,10 @@ class Router(store: Store, cache: AccountCache, emailer: ActorRef) extends CorsH
   implicit val onExceptionHandler = ExceptionHandler {
     case NonFatal(error) =>
       extractRequestContext { context =>
-        val cause = s"*** Exception: on - ${context.request.uri} with - ${error.getMessage}"
-        logger.error(cause)
+        val fault = Fault(cause = s"*** Exception: on - ${context.request.uri} with - ${error.getMessage}")
+        logger.error(fault.toString)
         context.request.discardEntityBytes(context.materializer)
-        complete(InternalServerError -> addFault(Fault(cause = cause)))
+        complete(InternalServerError -> addFault(fault))
       }
   }
     
