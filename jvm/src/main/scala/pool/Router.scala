@@ -33,8 +33,8 @@ class Router(store: Store, cache: AccountCache, emailer: ActorRef) extends CorsH
     addFault(fault)
   }
 
-  val onBadRequestHandler = (serializable: Serializable) => {
-    val fault = Fault(code = BadRequest.intValue, cause = s"*** Bad Request: $serializable")
+  val onBadRequestHandler = (cause: Serializable) => {
+    val fault = Fault(code = BadRequest.intValue, cause = s"*** Bad Request: $cause")
     logger.error(fault.toString)
     addFault(fault)
   }
