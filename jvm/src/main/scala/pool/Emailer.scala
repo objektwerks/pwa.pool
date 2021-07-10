@@ -58,7 +58,7 @@ class Emailer(conf: Config) extends Actor with ActorLogging {
       session.open()
       messageId = Some( session.sendMail(buildEmail(account)) )
     } catch {
-      case NonFatal(error) => log.error(s"*** Emailer send to: ${account.email} failed: ${error.getMessage}", error)
+      case NonFatal(cause) => log.error(cause, "*** Emailer send to: {} failed: {}", account.email, cause.getMessage)
     } finally {
       session.close()
     }
