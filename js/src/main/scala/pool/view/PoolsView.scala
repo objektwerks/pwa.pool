@@ -28,7 +28,9 @@ object PoolsView {
   def apply(context: Context): Div = {
     println(context)
     div(idAttr(id), cls("w3-container"), display("none"),
-      h6(cls("w3-indigo"), "Pools"),
+      div(cls("w3-container w3-indigo"),
+        h6("Pools")
+      ),
       div(cls("w3-panel w3-red"),
         child.text <-- errors.events
       ),
