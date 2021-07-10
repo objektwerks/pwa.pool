@@ -30,14 +30,14 @@ class Router(store: Store, cache: AccountCache, emailer: ActorRef) extends CorsH
 
   val onUnauthorizedRequestHandler = (cause: String) => {
     val fault = Fault(code = Unauthorized.intValue, cause = s"*** Unauthorized Request: $cause")
-    logger.error(fault.toString())
+    logger.error(fault.toString)
     addFault(fault)
   }
 
   val onBadRequestHandler = (serializable: Serializable) => {
-    val cause = s"*** Bad Request: $serializable"
-    logger.error(cause)
-    addFault(Fault(code = BadRequest.intValue, cause = cause))
+    val fault = Fault(code = BadRequest.intValue, cause = s"*** Bad Request: $serializable")
+    logger.error(fault.toString)
+    addFault(fault)
   }
 
   implicit val onExceptionHandler = ExceptionHandler {
