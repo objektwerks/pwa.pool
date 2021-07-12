@@ -16,7 +16,7 @@ abstract class Proxy {
   )
 
   def headers(license: String): Map[String, String] =
-    if (license.nonEmpty) headers + ( Account.headerLicenseKey -> license )
+    if (license.nonEmpty) headers + ( Account.licenseHeader -> license )
     else headers
 
 

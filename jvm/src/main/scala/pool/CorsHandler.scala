@@ -13,7 +13,7 @@ trait CorsHandler {
   val corsResponseHeaders = List(
     `Access-Control-Allow-Origin`.*,
     `Access-Control-Allow-Credentials`(true),
-    `Access-Control-Allow-Headers`("Authorization", "Content-Type", "X-Requested-With")
+    `Access-Control-Allow-Headers`("Authorization", "Content-Type", "X-Requested-With", Account.licenseHeader)
   )
 
   def corsHandler(route: Route): Route = addAccessControlHeaders { preflightRequestHandler ~ route }

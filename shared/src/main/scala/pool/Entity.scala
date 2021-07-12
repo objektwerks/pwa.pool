@@ -30,7 +30,7 @@ object Account {
     deactivated = 0
   )
   val emptyLicense = ""
-  val headerLicenseKey = "license"
+  val licenseHeader = "License"
 }
 
 final case class License(key: String) extends Entity

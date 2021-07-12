@@ -391,7 +391,7 @@ class Router(store: Store, cache: AccountCache, emailer: ActorRef) extends CorsH
       measurements ~ cleanings ~ chemicals ~ supplies ~ repairs
   }
 
-  val secure = (route: Route) => headerValueByName(Account.headerLicenseKey) { license =>
+  val secure = (route: Route) => headerValueByName(Account.licenseHeader) { license =>
     onSuccess(cache.isAccountActived(license)) { isActivated =>
       if (isActivated) route
       else {

@@ -81,7 +81,7 @@ class RouterTest extends AnyWordSpec with BeforeAndAfterAll with Matchers with S
       Post("/register", Register(email = conf.getString("email.from"))) ~> router.routes ~> check {
         status shouldBe OK
         account = responseAs[Registered].account
-        licenseHeader = RawHeader(Account.headerLicenseKey, account.license)
+        licenseHeader = RawHeader(Account.licenseHeader, account.license)
         account.isActivated shouldBe true
       }
     }
