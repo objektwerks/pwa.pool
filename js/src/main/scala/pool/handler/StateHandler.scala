@@ -18,7 +18,7 @@ object StateHandler {
     response.onComplete {
       case Success(either) => either match {
         case Right(state) =>
-          console.debug(s"State: $state")
+          console.info(s"State: $state")
           handler(context, errors, state)
         case Left(fault) =>
           console.error(s"Fault: $fault")
