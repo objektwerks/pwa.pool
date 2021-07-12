@@ -3,6 +3,7 @@ package pool.view
 import com.raquo.laminar.api.L._
 
 import pool._
+import pool.component.{Errors, Header}
 import pool.handler.StateHandler
 import pool.proxy.EntityProxy
 
@@ -28,12 +29,8 @@ object PoolsView {
   def apply(context: Context): Div = {
     println(context)
     div(idAttr(id), cls("w3-container"), display("none"),
-      div(cls("w3-container w3-indigo"),
-        h6("Pools")
-      ),
-      div(cls("w3-panel w3-red"),
-        child.text <-- errors.events
-      ),
+      Header("Pools"),
+      Errors(errors),
       ul(idAttr("pools"), cls("w3-ul w3-hoverable")),
       div(cls("w3-bar"),
         button(cls("w3-bar-item w3-button w3-margin w3-text-indigo"),
