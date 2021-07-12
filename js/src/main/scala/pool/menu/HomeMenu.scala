@@ -3,15 +3,15 @@ package pool.menu
 import com.raquo.laminar.api.L._
 
 import pool.Context
-import pool.dialog.{AccountDialog, LoginDialog, RegisterDialog}
+import pool.dialog.AccountDialog
 import pool.view.PoolsView
 
 object HomeMenu {
   val id = getClass.getSimpleName
-  val registerMenuItemId = id + "-" + RegisterDialog.id
-  val loginMenuItemId = id + "-" + LoginDialog.id
-  val accountMenuItemId = id + "-" + AccountDialog.id
-  val poolsMenuItemId = id + "-" + PoolsView.id
+  val registerMenuItemId = id + "-register-menu-item"
+  val loginMenuItemId = id + "-login-menu-item"
+  val accountMenuItemId = id + "-account-menu-item"
+  val poolsMenuItemId = id + "-pools-menu-item"
 
   def apply(context: Context,
             registerDialog: Div,
@@ -47,6 +47,7 @@ object HomeMenu {
         onClick --> { _ =>
           PoolsView.pools(context)
           context.show(PoolsView.id)
+          context.hide(poolsMenuItemId)
         },
         "Pools"
       ),
