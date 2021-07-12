@@ -3,6 +3,7 @@ package pool.dialog
 import com.raquo.laminar.api.L._
 
 import pool._
+import pool.component.{Errors, Header}
 import pool.handler.EventHandler
 import pool.proxy.CommandProxy
 
@@ -28,12 +29,8 @@ object AccountDialog {
     div(idAttr(id), cls("w3-modal"),
       div(cls("w3-container"),
         div(cls("w3-modal-content"),
-          div(cls("w3-container w3-indigo"),
-            h6("Account")
-          ),
-          div(cls("w3-panel w3-red"),
-            child.text <-- errors.events
-          ),
+          Header("Account"),
+          Errors(errors),
           div(cls("w3-row w3-margin"),
             div(cls("w3-col"), width("25%"),
               label(cls("w3-left-align w3-text-indigo"), "License:")
