@@ -18,7 +18,7 @@ object EventHandler {
     response.onComplete {
       case Success(either) => either match {
         case Right(event) =>
-          console.debug(s"Event: $event")
+          console.info(s"Event: $event")
           handler(context, errors, event)
         case Left(fault) =>
           console.error(s"Fault: $fault")
