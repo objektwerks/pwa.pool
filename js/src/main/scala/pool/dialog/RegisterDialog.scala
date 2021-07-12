@@ -6,6 +6,7 @@ import pool.handler.EventHandler
 import pool.menu.HomeMenu
 import pool.proxy.CommandProxy
 import pool._
+import pool.component.{Errors, Header}
 
 object RegisterDialog {
   val id = getClass.getSimpleName
@@ -25,12 +26,8 @@ object RegisterDialog {
     div(idAttr(id), cls("w3-modal"),
       div(cls("w3-container"),
         div(cls("w3-modal-content"),
-          div(cls("w3-container w3-indigo"),
-            h6("Register")
-          ),
-          div(cls("w3-panel w3-red"),
-            child.text <-- errors.events
-          ),
+          Header("Register"),
+          Errors(errors),
           div(cls("w3-row w3-margin"),
             div(cls("w3-col"), width("15%"),
               label(cls("w3-left-align w3-text-indigo"), "Email:")
