@@ -5,6 +5,7 @@ import com.raquo.laminar.api.L._
 import pool._
 import pool.component.{Errors, Header}
 import pool.handler.EventHandler
+import pool.menu.HomeMenu
 import pool.proxy.CommandProxy
 
 object AccountDialog {
@@ -18,9 +19,12 @@ object AccountDialog {
       case deactivated: Deactivated =>
         context.account.set(deactivated.account)
         context.hide(id)
+        context.hide(HomeMenu.poolsMenuItemId)
       case reactivated: Reactivated =>
         context.account.set(reactivated.account)
         context.hide(id)
+        context.show(HomeMenu.poolsMenuItemId)
+
       case _ => errors.emit(s"Invalid: $event")
     }
   }
