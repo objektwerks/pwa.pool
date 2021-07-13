@@ -1,12 +1,12 @@
 package pool.dialog
 
 import com.raquo.laminar.api.L._
-
 import pool._
 import pool.component.{Errors, Header}
 import pool.handler.EventHandler
 import pool.menu.HomeMenu
 import pool.proxy.CommandProxy
+import pool.view.PoolsView
 
 object AccountDialog {
   val id = getClass.getSimpleName
@@ -18,13 +18,13 @@ object AccountDialog {
     event match {
       case deactivated: Deactivated =>
         context.account.set(deactivated.account)
-        context.hide(id)
         context.hide(HomeMenu.poolsMenuItemId)
+        context.hide(PoolsView.id)
+        context.hide(id)
       case reactivated: Reactivated =>
         context.account.set(reactivated.account)
         context.hide(id)
         context.show(HomeMenu.poolsMenuItemId)
-
       case _ => errors.emit(s"Invalid: $event")
     }
   }
