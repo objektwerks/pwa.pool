@@ -3,16 +3,17 @@ package pool.component
 import com.raquo.laminar.api.L._
 
 object Input {
-  def apply(inputWidth: String,
-            inputType: String,
-            isReadOnly: Boolean): Div =
+  def apply(column: String,
+            typeOf: String,
+            isReadOnly: Boolean = false): Div =
     div(
       cls("w3-col"),
-      width(inputWidth),
+      width(column),
       input(
         cls("w3-input w3-hover-light-gray w3-text-indigo"),
-        typ(inputType),
-        required(isReadOnly),
+        typ(typeOf),
+        required(true),
+        readOnly(isReadOnly)
       )
     )
 }
