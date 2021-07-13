@@ -14,7 +14,7 @@ object CommandProxy extends Proxy {
   import upickle.default._
 
   def post(url: String, license: String, command: Command): Future[Either[Fault, Event]] = {
-    console.debug(s"Command: $command")
+    console.info(s"Command: $command")
     Ajax.post(url = url, headers = headers(license), data = write[Command](command)).map { xhr =>
       xhr.status match {
         case 200 => Try(read[Event](xhr.responseText)).fold(error => Left(log(error)), event => Right(event))
