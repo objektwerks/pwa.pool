@@ -3,13 +3,15 @@ package pool.component
 import com.raquo.laminar.api.L._
 
 object Text {
+  val textCss = "w3-input w3-hover-light-gray w3-text-indigo"
+
   def apply(column: String,
             typeOf: String): Div =
     div(
       cls("w3-col"),
       width(column),
       input(
-        cls("w3-input w3-hover-light-gray w3-text-indigo"),
+        cls(textCss),
         typ(typeOf),
         required(true)
       )
@@ -17,7 +19,7 @@ object Text {
 
   def readonly(typeOf: String): Input =
     input(
-      cls("w3-input w3-hover-light-gray w3-text-indigo"),
+      cls(textCss),
       typ(typeOf),
       readOnly(true)
     )
