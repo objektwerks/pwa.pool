@@ -1,11 +1,12 @@
 package pool.dialog
 
 import com.raquo.laminar.api.L._
+
 import pool.handler.EventHandler
 import pool.menu.HomeMenu
 import pool.proxy.CommandProxy
 import pool._
-import pool.component.{Errors, Field, Header, Input, Label}
+import pool.component.{Errors, Field, Header, Text, Label}
 
 object RegisterDialog {
   val id = getClass.getSimpleName
@@ -29,7 +30,7 @@ object RegisterDialog {
           Errors(errors),
           Field(
             Label(column = "15%", name = "Email:"),
-            Input(column = "85%", typeOf = "email").amend {
+            Text(column = "85%", typeOf = "email").amend {
               onChange.mapToValue.filter(_.nonEmpty) --> context.email
             }
           ),
