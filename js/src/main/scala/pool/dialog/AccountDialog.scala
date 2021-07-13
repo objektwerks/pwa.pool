@@ -1,8 +1,9 @@
 package pool.dialog
 
 import com.raquo.laminar.api.L._
+
 import pool._
-import pool.component.{Errors, Header}
+import pool.component.{Errors, Field, Header, Text, Label}
 import pool.handler.EventHandler
 import pool.menu.HomeMenu
 import pool.proxy.CommandProxy
@@ -35,50 +36,35 @@ object AccountDialog {
         div(cls("w3-modal-content"),
           Header("Account"),
           Errors(errors),
-          div(cls("w3-row w3-margin"),
-            div(cls("w3-col"), width("25%"),
-              label(cls("w3-left-align w3-text-indigo"), "License:")
-            ),
-            div(cls("w3-col"), width("75%"),
-              input(cls("w3-input w3-text-indigo"), typ("text"), readOnly(true),
-                value <-- context.account.signal.map(_.license))
-            )
+          Field(
+            Label(column = "25%", name = "License:"),
+            Text.wrapper(column = "75%", input = Text.readonly(typeOf = "text").amend {
+              value <-- context.account.signal.map(_.license)
+            })
           ),
-          div(cls("w3-row w3-margin"),
-            div(cls("w3-col"), width("25%"),
-              label(cls("w3-left-align w3-text-indigo"), "Email:")
-            ),
-            div(cls("w3-col"), width("75%"),
-              input(cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("text"), readOnly(true),
-                value <-- context.account.signal.map(_.email))
-            )
+          Field(
+            Label(column = "25%", name = "Email:"),
+            Text.wrapper(column = "75%", input = Text.readonly(typeOf = "text").amend {
+              value <-- context.account.signal.map(_.email)
+            })
           ),
-          div(cls("w3-row w3-margin"),
-            div(cls("w3-col"), width("25%"),
-              label(cls("w3-left-align w3-text-indigo"), "Pin:")
-            ),
-            div(cls("w3-col"), width("75%"),
-              input(cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("text"), readOnly(true),
-                value <-- context.account.signal.map(_.pin.toString))
-            )
+          Field(
+            Label(column = "25%", name = "Pin:"),
+            Text.wrapper(column = "75%", input = Text.readonly(typeOf = "text").amend {
+              value <-- context.account.signal.map(_.pin.toString)
+            })
           ),
-          div(cls("w3-row w3-margin"),
-            div(cls("w3-col"), width("25%"),
-              label(cls("w3-left-align w3-text-indigo"), "Activated:")
-            ),
-            div(cls("w3-col"), width("75%"),
-              input(cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("text"), readOnly(true),
-                value <-- context.account.signal.map(_.activated.toString))
-            )
+          Field(
+            Label(column = "25%", name = "Activated:"),
+            Text.wrapper(column = "75%", input = Text.readonly(typeOf = "text").amend {
+              value <-- context.account.signal.map(_.activated.toString)
+            })
           ),
-          div(cls("w3-row w3-margin"),
-            div(cls("w3-col"), width("25%"),
-              label(cls("w3-left-align w3-text-indigo"), "Deactivated:")
-            ),
-            div(cls("w3-col"), width("75%"),
-              input(cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("text"), readOnly(true),
-                value <-- context.account.signal.map(_.deactivated.toString))
-            )
+          Field(
+            Label(column = "25%", name = "Deactivated:"),
+            Text.wrapper(column = "75%", input = Text.readonly(typeOf = "text").amend {
+              value <-- context.account.signal.map(_.deactivated.toString)
+            })
           ),
           div(cls("w3-bar"),
             button(idAttr(deactivateButtonId), cls("w3-bar-item w3-button w3-margin w3-text-indigo"),
