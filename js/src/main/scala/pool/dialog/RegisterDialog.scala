@@ -1,12 +1,11 @@
 package pool.dialog
 
 import com.raquo.laminar.api.L._
-
 import pool.handler.EventHandler
 import pool.menu.HomeMenu
 import pool.proxy.CommandProxy
 import pool._
-import pool.component.{Errors, Header}
+import pool.component.{Errors, Field, Header, Input, Label}
 
 object RegisterDialog {
   val id = getClass.getSimpleName
@@ -28,15 +27,11 @@ object RegisterDialog {
         div(cls("w3-modal-content"),
           Header("Register"),
           Errors(errors),
-          div(cls("w3-row w3-margin"),
-            div(cls("w3-col"), width("15%"),
-              label(cls("w3-left-align w3-text-indigo"), "Email:")
-            ),
-            div(cls("w3-col"), width("85%"),
-              input(cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("email"), required(true), autoFocus(true),
-                onChange.mapToValue.filter(_.nonEmpty) --> context.email
-              )
-            )
+          Field(
+            Label(column = "15%", name = "Email:"),
+            Input(column = "85%", typeOf = "email").amend {
+              onChange.mapToValue.filter(_.nonEmpty) --> context.email
+            }
           ),
           div(cls("w3-bar"),
             button(cls("w3-bar-item w3-button w3-margin w3-text-indigo"),
