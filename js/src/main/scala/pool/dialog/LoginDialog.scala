@@ -1,11 +1,12 @@
 package pool.dialog
 
 import com.raquo.laminar.api.L._
+
 import pool.handler.EventHandler
 import pool.menu.HomeMenu
 import pool.proxy.CommandProxy
 import pool._
-import pool.component.{Errors, Field, Header, Input, Label}
+import pool.component.{Errors, Field, Header, Text, Label}
 
 object LoginDialog {
   val id = getClass.getSimpleName
@@ -32,7 +33,7 @@ object LoginDialog {
           Errors(errors),
           Field(
             Label(column = "15%", name = "Pin:"),
-            Input(column = "85%", typeOf = "number").amend {
+            Text(column = "85%", typeOf = "number").amend {
               onChange.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> context.pin
             }
           ),
