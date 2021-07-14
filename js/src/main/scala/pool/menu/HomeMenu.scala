@@ -3,6 +3,7 @@ package pool.menu
 import com.raquo.laminar.api.L._
 
 import pool.Context
+import pool.component.MenuItem
 import pool.dialog.AccountDialog
 import pool.view.PoolsView
 
@@ -18,19 +19,17 @@ object HomeMenu {
             loginDialog: Div,
             accountDialog: Div): Div =
     div(idAttr(id), cls("w3-bar w3-margin w3-white w3-text-indigo"),
-      a(idAttr(registerMenuItemId), href("#"), cls("w3-bar-item w3-button"),
+      MenuItem(id = registerMenuItemId, name = "Register").amend {
         onClick --> { _ =>
           registerDialog.amend(display("block"))
-        },
-        "Register"
-      ),
-      a(idAttr(loginMenuItemId), href("#"), cls("w3-bar-item w3-button"),
+        }
+      },
+      MenuItem(id = loginMenuItemId, name = "Login").amend {
         onClick --> { _ =>
           loginDialog.amend(display("block"))
-        },
-        "Login"
-      ),
-      a(idAttr(accountMenuItemId), href("#"), cls("w3-bar-item w3-button"), display("none"),
+        }
+      },
+      MenuItem(id = accountMenuItemId, name = "Account").amend {
         onClick --> { _ =>
           accountDialog.amend(display("block"))
           if (context.account.now().deactivated == 0) {
@@ -40,17 +39,15 @@ object HomeMenu {
             context.hide(AccountDialog.deactivateButtonId)
             context.show(AccountDialog.reactivateButtonId)
           }
-        },
-        "Account"
-      ),
-      a(idAttr(poolsMenuItemId), href("#"), cls("w3-bar-item w3-button"), display("none"),
+        }
+      },
+      MenuItem(id = poolsMenuItemId, name = "Pools").amend {
         onClick --> { _ =>
           PoolsView.pools(context)
           context.show(PoolsView.id)
           context.hide(poolsMenuItemId)
-        },
-        "Pools"
-      ),
+        }
+      },
       registerDialog,
       loginDialog,
       accountDialog
