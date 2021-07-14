@@ -6,7 +6,7 @@ import pool.handler.EventHandler
 import pool.menu.HomeMenu
 import pool.proxy.CommandProxy
 import pool._
-import pool.component.{Errors, Field, Header, Text, Label}
+import pool.component.{Errors, Field, Header, Label, Text}
 
 object LoginDialog {
   val id = getClass.getSimpleName
@@ -33,9 +33,9 @@ object LoginDialog {
           Errors(errors),
           Field(
             Label(column = "15%", name = "Pin:"),
-            Text(column = "85%", typeOf = "number").amend {
-              onChange.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> context.pin
-            }
+            Text(column = "85%", Text.field(typeOf = "number").amend {
+              onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> context.pin
+            })
           ),
           div(cls("w3-bar"),
             button(cls("w3-bar-item w3-button w3-margin w3-text-indigo"),
