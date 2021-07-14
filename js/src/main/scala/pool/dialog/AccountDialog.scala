@@ -38,31 +38,31 @@ object AccountDialog {
           Errors(errors),
           Field(
             Label(column = "25%", name = "License:"),
-            Text.wrapper(column = "75%", input = Text.readonly(typeOf = "text").amend {
+            Text(column = "75%", Text.field(typeOf = "text", isReadOnly = true).amend {
               value <-- context.account.signal.map(_.license)
             })
           ),
           Field(
             Label(column = "25%", name = "Email:"),
-            Text.wrapper(column = "75%", input = Text.readonly(typeOf = "text").amend {
+            Text(column = "75%", Text.field(typeOf = "text", isReadOnly = true).amend {
               value <-- context.account.signal.map(_.email)
             })
           ),
           Field(
             Label(column = "25%", name = "Pin:"),
-            Text.wrapper(column = "75%", input = Text.readonly(typeOf = "text").amend {
+            Text(column = "75%", Text.field(typeOf = "text", isReadOnly = true).amend {
               value <-- context.account.signal.map(_.pin.toString)
             })
           ),
           Field(
             Label(column = "25%", name = "Activated:"),
-            Text.wrapper(column = "75%", input = Text.readonly(typeOf = "text").amend {
+            Text(column = "75%", Text.field(typeOf = "text", isReadOnly = true).amend {
               value <-- context.account.signal.map(_.activated.toString)
             })
           ),
           Field(
             Label(column = "25%", name = "Deactivated:"),
-            Text.wrapper(column = "75%", input = Text.readonly(typeOf = "text").amend {
+            Text(column = "75%", Text.field(typeOf = "text", isReadOnly = true).amend {
               value <-- context.account.signal.map(_.deactivated.toString)
             })
           ),
