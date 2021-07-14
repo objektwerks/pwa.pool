@@ -6,7 +6,7 @@ import pool.handler.EventHandler
 import pool.menu.HomeMenu
 import pool.proxy.CommandProxy
 import pool._
-import pool.component.{Errors, Field, Header, Label, Text}
+import pool.component.{MenuButton, Errors, Field, Header, Label, Text}
 
 object RegisterDialog {
   val id = getClass.getSimpleName
@@ -35,18 +35,16 @@ object RegisterDialog {
             })
           ),
           div(cls("w3-bar"),
-            button(cls("w3-bar-item w3-button w3-margin w3-text-indigo"),
+            MenuButton(name = "Register").amend {
               onClick --> { _ =>
                 val command = Register(context.email.now())
                 val response = CommandProxy.post(context.registerUrl, Account.emptyLicense, command)
                 EventHandler.handle(context, errors, response, handler)
-              },
-              "Register"
-            ),
-            button(cls("w3-bar-item w3-button w3-margin w3-text-indigo"),
-              onClick --> (_ => context.hide(id)),
-              "Cancel"
-            )
+              }
+            },
+            MenuButton(name = "Cancel").amend {
+              onClick --> { _ => context.hide(id) }
+            }
           )
         )
       )
