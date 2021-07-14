@@ -2,11 +2,11 @@ package pool.dialog
 
 import com.raquo.laminar.api.L._
 
+import pool._
+import pool.component._
 import pool.handler.EventHandler
 import pool.menu.HomeMenu
 import pool.proxy.CommandProxy
-import pool._
-import pool.component.{Errors, Field, Header, Label, Text}
 
 object LoginDialog {
   val id = getClass.getSimpleName
@@ -38,18 +38,16 @@ object LoginDialog {
             })
           ),
           div(cls("w3-bar"),
-            button(cls("w3-bar-item w3-button w3-margin w3-text-indigo"),
+            MenuButton(name = "Login").amend {
               onClick --> { _ =>
                 val command = Login(context.pin.now())
                 val response = CommandProxy.post(context.loginUrl, Account.emptyLicense, command)
                 EventHandler.handle(context, errors, response, handler)
-              },
-              "Login"
-            ),
-            button(cls("w3-bar-item w3-button w3-margin w3-text-indigo"),
-              onClick --> (_ => context.hide(id)),
-              "Cancel"
-            )
+              }
+            },
+            MenuButton(name = "Cancel").amend {
+              onClick --> { _ => context.hide(id) }
+            }
           )
         )
       )
