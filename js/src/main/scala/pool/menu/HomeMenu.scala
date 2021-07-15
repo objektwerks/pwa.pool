@@ -29,7 +29,8 @@ object HomeMenu {
           loginDialog.amend(display("block"))
         }
       },
-      MenuItem(id = accountMenuItemId, name = "Account").amend {
+      MenuItem(id = accountMenuItemId, name = "Account", isDisplayed = "none").amend {
+        display("none")
         onClick --> { _ =>
           accountDialog.amend(display("block"))
           if (context.account.now().deactivated == 0) {
@@ -41,7 +42,8 @@ object HomeMenu {
           }
         }
       },
-      MenuItem(id = poolsMenuItemId, name = "Pools").amend {
+      MenuItem(id = poolsMenuItemId, name = "Pools", isDisplayed = "none").amend {
+        display("none")
         onClick --> { _ =>
           PoolsView.pools(context)
           context.show(PoolsView.id)
