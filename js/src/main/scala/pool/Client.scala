@@ -20,6 +20,8 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
   NowProxy.post(s"$publicUrl/now").foreach(println)
 
   val context = Context(publicUrl, apiUrl)
+  println(context)
+
   val container = Container(
     HomeMenu(
       context,
@@ -29,5 +31,6 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
     ),
     PoolsView(context)
   )
+
   render(document.getElementById("content"), container)
 }
