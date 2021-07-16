@@ -1,6 +1,5 @@
 package pool.proxy
 
-import org.scalajs.dom.console
 import org.scalajs.dom.ext.Ajax
 
 import pool.{Entity, Fault, Serializers, State}
@@ -14,7 +13,7 @@ object EntityProxy extends Proxy {
   import upickle.default._
 
   def post(url: String, license: String, entity: Entity): Future[Either[Fault, State]] = {
-    console.info(s"Entity: $entity")
+    println(s"Entity: $entity")
     Ajax.post(url = url, headers = headers(license), data = write[Entity](entity)).map { xhr =>
       xhr.status match {
         case 200 => Try(read[State](xhr.responseText)).fold(error => Left(log(error)), state => Right(state))
