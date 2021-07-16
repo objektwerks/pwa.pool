@@ -66,7 +66,7 @@ object AccountDialog {
               value <-- context.account.signal.map(_.deactivated.toString)
             })
           ),
-          div(cls("w3-bar"),
+          MenuButtonBar(
             MenuButton(id = deactivateButtonId, name = "Deactivate").amend {
               onClick --> { _ =>
                 val command = Deactivate(context.account.now().license)
