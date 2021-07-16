@@ -37,7 +37,7 @@ object LoginDialog {
               onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> context.pin
             })
           ),
-          div(cls("w3-bar"),
+          MenuButtonBar(
             MenuButton(name = "Login").amend {
               onClick --> { _ =>
                 val command = Login(context.pin.now())
