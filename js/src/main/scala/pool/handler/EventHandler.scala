@@ -2,8 +2,6 @@ package pool.handler
 
 import com.raquo.laminar.api.L._
 
-import org.scalajs.dom.console
-
 import pool.{Context, Event, Fault}
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -18,14 +16,14 @@ object EventHandler {
     response.onComplete {
       case Success(either) => either match {
         case Right(event) =>
-          console.info(s"Event: $event")
+          println(s"Event: $event")
           handler(context, errors, event)
         case Left(fault) =>
-          console.error(s"Fault: $fault")
+          println(s"Fault: $fault")
           errors.emit(s"Fault: $fault")
       }
       case Failure(failure) =>
-        console.error(s"Failure: $failure")
+        println(s"Failure: $failure")
         errors.emit(s"Failure: $failure")
     }
   }
