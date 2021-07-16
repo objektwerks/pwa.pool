@@ -3,7 +3,7 @@ package pool.view
 import com.raquo.laminar.api.L._
 
 import pool._
-import pool.component.{Errors, Header}
+import pool.component._
 import pool.handler.StateHandler
 import pool.proxy.EntityProxy
 
@@ -27,24 +27,20 @@ object PoolsView {
   }
 
   def apply(context: Context): Div = {
-    println(context)
-    div(idAttr(id), cls("w3-container"), display("none"),
+    Container(id = id, isDisplayed = "none",
       Header("Pools"),
       Errors(errors),
-      ul(idAttr("pools"), cls("w3-ul w3-hoverable")),
-      div(cls("w3-bar"),
-        button(cls("w3-bar-item w3-button w3-margin w3-text-indigo"),
+      MenuButtonBar(
+        MenuButton(name = "Add").amend {
           onClick --> { _ =>
-            println("Todo: pools view add button onclick")
-          },
-          "Add"
-        ),
-        button(cls("w3-bar-item w3-button w3-margin w3-text-indigo"),
+            println(context)
+          }
+        },
+        MenuButton(name = "Edit").amend {
           onClick --> { _ =>
-            println("Todo: pools view edit button onclick")
-          },
-          "Edit"
-        )
+            println(context)
+          }
+        }
       )
     )
   }
