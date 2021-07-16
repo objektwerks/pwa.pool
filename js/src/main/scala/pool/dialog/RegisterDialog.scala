@@ -1,12 +1,11 @@
 package pool.dialog
 
 import com.raquo.laminar.api.L._
-
 import pool.handler.EventHandler
 import pool.menu.HomeMenu
 import pool.proxy.CommandProxy
 import pool._
-import pool.component.{MenuButton, Errors, Field, Header, Label, Text}
+import pool.component.{Errors, Field, Header, Label, MenuButton, MenuButtonBar, Text}
 
 object RegisterDialog {
   val id = getClass.getSimpleName
@@ -34,7 +33,7 @@ object RegisterDialog {
               onInput.mapToValue.filter(_.nonEmpty) --> context.email
             })
           ),
-          div(cls("w3-bar"),
+          MenuButtonBar(
             MenuButton(name = "Register").amend {
               onClick --> { _ =>
                 val command = Register(context.email.now())
