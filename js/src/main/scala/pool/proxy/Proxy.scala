@@ -1,7 +1,5 @@
 package pool.proxy
 
-import org.scalajs.dom.console
-
 import pool.{Account, Fault, Serializers}
 
 import scala.util.Try
@@ -24,13 +22,13 @@ abstract class Proxy {
     Try(read[Fault](responseText)).fold(error => Left(log(error)), fault => Left(fault))
 
   def log(error: Throwable): Fault = {
-    console.error(error.printStackTrace())
+    println(error.printStackTrace())
     log(error.getMessage)
   }
 
   def log(statusText: String, statusCode: Int = 500): Fault = {
     val fault = Fault(code = statusCode, cause = statusText)
-    console.error(fault.toString)
+    println(fault.toString)
     fault
   }
 }
