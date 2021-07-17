@@ -83,8 +83,8 @@ Package
 
 Client
 ------
-* Command => Event | Fault
-* Entity  => State | Fault
+* Command => Fault | Event
+* Entity  => Fault | State
 
 Proxy
 -----
