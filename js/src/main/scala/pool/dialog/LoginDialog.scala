@@ -26,30 +26,26 @@ object LoginDialog {
   }
 
   def apply(context: Context): Div =
-    div(idAttr(id), cls("w3-modal"),
-      div(cls("w3-container"),
-        div(cls("w3-modal-content"),
-          Header("Login"),
-          Errors(errors),
-          Field(
-            Label(column = "15%", name = "Pin:"),
-            Text(column = "85%", Text.field(typeOf = "number").amend {
-              onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> context.pin
-            })
-          ),
-          MenuButtonBar(
-            MenuButton(name = "Login").amend {
-              onClick --> { _ =>
-                val command = Login(context.pin.now())
-                val response = CommandProxy.post(context.loginUrl, Account.emptyLicense, command)
-                EventHandler.handle(context, errors, response, handler)
-              }
-            },
-            MenuButton(name = "Cancel").amend {
-              onClick --> { _ => context.hide(id) }
-            }
-          )
-        )
+    Modal(id = id,
+      Header("Login"),
+      Errors(errors),
+      Field(
+        Label(column = "15%", name = "Pin:"),
+        Text(column = "85%", Text.field(typeOf = "number").amend {
+          onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> context.pin
+        })
+      ),
+      MenuButtonBar(
+        MenuButton(name = "Login").amend {
+          onClick --> { _ =>
+            val command = Login(context.pin.now())
+            val response = CommandProxy.post(context.loginUrl, Account.emptyLicense, command)
+            EventHandler.handle(context, errors, response, handler)
+          }
+        },
+        MenuButton(name = "Cancel").amend {
+          onClick --> { _ => context.hide(id) }
+        }
       )
     )
 }
