@@ -16,14 +16,14 @@ object StateHandler {
     response.onComplete {
       case Success(either) => either match {
         case Right(state) =>
-          println(s"State: $state")
+          context.log(s"State: $state")
           handler(context, errors, state)
         case Left(fault) =>
-          println(s"Fault: $fault")
+          context.log(s"Fault: $fault")
           errors.emit(s"Fault: $fault")
       }
       case Failure(failure) =>
-        println(s"Failure: $failure")
+        context.log(s"Failure: $failure")
         errors.emit(s"Failure: $failure")
     }
   }
