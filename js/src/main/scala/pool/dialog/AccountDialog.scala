@@ -31,61 +31,57 @@ object AccountDialog {
   }
 
   def apply(context: Context): Div =
-    div(idAttr(id), cls("w3-modal"),
-      div(cls("w3-container"),
-        div(cls("w3-modal-content"),
-          Header("Account"),
-          Errors(errors),
-          Field(
-            Label(column = "25%", name = "License:"),
-            Text(column = "75%", Text.field(typeOf = "text", isReadOnly = true).amend {
-              value <-- context.account.signal.map(_.license)
-            })
-          ),
-          Field(
-            Label(column = "25%", name = "Email:"),
-            Text(column = "75%", Text.field(typeOf = "text", isReadOnly = true).amend {
-              value <-- context.account.signal.map(_.email)
-            })
-          ),
-          Field(
-            Label(column = "25%", name = "Pin:"),
-            Text(column = "75%", Text.field(typeOf = "text", isReadOnly = true).amend {
-              value <-- context.account.signal.map(_.pin.toString)
-            })
-          ),
-          Field(
-            Label(column = "25%", name = "Activated:"),
-            Text(column = "75%", Text.field(typeOf = "text", isReadOnly = true).amend {
-              value <-- context.account.signal.map(_.activated.toString)
-            })
-          ),
-          Field(
-            Label(column = "25%", name = "Deactivated:"),
-            Text(column = "75%", Text.field(typeOf = "text", isReadOnly = true).amend {
-              value <-- context.account.signal.map(_.deactivated.toString)
-            })
-          ),
-          MenuButtonBar(
-            MenuButton(id = deactivateButtonId, name = "Deactivate").amend {
-              onClick --> { _ =>
-                val command = Deactivate(context.account.now().license)
-                val response = CommandProxy.post(context.deactivateUrl, Account.emptyLicense, command)
-                EventHandler.handle(context, errors, response, handler)
-              }
-            },
-            MenuButton(id = reactivateButtonId, name = "Reactivate").amend {
-              onClick --> { _ =>
-                val command = Reactivate(context.account.now().license)
-                val response = CommandProxy.post(context.reactivateUrl, Account.emptyLicense, command)
-                EventHandler.handle(context, errors, response, handler)
-              }
-            },
-            MenuButton(name = "Cancel").amend {
-              onClick --> { _ => context.hide(id) }
-            }
-          )
-        )
+    Modal(id = id,
+      Header("Account"),
+      Errors(errors),
+      Field(
+        Label(column = "25%", name = "License:"),
+        Text(column = "75%", Text.field(typeOf = "text", isReadOnly = true).amend {
+          value <-- context.account.signal.map(_.license)
+        })
+      ),
+      Field(
+        Label(column = "25%", name = "Email:"),
+        Text(column = "75%", Text.field(typeOf = "text", isReadOnly = true).amend {
+          value <-- context.account.signal.map(_.email)
+        })
+      ),
+      Field(
+        Label(column = "25%", name = "Pin:"),
+        Text(column = "75%", Text.field(typeOf = "text", isReadOnly = true).amend {
+          value <-- context.account.signal.map(_.pin.toString)
+        })
+      ),
+      Field(
+        Label(column = "25%", name = "Activated:"),
+        Text(column = "75%", Text.field(typeOf = "text", isReadOnly = true).amend {
+          value <-- context.account.signal.map(_.activated.toString)
+        })
+      ),
+      Field(
+        Label(column = "25%", name = "Deactivated:"),
+        Text(column = "75%", Text.field(typeOf = "text", isReadOnly = true).amend {
+          value <-- context.account.signal.map(_.deactivated.toString)
+        })
+      ),
+      MenuButtonBar(
+        MenuButton(id = deactivateButtonId, name = "Deactivate").amend {
+          onClick --> { _ =>
+            val command = Deactivate(context.account.now().license)
+            val response = CommandProxy.post(context.deactivateUrl, Account.emptyLicense, command)
+            EventHandler.handle(context, errors, response, handler)
+          }
+        },
+        MenuButton(id = reactivateButtonId, name = "Reactivate").amend {
+          onClick --> { _ =>
+            val command = Reactivate(context.account.now().license)
+            val response = CommandProxy.post(context.reactivateUrl, Account.emptyLicense, command)
+            EventHandler.handle(context, errors, response, handler)
+          }
+        },
+        MenuButton(name = "Cancel").amend {
+          onClick --> { _ => context.hide(id) }
+        }
       )
     )
 }
