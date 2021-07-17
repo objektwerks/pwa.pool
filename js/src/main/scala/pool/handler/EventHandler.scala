@@ -16,14 +16,14 @@ object EventHandler {
     response.onComplete {
       case Success(either) => either match {
         case Right(event) =>
-          println(s"Event: $event")
+          context.log(s"Event: $event")
           handler(context, errors, event)
         case Left(fault) =>
-          println(s"Fault: $fault")
+          context.log(s"Fault: $fault")
           errors.emit(s"Fault: $fault")
       }
       case Failure(failure) =>
-        println(s"Failure: $failure")
+        context.log(s"Failure: $failure")
         errors.emit(s"Failure: $failure")
     }
   }
