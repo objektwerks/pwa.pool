@@ -1,6 +1,6 @@
 package pool.proxy
 
-import pool.{Account, Fault, Serializers}
+import pool.{Account, Context, Fault, Serializers}
 
 import scala.util.Try
 
@@ -28,7 +28,7 @@ abstract class Proxy {
 
   def log(statusText: String, statusCode: Int = 500): Fault = {
     val fault = Fault(code = statusCode, cause = statusText)
-    println(fault.toString)
+    Context.log(fault.toString)
     fault
   }
 }
