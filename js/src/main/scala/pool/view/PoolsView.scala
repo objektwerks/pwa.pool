@@ -33,12 +33,12 @@ object PoolsView {
       MenuButtonBar(
         MenuButton(name = "Add").amend {
           onClick --> { _ =>
-            println(context)
+            context.log(context)
           }
         },
         MenuButton(name = "Edit").amend {
           onClick --> { _ =>
-            println(context)
+            context.log(context)
           }
         }
       )
