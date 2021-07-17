@@ -23,30 +23,26 @@ object RegisterDialog {
   }
 
   def apply(context: Context): Div =
-    div(idAttr(id), cls("w3-modal"),
-      div(cls("w3-container"),
-        div(cls("w3-modal-content"),
-          Header("Register"),
-          Errors(errors),
-          Field(
-            Label(column = "15%", name = "Email:"),
-            Text(column = "85%", Text.field(typeOf = "email").amend {
-              onInput.mapToValue.filter(_.nonEmpty) --> context.email
-            })
-          ),
-          MenuButtonBar(
-            MenuButton(name = "Register").amend {
-              onClick --> { _ =>
-                val command = Register(context.email.now())
-                val response = CommandProxy.post(context.registerUrl, Account.emptyLicense, command)
-                EventHandler.handle(context, errors, response, handler)
-              }
-            },
-            MenuButton(name = "Cancel").amend {
-              onClick --> { _ => context.hide(id) }
-            }
-          )
-        )
+    Modal(id = id,
+      Header("Register"),
+      Errors(errors),
+      Field(
+        Label(column = "15%", name = "Email:"),
+        Text(column = "85%", Text.field(typeOf = "email").amend {
+          onInput.mapToValue.filter(_.nonEmpty) --> context.email
+        })
+      ),
+      MenuButtonBar(
+        MenuButton(name = "Register").amend {
+          onClick --> { _ =>
+            val command = Register(context.email.now())
+            val response = CommandProxy.post(context.registerUrl, Account.emptyLicense, command)
+            EventHandler.handle(context, errors, response, handler)
+          }
+        },
+        MenuButton(name = "Cancel").amend {
+          onClick --> { _ => context.hide(id) }
+        }
       )
     )
 }
