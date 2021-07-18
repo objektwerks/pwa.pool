@@ -23,6 +23,7 @@ object RegisterDialog {
     Modal(id = id,
       Header("Register"),
       Errors(errors),
+      Info("Enter email address and click Register button. Check you email for account info."),
       Field(
         Label(column = "15%", name = "Email:"),
         Text(column = "85%", Text.field(typeOf = "email").amend {
