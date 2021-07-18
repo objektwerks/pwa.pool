@@ -14,10 +14,7 @@ object RegisterDialog {
 
   def handler(context: Context, errors: EventBus[String], event: Event): Unit = {
     event match {
-      case registered: Registered =>
-        context.account.set(registered.account)
-        context.hide(HomeMenu.registerMenuItemId)
-        context.hide(id)
+      case registered: Registered => context.account.set(registered.account)
       case _ => errors.emit(s"Invalid: $event")
     }
   }
@@ -35,6 +32,8 @@ object RegisterDialog {
       MenuButtonBar(
         MenuButton(name = "Register").amend {
           onClick --> { _ =>
+            context.hide(HomeMenu.registerMenuItemId)
+            context.hide(id)
             val command = Register(context.email.now())
             val response = CommandProxy.post(context.registerUrl, Account.emptyLicense, command)
             EventHandler.handle(context, errors, response, handler)
