@@ -26,24 +26,26 @@ class AccountCache(store: Store)(implicit ec: ExecutionContext) {
   private val cache: Cache[Account] = CaffeineCache[Account](conf)
 
   def cacheAccount(account: Account): Unit = {
-    if (account.isActivated && cache.get(account.license).isEmpty) cache.put(account.license)(account)
+    if (account.isActivated && cache.get(account.license).isEmpty)
+      cache.put(account.license)(account)
     ()
   }
 
   def decacheAccount(account: Account): Unit = {
-    if (account.isDeactivated && cache.get(account.license).nonEmpty) cache.remove(account.license)
+    if (account.isDeactivated && cache.get(account.license).nonEmpty)
+      cache.remove(account.license)
     ()
   }
 
-  def isAccountActived(license: String): Future[Boolean] = {
-    if (cache.get(license).nonEmpty) Future.successful(cache.get(license).get.isActivated)
+  def isAccountActived(license: String): Future[Boolean] =
+    if (cache.get(license).nonEmpty)
+      Future.successful(cache.get(license).get.isActivated)
     else store.getAccount(license).map {
-      case Some(licensee) =>
-        if (licensee.isActivated) {
-          cache.put(licensee.license)(licensee)
+      case Some(account) =>
+        if (account.isActivated) {
+          cache.put(account.license)(account)
           true
         } else false
       case None => false
     }
-  }
 }
