@@ -1,6 +1,6 @@
 package pool
 
-import akka.actor.{ActorSystem, Props}
+import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 
 import com.typesafe.config.ConfigFactory
@@ -20,7 +20,7 @@ object Server {
 
     val store = Store(conf)
     val cache = AccountCache(store)
-    val emailer = system.actorOf(Props(classOf[Emailer], conf), name = "emailer")
+    val emailer = Emailer(conf)
     val router = Router(store, cache, emailer)
     val host = conf.getString("server.host")
     val port = conf.getInt("server.port")

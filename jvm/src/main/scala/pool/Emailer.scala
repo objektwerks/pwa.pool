@@ -1,16 +1,17 @@
 package pool
 
-import akka.actor.{Actor, ActorLogging}
-
 import com.typesafe.config.Config
 
-import jodd.mail.{Email, MailServer, SendMailSession, SmtpServer}
+import jodd.mail.{Email, MailServer, SmtpServer}
 
-import scala.util.control.NonFatal
+import scala.concurrent.Future
+import scala.util.{Try, Using}
 
-final case class SendEmail(account: Account) extends Product with Serializable
+object Emailer {
+  def apply(conf: Config): Emailer = new Emailer(conf)
+}
 
-class Emailer(conf: Config) extends Actor with ActorLogging {
+final class Emailer(conf: Config) {
   private val smtpServer: SmtpServer = MailServer.create()
     .ssl(true)
     .host(conf.getString("email.smtp.host"))
@@ -25,7 +26,7 @@ class Emailer(conf: Config) extends Actor with ActorLogging {
   private val pin = conf.getString("email.pin")
   private val instructions = conf.getString("email.instructions")
 
-  private def buildEmail(licensee: Account): Email = {
+  private def buildEmail(account: Account): Email = {
     val html = s"""
                   |<!DOCTYPE html>
                   |<html lang="en">
@@ -35,36 +36,26 @@ class Emailer(conf: Config) extends Actor with ActorLogging {
                   |</head>
                   |<body>
                   |<p>$message</p>
-                  |<p>$lic ${licensee.license}</p>
-                  |<p>$email ${licensee.email}</p>
-                  |<p>$pin ${licensee.pin}</p>
+                  |<p>$lic ${account.license}</p>
+                  |<p>$email ${account.email}</p>
+                  |<p>$pin ${account.pin}</p>
                   |<p>$instructions</p>
                   |</body>
                   |</html>
                   |""".stripMargin
     Email.create()
       .from(from)
-      .to(licensee.email)
+      .to(account.email)
       .subject(subject)
       .htmlMessage(html, "UTF-8")
   }
 
-  private def sendEmail(account: Account): Option[String] = {
-    var session: SendMailSession = null
-    var messageId: Option[String] = None
-    try {
-      session = smtpServer.createSession
-      session.open()
-      messageId = Some( session.sendMail( buildEmail(account) ) )
-    } catch {
-      case NonFatal(cause) => log.error(cause, "*** Emailer send to: {} failed: {}", account.email, cause.getMessage)
-    } finally {
-      session.close()
-    }
-    messageId
-  }
-
-  override def receive: Receive = {
-    case send: SendEmail => sender() ! sendEmail(send.account)
+  def sendEmail(account: Account): Future[Try[String]] = {
+    Future.successful(
+      Using( smtpServer.createSession ) { session =>
+        session.open()
+        session.sendMail( buildEmail(account) )
+      }
+    )
   }
 }
