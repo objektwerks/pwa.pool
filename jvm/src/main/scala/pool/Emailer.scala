@@ -24,7 +24,6 @@ class Emailer(conf: Config) extends Actor with ActorLogging {
   private val lic = conf.getString("email.lic")
   private val pin = conf.getString("email.pin")
   private val instructions = conf.getString("email.instructions")
-  private val retries = conf.getInt("email.retries")
 
   private def buildEmail(licensee: Account): Email = {
     val html = s"""
@@ -56,7 +55,7 @@ class Emailer(conf: Config) extends Actor with ActorLogging {
     try {
       session = smtpServer.createSession
       session.open()
-      messageId = Some( session.sendMail(buildEmail(account)) )
+      messageId = Some( session.sendMail( buildEmail(account) ) )
     } catch {
       case NonFatal(cause) => log.error(cause, "*** Emailer send to: {} failed: {}", account.email, cause.getMessage)
     } finally {
@@ -66,13 +65,6 @@ class Emailer(conf: Config) extends Actor with ActorLogging {
   }
 
   override def receive: Receive = {
-    case send: SendEmail =>
-      var attempts = -1
-      var messageId: Option[String] = None
-      while ( attempts != retries && messageId.isEmpty ) {
-        messageId = sendEmail(send.account)
-        attempts += 1
-      }
-      sender() ! messageId
+    case send: SendEmail => sender() ! sendEmail(send.account)
   }
 }
