@@ -40,7 +40,7 @@ class Store(conf: Config)(implicit ec: ExecutionContext) {
           .update(_.deactivated -> lift(DateTime.currentDate))
       )
     }
-    getAccountByLicense(license)
+    getAccount(license)
   }
 
   def reactivateAccount(license: String): Future[Option[Account]] = {
@@ -52,23 +52,16 @@ class Store(conf: Config)(implicit ec: ExecutionContext) {
           .update(_.activated -> lift(DateTime.currentDate), _.deactivated -> lift(0))
       )
     }
-    getAccountByLicense(license)
+    getAccount(license)
   }
 
-  def getAccountByLicense(license: String): Future[Option[Account]] =
+  def getAccount(license: String): Future[Option[Account]] =
     run(
       query[Account]
         .filter(_.license == lift(license))
     ).map(result => result.headOption)
 
-  def isEmailUnused(email: String): Future[Boolean] =
-    run(
-      query[Account]
-        .filter(_.email == lift(email))
-        .isEmpty
-    )
-
-  def isPinUnused(pin: Int): Future[Boolean] =
+  def isPinUnique(pin: Int): Future[Boolean] =
     run(
       query[Account]
         .filter(_.pin == lift(pin))

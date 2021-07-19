@@ -3,7 +3,7 @@ CREATE SCHEMA PUBLIC;
 
 CREATE TABLE account (
   license VARCHAR(36) PRIMARY KEY,
-  email VARCHAR NOT NULL UNIQUE,
+  email VARCHAR NOT NULL,
   pin INT NOT NULL UNIQUE,
   activated INT NOT NULL,
   deactivated INT NOT NULL
