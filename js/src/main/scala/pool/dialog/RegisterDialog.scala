@@ -11,10 +11,14 @@ import pool.component._
 object RegisterDialog {
   val id = getClass.getSimpleName
   val errors = new EventBus[String]
+  val messages = new EventBus[String]
 
   def handler(context: Context, errors: EventBus[String], event: Event): Unit = {
     event match {
-      case registered: Registered => context.account.set(registered.account)
+      case registered: Registered =>
+        context.account.set(registered.account)
+        context.hide(HomeMenu.registerMenuItemId)
+        context.hide(id)
       case _ => errors.emit(s"Invalid: $event")
     }
   }
@@ -23,7 +27,7 @@ object RegisterDialog {
     Modal(id = id,
       Header("Register"),
       Errors(errors),
-      Info("Enter email address and click Register button. Then check you email for account info to login."),
+      Messages(messages),
       Field(
         Label(column = "15%", name = "Email:"),
         Text(column = "85%", Text.field(typeOf = "email").amend {
@@ -33,8 +37,7 @@ object RegisterDialog {
       MenuButtonBar(
         MenuButton(name = "Register").amend {
           onClick --> { _ =>
-            context.hide(HomeMenu.registerMenuItemId)
-            context.hide(id)
+            messages.emit("Registering...")
             val command = Register(context.email.now())
             val response = CommandProxy.post(context.registerUrl, Account.emptyLicense, command)
             EventHandler.handle(context, errors, response, handler)
