@@ -15,6 +15,13 @@ class Store(conf: Config)(implicit ec: ExecutionContext) {
 
   import ctx._
 
+  def isPinUnique(pin: Int): Future[Boolean] =
+    run(
+      query[Account]
+        .filter(_.pin == lift(pin))
+        .isEmpty
+    )
+
   def registerAccount(account: Account): Future[Account] =
     ctx.transaction { implicit ec =>
       run(
@@ -60,13 +67,6 @@ class Store(conf: Config)(implicit ec: ExecutionContext) {
       query[Account]
         .filter(_.license == lift(license))
     ).map(result => result.headOption)
-
-  def isPinUnique(pin: Int): Future[Boolean] =
-    run(
-      query[Account]
-        .filter(_.pin == lift(pin))
-        .isEmpty
-    )
 
   def listPools(license: String): Future[Seq[Pool]] =
     run(
