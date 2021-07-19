@@ -15,13 +15,6 @@ class Store(conf: Config)(implicit ec: ExecutionContext) {
 
   import ctx._
 
-  def isPinUnique(pin: Int): Future[Boolean] =
-    run(
-      query[Account]
-        .filter(_.pin == lift(pin))
-        .isEmpty
-    )
-
   def registerAccount(account: Account): Future[Account] =
     ctx.transaction { implicit ec =>
       run(
