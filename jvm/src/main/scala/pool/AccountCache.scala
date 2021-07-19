@@ -40,7 +40,7 @@ class AccountCache(store: Store)(implicit ec: ExecutionContext) {
   def isAccountActived(license: String): Future[Boolean] =
     if (cache.get(license).nonEmpty)
       Future.successful(cache.get(license).get.isActivated)
-    else store.getAccount(license).map {
+    else store.getAccountByLicense(license).map {
       case Some(account) =>
         if (account.isActivated) {
           cache.put(account.license)(account)
