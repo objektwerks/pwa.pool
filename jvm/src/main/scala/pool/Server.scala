@@ -13,7 +13,7 @@ import scala.io.StdIn
 
 object Server {
   def main(args: Array[String]): Unit = {
-    val logger = LoggerFactory.getLogger(Server.getClass)
+    val logger = LoggerFactory.getLogger(getClass)
     val conf = ConfigFactory.load("server.conf")
     implicit val system = ActorSystem.create(conf.getString("server.name"), conf.getConfig("akka"))
     implicit val dispatcher = system.dispatcher
