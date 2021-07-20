@@ -1,6 +1,7 @@
 package pool
 
 import org.scalajs.dom.document
+
 object Context {
   def log(any: Any): Unit = println(any)
 }
