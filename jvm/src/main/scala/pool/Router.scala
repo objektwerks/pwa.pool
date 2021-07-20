@@ -59,7 +59,8 @@ class Router(store: Store,
         if (register.isValid) {
           val account = Account(register.email)
           onSuccess(emailer.sendEmail(account)) {
-            case Success(_) =>
+            case Success(messageId) =>
+              logger.info(s"Emailer sent message[$messageId] to ${account.email}")
               onSuccess(store.registerAccount(account)) {
                 account => complete(OK -> Registered(account))
               }
