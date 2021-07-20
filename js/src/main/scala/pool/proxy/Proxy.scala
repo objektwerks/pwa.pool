@@ -22,7 +22,7 @@ abstract class Proxy {
     Try(read[Fault](responseText)).fold(error => Left(log(error)), fault => Left(fault))
 
   def log(error: Throwable): Fault = {
-    println(error.printStackTrace())
+    Context.log(error.printStackTrace())
     log(error.getMessage)
   }
 
