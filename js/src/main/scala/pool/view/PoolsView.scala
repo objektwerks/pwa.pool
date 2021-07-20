@@ -10,12 +10,13 @@ import pool.proxy.EntityProxy
 object PoolsView {
   val id = getClass.getSimpleName
   val errors = new EventBus[String]
+  val pools = Var(Pools(Seq.empty[Pool]))
 
   def handler(context: Context, errors: EventBus[String], state: State): Unit = {
     state match {
-      case pools: Pools => context.pools.set(pools)
-      case id: Id => println(s"Todo Id: $id for add pool.")
-      case count: Count => println(s"Todo Count: $count for update pool.")
+      case pools: Pools => this.pools.set(pools)
+      case id: Id => context.log(s"Todo Id: $id for add pool.")
+      case count: Count => context.log(s"Todo Count: $count for update pool.")
       case _ => errors.emit(s"Invalid: $state")
     }
   }
