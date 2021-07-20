@@ -6,21 +6,25 @@ import akka.http.scaladsl.server.{ExceptionHandler, Route}
 
 import java.time.Instant
 
-import org.slf4j.LoggerFactory
+import org.slf4j.Logger
 
 import scala.util.{Failure, Success}
 import scala.util.control.NonFatal
 
 object Router {
-  def apply(store: Store, cache: AccountCache, emailer: Emailer): Router = new Router(store, cache, emailer)
+  def apply(store: Store,
+            cache: AccountCache,
+            emailer: Emailer,
+            logger: Logger): Router = new Router(store, cache, emailer, logger)
 }
 
-class Router(store: Store, cache: AccountCache, emailer: Emailer) extends CorsHandler {
+class Router(store: Store,
+             cache: AccountCache,
+             emailer: Emailer,
+             logger: Logger) extends CorsHandler {
   import de.heikoseeberger.akkahttpupickle.UpickleSupport._
   import Serializers._
   import Validators._
-
-  val logger = LoggerFactory.getLogger(getClass)
 
   val onUnauthorizedRequestHandler = (cause: String) => {
     val fault = Fault(code = Unauthorized.intValue, cause = cause)

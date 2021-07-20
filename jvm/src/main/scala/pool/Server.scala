@@ -21,7 +21,7 @@ object Server {
     val store = Store(conf)
     val cache = AccountCache(store)
     val emailer = Emailer(conf)
-    val router = Router(store, cache, emailer)
+    val router = Router(store, cache, emailer, logger)
     val host = conf.getString("server.host")
     val port = conf.getInt("server.port")
     val server = Http()
