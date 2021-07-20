@@ -19,9 +19,6 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
   val context = Context(publicUrl, apiUrl)
   context.log(context)
 
-  ServiceWorker.register()
-  NowProxy.post(s"$publicUrl/now").foreach(now => context.log(now))
-
   val container = Container(
     HomeMenu(
       context,
@@ -31,6 +28,9 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
     ),
     PoolsView(context)
   )
+
+  ServiceWorker.register()
+  NowProxy.post(s"$publicUrl/now").foreach(now => context.log(now))
 
   render(document.getElementById("content"), container)
 }
