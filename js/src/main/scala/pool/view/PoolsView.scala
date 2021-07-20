@@ -4,6 +4,7 @@ import com.raquo.laminar.api.L._
 
 import pool._
 import pool.component._
+import pool.dialog.AccountDialog
 import pool.handler.StateHandler
 import pool.proxy.EntityProxy
 
@@ -22,7 +23,7 @@ object PoolsView {
   }
 
   def pools(context: Context): Unit = {
-    val license = License(context.account.now().license)
+    val license = License(AccountDialog.account.now().license)
     val response = EntityProxy.post(context.poolsUrl, license.key, license)
     StateHandler.handle(context, errors, response, handler)
   }

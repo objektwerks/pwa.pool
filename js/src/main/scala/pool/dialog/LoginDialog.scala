@@ -11,11 +11,12 @@ import pool.proxy.CommandProxy
 object LoginDialog {
   val id = getClass.getSimpleName
   val errors = new EventBus[String]
+  val pin = Var(0)
 
   def handler(context: Context, errors: EventBus[String], event: Event): Unit = {
     event match {
       case loggedin: LoggedIn =>
-        context.account.set(loggedin.account)
+        AccountDialog.account.set(loggedin.account)
         context.hide(HomeMenu.registerMenuItemId)
         context.hide(HomeMenu.loginMenuItemId)
         context.show(HomeMenu.accountMenuItemId)
@@ -32,13 +33,13 @@ object LoginDialog {
       Field(
         Label(column = "15%", name = "Pin:"),
         Text(column = "85%", Text.field(typeOf = "number").amend {
-          onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> context.pin
+          onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> pin
         })
       ),
       MenuButtonBar(
         MenuButton(name = "Login").amend {
           onClick --> { _ =>
-            val command = Login(context.pin.now())
+            val command = Login(pin.now())
             val response = CommandProxy.post(context.loginUrl, Account.emptyLicense, command)
             EventHandler.handle(context, errors, response, handler)
           }

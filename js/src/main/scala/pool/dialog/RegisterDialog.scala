@@ -12,11 +12,12 @@ object RegisterDialog {
   val id = getClass.getSimpleName
   val errors = new EventBus[String]
   val messages = new EventBus[String]
+  val email = Var("")
 
   def handler(context: Context, errors: EventBus[String], event: Event): Unit = {
     event match {
       case registered: Registered =>
-        context.account.set(registered.account)
+        AccountDialog.account.set(registered.account)
         context.hide(HomeMenu.registerMenuItemId)
         context.hide(id)
       case _ => errors.emit(s"Invalid: $event")
@@ -31,14 +32,14 @@ object RegisterDialog {
       Field(
         Label(column = "15%", name = "Email:"),
         Text(column = "85%", Text.field(typeOf = "email").amend {
-          onInput.mapToValue.filter(_.nonEmpty) --> context.email
+          onInput.mapToValue.filter(_.nonEmpty) --> email
         })
       ),
       MenuButtonBar(
         MenuButton(name = "Register").amend {
           onClick --> { _ =>
             messages.emit("Registering...")
-            val command = Register(context.email.now())
+            val command = Register(email.now())
             val response = CommandProxy.post(context.registerUrl, Account.emptyLicense, command)
             EventHandler.handle(context, errors, response, handler)
           }

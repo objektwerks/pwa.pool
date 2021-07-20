@@ -34,7 +34,7 @@ object HomeMenu {
           display("none")
           onClick --> { _ =>
             accountDialog.amend(display("block"))
-            if (context.account.now().deactivated == 0) {
+            if (AccountDialog.account.now().deactivated == 0) {
               context.show(AccountDialog.deactivateButtonId)
               context.hide(AccountDialog.reactivateButtonId)
             } else {
