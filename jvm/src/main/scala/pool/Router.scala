@@ -33,7 +33,7 @@ class Router(store: Store,
   }
 
   val onBadRequestHandler = (cause: Serializable) => {
-    val fault = Fault(code = BadRequest.intValue, cause = s"*** Bad Request: $cause")
+    val fault = Fault(code = BadRequest.intValue, cause = s"Bad Request: $cause")
     logger.error(s"*** $fault")
     store.addFault(fault)
   }
