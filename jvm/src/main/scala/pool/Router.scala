@@ -28,21 +28,21 @@ class Router(store: Store,
 
   val onUnauthorizedRequestHandler = (cause: String) => {
     val fault = Fault(code = Unauthorized.intValue, cause = cause)
-    logger.error(fault.toString)
+    logger.error(s"*** $fault")
     store.addFault(fault)
   }
 
   val onBadRequestHandler = (cause: Serializable) => {
     val fault = Fault(code = BadRequest.intValue, cause = s"*** Bad Request: $cause")
-    logger.error(fault.toString)
+    logger.error(s"*** $fault")
     store.addFault(fault)
   }
 
   implicit val onExceptionHandler = ExceptionHandler {
     case NonFatal(error) =>
       extractRequestContext { context =>
-        val fault = Fault(cause = s"*** Exception: on - ${context.request.uri} with - ${error.getMessage}")
-        logger.error(fault.toString)
+        val fault = Fault(cause = s"Exception: on - ${context.request.uri} with - ${error.getMessage}")
+        logger.error(s"*** $fault")
         context.request.discardEntityBytes(context.materializer)
         complete(InternalServerError -> store.addFault(fault))
       }
@@ -79,7 +79,7 @@ class Router(store: Store,
               cache.cacheAccount(account)
               complete(OK -> LoggedIn(account))
             case None =>
-              val cause = s"*** Unauthorized pin: ${login.pin}"
+              val cause = s"Unauthorized pin: ${login.pin}"
               complete(Unauthorized -> onUnauthorizedRequestHandler(cause))
           }
         } else complete(BadRequest -> onBadRequestHandler(login))
@@ -95,7 +95,7 @@ class Router(store: Store,
               cache.decacheAccount(account)
               complete(OK -> Deactivated(account))
             case None =>
-              val cause = s"*** Unauthorized license: ${deactivate.license}"
+              val cause = s"Unauthorized license: ${deactivate.license}"
               complete(Unauthorized -> onUnauthorizedRequestHandler(cause))
           }
         } else complete(BadRequest -> onBadRequestHandler(deactivate))
@@ -110,7 +110,7 @@ class Router(store: Store,
             case Some(licensee) =>
               complete(OK -> Reactivated(licensee))
             case None =>
-              val cause = s"*** Unauthorized license: ${reactivate.license}"
+              val cause = s"Unauthorized license: ${reactivate.license}"
               complete(Unauthorized -> onUnauthorizedRequestHandler(cause))
           }
         } else complete(BadRequest -> onBadRequestHandler(reactivate))
@@ -122,7 +122,7 @@ class Router(store: Store,
       entity(as[License]) { license =>
         if (license.isValid) onSuccess(store.listPools(license.key)) { pools => complete(OK -> Pools(pools)) }
         else {
-          val cause = s"*** Unauthorized license: $license"
+          val cause = s"Unauthorized license: $license"
           complete(Unauthorized -> onUnauthorizedRequestHandler(cause))
         }
       }
@@ -396,7 +396,7 @@ class Router(store: Store,
     onSuccess(cache.isAccountActived(license)) { isActivated =>
       if (isActivated) route
       else {
-        val cause = s"*** Unauthorized license is not activated: $license"
+        val cause = s"Unauthorized license is not activated: $license"
         complete(Unauthorized -> onUnauthorizedRequestHandler(cause))
       }
     }
