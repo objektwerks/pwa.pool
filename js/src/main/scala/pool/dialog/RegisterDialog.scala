@@ -27,8 +27,8 @@ object RegisterDialog {
   def apply(context: Context): Div =
     Modal(id = id,
       Header("Register"),
-      Errors(errors),
       Messages(messages),
+      Errors(errors),
       Field(
         Label(column = "15%", name = "Email:"),
         Text(column = "85%", Text.field(typeOf = "email").amend {
