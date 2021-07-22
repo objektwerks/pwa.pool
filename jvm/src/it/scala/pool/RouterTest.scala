@@ -1,6 +1,8 @@
 package pool
 
 import akka.actor.ActorSystem
+import akka.actor.Props
+
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.model.headers.RawHeader
@@ -30,7 +32,7 @@ class RouterTest extends AnyWordSpec with BeforeAndAfterAll with Matchers with S
 
   val store = Store(conf)
   val cache = AccountCache(store)
-  val emailer = Emailer(conf)
+  val emailer = system.actorOf(Props(classOf[Emailer], conf), name = "emailer")
   val router = Router(store, cache, emailer, logger)
   val host = conf.getString("server.host")
   val port = conf.getInt("server.port")

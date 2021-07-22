@@ -1,17 +1,16 @@
 package pool
 
+import akka.actor.Actor
+
 import com.typesafe.config.Config
 
 import jodd.mail.{Email, MailServer, SmtpServer}
 
-import scala.concurrent.Future
 import scala.util.{Try, Using}
 
-object Emailer {
-  def apply(conf: Config): Emailer = new Emailer(conf)
-}
+final case class SendEmail(account: Account) extends Product with Serializable
 
-final class Emailer(conf: Config) {
+final class Emailer(conf: Config) extends Actor {
   private val smtpServer: SmtpServer = MailServer.create()
     .ssl(true)
     .host(conf.getString("email.smtp.host"))
@@ -50,12 +49,13 @@ final class Emailer(conf: Config) {
       .htmlMessage(html, "UTF-8")
   }
 
-  def sendEmail(account: Account): Future[Try[String]] = {
-    Future.successful(
-      Using( smtpServer.createSession ) { session =>
-        session.open()
-        session.sendMail( buildEmail(account) )
-      }
-    )
+  private def sendEmail(account: Account): Try[String] =
+    Using( smtpServer.createSession ) { session =>
+      session.open()
+      session.sendMail( buildEmail(account) )
+    }
+
+  override def receive: Receive = {
+    case send: SendEmail => sender() ! sendEmail(send.account)
   }
 }
