@@ -14,7 +14,6 @@ import org.slf4j.Logger
 
 import scala.concurrent.duration._
 import scala.language.postfixOps
-import scala.util.{Failure, Success}
 import scala.util.control.NonFatal
 
 object Router {
@@ -65,14 +64,11 @@ class Router(store: Store,
         if (register.isValid) {
           implicit val timeout = Timeout(10 seconds)
           val account = Account(register.email)
-          onSuccess( emailer ? SendEmail(account) ) {
-            case Success(messageId) =>
-              logger.info(s"*** Emailer sent message[$messageId] to ${account.email}")
-              onSuccess(store.registerAccount(account)) {
-                account => complete(OK -> Registered(account))
-              }
-            case Failure(error) => complete(BadRequest -> onBadRequestHandler(error.getMessage))
-            case _ => complete(BadRequest -> onBadRequestHandler(register))
+          onSuccess( emailer ? SendEmail(account) ) { messageId =>
+            logger.info(s"*** Emailer sent message [ id: $messageId ] to ${account.email}")
+            onSuccess(store.registerAccount(account)) {
+              account => complete(OK -> Registered(account))
+            }
           }
         } else complete(BadRequest -> onBadRequestHandler(register))
       }

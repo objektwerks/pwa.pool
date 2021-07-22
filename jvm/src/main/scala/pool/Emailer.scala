@@ -6,7 +6,7 @@ import com.typesafe.config.Config
 
 import jodd.mail.{Email, MailServer, SmtpServer}
 
-import scala.util.{Try, Using}
+import scala.util.Using
 
 final case class SendEmail(account: Account) extends Product with Serializable
 
@@ -49,11 +49,11 @@ final class Emailer(conf: Config) extends Actor {
       .htmlMessage(html, "UTF-8")
   }
 
-  private def sendEmail(account: Account): Try[String] =
+  private def sendEmail(account: Account): String =
     Using( smtpServer.createSession ) { session =>
       session.open()
       session.sendMail( buildEmail(account) )
-    }
+    }.getOrElse("Message-ID not provided.")
 
   override def receive: Receive = {
     case send: SendEmail => sender() ! sendEmail(send.account)
