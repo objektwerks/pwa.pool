@@ -125,3 +125,10 @@ CREATE TABLE fault (
   cause VARCHAR NOT NULL,
   PRIMARY KEY (date_of, time_of, nano_of)
 );
+
+CREATE TABLE email (
+  id VARCHAR PRIMARY KEY,
+  address VARCHAR NOT NULL,
+  processed BOOL NOT NULL,
+  valid BOOL NOT NULL
+);

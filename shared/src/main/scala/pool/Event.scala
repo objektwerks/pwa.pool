@@ -2,7 +2,7 @@ package pool
 
 sealed trait Event extends Product with Serializable
 
-final case class Registered(account: Account) extends Event
+final case class Registering() extends Event
 
 final case class LoggedIn(account: Account) extends Event
 

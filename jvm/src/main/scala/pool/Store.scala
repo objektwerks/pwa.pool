@@ -15,6 +15,20 @@ class Store(conf: Config)(implicit ec: ExecutionContext) {
 
   import ctx._
 
+  def listEmails: Future[Seq[Email]] =
+    run(
+      query[Email]
+        .filter(_.processed == lift(false))
+    )
+
+  def addEmail(email: Email): Future[Unit] =
+    ctx.transaction { implicit ec =>
+      run(
+        query[Email]
+          .insert(lift(email))
+      ).map(_ => ())
+    }
+
   def registerAccount(account: Account): Future[Account] =
     ctx.transaction { implicit ec =>
       run(

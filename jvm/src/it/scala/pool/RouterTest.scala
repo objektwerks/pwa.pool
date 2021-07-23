@@ -32,7 +32,7 @@ class RouterTest extends AnyWordSpec with BeforeAndAfterAll with Matchers with S
 
   val store = Store(conf)
   val cache = AccountCache(store)
-  val emailer = system.actorOf(Props(classOf[Emailer], conf), name = "emailer")
+  val emailer = system.actorOf(Props(classOf[Emailer], conf, store), name = "emailer")
   val router = Router(store, cache, emailer, logger)
   val host = conf.getString("server.host")
   val port = conf.getInt("server.port")
@@ -63,7 +63,7 @@ class RouterTest extends AnyWordSpec with BeforeAndAfterAll with Matchers with S
   import Serializers._
   import Validators._
 
-  var account: Account = _
+  var account: Account = Await.result( store.registerAccount( Account(conf.getString("email.from")) ), 3 seconds )
   var licenseHeader: RawHeader = _
   var poolid: PoolId = _
   var timerid: TimerId = _
@@ -82,9 +82,6 @@ class RouterTest extends AnyWordSpec with BeforeAndAfterAll with Matchers with S
     "post to registered" in {
       Post("/register", Register(email = conf.getString("email.from"))) ~> router.routes ~> check {
         status shouldBe OK
-        account = responseAs[Registered].account
-        licenseHeader = RawHeader(Account.licenseHeader, account.license)
-        account.isActivated shouldBe true
       }
     }
   }
@@ -93,7 +90,8 @@ class RouterTest extends AnyWordSpec with BeforeAndAfterAll with Matchers with S
     "post to loggedin" in {
       Post("/login", Login(account.pin)) ~> router.routes ~> check {
         status shouldBe OK
-        responseAs[LoggedIn].account shouldEqual account
+        account = responseAs[LoggedIn].account
+        licenseHeader = RawHeader(Account.licenseHeader, account.license)
         account.isActivated shouldBe true
       }
     }

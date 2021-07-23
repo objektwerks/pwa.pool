@@ -1,8 +1,6 @@
 package pool
 
 import akka.actor.ActorRef
-import akka.pattern._
-import akka.util.Timeout
 
 import akka.http.scaladsl.model.StatusCodes.{BadRequest, InternalServerError, OK, Unauthorized}
 import akka.http.scaladsl.server.Directives._
@@ -12,8 +10,6 @@ import java.time.Instant
 
 import org.slf4j.Logger
 
-import scala.concurrent.duration._
-import scala.language.postfixOps
 import scala.util.control.NonFatal
 
 object Router {
@@ -62,14 +58,8 @@ class Router(store: Store,
     post {
       entity(as[Register]) { register =>
         if (register.isValid) {
-          implicit val timeout = Timeout(10 seconds)
-          val account = Account(register.email)
-          onSuccess( emailer ? SendEmail(account) ) { messageId =>
-            logger.info(s"*** Emailer sent message [ id: $messageId ] to ${account.email}")
-            onSuccess(store.registerAccount(account)) {
-              account => complete(OK -> Registered(account))
-            }
-          }
+          emailer ! SendEmail( Account(register.email) )
+          complete(OK -> Registering)
         } else complete(BadRequest -> onBadRequestHandler(register))
       }
     }

@@ -6,6 +6,11 @@ import scala.util.Random
 
 sealed trait Entity extends Product with Serializable
 
+final case class Email(id : String,
+                       address: String,
+                       processed: Boolean = false,
+                       valid: Boolean = false) extends Entity
+
 final case class Account(license: String,
                          email: String,
                          pin: Int,

@@ -16,7 +16,7 @@ import scala.annotation.nowarn
     registerRW, loginRW, deactivateRW, reactivateRW
   )
 
-  implicit val registeredRW: ReadWriter[Registered] = macroRW
+  implicit val registeredRW: ReadWriter[Registering] = macroRW
   implicit val loggedInRW: ReadWriter[LoggedIn] = macroRW
   implicit val deactivatedRW: ReadWriter[Deactivated] = macroRW
   implicit val reactivatedRW: ReadWriter[Reactivated] = macroRW

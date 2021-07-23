@@ -1,9 +1,7 @@
 package pool
 
 import akka.actor.Actor
-
 import com.typesafe.config.Config
-
 import jodd.mail.{Email, ImapServer, MailServer, SmtpServer}
 
 import scala.concurrent.duration._
@@ -12,7 +10,7 @@ import scala.util.Using
 
 final case class SendEmail(account: Account) extends Product with Serializable
 
-final class Emailer(conf: Config) extends Actor {
+final class Emailer(conf: Config, store: Store) extends Actor {
   implicit private val ec = context.system.dispatcher
 
   private val host = conf.getString("email.host")
@@ -64,11 +62,15 @@ final class Emailer(conf: Config) extends Actor {
       .htmlMessage(html, "UTF-8")
   }
 
-  private def sendEmail(account: Account): String =
+  private def sendEmail(account: Account): Unit =
     Using( smtpServer.createSession ) { session =>
       session.open()
-      session.sendMail( buildEmail(account) )
-    }.getOrElse("Message-ID not provided.")
+      val messageId = session.sendMail( buildEmail(account) )
+      val email = pool.Email(id = messageId, address = account.email)
+      store.registerAccount(account)
+      store.addEmail(email)
+      ()
+    }.get
 
   private def receiveEmail(): Runnable = new Runnable() {
     override def run(): Unit =
@@ -80,6 +82,6 @@ final class Emailer(conf: Config) extends Actor {
   }
 
   override def receive: Receive = {
-    case send: SendEmail => sender() ! sendEmail(send.account)
+    case send: SendEmail => sendEmail(send.account)
   }
 }
