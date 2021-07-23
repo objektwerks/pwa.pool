@@ -67,8 +67,8 @@ final class Emailer(conf: Config, store: Store) extends Actor {
       session.open()
       val messageId = session.sendMail( buildEmail(account) )
       val email = pool.Email(id = messageId, address = account.email)
-      store.registerAccount(account)
       store.addEmail(email)
+      store.registerAccount(account)
       ()
     }.get
 

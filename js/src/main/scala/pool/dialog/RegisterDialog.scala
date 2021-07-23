@@ -11,7 +11,6 @@ import pool.component._
 object RegisterDialog {
   val id = getClass.getSimpleName
   val errors = new EventBus[String]
-  val messages = new EventBus[String]
   val email = Var("")
 
   def handler(context: Context, errors: EventBus[String], event: Event): Unit = {
@@ -26,7 +25,7 @@ object RegisterDialog {
   def apply(context: Context): Div =
     Modal(id = id,
       Header("Register"),
-      Messages(messages),
+      Note("Provided your email address is valid, you will receive your new account information via email."),
       Errors(errors),
       Field(
         Label(column = "15%", name = "Email:"),
