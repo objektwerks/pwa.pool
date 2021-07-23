@@ -15,7 +15,7 @@ object RegisterDialog {
 
   def handler(context: Context, errors: EventBus[String], event: Event): Unit = {
     event match {
-      case Registering() =>
+      case Registering(_) =>
         context.hide(HomeMenu.registerMenuItemId)
         context.hide(id)
       case _ => errors.emit(s"Invalid: $event")

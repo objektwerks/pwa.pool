@@ -82,6 +82,7 @@ class RouterTest extends AnyWordSpec with BeforeAndAfterAll with Matchers with S
     "post to registered" in {
       Post("/register", Register(email = conf.getString("email.from"))) ~> router.routes ~> check {
         status shouldBe OK
+        responseAs[Registering].inProgress shouldBe true
       }
     }
   }
