@@ -128,6 +128,7 @@ CREATE TABLE fault (
 
 CREATE TABLE email (
   id VARCHAR PRIMARY KEY,
+  license VARCHAR(36) NOT NULL,
   address VARCHAR NOT NULL,
   processed BOOL NOT NULL,
   valid BOOL NOT NULL
