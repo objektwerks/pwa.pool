@@ -1,14 +1,20 @@
 package pool
 
 import akka.actor.Actor
+
 import com.typesafe.config.Config
+
 import jodd.mail.{Email, ImapServer, MailServer, SmtpServer}
+
+import org.slf4j.Logger
 
 import scala.concurrent.duration._
 import scala.language.postfixOps
 import scala.util.Using
 
-final class Emailer(conf: Config, store: Store) extends Actor {
+final class Emailer(conf: Config,
+                    store: Store,
+                    logger: Logger) extends Actor {
   implicit private val ec = context.system.dispatcher
 
   private val host = conf.getString("email.host")
@@ -66,8 +72,10 @@ final class Emailer(conf: Config, store: Store) extends Actor {
       val account = Account(register.email)
       val messageId = session.sendMail( buildEmail(account) )
       val email = pool.Email(id = messageId, license = account.license, address = account.email)
+      logger.info(s"*** Emailer sent: $email")
       store.addEmail(email)
       store.registerAccount(account)
+      logger.info(s"*** Emailer registered account: $account")
       ()
     }.get
 
