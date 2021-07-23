@@ -8,8 +8,6 @@ import scala.concurrent.duration._
 import scala.language.postfixOps
 import scala.util.Using
 
-final case class SendEmail(account: Account) extends Product with Serializable
-
 final class Emailer(conf: Config, store: Store) extends Actor {
   implicit private val ec = context.system.dispatcher
 
@@ -62,9 +60,10 @@ final class Emailer(conf: Config, store: Store) extends Actor {
       .htmlMessage(html, "UTF-8")
   }
 
-  private def sendEmail(account: Account): Unit =
+  private def sendEmail(register: Register): Unit =
     Using( smtpServer.createSession ) { session =>
       session.open()
+      val account = Account(register.email)
       val messageId = session.sendMail( buildEmail(account) )
       val email = pool.Email(id = messageId, license = account.license, address = account.email)
       store.addEmail(email)
@@ -82,6 +81,6 @@ final class Emailer(conf: Config, store: Store) extends Actor {
   }
 
   override def receive: Receive = {
-    case send: SendEmail => sendEmail(send.account)
+    case register: Register => sendEmail(register)
   }
 }

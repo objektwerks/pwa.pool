@@ -58,7 +58,7 @@ class Router(store: Store,
     post {
       entity(as[Register]) { register =>
         if (register.isValid) {
-          emailer ! SendEmail( Account(register.email) )
+          emailer ! register
           complete(OK -> Registering())
         } else complete(BadRequest -> onBadRequestHandler(register))
       }
