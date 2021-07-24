@@ -38,12 +38,12 @@ class Store(conf: Config)(implicit ec: ExecutionContext) {
       ).map(_ => ())
     }
 
-  def registerAccount(account: Account): Future[Account] =
+  def registerAccount(account: Account): Future[Unit] =
     ctx.transaction { implicit ec =>
       run(
         query[Account]
           .insert(lift(account))
-      ).map(_ => account)
+      ).map(_ => ())
     }
 
   def loginAccount(pin: Int): Future[Option[Account]] =
