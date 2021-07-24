@@ -75,9 +75,9 @@ final class Emailer(conf: Config,
       val email = pool.Email(id = messageId, license = account.license, address = account.email)
       logger.info("*** Emailer sent: {}", email)
       store.addEmail(email)
-      logger.info(s"*** Emailer added: {}", email)
+      logger.info("*** Emailer added: {}", email)
       store.registerAccount(account)
-      logger.info(s"*** Emailer registered account: {}", account)
+      logger.info("*** Emailer registered account: {}", account)
       ()
     }.get
 
@@ -87,21 +87,21 @@ final class Emailer(conf: Config,
         session.open()
         store.listEmails.onComplete {
           case Success(emails) =>
-            logger.info(s"*** Emailer listEmails [${emails.size}]: ${emails.foreach(println)}")
+            logger.info("*** Emailer listEmails [{}]: {}", emails.size, emails.foreach(println))
             emails.foreach { email =>
               val messages = session.receiveEmailAndDelete( filter().messageId(email.id) )
-              logger.info(s"*** Emailer receiveEmailAndDelete [${email.id}] messages [${messages.size}]: ${messages.foreach(println)}")
+              logger.info("*** Emailer receiveEmailAndDelete [{}] messages [{}]: {}", email.id, messages.size, messages.foreach(println))
               messages.foreach { message =>
                 if (message.messageId() == email.id) {
-                  logger.info(s"*** Emailer message id [${message.messageId}] : email id [${email.id}]")
+                  logger.info("*** Emailer message id [{}] : email id [{}]", message.messageId, email.id)
                   store.updateEmail( email.copy(processed = true) )
-                  logger.info(s"*** Emailer updateEmail: $email")
+                  logger.info("*** Emailer updateEmail: {}", email)
                   store.removeAccount( email.license )
-                  logger.info(s"*** Emailer removeAccount: ${email.license}")
+                  logger.info("*** Emailer removeAccount: {}", email.license)
                 }
               }
             }
-          case Failure(error) => logger.info(s"*** Emailer listEmails failed: $error")
+          case Failure(error) => logger.info("*** Emailer listEmails failed: {}", error)
         }
         ()
       }.get
