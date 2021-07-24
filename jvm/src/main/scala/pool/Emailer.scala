@@ -73,10 +73,11 @@ final class Emailer(conf: Config,
       val account = Account(register.email)
       val messageId = session.sendMail( buildEmail(account) )
       val email = pool.Email(id = messageId, license = account.license, address = account.email)
-      logger.info(s"*** Emailer sent: $email")
+      logger.info("*** Emailer sent: {}", email)
       store.addEmail(email)
+      logger.info(s"*** Emailer added: {}", email)
       store.registerAccount(account)
-      logger.info(s"*** Emailer registered account: $account")
+      logger.info(s"*** Emailer registered account: {}", account)
       ()
     }.get
 
