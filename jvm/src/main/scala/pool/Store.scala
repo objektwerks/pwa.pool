@@ -84,6 +84,15 @@ class Store(conf: Config)(implicit ec: ExecutionContext) {
         .filter(_.license == lift(license))
     ).map(result => result.headOption)
 
+  def removeAccount(license: String): Future[Unit] =
+    ctx.transaction { implicit ec =>
+      run(
+        query[Account]
+          .filter(_.license == lift(license))
+          .delete
+      ).map(_ => ())
+    }
+
   def listPools(license: String): Future[Seq[Pool]] =
     run(
       query[Pool]
