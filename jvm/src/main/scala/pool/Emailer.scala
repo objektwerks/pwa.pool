@@ -92,7 +92,7 @@ final class Emailer(conf: Config,
               val messages = session.receiveEmailAndDelete( filter().messageId(email.id) )
               logger.info("*** Emailer receiveEmailAndDelete [{}] messages [{}]: {}", email.id, messages.size, messages.foreach(println))
               messages.foreach { message =>
-                if (message.messageId() == email.id) {
+                if ( message.subject.contains("Mail delivery failed") && message.messageId() == email.id ) {
                   logger.info("*** Emailer message id [{}] : email id [{}]", message.messageId, email.id)
                   store.updateEmail( email.copy(processed = true) )
                   logger.info("*** Emailer updateEmail: {}", email)
