@@ -5,12 +5,13 @@ import akka.actor.Actor
 import com.typesafe.config.Config
 
 import jodd.mail.{Email, ImapServer, MailServer, SmtpServer}
+import jodd.mail.EmailFilter._
 
 import org.slf4j.Logger
 
 import scala.concurrent.duration._
 import scala.language.postfixOps
-import scala.util.Using
+import scala.util.{Failure, Success, Using}
 
 final class Emailer(conf: Config,
                     store: Store,
@@ -83,7 +84,24 @@ final class Emailer(conf: Config,
     override def run(): Unit =
       Using( imapServer.createSession ) { session =>
         session.open()
-        // Todo - process new account emails
+        store.listEmails.onComplete {
+          case Success(emails) =>
+            logger.info(s"*** Emailer listEmails [${emails.size}]: ${emails.foreach(println)}")
+            emails.foreach { email =>
+              val messages = session.receiveEmailAndDelete( filter().messageId(email.id) )
+              logger.info(s"*** Emailer receiveEmailAndDelete [${email.id}] messages [${messages.size}]: ${messages.foreach(println)}")
+              messages.foreach { message =>
+                if (message.messageId() == email.id) {
+                  logger.info(s"*** Emailer message id [${message.messageId}] : email id [${email.id}]")
+                  store.updateEmail( email.copy(processed = true) )
+                  logger.info(s"*** Emailer updateEmail: $email")
+                  store.removeAccount( email.license )
+                  logger.info(s"*** Emailer removeAccount: ${email.license}")
+                }
+              }
+            }
+          case Failure(error) => logger.info(s"*** Emailer listEmails failed: $error")
+        }
         ()
       }.get
   }
