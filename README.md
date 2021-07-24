@@ -93,7 +93,7 @@ Proxy
 
 Account
 -------
-* Register( email ) => Registered( account )
+* Register( email ) => Registering( inProgress )
 * Login( pin ) => LoggedIn( account )
 * Deactivate( license ) => Deactivated( account )
 * Reactivate( license ) => Reactivated( account )
@@ -125,6 +125,7 @@ Views
 Rest
 ----
 >Public url: /
+* /now
 * /register
 * /login
 * /deactivate
