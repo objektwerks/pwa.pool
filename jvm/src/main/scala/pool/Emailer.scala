@@ -95,12 +95,12 @@ final class Emailer(conf: Config,
                 logger.info("*** Emailer message id [{}] : email id [{}]", message.messageId, email.id)
                 if ( message.subject.contains("Mail delivery failed") && message.messageId() == email.id ) {
                   store.updateEmail( email.copy(processed = true) )
-                  logger.info("*** Emailer updateEmail: {}", email)
+                  logger.info("*** Emailer [invalid] updateEmail: {}", email)
                   store.removeAccount( email.license )
                   logger.info("*** Emailer removeAccount: {}", email.license)
                 } else if ( message.messageId() == email.id ) {
                   store.updateEmail( email.copy(processed = true, valid = true) )
-                  logger.info("*** Emailer updateEmail: {}", email)
+                  logger.info("*** Emailer [valid] updateEmail: {}", email)
                 } else logger.info("*** Emailer invalid message: {}", message)
               }
             }
