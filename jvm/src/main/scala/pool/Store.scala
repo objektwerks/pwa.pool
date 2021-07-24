@@ -78,6 +78,12 @@ class Store(conf: Config)(implicit ec: ExecutionContext) {
     getAccount(license)
   }
 
+  def listAccounts: Future[Seq[Account]] =
+    run(
+      query[Account]
+        .sortBy(_.activated)(Ord.desc)
+    )
+
   def getAccount(license: String): Future[Option[Account]] =
     run(
       query[Account]
