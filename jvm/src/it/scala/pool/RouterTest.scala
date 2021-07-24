@@ -63,7 +63,7 @@ class RouterTest extends AnyWordSpec with BeforeAndAfterAll with Matchers with S
   import Serializers._
   import Validators._
 
-  var account: Account = Await.result( store.registerAccount( Account(conf.getString("email.from")) ), 3 seconds )
+  var account: Account = _
   var licenseHeader: RawHeader = _
   var poolid: PoolId = _
   var timerid: TimerId = _
@@ -83,6 +83,8 @@ class RouterTest extends AnyWordSpec with BeforeAndAfterAll with Matchers with S
       Post("/register", Register(email = conf.getString("email.from"))) ~> router.routes ~> check {
         status shouldBe OK
         responseAs[Registering].inProgress shouldBe true
+        Thread.sleep(3000L) // Required for Emailer to: 1. send email, 2. add email, 3. register account
+        account = Await.result(store.listAccounts, 3 seconds ).head
       }
     }
   }
