@@ -27,6 +27,7 @@ class Router(store: Store,
   import Serializers._
   import Validators._
 
+  // Using Unauthorized(401) in Fault; yet using BadRequest(400) in complete(...) due to browser issues.
   val onUnauthorizedRequestHandler = (cause: String) => {
     val fault = Fault(code = Unauthorized.intValue, cause = cause)
     logger.error(s"*** $fault")
@@ -74,7 +75,7 @@ class Router(store: Store,
               complete(OK -> LoggedIn(account))
             case None =>
               val cause = s"Unauthorized pin: ${login.pin}"
-              complete(Unauthorized -> onUnauthorizedRequestHandler(cause))
+              complete(BadRequest -> onUnauthorizedRequestHandler(cause))
           }
         } else complete(BadRequest -> onBadRequestHandler(login))
       }
@@ -90,7 +91,7 @@ class Router(store: Store,
               complete(OK -> Deactivated(account))
             case None =>
               val cause = s"Unauthorized license: ${deactivate.license}"
-              complete(Unauthorized -> onUnauthorizedRequestHandler(cause))
+              complete(BadRequest -> onUnauthorizedRequestHandler(cause))
           }
         } else complete(BadRequest -> onBadRequestHandler(deactivate))
       }
@@ -105,7 +106,7 @@ class Router(store: Store,
               complete(OK -> Reactivated(licensee))
             case None =>
               val cause = s"Unauthorized license: ${reactivate.license}"
-              complete(Unauthorized -> onUnauthorizedRequestHandler(cause))
+              complete(BadRequest -> onUnauthorizedRequestHandler(cause))
           }
         } else complete(BadRequest -> onBadRequestHandler(reactivate))
       }
@@ -117,7 +118,7 @@ class Router(store: Store,
         if (license.isValid) onSuccess(store.listPools(license.key)) { pools => complete(OK -> Pools(pools)) }
         else {
           val cause = s"Unauthorized license: $license"
-          complete(Unauthorized -> onUnauthorizedRequestHandler(cause))
+          complete(BadRequest -> onUnauthorizedRequestHandler(cause))
         }
       }
     }
@@ -391,7 +392,7 @@ class Router(store: Store,
       if (isActivated) route
       else {
         val cause = s"Unauthorized license is not activated: $license"
-        complete(Unauthorized -> onUnauthorizedRequestHandler(cause))
+        complete(BadRequest -> onUnauthorizedRequestHandler(cause))
       }
     }
   }

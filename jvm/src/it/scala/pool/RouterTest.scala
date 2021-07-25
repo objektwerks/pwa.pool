@@ -372,7 +372,7 @@ class RouterTest extends AnyWordSpec with BeforeAndAfterAll with Matchers with S
   "unauthorized" should {
     "post to pools, fault" in {
       Post(apiUrl + "/pools", License("")) ~> addHeader(licenseHeader.copy(value = "")) ~> router.routes ~> check {
-        status shouldBe Unauthorized
+        status shouldBe BadRequest
         val fault = responseAs[Fault]
         fault.cause.nonEmpty shouldBe true
         fault.code shouldBe 401
