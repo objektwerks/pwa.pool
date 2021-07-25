@@ -19,18 +19,18 @@ abstract class Proxy {
 
 
   def toFault(responseText: String): Left[Fault, Nothing] = {
-    Context.log(s"*** in toFault(responseText: String) ... $responseText")
+    Context.log(s"... in toFault(responseText: String) ... $responseText")
     Try(read[Fault](responseText)).fold(error => Left(log(error)), fault => Left(fault))
   }
 
   def log(error: Throwable): Fault = {
-    Context.log(s"*** in log(error: Throwable) ... ${error.getMessage}")
+    Context.log(s"... in log(error: Throwable) ... ${error.getMessage}")
     Context.log(error.printStackTrace())
     log(error.getMessage)
   }
 
   def log(statusText: String, statusCode: Int = 500): Fault = {
-    Context.log(s"*** in log(statusText: String, statusCode: Int = 500) ... $statusText / $statusCode")
+    Context.log(s"... in log(statusText: String, statusCode: Int = 500) ... $statusText : $statusCode")
     val fault = Fault(code = statusCode, cause = statusText)
     Context.log(fault.toString)
     fault
