@@ -17,8 +17,8 @@ object EntityProxy extends Proxy {
     Ajax.post(url = url, headers = headers(license), data = write[Entity](entity)).map { xhr =>
       xhr.status match {
         case 200 => Try(read[State](xhr.responseText)).fold(error => Left(log(error)), state => Right(state))
-        case 400 | 500 => toFault(xhr.responseText)
-        case _ => Left( log(xhr.statusText, xhr.status) )
+        case 400 | 500 => Left( readAsFault(xhr.responseText) )
+        case _ => Left( log(xhr.statusText) )
       }
     }.recover { case error => Left( log(error) ) }
   }

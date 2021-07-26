@@ -18,20 +18,20 @@ abstract class Proxy {
     else headers
 
 
-  def toFault(responseText: String): Left[Fault, Nothing] = {
-    Context.log(s"... in toFault(responseText: String) ... $responseText")
-    Try(read[Fault](responseText)).fold(error => Left(log(error)), fault => Left(fault))
+  def readAsFault(responseText: String): Fault = {
+    Context.log(s"... in readAsFault(responseText: String) ... $responseText")
+    Try(read[Fault](responseText)).getOrElse( log(responseText) )
   }
 
   def log(error: Throwable): Fault = {
     Context.log(s"... in log(error: Throwable) ... ${error.getMessage}")
     Context.log(error.printStackTrace())
-    log(error.getMessage)
+    Fault(cause = error.getMessage)
   }
 
-  def log(statusText: String, statusCode: Int = 500): Fault = {
-    Context.log(s"... in log(statusText: String, statusCode: Int = 500) ... $statusText : $statusCode")
-    val fault = Fault(code = statusCode, cause = statusText)
+  def log(statusText: String): Fault = {
+    Context.log(s"... in log(statusText: String) ... $statusText")
+    val fault = Fault(cause = statusText)
     Context.log(fault.toString)
     fault
   }
