@@ -90,7 +90,7 @@ final class Emailer(conf: Config,
       Using( imapServer.createSession ) { session =>
         session.open()
         if (session.isConnected) {
-          val messages = session.receiveEmailAndMarkSeen( filter().flag(Flags.Flag.SEEN, false) )
+          val messages = session.receiveEmailAndMarkSeen( filter.flag(Flags.Flag.SEEN, false) )
           logger.info("*** Emailer receiveEmailAndMarkSeen messages: {}", messages.size)
           store.listEmails.onComplete {
             case Success(emails) =>
