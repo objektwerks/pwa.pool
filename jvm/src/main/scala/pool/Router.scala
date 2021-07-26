@@ -1,13 +1,11 @@
 package pool
 
 import akka.actor.ActorRef
-
 import akka.http.scaladsl.model.StatusCodes.{BadRequest, InternalServerError, OK, Unauthorized}
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.{ExceptionHandler, Route}
 
 import java.time.Instant
-
 import org.slf4j.Logger
 
 import scala.util.control.NonFatal
@@ -27,29 +25,26 @@ class Router(store: Store,
   import Serializers._
   import Validators._
 
-  // Using Unauthorized(401) in Fault; yet using BadRequest(400) in complete(...) due to browser issues.
-  val onUnauthorizedRequestHandler = (cause: String) => {
-    val fault = Fault(code = Unauthorized.intValue, cause = cause)
+  val toFault = (code: Int, cause: String) => {
+    val fault = Fault(code, cause)
     logger.error(s"*** $fault")
     store.addFault(fault)
   }
 
-  val onBadRequestHandler = (cause: Serializable) => {
-    val fault = Fault(code = BadRequest.intValue, cause = s"Bad Request: $cause")
-    logger.error(s"*** $fault")
-    store.addFault(fault)
-  }
+  // Using Unauthorized(401) in Fault; yet using BadRequest(400) in complete(...) due to browser issues.
+  val onUnauthorizedRequestHandler = (cause: String) => toFault(Unauthorized.intValue, cause)
+
+  val onBadRequestHandler = (cause: Serializable) => toFault(BadRequest.intValue, s"Bad Request: $cause")
 
   implicit val onExceptionHandler = ExceptionHandler {
     case NonFatal(error) =>
       extractRequestContext { context =>
-        val fault = Fault(
-          code = InternalServerError.intValue,
-          cause = s"Exception: on - ${context.request.uri} with - ${error.getMessage}"
+        val fault = toFault(
+          InternalServerError.intValue,
+          s"Exception: url - ${context.request.uri} error - ${error.getMessage}"
         )
-        logger.error(s"*** $fault")
         context.request.discardEntityBytes(context.materializer)
-        complete(InternalServerError -> store.addFault(fault))
+        complete(InternalServerError -> fault)
       }
   }
     
