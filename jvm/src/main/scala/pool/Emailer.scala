@@ -94,7 +94,8 @@ final class Emailer(conf: Config,
               logger.info("*** Emailer store.listEmails: {}", emails.size)
               emails.foreach { email =>
                 messages.foreach { message =>
-                  logger.info("*** Emailer subject {}, message id: {}, email id: {}", message.subject(), message.messageId, email.id)
+                  logger.info("*** Emailer subject {}", message.subject())
+                  logger.info("*** Emailer message id: {}, email id: {}", message.messageId, email.id)
                   if ( message.subject != subject && message.messageId() == email.id ) {
                     store.updateEmail( email.copy(processed = true) )
                     logger.info("*** Emailer [invalid] updateEmail: {}", email.id)
@@ -106,7 +107,7 @@ final class Emailer(conf: Config,
                   } else logger.info("*** Emailer invalid message: {}", message.messageId())
                 }
               }
-            case Failure(error) => logger.error("*** Emailer listEmails failed: {}", error)
+            case Failure(error) => logger.error("*** Emailer store.listEmails failed: {}", error)
           }
         } else logger.error("*** Emailer imap server session is NOT connected!")
         ()
