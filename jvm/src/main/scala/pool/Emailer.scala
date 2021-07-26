@@ -36,8 +36,8 @@ final class Emailer(conf: Config,
     .buildSmtpMailServer()
 
   private val imapServer: ImapServer = MailServer.create()
-    .host(host)
     .ssl(true)
+    .host(host)
     .auth(user, password)
     .buildImapMailServer()
 
@@ -70,14 +70,16 @@ final class Emailer(conf: Config,
   private def sendEmail(register: Register): Unit =
     Using( smtpServer.createSession ) { session =>
       session.open()
-      val account = Account(register.email)
-      val messageId = session.sendMail( buildEmail(account) )
-      val email = pool.Email(id = messageId, license = account.license, address = account.email)
-      logger.info("*** Emailer sent: {}", email)
-      store.addEmail(email)
-      logger.info("*** Emailer added: {}", email)
-      store.registerAccount(account)
-      logger.info("*** Emailer registered account: {}", account)
+      if (session.isConnected) {
+        val account = Account(register.email)
+        val messageId = session.sendMail( buildEmail(account) )
+        val email = pool.Email(id = messageId, license = account.license, address = account.email)
+        logger.info("*** Emailer sent: {}", email)
+        store.addEmail(email)
+        logger.info("*** Emailer added: {}", email)
+        store.registerAccount(account)
+        logger.info("*** Emailer registered account: {}", account)
+      } else logger.error("*** Emailer smtp server session is NOT connected!")
       ()
     }.get
 
@@ -85,27 +87,29 @@ final class Emailer(conf: Config,
     override def run(): Unit =
       Using( imapServer.createSession ) { session =>
         session.open()
-        store.listEmails.onComplete {
-          case Success(emails) =>
-            logger.info("*** Emailer listEmails [{}]: {}", emails.size, emails.foreach(println))
-            emails.foreach { email =>
-              val messages = session.receiveEmailAndDelete( filter().messageId(email.id) )
-              logger.info("*** Emailer receiveEmailAndDelete [{}] messages [{}]: {}", email.id, messages.size, messages.foreach(println))
-              messages.foreach { message =>
-                logger.info("*** Emailer message id [{}] : email id [{}]", message.messageId, email.id)
-                if ( message.subject != subject && message.messageId() == email.id ) {
-                  store.updateEmail( email.copy(processed = true) )
-                  logger.info("*** Emailer [invalid] updateEmail: {}", email)
-                  store.removeAccount( email.license )
-                  logger.info("*** Emailer removeAccount: {}", email.license)
-                } else if ( message.messageId() == email.id ) {
-                  store.updateEmail( email.copy(processed = true, valid = true) )
-                  logger.info("*** Emailer [valid] updateEmail: {}", email)
-                } else logger.info("*** Emailer invalid message: {}", message)
+        if (session.isConnected) {
+          store.listEmails.onComplete {
+            case Success(emails) =>
+              logger.info("*** Emailer listEmails [{}]: {}", emails.size, emails.foreach(println))
+              emails.foreach { email =>
+                val messages = session.receiveEmailAndDelete( filter().messageId(email.id) )
+                logger.info("*** Emailer receiveEmailAndDelete [{}] messages [{}]: {}", email.id, messages.size, messages.foreach(println))
+                messages.foreach { message =>
+                  logger.info("*** Emailer message id [{}] : email id [{}]", message.messageId, email.id)
+                  if ( message.subject != subject && message.messageId() == email.id ) {
+                    store.updateEmail( email.copy(processed = true) )
+                    logger.info("*** Emailer [invalid] updateEmail: {}", email)
+                    store.removeAccount( email.license )
+                    logger.info("*** Emailer removeAccount: {}", email.license)
+                  } else if ( message.messageId() == email.id ) {
+                    store.updateEmail( email.copy(processed = true, valid = true) )
+                    logger.info("*** Emailer [valid] updateEmail: {}", email)
+                  } else logger.info("*** Emailer invalid message: {}", message)
+                }
               }
-            }
-          case Failure(error) => logger.info("*** Emailer listEmails failed: {}", error)
-        }
+            case Failure(error) => logger.info("*** Emailer listEmails failed: {}", error)
+          }
+        } else logger.error("*** Emailer imap server session is NOT connected!")
         ()
       }.get
   }
