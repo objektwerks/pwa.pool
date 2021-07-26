@@ -5,7 +5,6 @@ import akka.actor.Actor
 import com.typesafe.config.Config
 
 import jodd.mail.{Email, ImapServer, MailServer, SmtpServer}
-import jodd.mail.EmailFilter._
 
 import org.slf4j.Logger
 
@@ -88,26 +87,26 @@ final class Emailer(conf: Config,
       Using( imapServer.createSession ) { session =>
         session.open()
         if (session.isConnected) {
+          val messages = session.receiveEmailAndMarkSeen()
+          logger.info("*** Emailer receiveEmailAndMarkSeen messages: {}", messages.size)
           store.listEmails.onComplete {
             case Success(emails) =>
-              logger.info("*** Emailer listEmails [{}]: {}", emails.size, emails.foreach(println))
+              logger.info("*** Emailer store.listEmails: {}", emails.size)
               emails.foreach { email =>
-                val messages = session.receiveEmailAndDelete( filter().messageId(email.id) )
-                logger.info("*** Emailer receiveEmailAndDelete [{}] messages [{}]: {}", email.id, messages.size, messages.foreach(println))
                 messages.foreach { message =>
-                  logger.info("*** Emailer message id [{}] : email id [{}]", message.messageId, email.id)
+                  logger.info("*** Emailer subject {}, message id: {}, email id: {}", message.subject(), message.messageId, email.id)
                   if ( message.subject != subject && message.messageId() == email.id ) {
                     store.updateEmail( email.copy(processed = true) )
-                    logger.info("*** Emailer [invalid] updateEmail: {}", email)
+                    logger.info("*** Emailer [invalid] updateEmail: {}", email.id)
                     store.removeAccount( email.license )
                     logger.info("*** Emailer removeAccount: {}", email.license)
                   } else if ( message.messageId() == email.id ) {
                     store.updateEmail( email.copy(processed = true, valid = true) )
-                    logger.info("*** Emailer [valid] updateEmail: {}", email)
-                  } else logger.info("*** Emailer invalid message: {}", message)
+                    logger.info("*** Emailer [valid] updateEmail: {}", email.id)
+                  } else logger.info("*** Emailer invalid message: {}", message.messageId())
                 }
               }
-            case Failure(error) => logger.info("*** Emailer listEmails failed: {}", error)
+            case Failure(error) => logger.error("*** Emailer listEmails failed: {}", error)
           }
         } else logger.error("*** Emailer imap server session is NOT connected!")
         ()
