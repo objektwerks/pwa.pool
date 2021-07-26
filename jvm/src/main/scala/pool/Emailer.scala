@@ -4,7 +4,10 @@ import akka.actor.Actor
 
 import com.typesafe.config.Config
 
+import javax.mail.Flags
+
 import jodd.mail.{Email, ImapServer, MailServer, SmtpServer}
+import jodd.mail.EmailFilter._
 
 import org.slf4j.Logger
 
@@ -87,7 +90,7 @@ final class Emailer(conf: Config,
       Using( imapServer.createSession ) { session =>
         session.open()
         if (session.isConnected) {
-          val messages = session.receiveEmailAndMarkSeen()
+          val messages = session.receiveEmailAndMarkSeen( filter().flag(Flags.Flag.SEEN, false) )
           logger.info("*** Emailer receiveEmailAndMarkSeen messages: {}", messages.size)
           store.listEmails.onComplete {
             case Success(emails) =>
