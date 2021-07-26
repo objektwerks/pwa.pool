@@ -43,7 +43,10 @@ class Router(store: Store,
   implicit val onExceptionHandler = ExceptionHandler {
     case NonFatal(error) =>
       extractRequestContext { context =>
-        val fault = Fault(cause = s"Exception: on - ${context.request.uri} with - ${error.getMessage}")
+        val fault = Fault(
+          code = InternalServerError.intValue,
+          cause = s"Exception: on - ${context.request.uri} with - ${error.getMessage}"
+        )
         logger.error(s"*** $fault")
         context.request.discardEntityBytes(context.materializer)
         complete(InternalServerError -> store.addFault(fault))
