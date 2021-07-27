@@ -7,6 +7,7 @@ import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.model.headers.RawHeader
 import akka.http.scaladsl.testkit.{RouteTestTimeout, ScalatestRouteTest}
+
 import akka.testkit.TestDuration
 
 import com.typesafe.config.ConfigFactory
@@ -372,7 +373,7 @@ class RouterTest extends AnyWordSpec with BeforeAndAfterAll with Matchers with S
   "unauthorized" should {
     "post to pools, fault" in {
       Post(apiUrl + "/pools", License("")) ~> addHeader(licenseHeader.copy(value = "")) ~> router.routes ~> check {
-        status shouldBe BadRequest
+        status shouldBe Unauthorized
         val fault = responseAs[Fault]
         fault.cause.nonEmpty shouldBe true
         fault.code shouldBe 401
