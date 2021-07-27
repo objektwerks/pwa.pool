@@ -81,6 +81,14 @@ Package
 1. sbt js/clean fullLinkJS
 2. sbt js/universal:packageZipTarball
 
+Http Codes
+----------
+>The Router only emits:
+1. 200
+2. 400
+3. 401
+5. 500
+
 Client
 ------
 * Command => Fault | Event
