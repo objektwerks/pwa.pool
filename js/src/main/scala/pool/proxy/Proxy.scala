@@ -1,6 +1,7 @@
 package pool.proxy
 
 import org.scalajs.dom.XMLHttpRequest
+
 import pool.{Account, Context, Fault, Serializers}
 
 import scala.util.Try
