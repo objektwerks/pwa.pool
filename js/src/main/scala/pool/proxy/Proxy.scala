@@ -1,5 +1,6 @@
 package pool.proxy
 
+import org.scalajs.dom.XMLHttpRequest
 import pool.{Account, Context, Fault, Serializers}
 
 import scala.util.Try
@@ -18,9 +19,9 @@ abstract class Proxy {
     else headers
 
 
-  def readAsFault(responseText: String): Fault = {
-    Context.log(s"... in readAsFault(responseText: String) ... $responseText")
-    Try(read[Fault](responseText)).getOrElse( log("empty", responseText) )
+  def readAsFault(xhr: XMLHttpRequest): Fault = {
+    Context.log(s"... in readAsFault(responseText: String) ... ${xhr.responseText}")
+    Try(read[Fault](xhr.responseText)).getOrElse( log(xhr) )
   }
 
   def log(error: Throwable): Fault = {
@@ -29,9 +30,9 @@ abstract class Proxy {
     Fault(cause = error.getMessage)
   }
 
-  def log(statusText: String, responseText: String): Fault = {
-    Context.log(s"... in log(statusText: String) ... $statusText")
-    val fault = Fault(cause = s"status: $statusText : response: $responseText")
+  def log(xhr: XMLHttpRequest): Fault = {
+    Context.log(s"... in log(statusText: String) ... ${xhr.statusText}")
+    val fault = Fault(cause = s"status: ${xhr.statusText} : response: ${xhr.responseText}")
     Context.log(fault.toString)
     fault
   }

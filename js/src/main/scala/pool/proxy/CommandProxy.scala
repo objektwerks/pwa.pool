@@ -17,12 +17,12 @@ object CommandProxy extends Proxy {
     Ajax.post(url = url, headers = headers(license), data = write[Command](command)).map { xhr =>
       xhr.status match {
         case 200 => Try(read[Event](xhr.responseText)).fold(error => Left(log(error)), event => Right(event))
-        case _ => Left(log(xhr.statusText, xhr.responseText))
+        case _ => Left(log(xhr))
       }
     }.recover { case AjaxException(xhr) =>
       xhr.status match {
-        case 400 | 401 | 500 => Left(readAsFault(xhr.responseText))
-        case _ => Left(log(xhr.statusText, xhr.responseText))
+        case 400 | 401 | 500 => Left(readAsFault(xhr))
+        case _ => Left(log(xhr))
       }
     }
   }
