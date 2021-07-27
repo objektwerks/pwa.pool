@@ -1,6 +1,6 @@
 package pool.proxy
 
-import org.scalajs.dom.ext.Ajax
+import org.scalajs.dom.ext.{Ajax, AjaxException}
 
 import pool.{Command, Context, Event, Fault, Serializers}
 
@@ -17,9 +17,13 @@ object CommandProxy extends Proxy {
     Ajax.post(url = url, headers = headers(license), data = write[Command](command)).map { xhr =>
       xhr.status match {
         case 200 => Try(read[Event](xhr.responseText)).fold(error => Left(log(error)), event => Right(event))
-        case 400 | 500 => Left( readAsFault(xhr.responseText) )
-        case _ => Left( log(xhr.statusText) )
+        case _ => Left(log(xhr.statusText, xhr.responseText))
       }
-    }.recover { case error => Left( log(error) ) }
+    }.recover { case AjaxException(xhr) =>
+      xhr.status match {
+        case 400 | 401 | 500 => Left(readAsFault(xhr.responseText))
+        case _ => Left(log(xhr.statusText, xhr.responseText))
+      }
+    }
   }
 }

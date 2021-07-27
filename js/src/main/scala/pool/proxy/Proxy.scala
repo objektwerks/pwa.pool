@@ -20,7 +20,7 @@ abstract class Proxy {
 
   def readAsFault(responseText: String): Fault = {
     Context.log(s"... in readAsFault(responseText: String) ... $responseText")
-    Try(read[Fault](responseText)).getOrElse( log(responseText) )
+    Try(read[Fault](responseText)).getOrElse( log("empty", responseText) )
   }
 
   def log(error: Throwable): Fault = {
@@ -29,9 +29,9 @@ abstract class Proxy {
     Fault(cause = error.getMessage)
   }
 
-  def log(statusText: String): Fault = {
+  def log(statusText: String, responseText: String): Fault = {
     Context.log(s"... in log(statusText: String) ... $statusText")
-    val fault = Fault(cause = statusText)
+    val fault = Fault(cause = s"status: $statusText : response: $responseText")
     Context.log(fault.toString)
     fault
   }

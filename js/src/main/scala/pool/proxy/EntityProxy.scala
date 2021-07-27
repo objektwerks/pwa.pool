@@ -1,6 +1,6 @@
 package pool.proxy
 
-import org.scalajs.dom.ext.Ajax
+import org.scalajs.dom.ext.{Ajax, AjaxException}
 
 import pool.{Context, Entity, Fault, Serializers, State}
 
@@ -17,9 +17,13 @@ object EntityProxy extends Proxy {
     Ajax.post(url = url, headers = headers(license), data = write[Entity](entity)).map { xhr =>
       xhr.status match {
         case 200 => Try(read[State](xhr.responseText)).fold(error => Left(log(error)), state => Right(state))
-        case 400 | 500 => Left( readAsFault(xhr.responseText) )
-        case _ => Left( log(xhr.statusText) )
+        case _ => Left(log(xhr.statusText, xhr.responseText))
       }
-    }.recover { case error => Left( log(error) ) }
+    }.recover { case AjaxException(xhr) =>
+      xhr.status match {
+        case 400 | 401 | 500 => Left(readAsFault(xhr.responseText))
+        case _ => Left(log(xhr.statusText, xhr.responseText))
+      }
+    }
   }
 }
