@@ -59,8 +59,7 @@ class RouterTest extends AnyWordSpec with BeforeAndAfterAll with Matchers with S
 
   import DateTime._
   import StatusCodes._
-  import de.heikoseeberger.akkahttpupickle.{UpickleSupport => Upickle}
-  import Upickle._
+  import de.heikoseeberger.akkahttpupickle.UpickleSupport._
   import Serializers._
   import Validators._
 
