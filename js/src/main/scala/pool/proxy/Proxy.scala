@@ -19,9 +19,8 @@ abstract class Proxy {
     if (license.nonEmpty) headers + ( Account.licenseHeader -> license )
     else headers
 
-
   def readAsFault(xhr: XMLHttpRequest): Fault = {
-    Context.log(s"... in readAsFault(responseText: String) ... ${xhr.responseText}")
+    Context.log(s"... in readAsFault(xhr: XMLHttpRequest) ... ${xhr.responseText}")
     Try(read[Fault](xhr.responseText)).getOrElse( log(xhr) )
   }
 
@@ -32,7 +31,7 @@ abstract class Proxy {
   }
 
   def log(xhr: XMLHttpRequest): Fault = {
-    Context.log(s"... in log(statusText: String) ... ${xhr.statusText}")
+    Context.log(s"... in log(xhr: XMLHttpRequest) ... ${xhr.statusText}")
     val fault = Fault(cause = s"status: ${xhr.statusText} : response: ${xhr.responseText}")
     Context.log(fault.toString)
     fault
