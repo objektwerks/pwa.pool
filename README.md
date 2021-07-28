@@ -83,11 +83,7 @@ Package
 
 Http Codes
 ----------
->The Router only emits:
-1. 200
-2. 400
-3. 401
-5. 500
+>The Router only emits: 200, 400, 401, 500
 
 Client
 ------
