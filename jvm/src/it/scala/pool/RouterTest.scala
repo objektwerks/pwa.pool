@@ -4,7 +4,7 @@ import akka.actor.ActorSystem
 import akka.actor.Props
 
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.model.StatusCodes
+import akka.http.scaladsl.model.StatusCodes.{BadRequest, OK, Unauthorized}
 import akka.http.scaladsl.model.headers.RawHeader
 import akka.http.scaladsl.testkit.{RouteTestTimeout, ScalatestRouteTest}
 
@@ -57,11 +57,10 @@ class RouterTest extends AnyWordSpec with BeforeAndAfterAll with Matchers with S
         logger.info("*** Server shutdown.")
       }
 
-  import DateTime._
-  import StatusCodes._
   import de.heikoseeberger.akkahttpupickle.UpickleSupport._
   import Serializers._
   import Validators._
+  import DateTime._
 
   var account: Account = _
   var licenseHeader: RawHeader = _

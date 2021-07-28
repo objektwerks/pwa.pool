@@ -1,6 +1,7 @@
 package pool
 
 import akka.actor.ActorRef
+
 import akka.http.scaladsl.model.StatusCodes.{BadRequest, InternalServerError, OK, Unauthorized}
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.{ExceptionHandler, Route}
