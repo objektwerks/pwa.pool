@@ -386,7 +386,7 @@ class Router(store: Store,
   }
 
   val secure = (route: Route) => headerValueByName(Account.licenseHeader) { license =>
-    onSuccess(cache.isAccountActived(license)) { isActivated =>
+    onSuccess(cache.isAccountActivated(license)) { isActivated =>
       if (isActivated) route
       else {
         val cause = s"Unauthorized license is not activated: $license"
