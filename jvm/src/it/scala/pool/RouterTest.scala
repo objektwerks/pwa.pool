@@ -57,10 +57,10 @@ class RouterTest extends AnyWordSpec with BeforeAndAfterAll with Matchers with S
         logger.info("*** Server shutdown.")
       }
 
-  import de.heikoseeberger.akkahttpupickle.{UpickleSupport => Upickle}
-  import Upickle._
   import DateTime._
   import StatusCodes._
+  import de.heikoseeberger.akkahttpupickle.{UpickleSupport => Upickle}
+  import Upickle._
   import Serializers._
   import Validators._
 
