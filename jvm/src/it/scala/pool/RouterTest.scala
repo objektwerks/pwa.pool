@@ -83,7 +83,7 @@ class RouterTest extends AnyWordSpec with BeforeAndAfterAll with Matchers with S
       Post("/register", Register(email = conf.getString("email.from"))) ~> router.routes ~> check {
         status shouldBe OK
         responseAs[Registering].inProgress shouldBe true
-        Thread.sleep(6000L) // Required for Emailer to: 1. send email, 2. add email, 3. register account
+        Thread.sleep(9000L) // Required for Emailer to: 1. send email, 2. add email, 3. register account
         account = Await.result(store.listAccounts, 3 seconds ).head
       }
     }
