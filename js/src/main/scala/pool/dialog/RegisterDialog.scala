@@ -25,7 +25,7 @@ object RegisterDialog {
   def apply(context: Context): Div =
     Modal(id = id,
       Header("Register"),
-      Note("Provided your email address is valid, you will receive your new account information via email."),
+      Note("Check your email for new account details, provided your given email address is valid."),
       Errors(errors),
       Field(
         Label(column = "15%", name = "Email:"),
