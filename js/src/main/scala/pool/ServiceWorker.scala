@@ -24,38 +24,6 @@ object ServiceWorker {
     "logo-512.png"
   ).toJSArray
 
-  self.addEventListener("install", (event: ExtendableEvent) => {
-    Context.log(s"[install] service worker installed: ${event.toString}")
-    event.waitUntil(toCache.toJSPromise)
-  })
-
-  self.addEventListener("activate", (event: ExtendableEvent) => {
-    Context.log(s"[activate] service worker activated: ${event.toString}")
-    invalidateCache()
-    self.clients.claim()
-  })
-
-  self.addEventListener("fetch", (event: FetchEvent) => {
-    if (event.request.cache == RequestCache.`only-if-cached`
-      && event.request.mode != RequestMode.`same-origin`) {
-      Context.log(s"[fetch] Bug [823392] cache === only-if-cached && mode !== same-orgin' > ${event.request.url}")
-    } else {
-      fromCache(event.request).onComplete {
-        case Success(response) =>
-          Context.log(s"[fetch] in cache > ${event.request.url}")
-          response
-        case Failure(error) =>
-          Context.log(s"[fetch] not in cache, calling server: ${event.request.url} > ${error.printStackTrace()}")
-          fetch(event.request)
-            .toFuture
-            .onComplete {
-              case Success(response) => response
-              case Failure(finalError) => Context.log(s"[fetch] final fetch failed: ${finalError.printStackTrace()}")
-            }
-      }
-    }
-  })
-
   def register(): Unit =
     toServiceWorkerNavigator(window.navigator)
       .serviceWorker
@@ -65,8 +33,48 @@ object ServiceWorker {
         case Success(registration) =>
           Context.log("[register] registered service worker")
           registration.update()
-        case Failure(error) => Context.log(s"[register] service worker registration failed: ${error.printStackTrace()}")
-      }  
+          registerEventListeners()
+        case Failure(error) =>
+          Context.log(s"[register] service worker registration failed: ${error.printStackTrace()}")
+      }
+
+  def registerEventListeners(): Unit = {
+    Context.log(s"[registerEventListeners] registering event listeners...")
+
+    self.addEventListener("install", (event: ExtendableEvent) => {
+      Context.log(s"[install] service worker installed: ${event.toString}")
+      event.waitUntil(toCache.toJSPromise)
+    })
+
+    self.addEventListener("activate", (event: ExtendableEvent) => {
+      Context.log(s"[activate] service worker activated: ${event.toString}")
+      invalidateCache()
+      self.clients.claim()
+    })
+
+    self.addEventListener("fetch", (event: FetchEvent) => {
+      if (event.request.cache == RequestCache.`only-if-cached`
+        && event.request.mode != RequestMode.`same-origin`) {
+        Context.log(s"[fetch] Bug [823392] cache === only-if-cached && mode !== same-orgin' > ${event.request.url}")
+      } else {
+        fromCache(event.request).onComplete {
+          case Success(response) =>
+            Context.log(s"[fetch] in cache > ${event.request.url}")
+            response
+          case Failure(error) =>
+            Context.log(s"[fetch] not in cache, calling server: ${event.request.url} > ${error.printStackTrace()}")
+            fetch(event.request)
+              .toFuture
+              .onComplete {
+                case Success(response) => response
+                case Failure(finalError) => Context.log(s"[fetch] final fetch failed: ${finalError.printStackTrace()}")
+              }
+        }
+      }
+    })
+
+    Context.log(s"[registerEventListeners] event listeners registered.")
+  }
 
   def toCache: Future[Unit] = {
     self.caches.open(poolCache)
@@ -91,7 +99,7 @@ object ServiceWorker {
       }
   }
 
-  def invalidateCache(): Unit =  {
+  def invalidateCache(): Unit = {
     self.caches.delete(poolCache)
       .toFuture
       .map { invalidatedCache =>
