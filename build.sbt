@@ -75,8 +75,8 @@ lazy val jvm = (project in file("jvm"))
         "io.getquill" %% "quill-async-postgres" % quillVersion,
         "com.github.cb372" %% "scalacache-caffeine" % "0.28.0",
         "org.jodd" % "jodd-mail" % "6.0.5",
-        "com.typesafe" % "config" % "1.4.0",
-        "ch.qos.logback" % "logback-classic" % "1.2.3",
+        "com.typesafe" % "config" % "1.4.1",
+        "ch.qos.logback" % "logback-classic" % "1.2.5",
         "com.typesafe.akka" %% "akka-http-testkit" % akkkHttpVersion % IntegrationTest,
         "com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion % IntegrationTest,
         "org.scalatest" %% "scalatest" % scalaTestVersion % IntegrationTest
