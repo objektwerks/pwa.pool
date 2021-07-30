@@ -1,9 +1,9 @@
 package pool
 
-import org.scalajs.dom.document
+import org.scalajs.dom.{console, document}
 
 object Context {
-  def log(any: Any): Unit = println(any)
+  def log(message: Any): Unit = console.log(message)
 }
 
 case class Context(publicUrl: String, apiUrl: String) extends Product with Serializable {
@@ -15,7 +15,7 @@ case class Context(publicUrl: String, apiUrl: String) extends Product with Seria
   val poolsAddUrl = s"$apiUrl/pools/add"
   val poolsUpdateUrl = s"$apiUrl/pools/update"
 
-  def log(any: Any): Unit = Context.log(any)
+  def log(message: Any): Unit = Context.log(message)
 
   def show(id: String): Unit = document.getElementById(id).setAttribute("style", "display: block")
 
