@@ -27,13 +27,19 @@ abstract class Proxy {
   def log(error: Throwable): Fault = {
     Context.log(s"... in log(error: Throwable) ... ${error.getMessage}")
     Context.log(error.printStackTrace())
-    Fault(cause = error.getMessage)
+    Fault(cause = s"Response handling error: ${error.getMessage}")
   }
 
   def log(xhr: XMLHttpRequest): Fault = {
-    Context.log(s"... in log(xhr: XMLHttpRequest) ... ${xhr.statusText}")
-    val fault = Fault(cause = s"status: ${xhr.statusText} : response: ${xhr.responseText}")
-    Context.log(fault.toString)
+    val error = s"Status: ${xhr.statusText} : Response: ${xhr.responseText}"
+    Context.log(s"... in log(xhr: XMLHttpRequest) ... $error")
+    val fault = xhr.status match {
+      case 400 => Fault(cause = s"Request handling error. $error.")
+      case 401 => Fault(cause = s"Unauthorized pin. $error.")
+      case 500 => Fault(cause = s"Server error. $error.")
+      case _ => Fault(cause = s"Unknown error. $error")
+    }
+    Context.log(fault)
     fault
   }
 }
