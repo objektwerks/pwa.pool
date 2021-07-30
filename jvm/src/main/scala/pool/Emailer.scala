@@ -79,7 +79,7 @@ final class Emailer(conf: Config,
         logger.info("*** Emailer sent: {}", email)
         store.addEmail(email)
         logger.info("*** Emailer added: {}", email)
-        store.registerAccount(account)
+        store.registerAccount(account).recoverWith { case _ => store.registerAccount(account) } // retry once
         logger.info("*** Emailer registered account: {}", account)
       } else logger.error("*** Emailer smtp server session is NOT connected!")
       ()
