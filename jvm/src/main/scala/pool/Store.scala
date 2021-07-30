@@ -12,7 +12,6 @@ object Store {
 
 class Store(conf: Config)(implicit ec: ExecutionContext) {
   implicit val ctx = new PostgresAsyncContext(SnakeCase, conf.getConfig("quill.ctx"))
-
   import ctx._
 
   def listEmails: Future[Seq[Email]] =
