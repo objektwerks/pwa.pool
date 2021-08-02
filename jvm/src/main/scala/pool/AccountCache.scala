@@ -8,13 +8,11 @@ import scalacache.caffeine.CaffeineCache
 import scalacache.modes.sync._
 import scalacache.{Cache, Entry}
 
-import scala.concurrent.{ExecutionContext, Future}
-
 object AccountCache {
-  def apply(store: Store)(implicit ec: ExecutionContext): AccountCache = new AccountCache(store)
+  def apply(): AccountCache = new AccountCache()
 }
 
-class AccountCache(store: Store)(implicit ec: ExecutionContext) {
+class AccountCache() {
   import Validators._
 
   private val conf = Caffeine
@@ -25,27 +23,19 @@ class AccountCache(store: Store)(implicit ec: ExecutionContext) {
 
   private val cache: Cache[Account] = CaffeineCache[Account](conf)
 
-  def cacheAccount(account: Account): Unit = {
-    if (account.isActivated && cache.get(account.license).isEmpty)
-      cache.put(account.license)(account)
+  def put(account: Account): Unit = {
+    cache.put(account.license)(account)
     ()
   }
 
-  def decacheAccount(account: Account): Unit = {
-    if (account.isDeactivated && cache.get(account.license).nonEmpty)
-      cache.remove(account.license)
+  def remove(account: Account): Unit = {
+    cache.remove(account.license)
     ()
   }
 
-  def isAccountActivated(license: String): Future[Boolean] =
-    if (cache.get(license).nonEmpty)
-      Future.successful(cache.get(license).get.isActivated)
-    else store.getAccount(license).map {
-      case Some(account) =>
-        if (account.isActivated) {
-          cache.put(account.license)(account)
-          true
-        } else false
-      case None => false
-    }
+  def isAccountActivated(license: String): Boolean = {
+    val account = cache.get(license)
+    if (account.nonEmpty) account.get.isActivated
+    else false
+  }
 }

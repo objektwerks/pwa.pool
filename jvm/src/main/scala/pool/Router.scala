@@ -70,7 +70,7 @@ class Router(store: Store,
         if (login.isValid) {
           onSuccess(store.loginAccount(login.pin)) {
             case Some(account) =>
-              cache.cacheAccount(account)
+              cache.put(account)
               complete(OK -> LoggedIn(account))
             case None =>
               val cause = s"Unauthorized pin: ${login.pin}"
@@ -86,7 +86,7 @@ class Router(store: Store,
         if (deactivate.isValid) {
           onSuccess(store.deactivateAccount(deactivate.license)) {
             case Some(account) =>
-              cache.decacheAccount(account)
+              cache.remove(account)
               complete(OK -> Deactivated(account))
             case None =>
               val cause = s"Unauthorized license: ${deactivate.license}"
@@ -101,8 +101,9 @@ class Router(store: Store,
       entity(as[Reactivate]) { reactivate =>
         if (reactivate.isValid) {
           onSuccess(store.reactivateAccount(reactivate.license)) {
-            case Some(licensee) =>
-              complete(OK -> Reactivated(licensee))
+            case Some(account) =>
+              cache.put(account)
+              complete(OK -> Reactivated(account))
             case None =>
               val cause = s"Unauthorized license: ${reactivate.license}"
               complete(Unauthorized -> onUnauthorizedRequestHandler(cause))
@@ -387,12 +388,10 @@ class Router(store: Store,
   }
 
   val secure = (route: Route) => headerValueByName(Account.licenseHeader) { license =>
-    onSuccess(cache.isAccountActivated(license)) { isActivated =>
-      if (isActivated) route
-      else {
-        val cause = s"Unauthorized license is not activated: $license"
-        complete(Unauthorized -> onUnauthorizedRequestHandler(cause))
-      }
+    if (cache.isAccountActivated(license)) route
+    else {
+      val cause = s"Unauthorized license is not activated: $license"
+      complete(Unauthorized -> onUnauthorizedRequestHandler(cause))
     }
   }
   val secureApi = secure { api }

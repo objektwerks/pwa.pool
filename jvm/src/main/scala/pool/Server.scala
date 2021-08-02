@@ -18,7 +18,7 @@ object Server {
     implicit val dispatcher = system.dispatcher
 
     val store = Store(conf)
-    val cache = AccountCache(store)
+    val cache = AccountCache()
     val emailer = system.actorOf(Props(classOf[Emailer], conf, store, logger), name = "emailer")
     val router = Router(store, cache, emailer, logger)
     val host = conf.getString("server.host")

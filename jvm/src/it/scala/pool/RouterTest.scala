@@ -32,7 +32,7 @@ class RouterTest extends AnyWordSpec with BeforeAndAfterAll with Matchers with S
   implicit val timeout = RouteTestTimeout(10.seconds dilated)
 
   val store = Store(conf)
-  val cache = AccountCache(store)
+  val cache = AccountCache()
   val emailer = system.actorOf(Props(classOf[Emailer], conf, store, logger), name = "emailer")
   val router = Router(store, cache, emailer, logger)
   val host = conf.getString("server.host")
