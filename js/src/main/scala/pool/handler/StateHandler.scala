@@ -20,11 +20,11 @@ object StateHandler {
           handler(context, errors, state)
         case Left(fault) =>
           context.log(s"Fault: $fault")
-          errors.emit(s"Fault: $fault")
+          errors.emit(s"Fault: ${fault.cause}")
       }
       case Failure(failure) =>
         context.log(s"Failure: $failure")
-        errors.emit(s"Failure: $failure")
+        errors.emit(s"Failure: ${failure.getMessage}")
     }
   }
 }
