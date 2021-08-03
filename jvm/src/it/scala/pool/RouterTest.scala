@@ -11,21 +11,24 @@ import akka.http.scaladsl.testkit.{RouteTestTimeout, ScalatestRouteTest}
 import akka.testkit.TestDuration
 
 import com.typesafe.config.ConfigFactory
+import com.typesafe.scalalogging.StrictLogging
 
 import org.scalatest.BeforeAndAfterAll
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
-import org.slf4j.LoggerFactory
 
 import scala.concurrent.duration._
 import scala.language.postfixOps
 import scala.sys.process.Process
 import scala.concurrent.Await
 
-class RouterTest extends AnyWordSpec with BeforeAndAfterAll with Matchers with ScalatestRouteTest {
+class RouterTest extends AnyWordSpec
+  with BeforeAndAfterAll
+  with Matchers
+  with ScalatestRouteTest
+  with StrictLogging {
   Process("psql -d pool -f ddl.sql").run().exitValue()
 
-  val logger = LoggerFactory.getLogger(getClass)
   val conf = ConfigFactory.load("test.server.conf")
   val actorRefFactory = ActorSystem.create(conf.getString("server.name"), conf.getConfig("akka"))
   implicit val dispatcher = system.dispatcher
@@ -33,8 +36,8 @@ class RouterTest extends AnyWordSpec with BeforeAndAfterAll with Matchers with S
 
   val store = Store(conf)
   val cache = AccountCache()
-  val emailer = system.actorOf(Props(classOf[Emailer], conf, store, logger), name = "emailer")
-  val router = Router(store, cache, emailer, logger)
+  val emailer = system.actorOf(Props(classOf[Emailer], conf, store), name = "emailer")
+  val router = Router(store, cache, emailer)
   val host = conf.getString("server.host")
   val port = conf.getInt("server.port")
   val apiUrl = conf.getString("server.apiUrl")

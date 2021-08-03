@@ -1,26 +1,26 @@
 package pool
 
 import akka.actor.{ActorSystem, Props}
+
 import akka.http.scaladsl.Http
 
 import com.typesafe.config.ConfigFactory
-import org.slf4j.LoggerFactory
+import com.typesafe.scalalogging.StrictLogging
 
 import scala.concurrent.Await
 import scala.concurrent.duration._
 import scala.io.StdIn
 
-object Server {
+object Server extends StrictLogging {
   def main(args: Array[String]): Unit = {
-    val logger = LoggerFactory.getLogger(getClass)
     val conf = ConfigFactory.load("server.conf")
     implicit val system = ActorSystem.create(conf.getString("server.name"), conf.getConfig("akka"))
     implicit val dispatcher = system.dispatcher
 
     val store = Store(conf)
     val cache = AccountCache()
-    val emailer = system.actorOf(Props(classOf[Emailer], conf, store, logger), name = "emailer")
-    val router = Router(store, cache, emailer, logger)
+    val emailer = system.actorOf(Props(classOf[Emailer], conf, store), name = "emailer")
+    val router = Router(store, cache, emailer)
     val host = conf.getString("server.host")
     val port = conf.getInt("server.port")
     val server = Http()

@@ -3,21 +3,19 @@ package pool
 import akka.actor.Actor
 
 import com.typesafe.config.Config
+import com.typesafe.scalalogging.LazyLogging
 
 import javax.mail.Flags
 
 import jodd.mail.{Email, ImapServer, MailServer, SmtpServer}
 import jodd.mail.EmailFilter._
 
-import org.slf4j.Logger
-
 import scala.concurrent.duration._
 import scala.language.postfixOps
 import scala.util.{Failure, Success, Using}
 
 final class Emailer(conf: Config,
-                    store: Store,
-                    logger: Logger) extends Actor {
+                    store: Store) extends Actor with LazyLogging {
   implicit private val ec = context.system.dispatcher
 
   private val host = conf.getString("email.host")

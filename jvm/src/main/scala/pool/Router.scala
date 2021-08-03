@@ -6,23 +6,21 @@ import akka.http.scaladsl.model.StatusCodes.{BadRequest, InternalServerError, OK
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.{ExceptionHandler, Route}
 
-import java.time.Instant
+import com.typesafe.scalalogging.LazyLogging
 
-import org.slf4j.Logger
+import java.time.Instant
 
 import scala.util.control.NonFatal
 
 object Router {
   def apply(store: Store,
             cache: AccountCache,
-            emailer: ActorRef,
-            logger: Logger): Router = new Router(store, cache, emailer, logger)
+            emailer: ActorRef): Router = new Router(store, cache, emailer)
 }
 
 class Router(store: Store,
              cache: AccountCache,
-             emailer: ActorRef,
-             logger: Logger) extends CorsHandler {
+             emailer: ActorRef) extends LazyLogging with CorsHandler {
   import de.heikoseeberger.akkahttpupickle.UpickleSupport._
   import Serializers._
   import Validators._
