@@ -1,6 +1,7 @@
 package pool.proxy
 
 import org.scalajs.dom.ext.Ajax
+import org.scalajs.dom.ext.AjaxException
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -12,5 +13,5 @@ object NowProxy extends Proxy {
         case 200 => xhr.responseText.stripPrefix("\"").stripSuffix("\"")
         case _ => xhr.statusText
       }
-    }.recover { case error => error.getMessage }
+    }.recover { case AjaxException(xhr) => xhr.statusText }
 }
