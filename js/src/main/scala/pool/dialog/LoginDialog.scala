@@ -3,6 +3,7 @@ package pool.dialog
 import com.raquo.laminar.api.L._
 
 import pool._
+import pool.Validators._
 import pool.component._
 import pool.handler.EventHandler
 import pool.menu.HomeMenu
@@ -20,7 +21,7 @@ object LoginDialog {
         context.hide(HomeMenu.registerMenuItemId)
         context.hide(HomeMenu.loginMenuItemId)
         context.show(HomeMenu.accountMenuItemId)
-        context.show(HomeMenu.poolsMenuItemId)
+        if (loggedin.account.isActivated) context.show(HomeMenu.poolsMenuItemId)
         context.hide(id)
       case _ => errors.emit(s"Invalid: $event")
     }

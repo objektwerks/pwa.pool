@@ -3,6 +3,7 @@ package pool.menu
 import com.raquo.laminar.api.L._
 
 import pool.Context
+import pool.Validators._
 import pool.component._
 import pool.dialog.AccountDialog
 import pool.view.PoolsView
@@ -34,10 +35,10 @@ object HomeMenu {
           display("none")
           onClick --> { _ =>
             accountDialog.amend(display("block"))
-            if (AccountDialog.account.now().deactivated == 0) {
+            if (AccountDialog.account.now().isActivated) {
               context.show(AccountDialog.deactivateButtonId)
               context.hide(AccountDialog.reactivateButtonId)
-            } else {
+            } else if (AccountDialog.account.now().isDeactivated) {
               context.hide(AccountDialog.deactivateButtonId)
               context.show(AccountDialog.reactivateButtonId)
             }

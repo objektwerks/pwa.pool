@@ -49,8 +49,6 @@ class Store(conf: Config)(implicit ec: ExecutionContext) {
     run(
       query[Account]
         .filter(_.pin == lift(pin))
-        .filter(_.activated > 0)
-        .filter(_.deactivated == 0)
     ).map(result => result.headOption)
 
   def deactivateAccount(license: String): Future[Option[Account]] = {
@@ -58,7 +56,6 @@ class Store(conf: Config)(implicit ec: ExecutionContext) {
       run(
         query[Account]
           .filter(_.license == lift(license))
-          .filter(_.deactivated == 0)
           .update(_.deactivated -> lift(DateTime.currentDate))
       )
     }
@@ -70,7 +67,6 @@ class Store(conf: Config)(implicit ec: ExecutionContext) {
       run(
         query[Account]
           .filter(_.license == lift(license))
-          .filter(_.deactivated != 0)
           .update(_.activated -> lift(DateTime.currentDate), _.deactivated -> lift(0))
       )
     }
