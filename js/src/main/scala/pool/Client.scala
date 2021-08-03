@@ -17,7 +17,7 @@ import scala.scalajs.js.annotation.JSExportTopLevel
 @JSExportTopLevel("Client")
 class Client(publicUrl: String, apiUrl: String) extends js.Object {
   val context = Context(publicUrl, apiUrl)
-  context.log(s"Context: $context")
+  context.log(s"[context] public url: $publicUrl api url: $apiUrl")
 
   val container = Container(
     HomeMenu(
@@ -31,7 +31,7 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
 
   ServiceWorker.register()
 
-  NowProxy.post(s"$publicUrl/now").foreach(now => context.log(s"Now: $now"))
+  NowProxy.post(s"$publicUrl/now").foreach(now => context.log(s"[now] $now"))
 
   render(document.getElementById("content"), container)
 }
