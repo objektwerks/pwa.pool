@@ -10,4 +10,6 @@
     <root level="DEBUG">
         <appender-ref ref="file"/>
     </root>
+    <logger name="io.getquill" level="WARN"/>
+    <logger name="quill.macro.log" level="WARN"/>    
 </configuration>
