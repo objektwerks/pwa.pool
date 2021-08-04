@@ -32,7 +32,7 @@ class AccountCache extends LazyLogging {
 
   def remove(account: Account): Unit = {
     cache.remove(account.license)
-    logger.info("*** Cache removed account: {}", account)
+    logger.info("*** Cache remove account: {}", account)
     ()
   }
 
@@ -40,7 +40,7 @@ class AccountCache extends LazyLogging {
     val account = cache.get(license)
     if (account.nonEmpty) {
       val isActivated = account.get.isActivated
-      logger.info("*** Cache is account activated: {}", isActivated)
+      logger.info("*** Cache account is activated: {}", isActivated)
       isActivated
     }
     else {
