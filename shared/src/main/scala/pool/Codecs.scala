@@ -18,4 +18,20 @@ object Codecs {
   implicit val deactivatedCodec: JsonValueCodec[Deactivated] = JsonCodecMaker.make
   implicit val reactivatedCodec: JsonValueCodec[Reactivated] = JsonCodecMaker.make
 
+  implicit val entityCodec: JsonValueCodec[Entity] = JsonCodecMaker.make
+  implicit val accountCodec: JsonValueCodec[Account] = JsonCodecMaker.make
+  implicit val licenseCodec: JsonValueCodec[License] = JsonCodecMaker.make
+  implicit val poolCodec: JsonValueCodec[Pool] = JsonCodecMaker.make
+  implicit val surfaceCodec: JsonValueCodec[Surface] = JsonCodecMaker.make
+  implicit val pumpCodec: JsonValueCodec[Pump] = JsonCodecMaker.make
+  implicit val timerCodec: JsonValueCodec[Timer] = JsonCodecMaker.make
+  implicit val timerSettingCodec: JsonValueCodec[TimerSetting] = JsonCodecMaker.make
+  implicit val heaterCodec: JsonValueCodec[Heater] = JsonCodecMaker.make
+  implicit val heaterSettingCodec: JsonValueCodec[HeaterSetting] = JsonCodecMaker.make
+  implicit val measurementCodec: JsonValueCodec[Measurement] = JsonCodecMaker.make
+  implicit val cleaningCodec: JsonValueCodec[Cleaning] = JsonCodecMaker.make
+  implicit val chemicalCodec: JsonValueCodec[Chemical] = JsonCodecMaker.make
+  implicit val supplyCodec: JsonValueCodec[Supply] = JsonCodecMaker.make
+
+  
 }
