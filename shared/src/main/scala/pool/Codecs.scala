@@ -1,9 +1,9 @@
 package pool
 
-object Codecs {
-  import com.github.plokhotnyuk.jsoniter_scala.core._
-  import com.github.plokhotnyuk.jsoniter_scala.macros._
+import com.github.plokhotnyuk.jsoniter_scala.core._
+import com.github.plokhotnyuk.jsoniter_scala.macros._
 
+object Codecs {
   implicit val faultCodec: JsonValueCodec[Fault] = JsonCodecMaker.make
 
   implicit val commandCodec: JsonValueCodec[Command] = JsonCodecMaker.make
@@ -33,5 +33,19 @@ object Codecs {
   implicit val chemicalCodec: JsonValueCodec[Chemical] = JsonCodecMaker.make
   implicit val supplyCodec: JsonValueCodec[Supply] = JsonCodecMaker.make
 
-  
+  implicit val stateCodec: JsonValueCodec[State] = JsonCodecMaker.make
+  implicit val idCodec: JsonValueCodec[Id] = JsonCodecMaker.make
+  implicit val countCodec: JsonValueCodec[Count] = JsonCodecMaker.make
+  implicit val poolsCodec: JsonValueCodec[Pools] = JsonCodecMaker.make
+  implicit val surfacesCodec: JsonValueCodec[Surfaces] = JsonCodecMaker.make
+  implicit val pumpsCodec: JsonValueCodec[Pumps] = JsonCodecMaker.make
+  implicit val timersCodec: JsonValueCodec[Timers] = JsonCodecMaker.make
+  implicit val timerSettingsCodec: JsonValueCodec[TimerSettings] = JsonCodecMaker.make
+  implicit val heatersCodec: JsonValueCodec[Heaters] = JsonCodecMaker.make
+  implicit val heaterSettingsCodec: JsonValueCodec[HeaterSettings] = JsonCodecMaker.make
+  implicit val measurementsCodec: JsonValueCodec[Measurements] = JsonCodecMaker.make
+  implicit val cleaningsCodec: JsonValueCodec[Cleanings] = JsonCodecMaker.make
+  implicit val chemicalsCodec: JsonValueCodec[Chemicals] = JsonCodecMaker.make
+  implicit val suppliesCodec: JsonValueCodec[Supplies] = JsonCodecMaker.make
+  implicit val repairsCodec: JsonValueCodec[Repairs] = JsonCodecMaker.make
 }
