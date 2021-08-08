@@ -2,6 +2,7 @@ name := "pwa.pool"
 
 lazy val akkaVersion = "2.6.15"
 lazy val akkaHttpVersion = "10.2.5"
+lazy val jsoniterVersion = "2.9.1"
 lazy val quillVersion = "3.8.0"
 lazy val upickleVersion = "1.4.0"
 lazy val scalaTestVersion = "3.2.9"
@@ -27,6 +28,8 @@ lazy val shared = crossProject(JSPlatform, JVMPlatform)
   .settings(
     libraryDependencies ++= Seq(
       "com.lihaoyi" %% "upickle" % upickleVersion,
+      "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-core"   % jsoniterVersion,
+      "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-macros" % jsoniterVersion % Provided,
       "io.github.cquiroz" %% "scala-java-time" % "2.3.0",
       "org.scalatest" %% "scalatest" % scalaTestVersion % Test
     )
@@ -47,6 +50,8 @@ lazy val js = (project in file("js"))
     libraryDependencies ++= Seq(
       "com.raquo" %%% "laminar" % "0.13.1",
       "com.lihaoyi" %%% "upickle" % upickleVersion,
+      "com.github.plokhotnyuk.jsoniter-scala" %%% "jsoniter-scala-core"   % jsoniterVersion,
+      "com.github.plokhotnyuk.jsoniter-scala" %%% "jsoniter-scala-macros" % jsoniterVersion % Provided,
       "io.github.cquiroz" %%% "scala-java-time" % "2.3.0"
     ),
     Compile / fastLinkJS / scalaJSLinkerOutputDirectory := target.value / public / "js",
