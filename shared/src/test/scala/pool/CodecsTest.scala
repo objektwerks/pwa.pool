@@ -12,9 +12,10 @@ class CodecsTest extends AnyFunSuite with Matchers {
     val pump = Pump(poolId = 1, installed = 1, model = "model.pump")
     val pumpByteArray = writeToArray(pump)
     pump shouldBe readFromArray(pumpByteArray)
+    pump.isInstanceOf[Entity] shouldBe true
 
-    println(s"pump: $pump")
-    println(s"pump as json: ${pumpByteArray.map(_.toChar).mkString}")
+    println(s"jsoniter pump: $pump")
+    println(s"jsoniter pump as json: ${pumpByteArray.map(_.toChar).mkString}")
   }
 
   test("heater") {
@@ -23,9 +24,10 @@ class CodecsTest extends AnyFunSuite with Matchers {
     val heater = Heater(poolId = 1, installed = 1, model = "model.heater")
     val heaterByteArray = writeToArray(heater)
     heater shouldBe readFromArray(heaterByteArray)
+    heater.isInstanceOf[Entity] shouldBe true
 
-    println(s"heater: $heater")
-    println(s"heater as json: ${heaterByteArray.map(_.toChar).mkString}")
+    println(s"jsoniter heater: $heater")
+    println(s"jsoniter heater as json: ${heaterByteArray.map(_.toChar).mkString}")
   }
   
   test("timer") {
@@ -34,8 +36,9 @@ class CodecsTest extends AnyFunSuite with Matchers {
     val timer = Timer(poolId = 1, installed = 1, model = "model.timer")
     val timerByteArray = writeToArray(timer)
     timer shouldBe readFromArray(timerByteArray)
+    timer.isInstanceOf[Entity] shouldBe true
 
-    println(s"timer: $timer")
-    println(s"timer as json: ${timerByteArray.map(_.toChar).mkString}")
+    println(s"jsoniter timer: $timer")
+    println(s"jsoniter timer as json: ${timerByteArray.map(_.toChar).mkString}")
   }  
 }
