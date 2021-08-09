@@ -6,12 +6,12 @@ import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
 class CodecsTest extends AnyFunSuite with Matchers {
-  test("pump") {
-    import Codecs.pumpCodec
+  import Codecs._
 
+  test("pump") {
     val pump = Pump(poolId = 1, installed = 1, model = "model.pump")
-    val pumpByteArray = writeToArray(pump)
-    pump shouldBe readFromArray(pumpByteArray)
+    val pumpByteArray = writeToArray[Pump](pump)
+    pump shouldBe readFromArray[Pump](pumpByteArray)
     pump.isInstanceOf[Entity] shouldBe true
 
     println(s"jsoniter pump: $pump")
@@ -19,11 +19,9 @@ class CodecsTest extends AnyFunSuite with Matchers {
   }
 
   test("heater") {
-    import Codecs.heaterCodec
-
     val heater = Heater(poolId = 1, installed = 1, model = "model.heater")
-    val heaterByteArray = writeToArray(heater)
-    heater shouldBe readFromArray(heaterByteArray)
+    val heaterByteArray = writeToArray[Heater](heater)
+    heater shouldBe readFromArray[Heater](heaterByteArray)
     heater.isInstanceOf[Entity] shouldBe true
 
     println(s"jsoniter heater: $heater")
@@ -31,11 +29,9 @@ class CodecsTest extends AnyFunSuite with Matchers {
   }
   
   test("timer") {
-    import Codecs.timerCodec
-
     val timer = Timer(poolId = 1, installed = 1, model = "model.timer")
-    val timerByteArray = writeToArray(timer)
-    timer shouldBe readFromArray(timerByteArray)
+    val timerByteArray = writeToArray[Timer](timer)
+    timer shouldBe readFromArray[Timer](timerByteArray)
     timer.isInstanceOf[Entity] shouldBe true
 
     println(s"jsoniter timer: $timer")
