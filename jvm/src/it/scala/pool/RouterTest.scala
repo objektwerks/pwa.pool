@@ -60,8 +60,12 @@ class RouterTest extends AnyWordSpec
         logger.info("*** Server shutdown.")
       }
 
-  import de.heikoseeberger.akkahttpupickle.UpickleSupport._
-  import Serializers._
+  import de.heikoseeberger.akkahttpjsoniterscala.JsoniterScalaSupport._
+  import Codecs._
+  import Codecs.CommandCodecs._
+  import Codecs.EventCodecs._
+  import Codecs.EntityCodecs._
+  import Codecs.StateCodecs._
   import Validators._
   import DateTime._
 
