@@ -16,6 +16,7 @@ class CodecsTest extends AnyFunSuite with Matchers {
 
     pump shouldBe readFromString[Pump](pumpJson)
     pump shouldBe readFromString[Entity](entityJson)
+    pumpJson shouldBe entityJson
 
     println(s"jsoniter pump: $pump")
     println(s"jsoniter pump as json: $pumpJson")
@@ -29,6 +30,7 @@ class CodecsTest extends AnyFunSuite with Matchers {
 
     heater shouldBe readFromString[Heater](heaterJson)
     heater shouldBe readFromString[Entity](entityJson)
+    heaterJson shouldBe entityJson
 
     println(s"jsoniter heater: $heater")
     println(s"jsoniter heater as json: $heaterJson")
@@ -42,6 +44,7 @@ class CodecsTest extends AnyFunSuite with Matchers {
 
     timer shouldBe readFromString[Timer](timerJson)
     timer shouldBe readFromString[Entity](entityJson)
+    timerJson shouldBe entityJson
 
     println(s"jsoniter timer: $timer")
     println(s"jsoniter timer as json: $timerJson")
