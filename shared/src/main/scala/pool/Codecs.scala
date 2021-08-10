@@ -5,9 +5,12 @@ import com.github.plokhotnyuk.jsoniter_scala.macros._
 
 object Codecs {
   implicit val faultCodec: JsonValueCodec[Fault] = JsonCodecMaker.make
+  implicit val commandCodec: JsonValueCodec[Command] = JsonCodecMaker.make
+  implicit val eventCodec: JsonValueCodec[Event] = JsonCodecMaker.make
+  implicit val entityCodec: JsonValueCodec[Entity] = JsonCodecMaker.make
+  implicit val stateCodec: JsonValueCodec[State] = JsonCodecMaker.make
 
   object CommandCodecs {
-    implicit val commandCodec: JsonValueCodec[Command] = JsonCodecMaker.make
     implicit val registerCodec: JsonValueCodec[Register] = JsonCodecMaker.make
     implicit val loginCodec: JsonValueCodec[Login] = JsonCodecMaker.make
     implicit val deactivateCodec: JsonValueCodec[Deactivate] = JsonCodecMaker.make
@@ -15,7 +18,6 @@ object Codecs {
   }
 
   object EventCodecs {
-    implicit val eventCodec: JsonValueCodec[Event] = JsonCodecMaker.make
     implicit val registeringCodec: JsonValueCodec[Registering] = JsonCodecMaker.make
     implicit val loggedInCodec: JsonValueCodec[LoggedIn] = JsonCodecMaker.make
     implicit val deactivatedCodec: JsonValueCodec[Deactivated] = JsonCodecMaker.make
@@ -23,7 +25,6 @@ object Codecs {
   }
 
   object EntityCodecs {
-    implicit val entityCodec: JsonValueCodec[Entity] = JsonCodecMaker.make
     implicit val accountCodec: JsonValueCodec[Account] = JsonCodecMaker.make
     implicit val licenseCodec: JsonValueCodec[License] = JsonCodecMaker.make
     implicit val poolCodec: JsonValueCodec[Pool] = JsonCodecMaker.make
@@ -44,7 +45,6 @@ object Codecs {
   }
 
   object StateCodecs {
-    implicit val stateCodec: JsonValueCodec[State] = JsonCodecMaker.make
     implicit val idCodec: JsonValueCodec[Id] = JsonCodecMaker.make
     implicit val countCodec: JsonValueCodec[Count] = JsonCodecMaker.make
     implicit val poolsCodec: JsonValueCodec[Pools] = JsonCodecMaker.make
