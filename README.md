@@ -267,6 +267,12 @@ Drop
 2. drop database pool;
 3. \q
 
+Config
+------
+>See these files:
+1. jvm/src/it/resources/test.server.conf
+2. jvm/src/main/resoures/server.conf
+
 Quill
 -----
 >To eliminate unused ExecutionContext variable errors, this scalac option must be set in the build.sbt:
