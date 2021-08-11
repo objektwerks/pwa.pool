@@ -21,12 +21,8 @@ object Router {
 class Router(store: Store,
              cache: AccountCache,
              emailer: ActorRef) extends LazyLogging with CorsHandler {
-  import de.heikoseeberger.akkahttpjsoniterscala.JsoniterScalaSupport._
-  import Codecs._
-  import Codecs.CommandCodecs._
-  import Codecs.EventCodecs._
-  import Codecs.EntityCodecs._
-  import Codecs.StateCodecs._
+  import de.heikoseeberger.akkahttpupickle.UpickleSupport._
+  import Serializers._
   import Validators._
 
   val toFault = (code: Int, cause: String) => {

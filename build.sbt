@@ -2,7 +2,6 @@ name := "pwa.pool"
 
 lazy val akkaVersion = "2.6.15"
 lazy val akkaHttpVersion = "10.2.5"
-lazy val jsoniterVersion = "2.9.1"
 lazy val quillVersion = "3.8.0"
 lazy val upickleVersion = "1.4.0"
 lazy val scalaTestVersion = "3.2.9"
@@ -27,8 +26,6 @@ lazy val shared = crossProject(JSPlatform, JVMPlatform)
   .settings(common)
   .settings(
     libraryDependencies ++= Seq(
-      "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-core"   % jsoniterVersion,
-      "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-macros" % jsoniterVersion % Provided,
       "com.lihaoyi" %% "upickle" % upickleVersion,
       "io.github.cquiroz" %% "scala-java-time" % "2.3.0",
       "org.scalatest" %% "scalatest" % scalaTestVersion % Test
@@ -49,8 +46,6 @@ lazy val js = (project in file("js"))
   .settings(
     libraryDependencies ++= Seq(
       "com.raquo" %%% "laminar" % "0.13.1",
-      "com.github.plokhotnyuk.jsoniter-scala" %%% "jsoniter-scala-core"   % jsoniterVersion,
-      "com.github.plokhotnyuk.jsoniter-scala" %%% "jsoniter-scala-macros" % jsoniterVersion % Provided,
       "com.lihaoyi" %%% "upickle" % upickleVersion,
       "io.github.cquiroz" %%% "scala-java-time" % "2.3.0"
     ),
@@ -75,7 +70,6 @@ lazy val jvm = (project in file("jvm"))
         "com.typesafe.akka" %% "akka-http" % akkaHttpVersion,
         "com.typesafe.akka" %% "akka-stream" % akkaVersion,
         "com.typesafe.akka" %% "akka-slf4j" % akkaVersion,
-        "de.heikoseeberger" %% "akka-http-jsoniter-scala" % "1.37.0",
         "de.heikoseeberger" %% "akka-http-upickle" % "1.37.0",
         "io.getquill" %% "quill-sql" % quillVersion,
         "io.getquill" %% "quill-async-postgres" % quillVersion,
