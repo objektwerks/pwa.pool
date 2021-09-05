@@ -1,8 +1,6 @@
 package pool
 
-import scala.annotation.nowarn
-
-@nowarn object Serializers {
+object Serializers {
   import upickle.default._
 
   implicit val faultRW: ReadWriter[Fault] = macroRW
