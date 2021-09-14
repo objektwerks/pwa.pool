@@ -6,7 +6,7 @@ import pool._
 import pool.Validators._
 import pool.component._
 import pool.handler.EventHandler
-import pool.menu.HomeMenu
+import pool.menu.{HomeMenu, MenuButton, MenuButtonBar}
 import pool.proxy.CommandProxy
 
 object LoginDialog {

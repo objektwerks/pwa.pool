@@ -3,7 +3,7 @@ package pool.dialog
 import com.raquo.laminar.api.L._
 
 import pool.handler.EventHandler
-import pool.menu.HomeMenu
+import pool.menu.{HomeMenu, MenuButton, MenuButtonBar}
 import pool.proxy.CommandProxy
 import pool._
 import pool.component._
