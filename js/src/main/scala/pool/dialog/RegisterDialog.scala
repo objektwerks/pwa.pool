@@ -1,12 +1,12 @@
 package pool.dialog
 
 import com.raquo.laminar.api.L._
-
 import pool.handler.EventHandler
 import pool.menu.{HomeMenu, MenuButton, MenuButtonBar}
 import pool.proxy.CommandProxy
 import pool._
 import pool.component._
+import pool.text.{Errors, Header, Label, Note, Text}
 
 object RegisterDialog {
   val id = getClass.getSimpleName

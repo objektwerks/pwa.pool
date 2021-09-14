@@ -1,12 +1,12 @@
 package pool.dialog
 
 import com.raquo.laminar.api.L._
-
 import pool._
 import pool.component._
 import pool.handler.EventHandler
 import pool.menu.{HomeMenu, MenuButton, MenuButtonBar}
 import pool.proxy.CommandProxy
+import pool.text.{Errors, Header, Label, Text}
 import pool.view.PoolsView
 
 object AccountDialog {

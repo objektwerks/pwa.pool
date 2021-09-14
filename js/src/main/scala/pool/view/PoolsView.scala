@@ -7,6 +7,7 @@ import pool.dialog.AccountDialog
 import pool.handler.StateHandler
 import pool.menu.{MenuButton, MenuButtonBar}
 import pool.proxy.EntityProxy
+import pool.text.{Errors, Header}
 
 object PoolsView {
   val id = getClass.getSimpleName
