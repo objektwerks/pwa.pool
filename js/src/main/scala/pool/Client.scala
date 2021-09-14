@@ -4,7 +4,7 @@ import com.raquo.laminar.api.L._
 
 import org.scalajs.dom._
 
-import pool.component.Container
+import pool.container.Container
 import pool.dialog.{AccountDialog, LoginDialog, RegisterDialog}
 import pool.menu.HomeMenu
 import pool.proxy.NowProxy

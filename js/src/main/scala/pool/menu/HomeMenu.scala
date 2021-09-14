@@ -4,7 +4,7 @@ import com.raquo.laminar.api.L._
 
 import pool.Context
 import pool.Validators._
-import pool.component._
+import pool.container._
 import pool.dialog.AccountDialog
 import pool.view.PoolsView
 

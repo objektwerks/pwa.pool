@@ -1,9 +1,10 @@
 package pool.dialog
 
 import com.raquo.laminar.api.L._
+
 import pool._
 import pool.Validators._
-import pool.component._
+import pool.container._
 import pool.handler.EventHandler
 import pool.menu.{HomeMenu, MenuButton, MenuButtonBar}
 import pool.proxy.CommandProxy

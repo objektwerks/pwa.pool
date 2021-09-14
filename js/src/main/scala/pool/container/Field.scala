@@ -1,4 +1,4 @@
-package pool.component
+package pool.container
 
 import com.raquo.laminar.api.L._
 
