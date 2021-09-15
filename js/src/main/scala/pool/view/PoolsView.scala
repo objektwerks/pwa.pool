@@ -1,6 +1,7 @@
 package pool.view
 
 import com.raquo.laminar.api.L._
+
 import pool._
 import pool.container._
 import pool.dialog.AccountDialog
