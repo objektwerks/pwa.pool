@@ -1,6 +1,7 @@
 .*
 !.gitignore
 !.sbtopts
+*.log
 project/metals.sbt
 project/project/
 project/target/
