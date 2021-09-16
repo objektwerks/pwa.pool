@@ -13,11 +13,11 @@ import pool.text.{Errors, Header}
 object PoolsView {
   val id = getClass.getSimpleName
   val errors = new EventBus[String]
-  val pools = Var(Pools(Seq.empty[Pool]))
+  val pools = Var(Seq.empty[Pool])
 
   def handler(context: Context, errors: EventBus[String], state: State): Unit = {
     state match {
-      case pools: Pools => this.pools.set(pools)
+      case pools: Pools => this.pools.set(pools.pools)
       case id: Id => context.log(s"Todo Id: $id for add pool.")
       case count: Count => context.log(s"Todo Count: $count for update pool.")
       case _ => errors.emit(s"Invalid: $state")
