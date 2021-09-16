@@ -24,7 +24,7 @@ object PoolsView {
     }
   }
 
-  def pools(context: Context): Unit = {
+  def init(context: Context): Unit = {
     val license = License(AccountDialog.account.now().license)
     val response = EntityProxy.post(context.poolsUrl, license.key, license)
     StateHandler.handle(context, errors, response, handler)
