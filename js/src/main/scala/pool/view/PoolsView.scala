@@ -14,7 +14,7 @@ object PoolsView {
   val id = getClass.getSimpleName
   val errors = new EventBus[String]
   var poolSignal = Signal.fromValue(Seq.empty[Pool])
-  val poolStream = poolSignal.split(_.id)((_, _, pool) => renderer(pool) ).changes
+  var poolStream = EventStream.fromValue(Seq.empty[Div])
 
   def init(context: Context): Unit = {
     val license = License(AccountDialog.account.now().license)
@@ -29,7 +29,9 @@ object PoolsView {
 
   def handler(context: Context, errors: EventBus[String], state: State): Unit = {
     state match {
-      case pools: Pools => poolSignal = Signal.fromValue(pools.pools)
+      case pools: Pools =>
+        poolSignal = Signal.fromValue(pools.pools)
+        poolStream = poolSignal.split(_.id)((_, _, pool) => renderer(pool) ).changes
       case id: Id => context.log(s"Todo Id: $id for add pool.")
       case count: Count => context.log(s"Todo Count: $count for update pool.")
       case _ => errors.emit(s"Invalid: $state")
