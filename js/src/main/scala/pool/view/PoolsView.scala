@@ -13,8 +13,8 @@ import pool.text.{Errors, Header}
 object PoolsView {
   val id = getClass.getSimpleName
   val errors = new EventBus[String]
-  val poolsVar = Var(Seq.empty[Pool])
-  val poolStream = poolsVar.signal.split(_.id)( (_, _, pool) => renderer(pool) ).changes
+  var poolSignal = Signal.fromValue(Seq.empty[Pool])
+  val poolStream = poolSignal.split(_.id)((_, _, pool) => renderer(pool) ).changes
 
   def init(context: Context): Unit = {
     val license = License(AccountDialog.account.now().license)
@@ -29,7 +29,7 @@ object PoolsView {
 
   def handler(context: Context, errors: EventBus[String], state: State): Unit = {
     state match {
-      case pools: Pools => poolsVar.set(pools.pools)
+      case pools: Pools => poolSignal = Signal.fromValue(pools.pools)
       case id: Id => context.log(s"Todo Id: $id for add pool.")
       case count: Count => context.log(s"Todo Count: $count for update pool.")
       case _ => errors.emit(s"Invalid: $state")
