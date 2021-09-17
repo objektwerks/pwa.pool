@@ -32,8 +32,8 @@ object PoolsView {
       case pools: Pools =>
         poolSignal = Signal.fromValue(pools.pools)
         poolStream = poolSignal.split(_.id)((_, _, pool) => renderer(pool) ).changes
-      case id: Id => context.log(s"Todo Id: $id for add pool.")
-      case count: Count => context.log(s"Todo Count: $count for update pool.")
+      case id: Id => context.log(s"Pool id: $id for add pool.")
+      case count: Count => context.log(s"Pool count: $count for update pool.")
       case _ => errors.emit(s"Invalid: $state")
     }
   }
