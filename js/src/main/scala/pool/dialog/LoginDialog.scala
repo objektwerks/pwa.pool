@@ -2,8 +2,8 @@ package pool.dialog
 
 import com.raquo.laminar.api.L._
 
-import pool._
 import pool.Validators._
+import pool._
 import pool.container._
 import pool.handler.EventHandler
 import pool.menu.{HomeMenu, MenuButton, MenuButtonBar}
@@ -15,7 +15,7 @@ object LoginDialog {
   val errors = new EventBus[String]
   val pin = Var(0)
 
-  def handler(context: Context, errors: EventBus[String], event: Event): Unit = {
+  def handler(context: Context, errors: EventBus[String], event: Event): Unit =
     event match {
       case loggedin: LoggedIn =>
         AccountDialog.account.set(loggedin.account)
@@ -26,7 +26,6 @@ object LoginDialog {
         context.hide(id)
       case _ => errors.emit(s"Invalid: $event")
     }
-  }
 
   def apply(context: Context): Div =
     Modal(id = id,
