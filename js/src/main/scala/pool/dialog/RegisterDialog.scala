@@ -2,26 +2,25 @@ package pool.dialog
 
 import com.raquo.laminar.api.L._
 
+import pool._
+import pool.container._
 import pool.handler.EventHandler
 import pool.menu.{HomeMenu, MenuButton, MenuButtonBar}
 import pool.proxy.CommandProxy
-import pool._
-import pool.container._
-import pool.text.{Errors, Header, Label, Note, Text}
+import pool.text._
 
 object RegisterDialog {
   val id = getClass.getSimpleName
   val errors = new EventBus[String]
   val email = Var("")
 
-  def handler(context: Context, errors: EventBus[String], event: Event): Unit = {
+  def handler(context: Context, errors: EventBus[String], event: Event): Unit =
     event match {
       case Registering(_) =>
         context.hide(HomeMenu.registerMenuItemId)
         context.hide(id)
       case _ => errors.emit(s"Invalid: $event")
     }
-  }
 
   def apply(context: Context): Div =
     Modal(id = id,
