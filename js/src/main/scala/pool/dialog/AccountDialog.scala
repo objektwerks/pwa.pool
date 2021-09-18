@@ -17,7 +17,7 @@ object AccountDialog {
   val errors = new EventBus[String]
   val account = Var(Account.emptyAccount)
 
-  def handler(context: Context, errors: EventBus[String], event: Event): Unit = {
+  def handler(context: Context, errors: EventBus[String], event: Event): Unit =
     event match {
       case deactivated: Deactivated =>
         account.set(deactivated.account)
@@ -30,7 +30,6 @@ object AccountDialog {
         context.show(HomeMenu.poolsMenuItemId)
       case _ => errors.emit(s"Invalid: $event")
     }
-  }
 
   def apply(context: Context): Div =
     Modal(id = id,
