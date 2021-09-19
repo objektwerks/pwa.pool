@@ -14,7 +14,7 @@ object PoolsView {
   val id = getClass.getSimpleName
   val errors = new EventBus[String]
   var poolSignal: Signal[Seq[Pool]] = Signal.fromValue(Seq.empty[Pool])
-  var listViewSignal: Signal[Seq[Div ]] = Signal.fromValue(Seq.empty[Div])
+  var listViewSignal: Signal[Seq[Li]] = Signal.fromValue(Seq.empty[Li])
 
   def init(context: Context): Unit = {
     val license = License(AccountDialog.account.now().license)
@@ -22,8 +22,8 @@ object PoolsView {
     StateHandler.handle(context, errors, response, handler)
   }
 
-  def renderer(pool: Signal[Pool]): Div =
-    div(
+  def renderer(pool: Signal[Pool]): Li =
+    li(
       child.text <-- pool.map(_.name)
     )
 
