@@ -3,9 +3,12 @@ package pool.view
 import com.raquo.laminar.api.L._
 
 object ListView {
-  def apply(divSignal: Signal[Seq[Div]]): Div =
+  def apply(itemsSignal: Signal[Seq[Li]]): Div =
     div(
-      cls("w3-margin"),
-      children <-- divSignal
+      cls("w3-container w3-margin"),
+      ul(
+        cls("w3-ul w3-hoverable"),
+        children <-- itemsSignal
+      )
     )
 }
