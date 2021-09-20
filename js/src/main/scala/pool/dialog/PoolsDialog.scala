@@ -16,8 +16,8 @@ object PoolsDialog {
       license = "",
       name = "pool",
       built = 0,
-      lat = 0,
-      lon = 0,
+      lat = 0.0,
+      lon = 0.0,
       volume = 1000
     )
   )
@@ -51,7 +51,7 @@ object PoolsDialog {
       Field(
         Label(column = "25%", name = "Lat:"),
         Text(column = "75%", Text.field(typeOf = "number").amend {
-          onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { lat =>
+          onInput.mapToValue.filter(_.toDoubleOption.nonEmpty).map(_.toDouble) --> { lat =>
             pool.update( pool => pool.copy(lat = lat) )
           }
         })
@@ -59,7 +59,7 @@ object PoolsDialog {
       Field(
         Label(column = "25%", name = "Lon:"),
         Text(column = "75%", Text.field(typeOf = "number").amend {
-          onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { lon =>
+          onInput.mapToValue.filter(_.toDoubleOption.nonEmpty).map(_.toDouble) --> { lon =>
             pool.update( pool => pool.copy(lon = lon) )
           }
         })
