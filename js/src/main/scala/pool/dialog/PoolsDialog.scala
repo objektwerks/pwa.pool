@@ -11,13 +11,16 @@ object PoolsDialog {
   val id = getClass.getSimpleName
   val errors = new EventBus[String]
 
-  val emptyPool = Pool(
-    license = "",
-    name = "pool",
-    built = 0,
-    lat = 0,
-    lon = 0,
-    volume = 1000)
+  val emptyPool = Var(
+    Pool(
+      license = "",
+      name = "pool",
+      built = 0,
+      lat = 0,
+      lon = 0,
+      volume = 1000
+    )
+  )
 
   def apply(context: Context, pool: Var[Pool]): Div =
     Modal(id = id,
