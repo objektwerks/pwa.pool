@@ -1,9 +1,9 @@
 package pool.dialog
 
 import com.raquo.laminar.api.L._
-
 import pool.container.Field
 import pool.dialog.AccountDialog.account
+import pool.menu.{MenuButton, MenuButtonBar}
 import pool.text.{Errors, Header, Label, Text}
 import pool.{Context, Pool}
 
@@ -71,6 +71,11 @@ object PoolsDialog {
             pool.update( pool => pool.copy(volume = volume) )
           }
         })
+      ),
+      MenuButtonBar(
+        MenuButton(name = "Cancel").amend {
+          onClick --> { _ => context.hide(id) }
+        }
       )
     )
 }
