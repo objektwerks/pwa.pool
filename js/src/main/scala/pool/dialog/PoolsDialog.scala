@@ -47,6 +47,14 @@ object PoolsDialog {
             pool.update( pool => pool.copy(built = built) )
           }
         })
+      ),
+      Field(
+        Label(column = "25%", name = "Lat:"),
+        Text(column = "75%", Text.field(typeOf = "number").amend {
+          onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { lat =>
+            pool.update( pool => pool.copy(lat = lat) )
+          }
+        })
       )
     )
 }
