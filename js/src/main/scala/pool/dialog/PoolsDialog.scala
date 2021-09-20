@@ -33,9 +33,19 @@ object PoolsDialog {
         })
       ),
       Field(
-        Label(column = "15%", name = "Name:"),
-        Text(column = "85%", Text.field(typeOf = "text").amend {
-          onInput.mapToValue.filter(_.nonEmpty) --> { name => pool.update( pool => pool.copy(name = name) ) }
+        Label(column = "25%", name = "Name:"),
+        Text(column = "75%", Text.field(typeOf = "text").amend {
+          onInput.mapToValue.filter(_.nonEmpty) --> { name =>
+            pool.update( pool => pool.copy(name = name) )
+          }
+        })
+      ),
+      Field(
+        Label(column = "25%", name = "Built:"),
+        Text(column = "75%", Text.field(typeOf = "number").amend {
+          onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { built =>
+            pool.update( pool => pool.copy(built = built) )
+          }
         })
       )
     )
