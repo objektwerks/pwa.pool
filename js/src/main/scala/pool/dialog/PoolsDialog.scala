@@ -1,8 +1,8 @@
 package pool.dialog
 
 import com.raquo.laminar.api.L._
+
 import pool.container.Field
-import pool.dialog.AccountDialog.account
 import pool.menu.{MenuButton, MenuButtonBar}
 import pool.text.{Errors, Header, Label, Text}
 import pool.{Context, Pool}
@@ -10,7 +10,6 @@ import pool.{Context, Pool}
 object PoolsDialog {
   val id = getClass.getSimpleName
   val errors = new EventBus[String]
-
   val emptyPool = Var(
     Pool(
       license = "",
@@ -29,7 +28,7 @@ object PoolsDialog {
       Field(
         Label(column = "25%", name = "License:"),
         Text(column = "75%", Text.field(typeOf = "text", isReadOnly = true).amend {
-          value <-- account.signal.map(_.license)
+          value <-- AccountDialog.account.signal.map(_.license)
         })
       ),
       Field(
