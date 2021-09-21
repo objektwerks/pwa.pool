@@ -21,8 +21,6 @@ object PoolsDialog {
     )
   )
 
-  def apply(context: Context): Div = apply(context, emptyPool)
-
   def apply(context: Context, pool: Var[Pool]): Div =
     Modal(id = id,
       Header("Pool"),
