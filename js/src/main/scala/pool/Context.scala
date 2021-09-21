@@ -13,6 +13,7 @@ case class Context(publicUrl: String, apiUrl: String) extends Product with Seria
   val pin = Var(0)
   val account = Var(Account.emptyAccount)
   val pools = Var(Seq.empty[Pool])
+  val pool = Var[Pool](Pool.emptyPool)
 
   val registerUrl = s"$publicUrl/register"
   val loginUrl = s"$publicUrl/login"
