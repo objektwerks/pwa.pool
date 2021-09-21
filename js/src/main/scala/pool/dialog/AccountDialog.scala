@@ -66,6 +66,9 @@ object AccountDialog {
         })
       ),
       MenuButtonBar(
+        MenuButton(name = "Cancel").amend {
+          onClick --> { _ => context.hide(id) }
+        },
         MenuButton(id = deactivateButtonId, name = "Deactivate").amend {
           onClick --> { _ =>
             val command = Deactivate(account.now().license)
@@ -79,9 +82,6 @@ object AccountDialog {
             val response = CommandProxy.post(context.reactivateUrl, Account.emptyLicense, command)
             EventHandler.handle(context, errors, response, handler)
           }
-        },
-        MenuButton(name = "Cancel").amend {
-          onClick --> { _ => context.hide(id) }
         }
       )
     )
