@@ -1,5 +1,7 @@
 package pool
 
+import com.raquo.laminar.api.L._
+
 import org.scalajs.dom.{console, document}
 
 object Context {
@@ -7,6 +9,11 @@ object Context {
 }
 
 case class Context(publicUrl: String, apiUrl: String) extends Product with Serializable {
+  val email = Var("")
+  val pin = Var(0)
+  val account = Var(Account.emptyAccount)
+  val pools = Var(Seq.empty[Pool])
+
   val registerUrl = s"$publicUrl/register"
   val loginUrl = s"$publicUrl/login"
   val deactivateUrl = s"$publicUrl/deactivate"
