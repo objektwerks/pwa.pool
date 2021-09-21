@@ -38,15 +38,15 @@ object LoginDialog {
         })
       ),
       MenuButtonBar(
+        MenuButton(name = "Cancel").amend {
+          onClick --> { _ => context.hide(id) }
+        },
         MenuButton(name = "Login").amend {
           onClick --> { _ =>
             val command = Login(pin.now())
             val response = CommandProxy.post(context.loginUrl, Account.emptyLicense, command)
             EventHandler.handle(context, errors, response, handler)
           }
-        },
-        MenuButton(name = "Cancel").amend {
-          onClick --> { _ => context.hide(id) }
         }
       )
     )
