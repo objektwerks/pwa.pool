@@ -4,7 +4,6 @@ import com.raquo.laminar.api.L._
 
 import pool._
 import pool.container._
-import pool.dialog.AccountDialog
 import pool.handler.StateHandler
 import pool.menu.{MenuButton, MenuButtonBar}
 import pool.proxy.EntityProxy
@@ -13,11 +12,10 @@ import pool.text.{Errors, Header}
 object PoolsView {
   val id = getClass.getSimpleName
   val errors = new EventBus[String]
-  var poolSignal: Signal[Seq[Pool]] = Signal.fromValue(Seq.empty[Pool])
-  var listViewSignal: Signal[Seq[Li]] = Signal.fromValue(Seq.empty[Li])
+  var listItems = Var(Seq.empty[Li]).toObservable
 
   def init(context: Context): Unit = {
-    val license = License(AccountDialog.account.now().license)
+    val license = License(context.account.now().license)
     val response = EntityProxy.post(context.poolsUrl, license.key, license)
     StateHandler.handle(context, errors, response, handler)
   }
@@ -30,8 +28,8 @@ object PoolsView {
   def handler(context: Context, errors: EventBus[String], state: State): Unit =
     state match {
       case pools: Pools =>
-        poolSignal = Signal.fromValue(pools.pools)
-        listViewSignal = poolSignal.split(_.id)((_, _, pool) => renderer(pool) )
+        context.pools.set(pools.pools)
+        listItems = context.pools.signal.split(_.id)((_, _, pool) => renderer(pool) )
       case id: Id => context.log(s"Pool id: $id for add pool.")
       case count: Count => context.log(s"Pool count: $count for update pool.")
       case _ => errors.emit(s"Invalid: $state")
@@ -41,7 +39,7 @@ object PoolsView {
     Container(id = id, isDisplayed = "none",
       Header("Pools"),
       Errors(errors),
-      ListView(listViewSignal),
+      ListView(listItems),
       MenuButtonBar(
         MenuButton(name = "Add").amend {
           onClick --> { _ =>
