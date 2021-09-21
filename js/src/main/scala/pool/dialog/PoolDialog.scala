@@ -7,7 +7,7 @@ import pool.menu.{MenuButton, MenuButtonBar}
 import pool.text.{Errors, Header, Label, Text}
 import pool.{Context, Pool}
 
-object PoolsDialog {
+object PoolDialog {
   val id = getClass.getSimpleName
   val addButtonId = id + "-add-button"
   val updateButtonId = id + "-update-button"
