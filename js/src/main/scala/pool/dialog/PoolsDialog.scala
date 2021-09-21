@@ -36,6 +36,7 @@ object PoolsDialog {
       Field(
         Label(column = "25%", name = "Name:"),
         Text(column = "75%", Text.field(typeOf = "text").amend {
+          value <-- pool.signal.map(_.name)
           onInput.mapToValue.filter(_.nonEmpty) --> { name =>
             pool.update( pool => pool.copy(name = name) )
           }
@@ -44,6 +45,7 @@ object PoolsDialog {
       Field(
         Label(column = "25%", name = "Built:"),
         Text(column = "75%", Text.field(typeOf = "number").amend {
+          value <-- pool.signal.map(_.built.toString)
           onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { built =>
             pool.update( pool => pool.copy(built = built) )
           }
@@ -52,6 +54,7 @@ object PoolsDialog {
       Field(
         Label(column = "25%", name = "Lat:"),
         Text(column = "75%", Text.field(typeOf = "number").amend {
+          value <-- pool.signal.map(_.lat.toString)
           onInput.mapToValue.filter(_.toDoubleOption.nonEmpty).map(_.toDouble) --> { lat =>
             pool.update( pool => pool.copy(lat = lat) )
           }
@@ -60,6 +63,7 @@ object PoolsDialog {
       Field(
         Label(column = "25%", name = "Lon:"),
         Text(column = "75%", Text.field(typeOf = "number").amend {
+          value <-- pool.signal.map(_.lon.toString)
           onInput.mapToValue.filter(_.toDoubleOption.nonEmpty).map(_.toDouble) --> { lon =>
             pool.update( pool => pool.copy(lon = lon) )
           }
@@ -68,6 +72,7 @@ object PoolsDialog {
       Field(
         Label(column = "25%", name = "Volume:"),
         Text(column = "75%", Text.field(typeOf = "number").amend {
+          value <-- pool.signal.map(_.volume.toString)
           onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { volume =>
             pool.update( pool => pool.copy(volume = volume) )
           }
