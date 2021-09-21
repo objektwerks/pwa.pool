@@ -9,6 +9,8 @@ import pool.{Context, Pool}
 
 object PoolsDialog {
   val id = getClass.getSimpleName
+  val addButtonId = id + "-add-button"
+  val updateButtonId = id + "-update-button"
   val errors = new EventBus[String]
   val emptyPool = Var(
     Pool(
@@ -79,6 +81,16 @@ object PoolsDialog {
       MenuButtonBar(
         MenuButton(name = "Cancel").amend {
           onClick --> { _ => context.hide(id) }
+        },
+        MenuButton(id = addButtonId, name = "Add").amend {
+          onClick --> { _ =>
+            context.log("add pool")
+          }
+        },
+        MenuButton(id = updateButtonId, name = "Update").amend {
+          onClick --> { _ =>
+            context.log("update pool")
+          }
         }
       )
     )
