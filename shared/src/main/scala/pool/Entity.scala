@@ -49,6 +49,17 @@ final case class Pool(id: Int = 0,
                       lon: Double,
                       volume: Int) extends Entity
 
+object Pool {
+  val emptyPool = Pool(
+    license = "",
+    name = "",
+    built = 0,
+    lat = 0.0,
+    lon = 0.0,
+    volume = 1000
+  )
+}
+
 final case class PoolId(id: Int) extends Entity
 
 final case class Surface(id: Int = 0,
