@@ -34,15 +34,15 @@ object RegisterDialog {
         })
       ),
       MenuButtonBar(
+        MenuButton(name = "Cancel").amend {
+          onClick --> { _ => context.hide(id) }
+        },
         MenuButton(name = "Register").amend {
           onClick --> { _ =>
             val command = Register(email.now())
             val response = CommandProxy.post(context.registerUrl, Account.emptyLicense, command)
             EventHandler.handle(context, errors, response, handler)
           }
-        },
-        MenuButton(name = "Cancel").amend {
-          onClick --> { _ => context.hide(id) }
         }
       )
     )
