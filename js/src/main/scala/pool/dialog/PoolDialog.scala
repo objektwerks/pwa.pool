@@ -30,7 +30,7 @@ object PoolDialog {
       Field(
         Label(column = "25%", name = "License:"),
         Text(column = "75%", Text.field(typeOf = "text", isReadOnly = true).amend {
-          value <-- AccountDialog.account.signal.map(_.license)
+          value <-- context.account.signal.map(_.license)
         })
       ),
       Field(
