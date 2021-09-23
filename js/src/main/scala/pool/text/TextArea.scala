@@ -11,9 +11,11 @@ object TextArea {
       textArea
     )
 
-  def field(isReadOnly: Boolean = false): TextArea =
+  def field(rowCount: Int = 2,
+            isReadOnly: Boolean = false): TextArea =
     textArea(
       cls("w3-hover-light-gray w3-text-indigo"),
+      rows(rowCount),
       readOnly(isReadOnly)
     )
 }
