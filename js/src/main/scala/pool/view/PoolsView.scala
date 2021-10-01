@@ -4,7 +4,7 @@ import com.raquo.laminar.api.L._
 
 import pool._
 import pool.container._
-import pool.dialog.PoolDialog
+import pool.dialog.{Add, Edit, PoolDialog, View}
 import pool.handler.StateHandler
 import pool.menu.{MenuButton, MenuButtonBar}
 import pool.proxy.EntityProxy
@@ -39,15 +39,15 @@ object PoolsView {
       MenuButtonBar(
         MenuButton(name = "Add").amend {
           onClick --> { _ =>
-            PoolDialog(context, context.account, Var(Pool.emptyPool)) }
+            PoolDialog(Add, context, context.account, Var(Pool.emptyPool)) }
         },
         MenuButton(name = "Edit").amend {
           onClick --> { _ =>
-            PoolDialog(context, context.account, context.pool) }
+            PoolDialog(Edit, context, context.account, context.pool) }
         },
         MenuButton(name = "View").amend {
           onClick --> { _ =>
-            PoolDialog(context, context.account, context.pool, readOnly = true) }
+            PoolDialog(View, context, context.account, context.pool, readOnly = true) }
         }
       )
     )
