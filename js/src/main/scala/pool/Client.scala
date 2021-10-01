@@ -14,24 +14,23 @@ import scala.scalajs.js.annotation.JSExportTopLevel
 
 @JSExportTopLevel("Client")
 class Client(publicUrl: String, apiUrl: String) extends js.Object {
-  val container = Container()
-  val context = Context(container, publicUrl, apiUrl)
+  val content = Container()
+  val context = Context(content, publicUrl, apiUrl)
   context.log(s"[context] public url: $publicUrl api url: $apiUrl")
 
-  container.amend {
+  content.amend {
     HomeMenu(
       context,
       RegisterDialog(context),
       LoginDialog(context),
       AccountDialog(context)
     )
-    PoolsView(context)
-    PoolDialog(context)
+    PoolsView(context, PoolDialog(context))
   }
 
   ServiceWorker.register()
 
   NowProxy.post(s"$publicUrl/now").foreach(now => context.log(s"[now] $now"))
 
-  render(document.getElementById("content"), container)
+  render(document.getElementById("content"), content)
 }
