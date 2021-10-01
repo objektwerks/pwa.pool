@@ -2,7 +2,7 @@ package pool.dialog
 
 import com.raquo.laminar.api.L._
 
-import pool.{Account, Context, Pool}
+import pool.{Context, Pool}
 import pool.container.Field
 import pool.menu.{MenuButton, MenuButtonBar}
 import pool.text.{Errors, Header, Label, Text}
@@ -26,7 +26,6 @@ object PoolDialog {
   }
 
   def apply(context: Context,
-            account: Var[Account],
             pool: Var[Pool],
             readOnly: Boolean = false): Div =
     Modal(id = id,
@@ -35,7 +34,7 @@ object PoolDialog {
       Field(
         Label(column = "25%", name = "License:"),
         Text(column = "75%", Text.field(typeOf = "text", isReadOnly = true).amend {
-          value <-- account.signal.map(_.license)
+          value <-- context.account.signal.map(_.license)
         })
       ),
       Field(
