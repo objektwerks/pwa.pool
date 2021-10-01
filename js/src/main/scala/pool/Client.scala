@@ -16,18 +16,19 @@ import scala.scalajs.js.annotation.JSExportTopLevel
 
 @JSExportTopLevel("Client")
 class Client(publicUrl: String, apiUrl: String) extends js.Object {
-  val context = Context(publicUrl, apiUrl)
+  val container = Container()
+  val context = Context(container, publicUrl, apiUrl)
   context.log(s"[context] public url: $publicUrl api url: $apiUrl")
 
-  val container = Container(
+  container.amend {
     HomeMenu(
       context,
       RegisterDialog(context),
       LoginDialog(context),
       AccountDialog(context)
-    ),
+    )
     PoolsView(context)
-  )
+  }
 
   ServiceWorker.register()
 
