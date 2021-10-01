@@ -8,7 +8,7 @@ object Context {
   def log(message: Any): Unit = console.log(message)
 }
 
-case class Context(container: Div, publicUrl: String, apiUrl: String) extends Product with Serializable {
+case class Context(content: Div, publicUrl: String, apiUrl: String) extends Product with Serializable {
   val email = Var("")
   val pin = Var(0)
   val account = Var(Account.emptyAccount)
