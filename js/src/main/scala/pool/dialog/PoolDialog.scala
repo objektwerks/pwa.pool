@@ -17,7 +17,18 @@ object PoolDialog {
             context: Context,
             account: Var[Account],
             pool: Var[Pool],
-            readOnly: Boolean = false): Div =
+            readOnly: Boolean = false): Div = {
+    mode match {
+      case Add =>
+        context.show(addButtonId)
+        context.hide(updateButtonId)
+      case Edit =>
+        context.hide(addButtonId)
+        context.show(updateButtonId)
+      case View =>
+        context.hide(addButtonId)
+        context.hide(updateButtonId)
+    }
     Modal(id = id,
       Header("Pool"),
       Errors(errors),
@@ -84,4 +95,5 @@ object PoolDialog {
         }
       )
     )
+  }
 }
