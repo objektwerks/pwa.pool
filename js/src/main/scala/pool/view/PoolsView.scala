@@ -39,10 +39,13 @@ object PoolsView {
       MenuButtonBar(
         MenuButton(name = "Add").amend {
           onClick --> { _ =>
+            val newPool = Pool.emptyPool.copy(license = context.account.now().license)
             context.container.amend {
-              PoolDialog(context, Var(Pool.emptyPool))
+              PoolDialog(context, Var(newPool))
             }
             PoolDialog.applyMode(Add, context)
+            context.pools.update(_ :+ newPool)
+            context.pool.set(newPool)
           }
         },
         MenuButton(name = "Edit").amend {
