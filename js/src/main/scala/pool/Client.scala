@@ -1,11 +1,9 @@
 package pool
 
 import com.raquo.laminar.api.L._
-
 import org.scalajs.dom._
-
 import pool.container.Container
-import pool.dialog.{AccountDialog, LoginDialog, RegisterDialog}
+import pool.dialog.{AccountDialog, LoginDialog, PoolDialog, RegisterDialog}
 import pool.menu.HomeMenu
 import pool.proxy.NowProxy
 import pool.view.PoolsView
@@ -28,6 +26,7 @@ class Client(publicUrl: String, apiUrl: String) extends js.Object {
       AccountDialog(context)
     )
     PoolsView(context)
+    PoolDialog(context)
   }
 
   ServiceWorker.register()
