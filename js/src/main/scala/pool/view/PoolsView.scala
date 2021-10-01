@@ -4,7 +4,7 @@ import com.raquo.laminar.api.L._
 
 import pool._
 import pool.container._
-import pool.dialog.{Add, Edit, PoolDialog, View}
+import pool.dialog.{Add, Edit, PoolDialog}
 import pool.handler.StateHandler
 import pool.menu.{MenuButton, MenuButtonBar}
 import pool.proxy.EntityProxy
@@ -31,7 +31,7 @@ object PoolsView {
     StateHandler.handle(context, errors, response, handler)
   }
 
-  def apply(context: Context): Div =
+  def apply(context: Context, poolDialog: Div): Div =
     Container(id = id, isDisplayed = "none",
       Header("Pools"),
       Errors(errors),
@@ -39,29 +39,15 @@ object PoolsView {
       MenuButtonBar(
         MenuButton(name = "Add").amend {
           onClick --> { _ =>
-            val newPool = Pool.emptyPool.copy(license = context.account.now().license)
-            context.container.amend {
-              PoolDialog(context, Var(newPool))
-            }
+            context.pool.set( Pool.emptyPool.copy(license = context.account.now().license) )
             PoolDialog.applyMode(Add, context)
-            context.pools.update(_ :+ newPool)
-            context.pool.set(newPool)
+            poolDialog.amend(display("block"))
           }
         },
         MenuButton(name = "Edit").amend {
           onClick --> { _ =>
-            context.container.amend {
-              PoolDialog(context, context.pool)
-            }
             PoolDialog.applyMode(Edit, context)
-          }
-        },
-        MenuButton(name = "View").amend {
-          onClick --> { _ =>
-            context.container.amend {
-              PoolDialog(context, context.pool, readOnly = true)
-            }
-            PoolDialog.applyMode(View, context)
+            poolDialog.amend(display("block"))
           }
         }
       )
