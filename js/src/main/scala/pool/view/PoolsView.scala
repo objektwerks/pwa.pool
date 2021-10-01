@@ -24,7 +24,7 @@ object PoolsView {
       case _ => errors.emit(s"Invalid: $state")
     }
 
-  def init(context: Context): Unit = {
+  def postApply(context: Context): Unit = {
     val license = License(context.account.now().license)
     val response = EntityProxy.post(context.poolsUrl, license.key, license)
     StateHandler.handle(context, errors, response, handler)

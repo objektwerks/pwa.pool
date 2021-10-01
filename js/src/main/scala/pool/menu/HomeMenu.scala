@@ -47,7 +47,7 @@ object HomeMenu {
         MenuItem(id = poolsMenuItemId, name = "Pools", isDisplayed = "none").amend {
           display("none")
           onClick --> { _ =>
-            PoolsView.init(context)
+            PoolsView.postApply(context)
             context.show(PoolsView.id)
             context.hide(poolsMenuItemId)
           }
