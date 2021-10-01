@@ -13,7 +13,8 @@ object PoolDialog {
   val updateButtonId = id + "-update-button"
   val errors = new EventBus[String]
 
-  def apply(context: Context,
+  def apply(mode: Mode,
+            context: Context,
             account: Var[Account],
             pool: Var[Pool],
             readOnly: Boolean = false): Div =
