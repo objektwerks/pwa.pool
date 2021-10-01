@@ -13,22 +13,22 @@ object PoolDialog {
   val updateButtonId = id + "-update-button"
   val errors = new EventBus[String]
 
-  def apply(mode: Mode,
-            context: Context,
+  def applyMode(mode: Mode, context: Context): Unit = mode match {
+    case Add =>
+      context.show(addButtonId)
+      context.hide(updateButtonId)
+    case Edit =>
+      context.hide(addButtonId)
+      context.show(updateButtonId)
+    case View =>
+      context.hide(addButtonId)
+      context.hide(updateButtonId)
+  }
+
+  def apply(context: Context,
             account: Var[Account],
             pool: Var[Pool],
-            readOnly: Boolean = false): Div = {
-    mode match {
-      case Add =>
-        context.show(addButtonId)
-        context.hide(updateButtonId)
-      case Edit =>
-        context.hide(addButtonId)
-        context.show(updateButtonId)
-      case View =>
-        context.hide(addButtonId)
-        context.hide(updateButtonId)
-    }
+            readOnly: Boolean = false): Div =
     Modal(id = id,
       Header("Pool"),
       Errors(errors),
@@ -95,5 +95,4 @@ object PoolDialog {
         }
       )
     )
-  }
 }

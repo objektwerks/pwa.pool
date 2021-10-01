@@ -40,22 +40,25 @@ object PoolsView {
         MenuButton(name = "Add").amend {
           onClick --> { _ =>
             context.container.amend {
-              PoolDialog(Add, context, context.account, Var(Pool.emptyPool))
+              PoolDialog(context, context.account, Var(Pool.emptyPool))
             }
+            PoolDialog.applyMode(Add, context)
           }
         },
         MenuButton(name = "Edit").amend {
           onClick --> { _ =>
             context.container.amend {
-              PoolDialog(Edit, context, context.account, context.pool)
+              PoolDialog(context, context.account, context.pool)
             }
+            PoolDialog.applyMode(Edit, context)
           }
         },
         MenuButton(name = "View").amend {
           onClick --> { _ =>
             context.container.amend {
-              PoolDialog(View, context, context.account, context.pool, readOnly = true)
+              PoolDialog(context, context.account, context.pool, readOnly = true)
             }
+            PoolDialog.applyMode(View, context)
           }
         }
       )
