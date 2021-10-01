@@ -42,7 +42,7 @@ object PoolDialog {
         Text(column = "75%", Text.field(typeOf = "text", isReadOnly = readOnly).amend {
           value <-- pool.signal.map(_.name)
           onInput.mapToValue.filter(_.nonEmpty) --> { name =>
-            context.pool.update( pool => pool.copy(name = name) )
+            pool.update( pool => pool.copy(name = name) )
           }
         })
       ),
@@ -51,7 +51,7 @@ object PoolDialog {
         Text(column = "75%", Text.field(typeOf = "number", isReadOnly = readOnly).amend {
           value <-- pool.signal.map(_.built.toString)
           onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { built =>
-            context.pool.update( pool => pool.copy(built = built) )
+            pool.update( pool => pool.copy(built = built) )
           }
         })
       ),
@@ -60,7 +60,7 @@ object PoolDialog {
         Text(column = "75%", Text.field(typeOf = "number", isReadOnly = readOnly).amend {
           value <-- pool.signal.map(_.lat.toString)
           onInput.mapToValue.filter(_.toDoubleOption.nonEmpty).map(_.toDouble) --> { lat =>
-            context.pool.update( pool => pool.copy(lat = lat) )
+            pool.update( pool => pool.copy(lat = lat) )
           }
         })
       ),
@@ -69,7 +69,7 @@ object PoolDialog {
         Text(column = "75%", Text.field(typeOf = "number", isReadOnly = readOnly).amend {
           value <-- pool.signal.map(_.lon.toString)
           onInput.mapToValue.filter(_.toDoubleOption.nonEmpty).map(_.toDouble) --> { lon =>
-            context.pool.update( pool => pool.copy(lon = lon) )
+            pool.update( pool => pool.copy(lon = lon) )
           }
         })
       ),
@@ -78,7 +78,7 @@ object PoolDialog {
         Text(column = "75%", Text.field(typeOf = "number", isReadOnly = readOnly).amend {
           value <-- pool.signal.map(_.volume.toString)
           onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { volume =>
-            context.pool.update( pool => pool.copy(volume = volume) )
+            pool.update( pool => pool.copy(volume = volume) )
           }
         })
       ),
