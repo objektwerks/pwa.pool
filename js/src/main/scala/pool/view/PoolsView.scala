@@ -4,7 +4,7 @@ import com.raquo.laminar.api.L._
 
 import pool._
 import pool.container._
-import pool.dialog.{Add, Edit, PoolDialog}
+import pool.dialog.{New, View, PoolDialog}
 import pool.handler.StateHandler
 import pool.menu.{MenuButton, MenuButtonBar}
 import pool.proxy.EntityProxy
@@ -20,8 +20,8 @@ object PoolsView {
       case pools: Pools =>
         context.pools.set(pools.pools)
         listItems = context.pools.signal.split(_.id)((_, _, pool) => ListView.renderItem(pool.map(_.name)))
-      case id: Id => context.log(s"Pool id: $id for add pool.")
-      case count: Count => context.log(s"Pool count: $count for update pool.")
+      case id: Id => context.log(s"Pool id: $id for add pool.") // Set context.pool with id
+      case count: Count => context.log(s"Pool count: $count for update pool.") // Assert count == 1
       case _ => errors.emit(s"Invalid: $state")
     }
 
@@ -35,18 +35,22 @@ object PoolsView {
     Container(id = id, isDisplayed = "none",
       Header("Pools"),
       Errors(errors),
-      ListView(listItems),
+      ListView(listItems).amend {
+        onClick.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { id =>
+          context.pools.now().find(_.id == id).foreach( pool => context.pool.set(pool) )
+        }
+      },
       MenuButtonBar(
-        MenuButton(name = "Add").amend {
+        MenuButton(name = "New").amend {
           onClick --> { _ =>
             context.pool.set( Pool.emptyPool.copy(license = context.account.now().license) )
-            PoolDialog.applyMode(Add, context)
+            PoolDialog.applyMode(New, context)
             poolDialog.amend(display("block"))
           }
         },
-        MenuButton(name = "Edit").amend {
+        MenuButton(name = "View").amend {
           onClick --> { _ =>
-            PoolDialog.applyMode(Edit, context)
+            PoolDialog.applyMode(View, context)
             poolDialog.amend(display("block"))
           }
         }
