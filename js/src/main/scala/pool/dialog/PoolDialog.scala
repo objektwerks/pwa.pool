@@ -14,10 +14,10 @@ object PoolDialog {
   val errors = new EventBus[String]
 
   def applyMode(mode: Mode, context: Context): Unit = mode match {
-    case Add =>
+    case New =>
       context.show(addButtonId)
       context.hide(updateButtonId)
-    case Edit =>
+    case View =>
       context.hide(addButtonId)
       context.show(updateButtonId)
   }
@@ -83,12 +83,16 @@ object PoolDialog {
         },
         MenuButton(id = addButtonId, name = "Add").amend {
           onClick --> { _ =>
+            // EntityProxy and StateHandler
             context.pools.update(_ :+ context.pool.now())
             context.hide(id)
           }
         },
         MenuButton(id = updateButtonId, name = "Update").amend {
-          onClick --> { _ => context.hide(id) }
+          onClick --> { _ =>
+            // EntityProxy and StateHandler
+            context.hide(id)
+          }
         }
       )
     )
