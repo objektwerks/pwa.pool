@@ -84,7 +84,6 @@ object PoolDialog {
         MenuButton(id = addButtonId, name = "Add").amend {
           onClick --> { _ =>
             // EntityProxy and StateHandler
-            context.pools.update(_ :+ context.pool.now())
             context.hide(id)
           }
         },
