@@ -21,7 +21,7 @@ object PoolsView {
         context.pools.set(pools.pools)
         listItems = context.pools.signal.split(_.id)((_, _, pool) => ListView.renderItem(pool.map(_.name)))
       case id: Id => context.log(s"Pool id: $id for add pool.") // Set context.pool with id
-      case count: Count => context.log(s"Pool count: $count for update pool.") // Assert count == 1
+      case count: Count => if (count.count != 1) errors.emit(s"Update failed: $count")
       case _ => errors.emit(s"Invalid: $state")
     }
 
