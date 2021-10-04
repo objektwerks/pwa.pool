@@ -8,13 +8,19 @@ import pool.handler.StateHandler
 import pool.menu.{MenuButton, MenuButtonBar}
 import pool.proxy.EntityProxy
 import pool.text.{Errors, Header, Label, Text}
-import pool.view.PoolsView.handler
+import pool.view.PoolsView
 
 object PoolDialog {
   val id = getClass.getSimpleName
   val addButtonId = id + "-add-button"
   val updateButtonId = id + "-update-button"
   val errors = new EventBus[String]
+
+  def handler(context: Context, url: String): Unit = {
+    val pool = context.pool.now()
+    val response = EntityProxy.post(url, context.account.now().license, pool)
+    StateHandler.handle(context, errors, response, PoolsView.handler)
+  }
 
   def applyMode(mode: Mode, context: Context): Unit = mode match {
     case New =>
@@ -86,15 +92,13 @@ object PoolDialog {
         },
         MenuButton(id = addButtonId, name = "Add").amend {
           onClick --> { _ =>
-            val pool = context.pool.now()
-            val response = EntityProxy.post(context.poolsAddUrl, context.account.now().license, pool)
-            StateHandler.handle(context, errors, response, handler)
+            handler(context, context.poolsAddUrl)
             context.hide(id)
           }
         },
         MenuButton(id = updateButtonId, name = "Update").amend {
           onClick --> { _ =>
-            // EntityProxy and StateHandler
+            handler(context, context.poolsUpdateUrl)
             context.hide(id)
           }
         }
