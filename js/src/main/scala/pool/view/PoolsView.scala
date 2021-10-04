@@ -21,8 +21,9 @@ object PoolsView {
         context.pools.set(pools.pools)
         listItems = context.pools.signal.split(_.id)((_, _, pool) => ListView.renderItem(pool.map(_.name)))
       case id: Id =>
-        context.pool.set( context.pool.now().copy(id = id.id) )
-        context.pools.update(_ :+ context.pool.now())
+        val pool = context.pool.now().copy(id = id.id)
+        context.pool.set( pool )
+        context.pools.update(_ :+ pool)
       case count: Count => if (count.count != 1) errors.emit(s"Update failed: $count")
       case _ => errors.emit(s"Invalid: $state")
     }
