@@ -56,6 +56,11 @@ object PoolsView {
             PoolDialog.applyMode(View, context)
             poolDialog.amend(display("block"))
           }
+        },
+        MenuButton(name = "Refresh").amend {
+          onClick --> { _ =>
+            load(context)
+          }
         }
       )
     )
