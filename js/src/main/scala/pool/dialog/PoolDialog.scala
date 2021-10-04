@@ -4,8 +4,11 @@ import com.raquo.laminar.api.L._
 
 import pool.Context
 import pool.container.Field
+import pool.handler.StateHandler
 import pool.menu.{MenuButton, MenuButtonBar}
+import pool.proxy.EntityProxy
 import pool.text.{Errors, Header, Label, Text}
+import pool.view.PoolsView.handler
 
 object PoolDialog {
   val id = getClass.getSimpleName
@@ -83,7 +86,9 @@ object PoolDialog {
         },
         MenuButton(id = addButtonId, name = "Add").amend {
           onClick --> { _ =>
-            // EntityProxy and StateHandler
+            val pool = context.pool.now()
+            val response = EntityProxy.post(context.poolsAddUrl, context.account.now().license, pool)
+            StateHandler.handle(context, errors, response, handler)
             context.hide(id)
           }
         },
