@@ -25,7 +25,7 @@ object PoolsView {
         context.pool.set( pool )
         context.pools.update(_ :+ pool)
       case count: Count => if (count.count != 1) errors.emit(s"Update failed: $count")
-      case _ => errors.emit(s"Invalid: $state")
+      case _ => errors.emit(s"Invalid state: $state")
     }
 
   def load(context: Context): Unit = {
