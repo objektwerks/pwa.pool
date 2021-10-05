@@ -12,6 +12,7 @@ import pool.text.{Errors, Header}
 
 object PoolsView {
   val id = getClass.getSimpleName
+  val viewButtonId = id + "-view-button"
   val errors = new EventBus[String]
   var listItems = Var(Seq.empty[Li]).toObservable
 
@@ -51,7 +52,7 @@ object PoolsView {
             poolDialog.amend(display("block"))
           }
         },
-        MenuButton(name = "View").amend {
+        MenuButton(id = viewButtonId, name = "View", isDisabled = true).amend {
           onClick --> { _ =>
             PoolDialog.applyMode(View, context)
             poolDialog.amend(display("block"))
