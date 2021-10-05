@@ -20,7 +20,13 @@ object PoolsView {
     state match {
       case pools: Pools =>
         context.pools.set(pools.pools)
-        listItems = context.pools.signal.split(_.id)((_, _, pool) => ListView.renderItem(pool.map(_.name)))
+        listItems = context.pools.signal.split(_.id)((_, _, pool) =>
+          ListView.renderItem( pool.map(_.name) ).amend {
+            onClick.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { id =>
+              context.pools.now().find(_.id == id).foreach(pool => context.pool.set(pool))
+            }
+          }
+        )
       case id: Id =>
         val pool = context.pool.now().copy(id = id.id)
         context.pool.set( pool )
@@ -39,11 +45,7 @@ object PoolsView {
     Container(id = id, isDisplayed = "none",
       Header("Pools"),
       Errors(errors),
-      ListView(listItems).amend {
-        onClick.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { id =>
-          context.pools.now().find(_.id == id).foreach( pool => context.pool.set(pool) )
-        }
-      },
+      ListView(listItems),
       MenuButtonBar(
         MenuButton(name = "New").amend {
           onClick --> { _ =>
