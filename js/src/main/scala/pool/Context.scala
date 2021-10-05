@@ -44,6 +44,10 @@ class Context(publicUrl: String, apiUrl: String) {
 
   def log(message: Any): Unit = Context.log(message)
 
+  def disable(id: String): Unit = document.getElementById(id).setAttribute("disabled", "true")
+
+  def enable(id: String): Unit = document.getElementById(id).setAttribute("disabled", "fase")
+
   def show(id: String): Unit = document.getElementById(id).setAttribute("style", "display: block")
 
   def hide(id: String): Unit = document.getElementById(id).setAttribute("style", "display: none")
