@@ -2,7 +2,7 @@ name := "pwa.pool"
 
 lazy val akkaVersion = "2.6.16"
 lazy val akkaHttpVersion = "10.2.6"
-lazy val quillVersion = "3.9.0"
+lazy val quillVersion = "3.10.0"
 lazy val upickleVersion = "1.4.1"
 lazy val scalaTestVersion = "3.2.9"
 
