@@ -7,5 +7,10 @@ object MenuButton {
 
   def apply(name: String): Button = button(cls(css), name)
 
-  def apply(id: String, name: String): Button = button(idAttr(id), cls(css), name)
+  def apply(id: String,
+            name: String,
+            isDisabled: Boolean = false): Button =
+    button(idAttr(id), cls(css), disabled(isDisabled),
+      name
+    )
 }
