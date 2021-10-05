@@ -24,6 +24,7 @@ object PoolsView {
           ListView.renderItem( pool.map(_.name) ).amend {
             onClick.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { id =>
               context.pools.now().find(_.id == id).foreach(pool => context.pool.set(pool))
+              context.enable(viewButtonId)
             }
           }
         )
