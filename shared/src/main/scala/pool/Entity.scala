@@ -42,23 +42,12 @@ object Account {
 final case class License(key: String) extends Entity
 
 final case class Pool(id: Int = 0,
-                      license: String,
-                      name: String,
-                      built: Int,
-                      lat: Double,
-                      lon: Double,
-                      volume: Int) extends Entity
-
-object Pool {
-  val emptyPool = Pool(
-    license = "",
-    name = "",
-    built = 0,
-    lat = 0.0,
-    lon = 0.0,
-    volume = 1000
-  )
-}
+                      license: String = "",
+                      name: String = "",
+                      built: Int = 0,
+                      lat: Double = 0.0,
+                      lon: Double = 0.0,
+                      volume: Int = 0) extends Entity
 
 final case class PoolId(id: Int) extends Entity
 
