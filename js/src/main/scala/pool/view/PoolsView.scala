@@ -50,7 +50,7 @@ object PoolsView {
       MenuButtonBar(
         MenuButton(name = "New").amend {
           onClick --> { _ =>
-            context.pool.set( Pool.emptyPool.copy(license = context.account.now().license) )
+            context.pool.set( Pool().copy(license = context.account.now().license) )
             PoolDialog.applyMode(New, context)
             poolDialog.amend(display("block"))
           }
