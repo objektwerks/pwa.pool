@@ -12,9 +12,9 @@ class SerializerTest extends AnyFunSuite with Matchers {
     val accountJson = write[Account](account)
     account shouldBe read[Account](accountJson)
 
-    println(s"upickle account: $account")
-    println(s"upickle account as json: $accountJson")
-    println(s"upickle read account json: ${read[Account](accountJson)}")
+    println(s"account: $account")
+    println(s"write account json: $accountJson")
+    println(s"read account json: ${read[Account](accountJson)}")
   }
 
   test("pool") {
@@ -22,8 +22,8 @@ class SerializerTest extends AnyFunSuite with Matchers {
     val poolJson = write[Pool](pool)
     pool shouldBe read[Pool](poolJson)
     
-    println(s"upickle pool: $pool")
-    println(s"upickle pool as json: $poolJson")
-    println(s"upickle read pool json: ${read[Pool](poolJson)}")
+    println(s"pool: $pool")
+    println(s"write pool json: $poolJson")
+    println(s"read pool json: ${read[Pool](poolJson)}")
   }
 }
