@@ -25,5 +25,13 @@ class SerializerTest extends AnyFunSuite with Matchers {
     println(s"pool: $pool")
     println(s"write pool json: $poolJson")
     println(s"read pool json: ${read[Pool](poolJson)}")
+
+    val emptyPool = Pool()
+    val emptyPoolJson = write[Pool](emptyPool)
+    emptyPool shouldBe read[Pool](emptyPoolJson)
+
+    println(s"empty pool: $emptyPool")
+    println(s"write empty pool json: $emptyPoolJson")
+    println(s"read empty pool json: ${read[Pool](emptyPoolJson)}")
   }
 }
