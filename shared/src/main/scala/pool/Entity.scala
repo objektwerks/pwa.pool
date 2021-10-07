@@ -111,11 +111,11 @@ final case class Cleaning(id: Int = 0,
                           deck: Boolean = false) extends Entity
 
 final case class Chemical(id: Int = 0,
-                          poolId: Int,
-                          added: Int,
-                          chemical: String,
-                          amount: Double,
-                          unit: String) extends Entity
+                          poolId: Int = 0,
+                          added: Int = 0,
+                          chemical: String = "",
+                          amount: Double = 0.0,
+                          unit: String = "") extends Entity
 
 final case class Supply(id: Int = 0,
                         poolId: Int,
