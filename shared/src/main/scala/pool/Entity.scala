@@ -75,9 +75,9 @@ final case class TimerSetting(id: Int = 0,
                               timeOff: Int = 0) extends Entity
 
 final case class Heater(id: Int = 0,
-                        poolId: Int,
-                        installed: Int,
-                        model: String) extends Entity
+                        poolId: Int = 0,
+                        installed: Int = 0,
+                        model: String = "") extends Entity
 
 final case class HeaterId(id: Int = 0) extends Entity
 
