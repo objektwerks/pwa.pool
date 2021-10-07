@@ -82,9 +82,9 @@ final case class Heater(id: Int = 0,
 final case class HeaterId(id: Int = 0) extends Entity
 
 final case class HeaterSetting(id: Int = 0,
-                               heaterId: Int,
-                               temp: Int,
-                               dateOn: Int,
+                               heaterId: Int = 0,
+                               temp: Int = 0,
+                               dateOn: Int = 0,
                                dateOff: Int = 0) extends Entity
 
 final case class Measurement(id: Int = 0,
