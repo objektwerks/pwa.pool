@@ -52,9 +52,9 @@ final case class Pool(id: Int = 0,
 final case class PoolId(id: Int) extends Entity
 
 final case class Surface(id: Int = 0,
-                         poolId: Int,
-                         installed: Int,
-                         kind: String) extends Entity
+                         poolId: Int = 0,
+                         installed: Int = 0,
+                         kind: String = "") extends Entity
 
 final case class Pump(id: Int = 0,
                       poolId: Int,
