@@ -126,7 +126,7 @@ final case class Supply(id: Int = 0,
                         unit: String = "") extends Entity
 
 final case class Repair(id: Int = 0,
-                        poolId: Int,
-                        repaired: Int,
-                        cost: Double,
-                        repair: String) extends Entity
+                        poolId: Int = 0,
+                        repaired: Int = 0,
+                        cost: Double = 0,
+                        repair: String = "") extends Entity
