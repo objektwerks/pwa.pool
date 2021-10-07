@@ -69,10 +69,10 @@ final case class Timer(id: Int = 0,
 final case class TimerId(id: Int = 0) extends Entity
 
 final case class TimerSetting(id: Int = 0,
-                              timerId: Int,
-                              created: Int,
-                              timeOn: Int,
-                              timeOff: Int) extends Entity
+                              timerId: Int = 0,
+                              created: Int = 0,
+                              timeOn: Int = 0,
+                              timeOff: Int = 0) extends Entity
 
 final case class Heater(id: Int = 0,
                         poolId: Int,
