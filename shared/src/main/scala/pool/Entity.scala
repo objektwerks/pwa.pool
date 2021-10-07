@@ -118,12 +118,12 @@ final case class Chemical(id: Int = 0,
                           unit: String = "") extends Entity
 
 final case class Supply(id: Int = 0,
-                        poolId: Int,
-                        purchased: Int,
-                        cost: Double,
-                        item: String,
-                        amount: Double,
-                        unit: String) extends Entity
+                        poolId: Int = 0,
+                        purchased: Int = 0,
+                        cost: Double = 0.0,
+                        item: String = "",
+                        amount: Double = 0.0,
+                        unit: String = "") extends Entity
 
 final case class Repair(id: Int = 0,
                         poolId: Int,
