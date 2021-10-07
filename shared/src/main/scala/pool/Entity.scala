@@ -100,8 +100,8 @@ final case class Measurement(id: Int = 0,
                              cyanuricAcid: Int = 50) extends Entity
 
 final case class Cleaning(id: Int = 0,
-                          poolId: Int,
-                          cleaned: Int,
+                          poolId: Int = 0,
+                          cleaned: Int = 0,
                           brush: Boolean = true,
                           net: Boolean = true,
                           vacuum: Boolean = false,
