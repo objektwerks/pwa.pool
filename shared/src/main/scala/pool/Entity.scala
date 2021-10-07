@@ -62,9 +62,9 @@ final case class Pump(id: Int = 0,
                       model: String = "") extends Entity
 
 final case class Timer(id: Int = 0,
-                       poolId: Int,
-                       installed: Int,
-                       model: String) extends Entity
+                       poolId: Int = 0,
+                       installed: Int = 0,
+                       model: String = "") extends Entity
 
 final case class TimerId(id: Int = 0) extends Entity
 
