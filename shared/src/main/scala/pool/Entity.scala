@@ -88,8 +88,8 @@ final case class HeaterSetting(id: Int = 0,
                                dateOff: Int = 0) extends Entity
 
 final case class Measurement(id: Int = 0,
-                             poolId: Int,
-                             measured: Int,
+                             poolId: Int = 0,
+                             measured: Int = 0,
                              temp: Int = 85,
                              totalHardness: Int = 375,
                              totalChlorine: Int = 3,
