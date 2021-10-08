@@ -10,12 +10,19 @@ object Text {
       input
     )
 
-  def field(typeOf: String, isReadOnly: Boolean = false): Input =
+  def field(typeOf: String): Input =
+    input(
+      cls("w3-input w3-hover-light-gray w3-text-indigo"),
+      typ(typeOf),
+      required(true)
+    )
+
+  def readonly(typeOf: String): Input =
     input(
       cls("w3-input w3-hover-light-gray w3-text-indigo"),
       typ(typeOf),
       required(true),
-      readOnly(isReadOnly)
+      readOnly(true)
     )
 
   def text(typeOf: String, text: Var[String], isReadOnly: Boolean = false): Input =
