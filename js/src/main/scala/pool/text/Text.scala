@@ -40,7 +40,7 @@ object Text {
       typ("number"),
       required(true),
       readOnly(isReadOnly),
-      onInput.mapToValue.map(_.filter(Character.isDigit)) --> integer
+      onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> integer
     )
 
   def double(double: Var[Double], isReadOnly: Boolean = false): Input =
@@ -49,6 +49,8 @@ object Text {
       typ("number"),
       required(true),
       readOnly(isReadOnly),
-      onInput.mapToValue.filter(value => value.charAt(0).isDigit || value == ".") --> double
+      onInput.mapToValue.filter( value =>
+        value.charAt(0).isDigit || ( value == "." && !double.now().toString.contains('.') )
+      ) --> double
     )
 }
