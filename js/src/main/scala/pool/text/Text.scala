@@ -49,6 +49,6 @@ object Text {
       typ("number"),
       required(true),
       readOnly(isReadOnly),
-      onInput.mapToValue.filter(_.toDoubleOption.nonEmpty).map(_.toDouble) --> double
+      onInput.mapToValue.filter(value => value.charAt(0).isDigit || value == ".") --> double
     )
 }
