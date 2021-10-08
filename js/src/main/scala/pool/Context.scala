@@ -53,4 +53,6 @@ class Context(publicUrl: String, apiUrl: String) {
   def show(id: String): Unit = document.getElementById(id).setAttribute("style", "display: block")
 
   def toggle(id: String, style: String): Unit = document.getElementById(id).classList.toggle(style)
+
+  def add(id: String, style: String): Unit = document.getElementById(id).classList.add(style)
 }
