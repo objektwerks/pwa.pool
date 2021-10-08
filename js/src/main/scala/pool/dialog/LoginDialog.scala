@@ -32,9 +32,7 @@ object LoginDialog {
       Errors(errors),
       Field(
         Label(column = "15%", name = "Pin:"),
-        Text(column = "85%", Text.field(typeOf = "number").amend {
-          onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> context.pin
-        })
+        Text(column = "85%", Text.integer(integer = context.pin))
       ),
       MenuButtonBar(
         MenuButton(name = "Cancel").amend {
