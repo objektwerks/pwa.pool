@@ -36,31 +36,31 @@ object AccountDialog {
       Errors(errors),
       Field(
         Label(column = "25%", name = "License:"),
-        Text(column = "75%", Text.field(typeOf = "text", isReadOnly = true).amend {
+        Text(column = "75%", Text.readonly(typeOf = "text").amend {
           value <-- context.account.signal.map(_.license)
         })
       ),
       Field(
         Label(column = "25%", name = "Email:"),
-        Text(column = "75%", Text.field(typeOf = "text", isReadOnly = true).amend {
+        Text(column = "75%", Text.readonly(typeOf = "text").amend {
           value <-- context.account.signal.map(_.email)
         })
       ),
       Field(
         Label(column = "25%", name = "Pin:"),
-        Text(column = "75%", Text.field(typeOf = "text", isReadOnly = true).amend {
+        Text(column = "75%", Text.readonly(typeOf = "text").amend {
           value <-- context.account.signal.map(_.pin.toString)
         })
       ),
       Field(
         Label(column = "25%", name = "Activated:"),
-        Text(column = "75%", Text.field(typeOf = "text", isReadOnly = true).amend {
+        Text(column = "75%", Text.readonly(typeOf = "text").amend {
           value <-- context.account.signal.map(_.activated.toString)
         })
       ),
       Field(
         Label(column = "25%", name = "Deactivated:"),
-        Text(column = "75%", Text.field(typeOf = "text", isReadOnly = true).amend {
+        Text(column = "75%", Text.readonly(typeOf = "text").amend {
           value <-- context.account.signal.map(_.deactivated.toString)
         })
       ),
