@@ -3,8 +3,7 @@ package pool.text
 import com.raquo.laminar.api.L._
 
 object Label {
-  def apply(column: String,
-            name: String): Div =
+  def apply(column: String, name: String): Div =
     div(
       cls("w3-col"),
       width(column),
