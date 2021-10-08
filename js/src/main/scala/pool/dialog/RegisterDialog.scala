@@ -28,9 +28,7 @@ object RegisterDialog {
       Errors(errors),
       Field(
         Label(column = "15%", name = "Email:"),
-        Text(column = "85%", Text.field(typeOf = "email").amend {
-          onInput.mapToValue.filter(_.nonEmpty) --> context.email
-        })
+        Text(column = "85%", Text.text(typeOf = "email", text = context.email))
       ),
       MenuButtonBar(
         MenuButton(name = "Cancel").amend {
