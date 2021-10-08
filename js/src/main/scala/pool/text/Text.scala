@@ -40,7 +40,7 @@ object Text {
       typ("number"),
       required(true),
       readOnly(isReadOnly),
-      onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> integer
+      onInput.mapToValue.map(_.filter(Character.isDigit)) --> integer
     )
 
   def double(double: Var[Double], isReadOnly: Boolean = false): Input =
