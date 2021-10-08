@@ -55,4 +55,6 @@ class Context(publicUrl: String, apiUrl: String) {
   def toggle(id: String, style: String): Unit = document.getElementById(id).classList.toggle(style)
 
   def add(id: String, style: String): Unit = document.getElementById(id).classList.add(style)
+
+  def remove(id: String, style: String): Unit = document.getElementById(id).classList.remove(style)
 }
