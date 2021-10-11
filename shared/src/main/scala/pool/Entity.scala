@@ -45,8 +45,6 @@ final case class Pool(id: Int = 0,
                       license: String = "",
                       name: String = "",
                       built: Int = 0,
-                      lat: Double = 0.0,
-                      lon: Double = 0.0,
                       volume: Int = 1000) extends Entity
 
 final case class PoolId(id: Int = 0) extends Entity
