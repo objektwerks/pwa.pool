@@ -104,7 +104,7 @@ class RouterTest extends AnyWordSpec
 
   "pools" should {
     "post to id, count, pools" in {
-      var pool = Pool(license = account.license, name = "pool-a", built = localDateToInt(1991, 3, 13), lat = 26.862631, lon = -82.288834, volume = 10000)
+      var pool = Pool(license = account.license, name = "pool-a", built = localDateToInt(1991, 3, 13), volume = 10000)
       Post(apiUrl + "/pools/add", pool) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         pool = pool.copy(id = responseAs[Id].id)
