@@ -47,8 +47,6 @@ object Validators {
       pool.license.isLicense &&
       pool.name.nonEmpty &&
       pool.built > 0 &&
-      (pool.lat >= -90.000000 && pool.lat <= 90.000000) &&
-      (pool.lat >= -180.000000 && pool.lat <= 180.000000) &&
       pool.volume >= 1000
   }
 
