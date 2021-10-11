@@ -18,7 +18,7 @@ class SerializerTest extends AnyFunSuite with Matchers {
   }
 
   test("pool") {
-    val pool = Pool(license = "abc123", name = "pool", built = 1991, lat = 26.85, lon = 82.29, volume = 10000)
+    val pool = Pool(license = "abc123", name = "pool", built = 1991, volume = 10000)
     val poolJson = write[Pool](pool)
     pool shouldBe read[Pool](poolJson)
     
