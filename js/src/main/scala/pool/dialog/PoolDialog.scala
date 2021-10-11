@@ -60,24 +60,6 @@ object PoolDialog {
         })
       ),
       Field(
-        Label(column = "25%", name = "Lat:"),
-        Text(column = "75%", Text.field(typeOf = "number").amend {
-          value <-- context.pool.signal.map(_.lat.toString)
-          onInput.mapToValue.filter(_.toDoubleOption.nonEmpty).map(_.toDouble) --> { lat =>
-            context.pool.update( pool => pool.copy(lat = lat) )
-          }
-        })
-      ),
-      Field(
-        Label(column = "25%", name = "Lon:"),
-        Text(column = "75%", Text.field(typeOf = "number").amend {
-          value <-- context.pool.signal.map(_.lon.toString)
-          onInput.mapToValue.filter(_.toDoubleOption.nonEmpty).map(_.toDouble) --> { lon =>
-            context.pool.update( pool => pool.copy(lon = lon) )
-          }
-        })
-      ),
-      Field(
         Label(column = "25%", name = "Volume:"),
         Text(column = "75%", Text.field(typeOf = "number").amend {
           value <-- context.pool.signal.map(_.volume.toString)
