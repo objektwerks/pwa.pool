@@ -151,7 +151,7 @@ Rest
 Object Model
 ------------
 * Account(license, email, pin, activated, deactivated)
-* Pool(id, license, name, built, lat, lon, volume)
+* Pool(id, license, name, built, volume)
 * Surface(id, poolId, installed, kind)
 * Pump(id, poolId, installed, model)
 * Timer(id, poolId, installed, model)
