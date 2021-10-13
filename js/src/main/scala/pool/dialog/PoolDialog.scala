@@ -43,7 +43,7 @@ object PoolDialog {
       ),
       Field(
         Label("Name"),
-        Text.field().amend {
+        Text.text().amend {
           value <-- context.pool.signal.map(_.name)
           onInput.mapToValue.filter(_.nonEmpty) --> { name =>
             context.pool.update( pool => pool.copy(name = name) )
@@ -52,7 +52,7 @@ object PoolDialog {
       ),
       Field(
         Label("Built"),
-        Text.field(typeOf = "number").amend {
+        Text.number().amend {
           value <-- context.pool.signal.map(_.built.toString)
           onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { built =>
             context.pool.update( pool => pool.copy(built = built) )
@@ -61,7 +61,7 @@ object PoolDialog {
       ),
       Field(
         Label("Volume"),
-        Text.field(typeOf = "number").amend {
+        Text.number().amend {
           value <-- context.pool.signal.map(_.volume.toString)
           onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { volume =>
             context.pool.update( pool => pool.copy(volume = volume) )
