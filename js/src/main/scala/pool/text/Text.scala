@@ -18,6 +18,13 @@ object Text {
       readOnly(true)
     )
 
+  def text(): Input =
+    input(
+      cls("w3-input w3-hover-light-gray w3-text-indigo"),
+      typ("text"),
+      required(true)
+    )
+
   def text(textVar: Var[String], typeOf: String = "text", isReadOnly: Boolean = false): Input =
     input(
       cls("w3-input w3-hover-light-gray w3-text-indigo"),
