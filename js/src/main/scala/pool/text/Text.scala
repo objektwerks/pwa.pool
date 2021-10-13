@@ -10,7 +10,7 @@ object Text {
       required(true)
     )
 
-  def readonly(typeOf: String): Input =
+  def readonly(typeOf: String = "text"): Input =
     input(
       cls("w3-input w3-hover-light-gray w3-text-indigo"),
       typ(typeOf),
