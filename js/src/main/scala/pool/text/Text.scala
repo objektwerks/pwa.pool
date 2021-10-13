@@ -3,16 +3,18 @@ package pool.text
 import com.raquo.laminar.api.L._
 
 object Text {
+  val css = "w3-input w3-hover-light-gray w3-text-indigo"
+
   def field(typeOf: String = "text"): Input =
     input(
-      cls("w3-input w3-hover-light-gray w3-text-indigo"),
+      cls(css),
       typ(typeOf),
       required(true)
     )
 
   def readonly(typeOf: String = "text"): Input =
     input(
-      cls("w3-input w3-hover-light-gray w3-text-indigo"),
+      cls(css),
       typ(typeOf),
       required(true),
       readOnly(true)
@@ -20,14 +22,14 @@ object Text {
 
   def text(): Input =
     input(
-      cls("w3-input w3-hover-light-gray w3-text-indigo"),
+      cls(css),
       typ("text"),
       required(true)
     )
 
   def text(textVar: Var[String], typeOf: String = "text", isReadOnly: Boolean = false): Input =
     input(
-      cls("w3-input w3-hover-light-gray w3-text-indigo"),
+      cls(css),
       typ(typeOf),
       required(true),
       readOnly(isReadOnly),
@@ -36,14 +38,14 @@ object Text {
 
   def number(): Input =
     input(
-      cls("w3-input w3-hover-light-gray w3-text-indigo"),
+      cls(css),
       typ("number"),
       required(true)
     )
 
   def integer(integerVar: Var[Int], isReadOnly: Boolean = false): Input =
     input(
-      cls("w3-input w3-hover-light-gray w3-text-indigo"),
+      cls(css),
       typ("number"),
       required(true),
       readOnly(isReadOnly),
@@ -52,7 +54,7 @@ object Text {
 
   def double(doubleVar: Var[Double], isReadOnly: Boolean = false): Input =
     input(
-      cls("w3-input w3-hover-light-gray w3-text-indigo"),
+      cls(css),
       typ("number"),
       required(true),
       readOnly(isReadOnly),
