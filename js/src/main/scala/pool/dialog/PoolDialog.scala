@@ -37,7 +37,7 @@ object PoolDialog {
       Errors(errors),
       Field(
         Label("License"),
-        Text.readonly(typeOf = "text").amend {
+        Text.readonly().amend {
           value <-- context.pool.signal.map(_.license)
         }
       ),
