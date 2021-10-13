@@ -27,6 +27,13 @@ object Text {
       onInput.mapToValue.filter(_.nonEmpty) --> textVar
     )
 
+  def number(): Input =
+    input(
+      cls("w3-input w3-hover-light-gray w3-text-indigo"),
+      typ("number"),
+      required(true)
+    )
+
   def integer(integerVar: Var[Int], isReadOnly: Boolean = false): Input =
     input(
       cls("w3-input w3-hover-light-gray w3-text-indigo"),
