@@ -21,17 +21,17 @@ object HomeMenu {
             accountDialog: Div): Div =
     Container(
       MenuItemBar(
-        MenuItem(id = registerMenuItemId, name = "Register").amend {
+        MenuItem(registerMenuItemId, "Register").amend {
           onClick --> { _ =>
             registerDialog.amend(display("block"))
           }
         },
-        MenuItem(id = loginMenuItemId, name = "Login").amend {
+        MenuItem(loginMenuItemId, "Login").amend {
           onClick --> { _ =>
             loginDialog.amend(display("block"))
           }
         },
-        MenuItem(id = accountMenuItemId, name = "Account", isDisplayed = "none").amend {
+        MenuItem(accountMenuItemId, "Account", isDisplayed = "none").amend {
           display("none")
           onClick --> { _ =>
             accountDialog.amend(display("block"))
@@ -44,7 +44,7 @@ object HomeMenu {
             }
           }
         },
-        MenuItem(id = poolsMenuItemId, name = "Pools", isDisplayed = "none").amend {
+        MenuItem(poolsMenuItemId, "Pools", isDisplayed = "none").amend {
           display("none")
           onClick --> { _ =>
             PoolsView.load(context)
