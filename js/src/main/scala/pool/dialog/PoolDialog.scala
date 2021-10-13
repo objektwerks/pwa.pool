@@ -43,7 +43,7 @@ object PoolDialog {
       ),
       Field(
         Label("Name"),
-        Text.field(typeOf = "text").amend {
+        Text.field().amend {
           value <-- context.pool.signal.map(_.name)
           onInput.mapToValue.filter(_.nonEmpty) --> { name =>
             context.pool.update( pool => pool.copy(name = name) )
