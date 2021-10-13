@@ -3,7 +3,7 @@ package pool.text
 import com.raquo.laminar.api.L._
 
 object Text {
-  def field(typeOf: String): Input =
+  def field(typeOf: String = "text"): Input =
     input(
       cls("w3-input w3-hover-light-gray w3-text-indigo"),
       typ(typeOf),
