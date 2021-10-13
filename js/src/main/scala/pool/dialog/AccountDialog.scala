@@ -35,34 +35,34 @@ object AccountDialog {
       Header("Account"),
       Errors(errors),
       Field(
-        Label(column = "25%", name = "License:"),
-        Text(column = "75%", Text.readonly(typeOf = "text").amend {
+        Label(name = "License:"),
+        Text.readonly(typeOf = "text").amend {
           value <-- context.account.signal.map(_.license)
-        })
+        }
       ),
       Field(
-        Label(column = "25%", name = "Email:"),
-        Text(column = "75%", Text.readonly(typeOf = "text").amend {
+        Label(name = "Email:"),
+        Text.readonly(typeOf = "text").amend {
           value <-- context.account.signal.map(_.email)
-        })
+        }
       ),
       Field(
-        Label(column = "25%", name = "Pin:"),
-        Text(column = "75%", Text.readonly(typeOf = "text").amend {
+        Label(name = "Pin:"),
+        Text.readonly(typeOf = "text").amend {
           value <-- context.account.signal.map(_.pin.toString)
-        })
+        }
       ),
       Field(
-        Label(column = "25%", name = "Activated:"),
-        Text(column = "75%", Text.readonly(typeOf = "text").amend {
+        Label(name = "Activated:"),
+        Text.readonly(typeOf = "text").amend {
           value <-- context.account.signal.map(_.activated.toString)
-        })
+        }
       ),
       Field(
-        Label(column = "25%", name = "Deactivated:"),
-        Text(column = "75%", Text.readonly(typeOf = "text").amend {
+        Label(name = "Deactivated:"),
+        Text.readonly(typeOf = "text").amend {
           value <-- context.account.signal.map(_.deactivated.toString)
-        })
+        }
       ),
       MenuButtonBar(
         MenuButton(name = "Cancel").amend {
