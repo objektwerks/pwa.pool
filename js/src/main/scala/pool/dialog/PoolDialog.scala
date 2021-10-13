@@ -36,13 +36,13 @@ object PoolDialog {
       Header("Pool"),
       Errors(errors),
       Field(
-        Label(name = "License:"),
+        Label("License"),
         Text.readonly(typeOf = "text").amend {
           value <-- context.pool.signal.map(_.license)
         }
       ),
       Field(
-        Label(name = "Name:"),
+        Label("Name"),
         Text.field(typeOf = "text").amend {
           value <-- context.pool.signal.map(_.name)
           onInput.mapToValue.filter(_.nonEmpty) --> { name =>
@@ -51,7 +51,7 @@ object PoolDialog {
         }
       ),
       Field(
-        Label(name = "Built:"),
+        Label("Built"),
         Text.field(typeOf = "number").amend {
           value <-- context.pool.signal.map(_.built.toString)
           onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { built =>
@@ -60,7 +60,7 @@ object PoolDialog {
         }
       ),
       Field(
-        Label(name = "Volume:"),
+        Label("Volume"),
         Text.field(typeOf = "number").amend {
           value <-- context.pool.signal.map(_.volume.toString)
           onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { volume =>
