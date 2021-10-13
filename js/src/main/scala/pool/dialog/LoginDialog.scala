@@ -32,7 +32,7 @@ object LoginDialog {
       Errors(errors),
       Field(
         Label("Pin"),
-        Text.integer(integerVar = context.pin)
+        Text.integer(context.pin)
       ),
       MenuButtonBar(
         MenuButton(name = "Cancel").amend {
