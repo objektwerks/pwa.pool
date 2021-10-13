@@ -65,7 +65,7 @@ object AccountDialog {
         }
       ),
       MenuButtonBar(
-        MenuButton(name = "Cancel").amend {
+        MenuButton("Cancel").amend {
           onClick --> { _ => context.hide(id) }
         },
         MenuButton(id = deactivateButtonId, name = "Deactivate").amend {
