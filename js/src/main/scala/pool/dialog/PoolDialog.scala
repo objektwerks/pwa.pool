@@ -69,16 +69,16 @@ object PoolDialog {
         }
       ),
       MenuButtonBar(
-        MenuButton(name = "Close").amend {
+        MenuButton("Close").amend {
           onClick --> { _ => context.hide(id) }
         },
-        MenuButton(id = addButtonId, name = "Add").amend {
+        MenuButton(addButtonId, "Add").amend {
           onClick --> { _ =>
             handler(context, context.poolsAddUrl)
             context.hide(id)
           }
         },
-        MenuButton(id = updateButtonId, name = "Update").amend {
+        MenuButton(updateButtonId, "Update").amend {
           onClick --> { _ =>
             handler(context, context.poolsUpdateUrl)
             context.hide(id)
