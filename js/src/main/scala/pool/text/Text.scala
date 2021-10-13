@@ -18,30 +18,30 @@ object Text {
       readOnly(true)
     )
 
-  def text(typeOf: String, text: Var[String], isReadOnly: Boolean = false): Input =
+  def text(typeOf: String, textVar: Var[String], isReadOnly: Boolean = false): Input =
     input(
       cls("w3-input w3-hover-light-gray w3-text-indigo"),
       typ(typeOf),
       required(true),
       readOnly(isReadOnly),
-      onInput.mapToValue.filter(_.nonEmpty) --> text
+      onInput.mapToValue.filter(_.nonEmpty) --> textVar
     )
 
-  def integer(integer: Var[Int], isReadOnly: Boolean = false): Input =
+  def integer(integerVar: Var[Int], isReadOnly: Boolean = false): Input =
     input(
       cls("w3-input w3-hover-light-gray w3-text-indigo"),
       typ("number"),
       required(true),
       readOnly(isReadOnly),
-      onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> integer
+      onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> integerVar
     )
 
-  def double(double: Var[Double], isReadOnly: Boolean = false): Input =
+  def double(doubleVar: Var[Double], isReadOnly: Boolean = false): Input =
     input(
       cls("w3-input w3-hover-light-gray w3-text-indigo"),
       typ("number"),
       required(true),
       readOnly(isReadOnly),
-      onInput.mapToValue.filter(_.toDoubleOption.nonEmpty).map(_.toDouble) --> double
+      onInput.mapToValue.filter(_.toDoubleOption.nonEmpty).map(_.toDouble) --> doubleVar
     )
 }
