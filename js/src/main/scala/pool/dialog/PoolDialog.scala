@@ -36,37 +36,37 @@ object PoolDialog {
       Header("Pool"),
       Errors(errors),
       Field(
-        Label(column = "25%", name = "License:"),
-        Text(column = "75%", Text.readonly(typeOf = "text").amend {
+        Label(name = "License:"),
+        Text.readonly(typeOf = "text").amend {
           value <-- context.pool.signal.map(_.license)
-        })
+        }
       ),
       Field(
-        Label(column = "25%", name = "Name:"),
-        Text(column = "75%", Text.field(typeOf = "text").amend {
+        Label(name = "Name:"),
+        Text.field(typeOf = "text").amend {
           value <-- context.pool.signal.map(_.name)
           onInput.mapToValue.filter(_.nonEmpty) --> { name =>
             context.pool.update( pool => pool.copy(name = name) )
           }
-        })
+        }
       ),
       Field(
-        Label(column = "25%", name = "Built:"),
-        Text(column = "75%", Text.field(typeOf = "number").amend {
+        Label(name = "Built:"),
+        Text.field(typeOf = "number").amend {
           value <-- context.pool.signal.map(_.built.toString)
           onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { built =>
             context.pool.update( pool => pool.copy(built = built) )
           }
-        })
+        }
       ),
       Field(
-        Label(column = "25%", name = "Volume:"),
-        Text(column = "75%", Text.field(typeOf = "number").amend {
+        Label(name = "Volume:"),
+        Text.field(typeOf = "number").amend {
           value <-- context.pool.signal.map(_.volume.toString)
           onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { volume =>
             context.pool.update( pool => pool.copy(volume = volume) )
           }
-        })
+        }
       ),
       MenuButtonBar(
         MenuButton(name = "Close").amend {
