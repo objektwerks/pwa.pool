@@ -35,31 +35,31 @@ object AccountDialog {
       Header("Account"),
       Errors(errors),
       Field(
-        Label(name = "License:"),
+        Label("License"),
         Text.readonly(typeOf = "text").amend {
           value <-- context.account.signal.map(_.license)
         }
       ),
       Field(
-        Label(name = "Email:"),
+        Label("Email Address"),
         Text.readonly(typeOf = "text").amend {
           value <-- context.account.signal.map(_.email)
         }
       ),
       Field(
-        Label(name = "Pin:"),
+        Label("Pin"),
         Text.readonly(typeOf = "text").amend {
           value <-- context.account.signal.map(_.pin.toString)
         }
       ),
       Field(
-        Label(name = "Activated:"),
+        Label("Activated"),
         Text.readonly(typeOf = "text").amend {
           value <-- context.account.signal.map(_.activated.toString)
         }
       ),
       Field(
-        Label(name = "Deactivated:"),
+        Label("Deactivated"),
         Text.readonly(typeOf = "text").amend {
           value <-- context.account.signal.map(_.deactivated.toString)
         }
