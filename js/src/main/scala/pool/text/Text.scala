@@ -18,7 +18,7 @@ object Text {
       readOnly(true)
     )
 
-  def text(typeOf: String, textVar: Var[String], isReadOnly: Boolean = false): Input =
+  def text(textVar: Var[String], typeOf: String = "text", isReadOnly: Boolean = false): Input =
     input(
       cls("w3-input w3-hover-light-gray w3-text-indigo"),
       typ(typeOf),
