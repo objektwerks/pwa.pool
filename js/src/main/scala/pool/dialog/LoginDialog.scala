@@ -35,10 +35,10 @@ object LoginDialog {
         Text.integer(context.pin)
       ),
       MenuButtonBar(
-        MenuButton(name = "Cancel").amend {
+        MenuButton("Cancel").amend {
           onClick --> { _ => context.hide(id) }
         },
-        MenuButton(name = "Login").amend {
+        MenuButton("Login").amend {
           onClick --> { _ =>
             val command = Login(context.pin.now())
             val response = CommandProxy.post(context.loginUrl, Account.emptyLicense, command)
