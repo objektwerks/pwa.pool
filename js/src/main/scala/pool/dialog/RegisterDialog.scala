@@ -27,8 +27,8 @@ object RegisterDialog {
       Note("Check your email for new account details, provided your given email address is valid."),
       Errors(errors),
       Field(
-        Label(name = "Email:"),
-        Text.text(typeOf = "email", text = context.email)
+        Label("Email Address"),
+        Text.text(typeOf = "email", textVar = context.email)
       ),
       MenuButtonBar(
         MenuButton(name = "Cancel").amend {
