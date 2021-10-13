@@ -31,10 +31,10 @@ object RegisterDialog {
         Text.text(context.email, "email")
       ),
       MenuButtonBar(
-        MenuButton(name = "Cancel").amend {
+        MenuButton("Cancel").amend {
           onClick --> { _ => context.hide(id) }
         },
-        MenuButton(name = "Register").amend {
+        MenuButton("Register").amend {
           onClick --> { _ =>
             val command = Register(context.email.now())
             val response = CommandProxy.post(context.registerUrl, Account.emptyLicense, command)
