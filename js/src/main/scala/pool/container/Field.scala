@@ -8,10 +8,4 @@ object Field {
       label,
       input
     )
-
-/*  def apply(label: Div, input: Div): Div =
-    div(cls("w3-row w3-margin"),
-      label,
-      input
-    )*/
 }
