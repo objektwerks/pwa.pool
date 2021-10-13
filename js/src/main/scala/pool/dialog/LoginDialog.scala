@@ -31,8 +31,8 @@ object LoginDialog {
       Header("Login"),
       Errors(errors),
       Field(
-        Label(name = "Pin:"),
-        Text.integer(integer = context.pin)
+        Label("Pin"),
+        Text.integer(integerVar = context.pin)
       ),
       MenuButtonBar(
         MenuButton(name = "Cancel").amend {
