@@ -4,6 +4,7 @@ object Validators {
   implicit class StringOps(val value: String) {
     def isLicense: Boolean = if (value.nonEmpty) value.length == 36 else false
     def isEmail: Boolean = value.nonEmpty && value.length >=3 && value.contains("@")
+    def isPin: Boolean = value.length == 9
   }
 
   implicit class RegisterOps(val register: Register) {
@@ -11,7 +12,7 @@ object Validators {
   }
 
   implicit class LoginOps(val login: Login) {
-    def isValid: Boolean = login.pin.length == 9
+    def isValid: Boolean = login.email.isEmail && login.pin.isPin
   }
 
   implicit class DeactivateOps(val deactivate: Deactivate) {
@@ -26,13 +27,13 @@ object Validators {
     def isActivated: Boolean =
       account.license.isLicense &&
       account.email.isEmail &&
-      account.pin.length == 9 &&
+      account.pin.isPin &&
       account.activated > 0 &&
       account.deactivated == 0
     def isDeactivated: Boolean =
       account.license.isLicense &&
       account.email.isEmail &&
-      account.pin.length == 9 &&
+      account.pin.isPin &&
       account.activated > 0 &&
       account.deactivated > 0
   }
