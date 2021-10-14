@@ -56,6 +56,8 @@ object Text {
     input(
       cls(css),
       typ("number"),
+      pattern("[0-9]+([.,][0-9]+)?"),
+      stepAttr("0.01"),
       required(true),
       readOnly(isReadOnly),
       onInput.mapToValue.filter(_.toDoubleOption.nonEmpty).map(_.toDouble) --> doubleVar
