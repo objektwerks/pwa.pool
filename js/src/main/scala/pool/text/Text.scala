@@ -36,10 +36,12 @@ object Text {
       onInput.mapToValue.filter(_.nonEmpty) --> textVar
     )
 
-  def number(): Input =
+  def integer(): Input =
     input(
       cls(css),
       typ("number"),
+      pattern("\\d*"),
+      stepAttr("1"),
       required(true)
     )
 
