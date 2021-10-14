@@ -93,7 +93,7 @@ class RouterTest extends AnyWordSpec
 
   "login" should {
     "post to loggedin" in {
-      Post("/login", Login(account.pin)) ~> router.routes ~> check {
+      Post("/login", Login(account.email, account.pin)) ~> router.routes ~> check {
         status shouldBe OK
         account = responseAs[LoggedIn].account
         licenseHeader = RawHeader(Account.licenseHeader, account.license)
