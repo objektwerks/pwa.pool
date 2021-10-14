@@ -29,7 +29,7 @@ class Context(publicUrl: String, apiUrl: String) {
   )
 
   val email = Var("")
-  val pin = Var(0)
+  val pin = Var("")
   val account = Var(Account.emptyAccount)
   val pools = Var(Seq.empty[Pool])
   val pool = Var[Pool](Pool())
