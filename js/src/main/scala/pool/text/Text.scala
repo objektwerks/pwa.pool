@@ -56,6 +56,15 @@ object Text {
       onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> integerVar
     )
 
+  def double(): Input =
+    input(
+      cls(css),
+      typ("number"),
+      pattern("[0-9]+([.,][0-9]+)?"),
+      stepAttr("0.01"),
+      required(true)
+    )
+
   def double(doubleVar: Var[Double], isReadOnly: Boolean = false): Input =
     input(
       cls(css),
