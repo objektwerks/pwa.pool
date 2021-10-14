@@ -51,8 +51,10 @@ object PoolDialog {
         }
       ),
       Field(
-        Label("Built"),
-        Text.number().amend {
+        Label("Year Built"),
+        Text.integer().amend {
+          minLength(4)
+          maxLength(4)
           value <-- context.pool.signal.map(_.built.toString)
           onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { built =>
             context.pool.update( pool => pool.copy(built = built) )
@@ -61,7 +63,9 @@ object PoolDialog {
       ),
       Field(
         Label("Volume"),
-        Text.number().amend {
+        Text.integer().amend {
+          minLength(4)
+          maxLength(5)
           value <-- context.pool.signal.map(_.volume.toString)
           onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { volume =>
             context.pool.update( pool => pool.copy(volume = volume) )
