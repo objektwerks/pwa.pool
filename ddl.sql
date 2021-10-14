@@ -4,7 +4,7 @@ CREATE SCHEMA PUBLIC;
 CREATE TABLE account (
   license VARCHAR(36) PRIMARY KEY,
   email VARCHAR NOT NULL,
-  pin INT NOT NULL UNIQUE,
+  pin VARCHAR(9) NOT NULL,
   activated INT NOT NULL,
   deactivated INT NOT NULL
 );
