@@ -2,6 +2,8 @@ package pool
 
 import java.util.UUID
 
+import scala.util.Random
+
 sealed trait Entity extends Product with Serializable
 
 final case class Email(id : String,
@@ -22,7 +24,7 @@ object Account {
   def apply(email: String): Account = Account(
     license = UUID.randomUUID.toString,
     email = email,
-    pin = UUID.randomUUID.toString.replaceAll("-", "").take(9),
+    pin = Random.shuffle( Random.alphanumeric.take(7).mkString.prepended("@").appended("!") ).mkString,
     activated = DateTime.currentDate,
     deactivated = 0
   )
