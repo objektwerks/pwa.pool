@@ -11,7 +11,7 @@ object Validators {
   }
 
   implicit class LoginOps(val login: Login) {
-    def isValid: Boolean = login.pin > 0
+    def isValid: Boolean = login.pin.length == 9
   }
 
   implicit class DeactivateOps(val deactivate: Deactivate) {
