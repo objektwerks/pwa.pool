@@ -66,7 +66,7 @@ class Router(store: Store,
     post {
       entity(as[Login]) { login =>
         if (login.isValid) {
-          onSuccess(store.loginAccount(login.pin)) {
+          onSuccess(store.loginAccount(login.email, login.pin)) {
             case Some(account) =>
               cache.put(account)
               complete(OK -> LoggedIn(account))
