@@ -31,6 +31,10 @@ object LoginDialog {
       Header("Login"),
       Errors(errors),
       Field(
+        Label("Email Address"),
+        Text.text(context.email, "email")
+      ),
+      Field(
         Label("Pin"),
         Text.text(context.pin).amend {
           minLength(9)
@@ -43,7 +47,7 @@ object LoginDialog {
         },
         MenuButton("Login").amend {
           onClick --> { _ =>
-            val command = Login(context.pin.now())
+            val command = Login(context.email.now(), context.pin.now())
             val response = CommandProxy.post(context.loginUrl, Account.emptyLicense, command)
             EventHandler.handle(context, errors, response, handler)
           }
