@@ -23,11 +23,13 @@ object HomeMenu {
       MenuItemBar(
         MenuItem(registerMenuItemId, "Register").amend {
           onClick --> { _ =>
+            context.email.set("")
             registerDialog.amend(display("block"))
           }
         },
         MenuItem(loginMenuItemId, "Login").amend {
           onClick --> { _ =>
+            context.email.set("")
             loginDialog.amend(display("block"))
           }
         },
