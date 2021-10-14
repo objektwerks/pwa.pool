@@ -45,7 +45,7 @@ class Store(conf: Config)(implicit ec: ExecutionContext) {
       ).map(_ => ())
     }
 
-  def loginAccount(pin: Int): Future[Option[Account]] =
+  def loginAccount(pin: String): Future[Option[Account]] =
     run(
       query[Account]
         .filter(_.pin == lift(pin))
