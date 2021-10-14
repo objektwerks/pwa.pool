@@ -14,7 +14,7 @@ final case class Email(id : String,
 
 final case class Account(license: String,
                          email: String,
-                         pin: Int,
+                         pin: String,
                          activated: Int,
                          deactivated: Int) extends Entity {
   def toLicense: License = License(license)
@@ -24,14 +24,14 @@ object Account {
   def apply(email: String): Account = Account(
     license = UUID.randomUUID.toString.toLowerCase,
     email = email,
-    pin = Math.abs(Random.nextInt()),
+    pin = Random.alphanumeric.take(9).mkString,
     activated = DateTime.currentDate,
     deactivated = 0
   )
   val emptyAccount = Account(
     license = "",
     email = "",
-    pin = 0,
+    pin = "",
     activated = 0,
     deactivated = 0
   )
