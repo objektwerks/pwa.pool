@@ -47,6 +47,8 @@ object Text {
     input(
       cls(css),
       typ("number"),
+      pattern("\\d*"),
+      stepAttr("1"),
       required(true),
       readOnly(isReadOnly),
       onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> integerVar
