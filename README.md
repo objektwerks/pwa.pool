@@ -98,15 +98,16 @@ Proxy
 Account
 -------
 * Register( email ) => Registering( inProgress )
-* Login( pin ) => LoggedIn( account )
+* Login( email, pin ) => LoggedIn( account )
 * Deactivate( license ) => Deactivated( account )
 * Reactivate( license ) => Reactivated( account )
 
 Dialogs
 -------
 * Register ( email )
-* Login ( pin )
+* Login ( email, pin )
 * Account ( license, email, pin, activated, deactivated )
+* Pool ( pool )
 
 Views
 -----
