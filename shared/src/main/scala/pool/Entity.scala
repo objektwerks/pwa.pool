@@ -21,10 +21,11 @@ object Entity {
       .appended(newSpecialChar)
   ).mkString
 
-  def newSpecialChar: Char = {
+  private def newSpecialChar: Char = {
     val list = random.shuffle(specialChars)
     list(random.nextInt(list.length))
-  }}
+  }
+}
 
 final case class Email(id : String,
                        license: String,
