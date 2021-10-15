@@ -12,14 +12,6 @@ object Text {
       required(true)
     )
 
-  def readonly(typeOf: String = "text"): Input =
-    input(
-      cls(css),
-      typ(typeOf),
-      required(true),
-      readOnly(true)
-    )
-
   def text(): Input =
     input(
       cls(css),
@@ -34,6 +26,22 @@ object Text {
       required(true),
       readOnly(isReadOnly),
       onInput.mapToValue.filter(_.nonEmpty) --> textVar
+    )
+
+  def readonly(typeOf: String = "text"): Input =
+    input(
+      cls(css),
+      typ(typeOf),
+      required(true),
+      readOnly(true)
+    )
+
+  def email(emailVar: Var[String]): Input =
+    input(
+      cls(css),
+      typ("email"),
+      required(true),
+      onInput.mapToValue.filter(_.nonEmpty) --> emailVar
     )
 
   def integer(): Input =
