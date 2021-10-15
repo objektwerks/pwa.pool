@@ -6,6 +6,21 @@ import scala.util.Random
 
 sealed trait Entity extends Product with Serializable
 
+object Entity {
+  val specialChars = "!@#$%^&*+"
+
+  def newLicense: String = UUID.randomUUID.toString
+
+  def newPin: String = Random.shuffle(
+    Random
+      .alphanumeric
+      .take(7)
+      .mkString
+      .prepended("@")
+      .appended("!")
+  ).mkString
+}
+
 final case class Email(id : String,
                        license: String,
                        address: String,
@@ -22,9 +37,9 @@ final case class Account(license: String,
 
 object Account {
   def apply(email: String): Account = Account(
-    license = UUID.randomUUID.toString,
+    license = Entity.newLicense,
     email = email,
-    pin = Random.shuffle( Random.alphanumeric.take(7).mkString.prepended("@").appended("!") ).mkString,
+    pin = Entity.newPin,
     activated = DateTime.currentDate,
     deactivated = 0
   )
