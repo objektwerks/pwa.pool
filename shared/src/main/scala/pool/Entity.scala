@@ -7,7 +7,7 @@ import scala.util.Random
 sealed trait Entity extends Product with Serializable
 
 object Entity {
-  val specialChars = "!@#$%^&*+"
+  private val specialChars = "!@#$%^&*+".toList
 
   def newLicense: String = UUID.randomUUID.toString
 
@@ -16,9 +16,11 @@ object Entity {
       .alphanumeric
       .take(7)
       .mkString
-      .prepended("@")
-      .appended("!")
+      .prepended(newSpecialChar)
+      .appended(newSpecialChar)
   ).mkString
+
+  def newSpecialChar: Char = Random.shuffle(specialChars).last
 }
 
 final case class Email(id : String,
