@@ -28,7 +28,7 @@ object RegisterDialog {
       Errors(errors),
       Field(
         Label("Email Address"),
-        Text.text(context.email, "email")
+        Text.email(context.email)
       ),
       MenuButtonBar(
         MenuButton("Cancel").amend {
