@@ -55,7 +55,7 @@ object PoolsView {
             poolDialog.amend(display("block"))
           }
         },
-        MenuButton(id = viewButtonId, name = "View", isDisabled = true).amend {
+        MenuButton(viewButtonId, "View", isDisabled = true).amend {
           onClick --> { _ =>
             PoolDialog.applyMode(View, context)
             poolDialog.amend(display("block"))
