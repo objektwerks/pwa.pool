@@ -24,11 +24,11 @@ object PoolDialog {
 
   def applyMode(mode: Mode, context: Context): Unit = mode match {
     case New =>
-      context.show(addButtonId)
-      context.hide(updateButtonId)
+      context.enable(addButtonId)
+      context.disable(updateButtonId)
     case View =>
-      context.hide(addButtonId)
-      context.show(updateButtonId)
+      context.disable(addButtonId)
+      context.enable(updateButtonId)
   }
 
   def apply(context: Context): Div =
