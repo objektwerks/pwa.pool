@@ -7,7 +7,7 @@ import scala.util.Random
 sealed trait Entity extends Product with Serializable
 
 object Entity {
-  private val specialChars = "~!@#$%^&*(){}-+<>?/:;".toList
+  private val specialChars = "~!@#$%^&*{}-+<>?/:;".toList
   private val random = new Random
 
   def newLicense: String = UUID.randomUUID.toString
