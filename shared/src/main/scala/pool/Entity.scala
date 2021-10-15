@@ -8,6 +8,7 @@ sealed trait Entity extends Product with Serializable
 
 object Entity {
   private val specialChars = "!@#$%^&*+".toList
+  private val random = new Random
 
   def newLicense: String = UUID.randomUUID.toString
 
@@ -21,8 +22,8 @@ object Entity {
   ).mkString
 
   def newSpecialChar: Char = {
-    val list = Random.shuffle(specialChars)
-    list(Random.nextInt(list.length))
+    val list = random.shuffle(specialChars)
+    list(random.nextInt(list.length))
   }}
 
 final case class Email(id : String,
