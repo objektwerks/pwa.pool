@@ -18,6 +18,12 @@ object Context {
 class Context(publicUrl: String, apiUrl: String) {
   log(s"[context] public url: $publicUrl api url: $apiUrl")
 
+  val email = Var("")
+  val pin = Var("")
+  val account = Var(Account.emptyAccount)
+  val pools = Var(Seq.empty[Pool])
+  val pool = Var[Pool](Pool())
+
   val content = Container(
     HomeMenu(
       this,
@@ -27,12 +33,6 @@ class Context(publicUrl: String, apiUrl: String) {
     ),
     PoolsView(this, PoolDialog(this))
   )
-
-  val email = Var("")
-  val pin = Var("")
-  val account = Var(Account.emptyAccount)
-  val pools = Var(Seq.empty[Pool])
-  val pool = Var[Pool](Pool())
 
   val registerUrl = s"$publicUrl/register"
   val loginUrl = s"$publicUrl/login"
