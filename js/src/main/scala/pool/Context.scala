@@ -2,6 +2,7 @@ package pool
 
 import com.raquo.laminar.api.L._
 
+import org.scalajs.dom.raw.HTMLButtonElement
 import org.scalajs.dom.{console, document}
 
 import pool.container.Container
@@ -44,12 +45,12 @@ class Context(publicUrl: String, apiUrl: String) {
 
   def log(message: Any): Unit = Context.log(message)
 
-  def disable(id: String): Unit = setDisabled(id, "true")
+  def disable(id: String): Unit = setDisabled(id, isDisabled = true)
 
-  def enable(id: String): Unit = setDisabled(id, "false")
+  def enable(id: String): Unit = setDisabled(id, isDisabled = false)
 
-  def setDisabled(id: String, isDisabled: String): Unit = document.getElementById(id) match {
-    case element: Element => element.setAttribute("disabled", isDisabled)
+  def setDisabled(id: String, isDisabled: Boolean): Unit = document.getElementById(id) match {
+    case button: HTMLButtonElement => button.disabled = isDisabled
     case _ =>
   }
 
