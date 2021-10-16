@@ -45,22 +45,16 @@ class Context(publicUrl: String, apiUrl: String) {
 
   def log(message: Any): Unit = Context.log(message)
 
-  def disable(id: String): Unit = setDisabled(id, isDisabled = true)
-
-  def enable(id: String): Unit = setDisabled(id, isDisabled = false)
-
-  def setDisabled(id: String, isDisabled: Boolean): Unit = document.getElementById(id) match {
-    case button: HTMLButtonElement => button.disabled = isDisabled
-    case _ =>
-  }
-
   def hide(id: String): Unit = document.getElementById(id).setAttribute("style", "display: none")
 
   def show(id: String): Unit = document.getElementById(id).setAttribute("style", "display: block")
 
-  def toggle(id: String, style: String): Boolean = document.getElementById(id).classList.toggle(style)
+  def disable(id: String): Unit = setDisabled(id, isDisabled = true)
 
-  def add(id: String, style: String): Unit = document.getElementById(id).classList.add(style)
+  def enable(id: String): Unit = setDisabled(id, isDisabled = false)
 
-  def remove(id: String, style: String): Unit = document.getElementById(id).classList.remove(style)
+  private def setDisabled(id: String, isDisabled: Boolean): Unit = document.getElementById(id) match {
+    case button: HTMLButtonElement => button.disabled = isDisabled
+    case _ =>
+  }
 }
