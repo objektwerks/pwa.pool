@@ -44,9 +44,14 @@ class Context(publicUrl: String, apiUrl: String) {
 
   def log(message: Any): Unit = Context.log(message)
 
-  def disable(id: String): Unit = document.getElementById(id).setAttribute("disabled", "true")
+  def disable(id: String): Unit = setDisabled(id, "true")
 
-  def enable(id: String): Unit = document.getElementById(id).setAttribute("disabled", "false")
+  def enable(id: String): Unit = setDisabled(id, "false")
+
+  def setDisabled(id: String, isDisabled: String): Unit = document.getElementById(id) match {
+    case element: Element => element.setAttribute("disabled", isDisabled)
+    case _ =>
+  }
 
   def hide(id: String): Unit = document.getElementById(id).setAttribute("style", "display: none")
 
