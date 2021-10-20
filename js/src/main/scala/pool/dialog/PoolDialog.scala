@@ -24,8 +24,8 @@ object PoolDialog {
 
   def applyMode(mode: Mode, context: Context): Unit = mode match {
     case New =>
-      context.enable(addButtonId)
       context.disable(updateButtonId)
+      context.enable(addButtonId)
     case View =>
       context.disable(addButtonId)
       context.enable(updateButtonId)
