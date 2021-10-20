@@ -1,14 +1,14 @@
-package pool.dialog
+package pool.view
 
 import com.raquo.laminar.api.L._
 
 import pool.Context
 import pool.container.{Container, Field}
+import pool.dialog.{Mode, New, View}
 import pool.handler.StateHandler
 import pool.menu.{MenuButton, MenuButtonBar}
 import pool.proxy.EntityProxy
 import pool.text.{Errors, Header, Label, Text}
-import pool.view.PoolsView
 
 object PoolView {
   val id = getClass.getSimpleName
@@ -46,7 +46,7 @@ object PoolView {
         Text.text().amend {
           value <-- context.pool.signal.map(_.name)
           onInput.mapToValue.filter(_.nonEmpty) --> { name =>
-            context.pool.update( pool => pool.copy(name = name) )
+            context.pool.update(pool => pool.copy(name = name))
           }
         }
       ),
@@ -57,7 +57,7 @@ object PoolView {
           maxLength(4)
           value <-- context.pool.signal.map(_.built.toString)
           onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { built =>
-            context.pool.update( pool => pool.copy(built = built) )
+            context.pool.update(pool => pool.copy(built = built))
           }
         }
       ),
@@ -68,7 +68,7 @@ object PoolView {
           maxLength(5)
           value <-- context.pool.signal.map(_.volume.toString)
           onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { volume =>
-            context.pool.update( pool => pool.copy(volume = volume) )
+            context.pool.update(pool => pool.copy(volume = volume))
           }
         }
       ),

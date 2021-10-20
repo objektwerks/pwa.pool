@@ -4,7 +4,7 @@ import com.raquo.laminar.api.L._
 
 import pool._
 import pool.container._
-import pool.dialog.{New, View, PoolView}
+import pool.dialog.{New, View}
 import pool.handler.StateHandler
 import pool.menu.{MenuButton, MenuButtonBar}
 import pool.proxy.EntityProxy

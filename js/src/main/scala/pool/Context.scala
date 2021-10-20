@@ -6,9 +6,9 @@ import org.scalajs.dom.raw.HTMLButtonElement
 import org.scalajs.dom.{console, document}
 
 import pool.container.Container
-import pool.dialog.{AccountDialog, LoginDialog, PoolView, RegisterDialog}
+import pool.dialog.{AccountDialog, LoginDialog, RegisterDialog}
 import pool.menu.HomeMenu
-import pool.view.PoolsView
+import pool.view.{PoolsView, PoolView}
 
 object Context {
   def apply(publicUrl: String, apiUrl: String): Context = new Context(publicUrl, apiUrl)
