@@ -6,7 +6,7 @@ import org.scalajs.dom.raw.HTMLButtonElement
 import org.scalajs.dom.{console, document}
 
 import pool.container.Container
-import pool.dialog.{AccountDialog, LoginDialog, PoolDialog, RegisterDialog}
+import pool.dialog.{AccountDialog, LoginDialog, PoolView, RegisterDialog}
 import pool.menu.HomeMenu
 import pool.view.PoolsView
 
@@ -32,7 +32,8 @@ class Context(publicUrl: String, apiUrl: String) {
       LoginDialog(this),
       AccountDialog(this)
     ),
-    PoolsView(this, PoolDialog(this))
+    PoolsView(this),
+    PoolView(this)
   )
 
   val registerUrl = s"$publicUrl/register"

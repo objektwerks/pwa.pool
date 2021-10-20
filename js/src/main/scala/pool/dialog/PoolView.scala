@@ -3,14 +3,14 @@ package pool.dialog
 import com.raquo.laminar.api.L._
 
 import pool.Context
-import pool.container.Field
+import pool.container.{Container, Field}
 import pool.handler.StateHandler
 import pool.menu.{MenuButton, MenuButtonBar}
 import pool.proxy.EntityProxy
 import pool.text.{Errors, Header, Label, Text}
 import pool.view.PoolsView
 
-object PoolDialog {
+object PoolView {
   val id = getClass.getSimpleName
   val addButtonId = id + "-add-button"
   val updateButtonId = id + "-update-button"
@@ -32,7 +32,7 @@ object PoolDialog {
   }
 
   def apply(context: Context): Div =
-    Modal(id = id,
+    Container(id = id, isDisplayed = "none",
       Header("Pool"),
       Errors(errors),
       Field(
@@ -80,12 +80,14 @@ object PoolDialog {
           onClick --> { _ =>
             handler(context, context.poolsAddUrl)
             context.hide(id)
+            context.show(PoolsView.id)
           }
         },
         MenuButton(updateButtonId, "Update").amend {
           onClick --> { _ =>
             handler(context, context.poolsUpdateUrl)
             context.hide(id)
+            context.show(PoolsView.id)
           }
         }
       )
