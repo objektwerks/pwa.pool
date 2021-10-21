@@ -79,15 +79,13 @@ object PoolView {
         MenuButton(addButtonId, "Add").amend {
           onClick --> { _ =>
             handler(context, context.poolsAddUrl)
-            context.hide(id)
-            context.show(PoolsView.id)
+            context.hideAndShow(id, PoolsView.id)
           }
         },
         MenuButton(updateButtonId, "Update").amend {
           onClick --> { _ =>
             handler(context, context.poolsUpdateUrl)
-            context.hide(id)
-            context.show(PoolsView.id)
+            context.hideAndShow(id, PoolsView.id)
           }
         }
       )
