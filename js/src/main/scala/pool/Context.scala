@@ -50,6 +50,11 @@ class Context(publicUrl: String, apiUrl: String) {
 
   def show(id: String): Unit = document.getElementById(id).setAttribute("style", "display: block")
 
+  def hideAndShow(hideId: String, showId: String): Unit = {
+    hide(hideId)
+    show(showId)
+  }
+
   def disable(id: String): Unit = setDisabled(id, isDisabled = true)
 
   def enable(id: String): Unit = setDisabled(id, isDisabled = false)
