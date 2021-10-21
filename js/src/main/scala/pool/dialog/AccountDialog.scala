@@ -25,8 +25,7 @@ object AccountDialog {
         context.hide(id)
       case reactivated: Reactivated =>
         context.account.set(reactivated.account)
-        context.hide(id)
-        context.show(HomeMenu.poolsMenuItemId)
+        context.hideAndShow(id, HomeMenu.poolsMenuItemId)
       case _ => errors.emit(s"Invalid: $event")
     }
 
