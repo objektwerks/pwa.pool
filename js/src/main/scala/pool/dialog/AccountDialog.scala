@@ -48,7 +48,7 @@ object AccountDialog {
       Field(
         Label("Pin"),
         Text.readonly().amend {
-          value <-- context.account.signal.map(_.pin.toString)
+          value <-- context.account.signal.map(_.pin)
         }
       ),
       Field(
