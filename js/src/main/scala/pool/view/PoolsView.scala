@@ -52,15 +52,13 @@ object PoolsView {
           onClick --> { _ =>
             context.pool.set( Pool().copy(license = context.account.now().license) )
             PoolView.applyMode(New, context)
-            context.hide(id)
-            context.show(PoolView.id)
+            context.hideAndShow(id, PoolView.id)
           }
         },
         MenuButton(viewButtonId, "View", isDisabled = true).amend {
           onClick --> { _ =>
             PoolView.applyMode(View, context)
-            context.hide(id)
-            context.show(PoolView.id)
+            context.hideAndShow(id, PoolView.id)
           }
         },
         MenuButton(name = "Refresh").amend {
