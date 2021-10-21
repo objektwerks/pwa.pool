@@ -34,24 +34,20 @@ object HomeMenu {
           }
         },
         MenuItem(accountMenuItemId, "Account", isDisplayed = "none").amend {
-          display("none")
+          display("none") // Why?
           onClick --> { _ =>
             accountDialog.amend(display("block"))
-            if (context.account.now().isActivated) {
-              context.show(AccountDialog.deactivateButtonId)
-              context.hide(AccountDialog.reactivateButtonId)
-            } else if (context.account.now().isDeactivated) {
-              context.hide(AccountDialog.deactivateButtonId)
-              context.show(AccountDialog.reactivateButtonId)
-            }
+            if (context.account.now().isActivated)
+              context.hideAndShow(AccountDialog.reactivateButtonId, AccountDialog.deactivateButtonId)
+            else if (context.account.now().isDeactivated)
+              context.hideAndShow(AccountDialog.deactivateButtonId, AccountDialog.reactivateButtonId)
           }
         },
         MenuItem(poolsMenuItemId, "Pools", isDisplayed = "none").amend {
-          display("none")
+          display("none") // Why?
           onClick --> { _ =>
             PoolsView.load(context)
-            context.show(PoolsView.id)
-            context.hide(poolsMenuItemId)
+            context.hideAndShow(poolsMenuItemId, PoolsView.id)
           }
         }
       ),
