@@ -61,9 +61,7 @@ class Context(publicUrl: String, apiUrl: String) {
 
   private def setDisabled(id: String, isDisabled: Boolean): Unit = {
     document.getElementById(id) match {
-      case button: HTMLButtonElement =>
-        log(s"HTMLButtonElement -> id: $id isDisabled: $isDisabled")
-        button.disabled = isDisabled
+      case button: HTMLButtonElement => button.disabled = isDisabled
       case _ => log(s"Element -> id: $id isDisabled: $isDisabled")
     }
   }
