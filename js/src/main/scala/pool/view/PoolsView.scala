@@ -14,7 +14,7 @@ object PoolsView {
   val id = getClass.getSimpleName
   val viewButtonId = id + "-view-button"
   val errors = new EventBus[String]
-  var listItems = Var(Seq.empty[Li]).toObservable
+  var listItems: Signal[Seq[Li]] = Var(Seq.empty[Li]).toObservable
 
   def handler(context: Context, errors: EventBus[String], state: State): Unit =
     state match {
