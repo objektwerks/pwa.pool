@@ -20,11 +20,13 @@ object PoolsView {
     state match {
       case pools: Pools =>
         context.pools.set(pools.pools)
-        listItems = context.pools.signal.split(_.id)((_, _, pool) =>
-          ListView.renderItem( pool.map(_.name) ).amend {
-            onClick.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { id =>
-              context.pools.now().find(_.id == id).foreach(pool => context.selectedPool.set(pool))
-              context.enable(viewButtonId)
+        listItems = context.pools.signal.split(_.id)( (id, _, poolSignal) =>
+          ListView.renderItem( poolSignal.map(_.name) ).amend {
+            onClick --> { _ =>
+              context.pools.now().find(_.id == id).foreach { pool =>
+                context.selectedPool.set(pool)
+                context.enable(viewButtonId)
+              }
             }
           }
         )
