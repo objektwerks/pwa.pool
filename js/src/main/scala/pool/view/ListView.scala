@@ -14,6 +14,7 @@ object ListView {
 
   def renderItem(item: Signal[String]): Li =
     li(
+      cls("w3-text-indigo w3-display-container"),
       child.text <-- item
     )
 }
