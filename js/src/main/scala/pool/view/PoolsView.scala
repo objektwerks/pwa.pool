@@ -14,22 +14,11 @@ object PoolsView {
   val id = getClass.getSimpleName
   val viewButtonId = id + "-view-button"
   val errors = new EventBus[String]
-  var listItems: Signal[Seq[Li]] = Var(Seq.empty[Li]).toObservable
 
   def handler(context: Context, errors: EventBus[String], state: State): Unit =
     state match {
       case pools: Pools =>
         context.pools.set(pools.pools)
-        listItems = context.pools.signal.split(_.id)( (id, _, poolSignal) =>
-          ListView.renderItem( poolSignal.map(_.name) ).amend {
-            onClick --> { _ =>
-              context.pools.now().find(_.id == id).foreach { pool =>
-                context.selectedPool.set(pool)
-                context.enable(viewButtonId)
-              }
-            }
-          }
-        )
       case id: Id =>
         val pool = context.selectedPool.now().copy(id = id.id)
         context.selectedPool.set(pool)
@@ -44,11 +33,22 @@ object PoolsView {
     StateHandler.handle(context, errors, response, handler)
   }
 
+  def split(context: Context): Signal[Seq[Li]] = context.pools.signal.split(_.id)( (id, _, poolSignal) =>
+    ListView.renderItem( poolSignal.map(_.name) ).amend {
+      onClick --> { _ =>
+        context.pools.now().find(_.id == id).foreach { pool =>
+          context.selectedPool.set(pool)
+          context.enable(viewButtonId)
+        }
+      }
+    }
+  )
+
   def apply(context: Context): Div =
     Container(id = id, isDisplayed = "none",
       Header("Pools"),
       Errors(errors),
-      ListView(listItems),
+      ListView(split(context)),
       MenuButtonBar(
         MenuButton(name = "New").amend {
           onClick --> { _ =>
