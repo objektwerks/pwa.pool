@@ -31,7 +31,7 @@ object PoolsView {
       case id: Id =>
         val pool = context.selectedPool.now().copy(id = id.id)
         context.selectedPool.set(pool)
-        context.pools.update(_ :+ pool)
+        context.pools.update(pools => pools :+ pool)
       case count: Count => if (count.count != 1) errors.emit(s"Update failed: $count")
       case _ => errors.emit(s"Invalid state: $state")
     }
