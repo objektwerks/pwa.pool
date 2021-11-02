@@ -74,7 +74,9 @@ object PoolView {
       ),
       MenuButtonBar(
         MenuButton("Close").amend {
-          onClick --> { _ => context.hideAndShow(id, PoolsView.id) }
+          onClick --> { _ =>
+            context.hideAndShow(id, PoolsView.id)
+          }
         },
         MenuButton(addButtonId, "Add").amend {
           onClick --> { _ =>
