@@ -23,14 +23,14 @@ object PoolsView {
         listItems = context.pools.signal.split(_.id)((_, _, pool) =>
           ListView.renderItem( pool.map(_.name) ).amend {
             onClick.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { id =>
-              context.pools.now().find(_.id == id).foreach(pool => context.pool.set(pool))
+              context.pools.now().find(_.id == id).foreach(pool => context.selectedPool.set(pool))
               context.enable(viewButtonId)
             }
           }
         )
       case id: Id =>
-        val pool = context.pool.now().copy(id = id.id)
-        context.pool.set(pool)
+        val pool = context.selectedPool.now().copy(id = id.id)
+        context.selectedPool.set(pool)
         context.pools.update(_ :+ pool)
       case count: Count => if (count.count != 1) errors.emit(s"Update failed: $count")
       case _ => errors.emit(s"Invalid state: $state")
@@ -50,7 +50,7 @@ object PoolsView {
       MenuButtonBar(
         MenuButton(name = "New").amend {
           onClick --> { _ =>
-            context.pool.set( Pool().copy(license = context.account.now().license) )
+            context.selectedPool.set( Pool().copy(license = context.account.now().license) )
             PoolView.applyMode(New, context)
             context.hideAndShow(id, PoolView.id)
           }

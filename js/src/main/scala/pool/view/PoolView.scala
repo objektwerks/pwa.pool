@@ -17,7 +17,7 @@ object PoolView {
   val errors = new EventBus[String]
 
   def handler(context: Context, url: String): Unit = {
-    val pool = context.pool.now()
+    val pool = context.selectedPool.now()
     val response = EntityProxy.post(url, context.account.now().license, pool)
     StateHandler.handle(context, errors, response, PoolsView.handler)
   }
@@ -38,15 +38,15 @@ object PoolView {
       Field(
         Label("License"),
         Text.readonly().amend {
-          value <-- context.pool.signal.map(_.license)
+          value <-- context.selectedPool.signal.map(_.license)
         }
       ),
       Field(
         Label("Name"),
         Text.text().amend {
-          value <-- context.pool.signal.map(_.name)
+          value <-- context.selectedPool.signal.map(_.name)
           onInput.mapToValue.filter(_.nonEmpty) --> { name =>
-            context.pool.update(pool => pool.copy(name = name))
+            context.selectedPool.update(pool => pool.copy(name = name))
           }
         }
       ),
@@ -55,9 +55,9 @@ object PoolView {
         Text.integer().amend {
           minLength(4)
           maxLength(4)
-          value <-- context.pool.signal.map(_.built.toString)
+          value <-- context.selectedPool.signal.map(_.built.toString)
           onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { built =>
-            context.pool.update(pool => pool.copy(built = built))
+            context.selectedPool.update(pool => pool.copy(built = built))
           }
         }
       ),
@@ -66,9 +66,9 @@ object PoolView {
         Text.integer().amend {
           minLength(4)
           maxLength(5)
-          value <-- context.pool.signal.map(_.volume.toString)
+          value <-- context.selectedPool.signal.map(_.volume.toString)
           onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { volume =>
-            context.pool.update(pool => pool.copy(volume = volume))
+            context.selectedPool.update(pool => pool.copy(volume = volume))
           }
         }
       ),

@@ -23,7 +23,7 @@ class Context(publicUrl: String, apiUrl: String) {
   val pin = Var("")
   val account = Var(Account.emptyAccount)
   val pools = Var(Seq.empty[Pool])
-  val pool = Var[Pool](Pool())
+  val selectedPool = Var[Pool](Pool())
 
   val content = Container(
     HomeMenu(
