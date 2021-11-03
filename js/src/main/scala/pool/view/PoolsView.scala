@@ -17,12 +17,11 @@ object PoolsView {
 
   def handler(context: Context, errors: EventBus[String], state: State): Unit =
     state match {
-      case pools: Pools =>
-        context.pools.set(pools.pools)
+      case pools: Pools => context.pools.set(pools.pools)
       case id: Id =>
         val pool = context.selectedPool.now().copy(id = id.id)
-        context.selectedPool.set(pool)
         context.pools.update(pools => pools :+ pool)
+        context.selectedPool.set(pool)
       case count: Count => if (count.count != 1) errors.emit(s"Update failed: $count")
       case _ => errors.emit(s"Invalid state: $state")
     }
