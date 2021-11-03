@@ -59,6 +59,11 @@ class Context(publicUrl: String, apiUrl: String) {
 
   def enable(id: String): Unit = setDisabled(id, isDisabled = false)
 
+  def disableAndEnable(disableId: String, enableId: String): Unit = {
+    disable(disableId)
+    enable(enableId)
+  }
+
   private def setDisabled(id: String, isDisabled: Boolean): Unit = {
     document.getElementById(id) match {
       case button: HTMLButtonElement => button.disabled = isDisabled
