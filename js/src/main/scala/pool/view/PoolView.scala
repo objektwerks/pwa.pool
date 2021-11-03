@@ -23,12 +23,8 @@ object PoolView {
   }
 
   def applyMode(mode: Mode, context: Context): Unit = mode match {
-    case New =>
-      context.disable(updateButtonId)
-      context.enable(addButtonId)
-    case View =>
-      context.disable(addButtonId)
-      context.enable(updateButtonId)
+    case New => context.disableAndEnable(updateButtonId, addButtonId)
+    case View => context.disableAndEnable(addButtonId, updateButtonId)
   }
 
   def apply(context: Context): Div =
