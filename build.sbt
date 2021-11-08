@@ -3,6 +3,7 @@ name := "pwa.pool"
 lazy val akkaVersion = "2.6.17"
 lazy val akkaHttpVersion = "10.2.6"
 lazy val quillVersion = "3.10.0"
+lazy val laminarVersion = "0.14.0"
 lazy val scalaJavaTimeVersion = "2.3.0"
 lazy val upickleVersion = "1.4.2"
 lazy val scalaTestVersion = "3.2.10"
@@ -46,7 +47,7 @@ lazy val js = (project in file("js"))
   .settings(common)
   .settings(
     libraryDependencies ++= Seq(
-      "com.raquo" %%% "laminar" % "0.13.1",
+      "com.raquo" %%% "laminar" % laminarVersion,
       "com.lihaoyi" %%% "upickle" % upickleVersion,
       "io.github.cquiroz" %%% "scala-java-time" % scalaJavaTimeVersion
     ),
