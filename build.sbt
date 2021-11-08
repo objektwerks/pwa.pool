@@ -3,6 +3,7 @@ name := "pwa.pool"
 lazy val akkaVersion = "2.6.17"
 lazy val akkaHttpVersion = "10.2.6"
 lazy val quillVersion = "3.10.0"
+lazy val scalaJavaTimeVersion = "2.3.0"
 lazy val upickleVersion = "1.4.2"
 lazy val scalaTestVersion = "3.2.10"
 
@@ -27,7 +28,7 @@ lazy val shared = crossProject(JSPlatform, JVMPlatform)
   .settings(
     libraryDependencies ++= Seq(
       "com.lihaoyi" %% "upickle" % upickleVersion,
-      "io.github.cquiroz" %% "scala-java-time" % "2.3.0",
+      "io.github.cquiroz" %% "scala-java-time" % scalaJavaTimeVersion,
       "org.scalatest" %% "scalatest" % scalaTestVersion % Test
     )
   )
@@ -47,7 +48,7 @@ lazy val js = (project in file("js"))
     libraryDependencies ++= Seq(
       "com.raquo" %%% "laminar" % "0.13.1",
       "com.lihaoyi" %%% "upickle" % upickleVersion,
-      "io.github.cquiroz" %%% "scala-java-time" % "2.3.0"
+      "io.github.cquiroz" %%% "scala-java-time" % scalaJavaTimeVersion
     ),
     Compile / fastLinkJS / scalaJSLinkerOutputDirectory := target.value / public / "js",
     Compile / fullLinkJS / scalaJSLinkerOutputDirectory := target.value / public / "js",
