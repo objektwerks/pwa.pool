@@ -1,10 +1,8 @@
 package pool
 
 import org.scalajs.dom._
-import org.scalajs.dom.experimental.Fetch._
-import org.scalajs.dom.experimental._
-import org.scalajs.dom.experimental.serviceworkers.ServiceWorkerGlobalScope._
-import org.scalajs.dom.experimental.serviceworkers._
+import org.scalajs.dom.ServiceWorkerGlobalScope.self
+import org.scalajs.dom.window.navigator
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -25,7 +23,7 @@ object ServiceWorker {
   ).toJSArray
 
   def register(): Unit =
-    toServiceWorkerNavigator(window.navigator)
+    navigator
       .serviceWorker
       .register("js/main.js")
       .toFuture
@@ -77,7 +75,7 @@ object ServiceWorker {
   }
 
   def toCache: Future[Unit] = {
-    self.caches.open(poolCache)
+    self.caches.get.open(poolCache)
       .toFuture
       .onComplete {
         case Success(cache) =>
@@ -90,7 +88,7 @@ object ServiceWorker {
   }
 
   def fromCache(request: Request): Future[Response] = {
-    self.caches.`match`(request)
+    self.caches.get.`match`(request)
       .toFuture
       .asInstanceOf[Future[Response]]
       .map { response: Response =>
@@ -100,7 +98,7 @@ object ServiceWorker {
   }
 
   def invalidateCache(): Unit = {
-    self.caches.delete(poolCache)
+    self.caches.get.delete(poolCache)
       .toFuture
       .map { invalidatedCache =>
         if (invalidatedCache) {
