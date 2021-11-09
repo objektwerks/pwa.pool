@@ -14,7 +14,7 @@ import scala.scalajs.js.annotation.JSExportTopLevel
 class Client(publicUrl: String, apiUrl: String) extends js.Object {
   val context = Context(publicUrl, apiUrl)
 
-  NowProxy.post(s"$publicUrl/now").foreach(now => context.log(s"[now] $now"))
+  NowProxy.fetch(s"$publicUrl/now").foreach(now => context.log(s"[now] $now"))
 
   ServiceWorker.register()
 
