@@ -148,7 +148,7 @@ Rest
 
 Object Model
 ------------
-* Email(id, license, address, processed = false, valid = false)
+* Email(id, license, address, processed, valid)
 * Account(license, email, pin, activated, deactivated)
 * Pool(id, license, name, built, volume)
 * Surface(id, poolId, installed, kind)
