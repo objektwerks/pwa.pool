@@ -17,7 +17,7 @@ final case class Account(license: String,
                          pin: String,
                          activated: Int,
                          deactivated: Int) extends Entity {
-  def toLicense: License = License(license)
+  def deriveLicense: License = License(license)
 }
 
 object Account {

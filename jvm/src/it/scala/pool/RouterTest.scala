@@ -116,7 +116,7 @@ class RouterTest extends AnyWordSpec
         status shouldBe OK
         responseAs[Count].count shouldEqual 1
       }
-      Post(apiUrl + "/pools", account.toLicense) ~> addHeader(licenseHeader) ~> router.routes ~> check {
+      Post(apiUrl + "/pools", account.deriveLicense) ~> addHeader(licenseHeader) ~> router.routes ~> check {
         status shouldBe OK
         responseAs[Pools].pools.length shouldEqual 1
       }
