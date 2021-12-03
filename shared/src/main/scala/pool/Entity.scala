@@ -6,24 +6,6 @@ import scala.util.Random
 
 sealed trait Entity extends Product with Serializable
 
-object Entity {
-  private val specialChars = "~!@#$%^&*{}-+<>?/:;".toList
-  private val random = new Random
-
-  def newLicense: String = UUID.randomUUID.toString
-
-  def newPin: String = Random.shuffle(
-    Random
-      .alphanumeric
-      .take(7)
-      .mkString
-      .prepended(newSpecialChar)
-      .appended(newSpecialChar)
-  ).mkString
-
-  private def newSpecialChar: Char = specialChars(random.nextInt(specialChars.length))
-}
-
 final case class Email(id : String,
                        license: String,
                        address: String,
@@ -39,13 +21,20 @@ final case class Account(license: String,
 }
 
 object Account {
-  def apply(email: String): Account = Account(
-    license = Entity.newLicense,
-    email = email,
-    pin = Entity.newPin,
-    activated = DateTime.currentDate,
-    deactivated = 0
-  )
+  private val specialChars = "~!@#$%^&*{}-+<>?/:;".toList
+  private val random = new Random
+
+  private def newLicense: String = UUID.randomUUID.toString
+  private def newSpecialChar: Char = specialChars(random.nextInt(specialChars.length))
+  private def newPin: String = Random.shuffle(
+    Random
+      .alphanumeric
+      .take(7)
+      .mkString
+      .prepended(newSpecialChar)
+      .appended(newSpecialChar)
+  ).mkString
+
   val emptyAccount = Account(
     license = "",
     email = "",
@@ -55,6 +44,14 @@ object Account {
   )
   val emptyLicense = ""
   val licenseHeader = "License"
+
+  def apply(email: String): Account = Account(
+    license = newLicense,
+    email = email,
+    pin = newPin,
+    activated = DateTime.currentDate,
+    deactivated = 0
+  )
 }
 
 final case class License(key: String) extends Entity
