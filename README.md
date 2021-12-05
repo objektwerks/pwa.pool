@@ -148,7 +148,7 @@ Rest
 
 Object Model
 ------------
-* Email(id, license, address, processed, valid)
+* License(key)
 * Account(license, email, pin, activated, deactivated)
 * Pool(id, license, name, built, volume)
 * Surface(id, poolId, installed, kind)
@@ -162,14 +162,17 @@ Object Model
 * Chemical(id, poolId, added, chemical, amount, unit)
 * Supply(id, poolId, purchased, cost, supply, amount, unit)
 * Repair(id, poolId, repaired, cost, repair)
+* Email(id, license, address, processed, valid)
 * Fault(id, dateOf, timeOf, code, cause)
 
 Relational Model
 ----------------
+* License
 * Account 1 ---> * Pool
 * Pool 1 ---> * Surface | Pump | Timer | Heater | Measurement | Cleaning | Chemical | Supply | Repair
 * Timer 1 ---> * TimerSetting
 * Heater 1 ---> * HeaterSetting
+* Email
 * Fault
 
 Measurements
