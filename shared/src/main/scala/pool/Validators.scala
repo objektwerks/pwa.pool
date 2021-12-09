@@ -34,7 +34,7 @@ object Validators {
       account.license.isLicense &&
       account.email.isEmail &&
       account.pin.isPin &&
-      account.activated > 0 &&
+      account.activated == 0 &&
       account.deactivated > 0
   }
 
