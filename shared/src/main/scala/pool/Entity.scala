@@ -133,13 +133,13 @@ final case class Chemical(id: Int = 0,
 final case class Supply(id: Int = 0,
                         poolId: Int = 0,
                         purchased: Int = 0,
-                        cost: Double = 0.0,
                         item: String = "",
                         amount: Double = 0.0,
-                        unit: String = "") extends Entity
+                        unit: String = "",
+                        cost: Double = 0.0) extends Entity
 
 final case class Repair(id: Int = 0,
                         poolId: Int = 0,
                         repaired: Int = 0,
-                        cost: Double = 0,
-                        repair: String = "") extends Entity
+                        repair: String = "",
+                        cost: Double = 0.0) extends Entity

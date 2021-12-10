@@ -101,18 +101,18 @@ CREATE TABLE supply (
   id SERIAL PRIMARY KEY,
   pool_id INT REFERENCES pool(id),
   purchased INT NOT NULL,
-  cost NUMERIC(5, 2) NOT NULL,
   item VARCHAR NOT NULL,
   amount NUMERIC(4, 2) NOT NULL,
-  unit VARCHAR NOT NULL
+  unit VARCHAR NOT NULL,
+  cost NUMERIC(5, 2) NOT NULL
 );
 
 CREATE TABLE repair (
   id SERIAL PRIMARY KEY,
   pool_id INT REFERENCES pool(id),
   repaired INT NOT NULL,
-  cost NUMERIC(7, 2) NOT NULL,
-  repair VARCHAR NOT NULL
+  repair VARCHAR NOT NULL,
+  cost NUMERIC(7, 2) NOT NULL
 );
 
 CREATE TABLE fault (
