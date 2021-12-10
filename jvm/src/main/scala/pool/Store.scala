@@ -57,7 +57,7 @@ class Store(conf: Config)(implicit ec: ExecutionContext) {
       run(
         query[Account]
           .filter(_.license == lift(license))
-          .update(_.deactivated -> lift(DateTime.currentDate))
+          .update(_.deactivated -> lift(DateTime.currentDate), _.activated -> lift(0))
       )
     }
     getAccount(license)
