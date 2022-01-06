@@ -4,6 +4,7 @@ PWA Pool App
 
 Install
 -------
+>jsdom **must** be installed locally - **not** globally!
 1. brew install postgresql
 2. brew install node
 3. npm install jsdom
