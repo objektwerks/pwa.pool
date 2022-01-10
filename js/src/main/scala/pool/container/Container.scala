@@ -10,5 +10,5 @@ object Container {
   def apply(id: String,
             isDisplayed: String,
             divs: Div*): Div =
-    div(idAttr(id), cls("w3-container"), display(isDisplayed), divs )
+    div(idAttr(id), cls("w3-container"), display(isDisplayed), divs)
 }
