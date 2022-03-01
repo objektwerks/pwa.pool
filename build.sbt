@@ -51,7 +51,6 @@ lazy val js = (project in file("js"))
       "com.lihaoyi" %%% "upickle" % upickleVersion,
       "io.github.cquiroz" %%% "scala-java-time" % scalaJavaTimeVersion
     ),
-    // Remove after testing sbt clean compile fastLinkJS - Compile / scalacOptions ~= (_ filter (_ == "-deprecation")),
     Compile / fastLinkJS / scalaJSLinkerOutputDirectory := target.value / public / "js",
     Compile / fullLinkJS / scalaJSLinkerOutputDirectory := target.value / public / "js",
     fastLinkJS / crossTarget := target.value / public,
