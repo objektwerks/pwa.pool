@@ -1,7 +1,7 @@
 name := "pwa.pool"
 
 lazy val akkaVersion = "2.6.18"
-lazy val akkaHttpVersion = "10.2.8"
+lazy val akkaHttpVersion = "10.2.9"
 lazy val quillVersion = "3.10.0"  // 3.11 contains dev.zio
 lazy val laminarVersion = "0.14.2"
 lazy val scalaJavaTimeVersion = "2.3.0"
