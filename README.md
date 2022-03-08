@@ -20,17 +20,6 @@ Configuration
 1. jvm/src/it/resources/test.server.conf
 2. jvm/src/main/resoures/server.conf
 
-jsEnv
------
->Using ( libraryDependencies += "org.scala-js" %% "scalajs-env-jsdom-nodejs" % "1.1.0" ) in plugins.sbt
->provides access to a NodeJs environment ( github.com/scala-js/scala-js-env-jsdom-nodejs ) for testing.
->Yet the following jsEnv shortcomings exist:
-1. NodeJs - Window object not supported.
-2. NodeJs and Jsdom - Window object supported. IndexedDB not supported. Other Windows libraries likely not supported.
-3. PhantomJS - Throws exception. Advanced configuration not available.
-4. Selenium - Doesn't support headless.
->Use utest ( www.lihaoyi.com/post/uTesttheEssentialTestFrameworkforScala.html ) for testing.
-
 Dev
 ---
 >[ shared ]
