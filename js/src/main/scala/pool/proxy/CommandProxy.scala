@@ -4,6 +4,7 @@ import org.scalajs.dom.ext.{Ajax, AjaxException}
 
 import pool.{Command, Context, Event, Fault, Serializers}
 
+import scala.annotation.nowarn
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.util.Try
@@ -12,6 +13,7 @@ object CommandProxy extends Proxy {
   import Serializers._
   import upickle.default._
 
+  @nowarn
   def post(url: String, license: String, command: Command): Future[Either[Fault, Event]] = {
     Context.log(s"Command: $command")
     Ajax.post(url = url, headers = headers(license), data = write[Command](command)).map { xhr =>
