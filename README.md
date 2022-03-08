@@ -20,14 +20,6 @@ Configuration
 1. jvm/src/it/resources/test.server.conf
 2. jvm/src/main/resoures/server.conf
 
-Bundling
---------
->None of the following Scalajs bundling options yield satisfactory results:
-1. ScalaJS Bundler: https://scalacenter.github.io/scalajs-bundler/index.html
-2. Sbt Web: https://github.com/sbt/sbt-web
-3. Sbt Web ScalaJS: https://github.com/vmunier/sbt-web-scalajs
->There is ***no*** Scalajs bundling standard.
-
 jsEnv
 -----
 >Using ( libraryDependencies += "org.scala-js" %% "scalajs-env-jsdom-nodejs" % "1.1.0" ) in plugins.sbt
