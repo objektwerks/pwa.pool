@@ -4,10 +4,8 @@ import com.typesafe.config.Config
 
 import io.getquill._
 
-import scala.annotation.nowarn
 import scala.concurrent.{ExecutionContext, Future}
 
-@nowarn
 object Store {
   def apply(conf: Config)(implicit ec: ExecutionContext): Store = new Store(conf)
 }
