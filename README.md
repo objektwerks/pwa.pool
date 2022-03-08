@@ -46,6 +46,11 @@ Package Server
 2. sbt jvm/universal:packageZipTarball | sbt 'show graalvm-native-image:packageBin'
 >**Optionally** execute Graalvm image: ./jvm/target/graalvm-native-image/scala.graalvm
 
+Package Client
+--------------
+1. sbt clean test fullLinkJS
+2. npx snowpack build ( see **build** directory )
+
 Http Codes
 ----------
 >The Router only emits: 200, 400, 401, 500
