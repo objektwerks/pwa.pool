@@ -4,12 +4,14 @@ import org.scalajs.dom._
 import org.scalajs.dom.ServiceWorkerGlobalScope.self
 import org.scalajs.dom.window.navigator
 
+import scala.annotation.nowarn
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
 import scala.util.{Failure, Success}
 
+@nowarn
 object ServiceWorker {
   val poolCache = "pool-cache"
   val poolAssets: js.Array[RequestInfo] = List[RequestInfo](
@@ -91,7 +93,7 @@ object ServiceWorker {
     self.caches.get.`match`(request)
       .toFuture
       .asInstanceOf[Future[Response]]
-      .map { response: Response =>
+      .map { ( response: Response ) =>
         Context.log(s"[fromCache] matched cache request: ${request.url}")
         response
       }

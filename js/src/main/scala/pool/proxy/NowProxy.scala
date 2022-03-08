@@ -4,11 +4,12 @@ import org.scalajs.dom
 import org.scalajs.dom.ext.Ajax
 import org.scalajs.dom.ext.AjaxException
 
+import scala.annotation.nowarn
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
-
 import scala.scalajs.js.Thenable.Implicits._
 
+@nowarn
 object NowProxy extends Proxy {
   def post(url: String): Future[String] =
     Ajax.post(url = url, headers = headers).map { xhr =>

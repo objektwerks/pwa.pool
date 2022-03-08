@@ -10,6 +10,8 @@ import pool.dialog.{AccountDialog, LoginDialog, RegisterDialog}
 import pool.menu.HomeMenu
 import pool.view.{PoolsView, PoolView}
 
+import scala.annotation.nowarn
+
 object Context {
   def apply(publicUrl: String, apiUrl: String): Context = new Context(publicUrl, apiUrl)
 
@@ -64,6 +66,7 @@ class Context(publicUrl: String, apiUrl: String) {
     enable(enableId)
   }
 
+  @nowarn
   private def setDisabled(id: String, isDisabled: Boolean): Unit = {
     document.getElementById(id) match {
       case button: HTMLButtonElement => button.disabled = isDisabled

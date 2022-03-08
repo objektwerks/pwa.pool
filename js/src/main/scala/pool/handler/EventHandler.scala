@@ -4,10 +4,12 @@ import com.raquo.laminar.api.L._
 
 import pool.{Context, Event, Fault}
 
+import scala.annotation.nowarn
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
 
+@nowarn
 object EventHandler {
   def handle(context: Context,
              errors: EventBus[String],

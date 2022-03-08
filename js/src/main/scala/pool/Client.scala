@@ -6,11 +6,13 @@ import org.scalajs.dom._
 
 import pool.proxy.NowProxy
 
+import scala.annotation.nowarn
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExportTopLevel
 
 @JSExportTopLevel("Client")
+@nowarn
 class Client(publicUrl: String, apiUrl: String) extends js.Object {
   val context = Context(publicUrl, apiUrl)
 
