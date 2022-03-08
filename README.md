@@ -2,6 +2,10 @@ PWA Pool App
 ------------
 >PWA Pool maintenance app using Akka-Http, Quill, uPickle, ScalaJs, Laminar and Postgresql.
 
+Note
+----
+>This project is no longer a work-in-progress. That could change in the future.
+
 Install
 -------
 >jsdom **must** be installed locally - **not** globally!
