@@ -36,10 +36,7 @@ lazy val shared = crossProject(JSPlatform, JVMPlatform)
 
 lazy val sharedJs = shared.js
 lazy val sharedJvm = shared.jvm
-
-lazy val public = "scala-2.13/classes/public"
-
-import NativePackagerHelper._
+lazy val public = "public"
 
 lazy val js = (project in file("js"))
   .dependsOn(sharedJs)
@@ -51,9 +48,8 @@ lazy val js = (project in file("js"))
       "com.lihaoyi" %%% "upickle" % upickleVersion,
       "io.github.cquiroz" %%% "scala-java-time" % scalaJavaTimeVersion
     ),
-    Compile / fastLinkJS / scalaJSLinkerOutputDirectory := target.value / public / "js",
-    Compile / fullLinkJS / scalaJSLinkerOutputDirectory := target.value / public / "js",
-    Universal / mappings := (Universal / mappings).value ++ contentOf(target.value / public)
+    Compile / fastLinkJS / scalaJSLinkerOutputDirectory := target.value / public,
+    Compile / fullLinkJS / scalaJSLinkerOutputDirectory := target.value / public
   )
 
 lazy val jvm = (project in file("jvm"))
