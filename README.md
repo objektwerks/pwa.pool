@@ -51,10 +51,6 @@ Package Client
 1. sbt clean test fullLinkJS
 2. npx snowpack build ( see **build** directory )
 
-Http Codes
-----------
->The Router only emits: 200, 400, 401, 500
-
 Client
 ------
 * Command => Fault | Event
@@ -137,6 +133,10 @@ Object Model
 * Repair(id, poolId, repaired, cost, repair)
 * Email(id, license, address, processed, valid)
 * Fault(id, dateOf, timeOf, code, cause)
+
+Http Codes
+----------
+>The Router only emits: 200, 400, 401, 500
 
 Relational Model
 ----------------
