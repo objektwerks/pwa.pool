@@ -7,7 +7,9 @@ Install
 >jsdom **must** be installed locally - **not** globally!
 1. brew install postgresql
 2. brew install node
-3. npm install jsdom
+3. npm install jsdom ( must install **locally** )
+4. npm install ( in project root directory )
+>See **package.json** for installable dependencies.
 
 Configuration
 -------------
