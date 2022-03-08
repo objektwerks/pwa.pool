@@ -4,6 +4,7 @@ import org.scalajs.dom.ext.{Ajax, AjaxException}
 
 import pool.{Context, Entity, Fault, Serializers, State}
 
+import scala.annotation.nowarn
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.util.Try
@@ -12,6 +13,7 @@ object EntityProxy extends Proxy {
   import Serializers._
   import upickle.default._
 
+  @nowarn
   def post(url: String, license: String, entity: Entity): Future[Either[Fault, State]] = {
     Context.log(s"Entity: $entity")
     Ajax.post(url = url, headers = headers(license), data = write[Entity](entity)).map { xhr =>
