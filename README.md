@@ -20,21 +20,11 @@ Configuration
 1. jvm/src/it/resources/test.server.conf
 2. jvm/src/main/resoures/server.conf
 
-Dev
----
->[ shared ]
-1. sbt [ interactive session ]
-2. project shared/clean | compile | test
->[ jvm ]
-1. sbt [ interactive session ]
-2. project jvm/clean | compile | test | it:test | run
->[ js ]
-1. sbt [ interactive session ]
-2. project js/clean | fastLinkJS | fullLinkJS
-3. open target/scala-2.13/classes/public/index.html and:
-    1. via **Intellij**, click target browser in right top corner **OR**
-    2. via **VSCode**, right click open with Live Server ( VSCode ) ( must install Live Server extension )
-4. open developer tools in index.html browser tab
+Build
+-----
+1. npm install ( only when package.json changes )
+2. sbt clean compile fastLinkJS
+>See **js/target/public** directory.
 
 Test
 ----
