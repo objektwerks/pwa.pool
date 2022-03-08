@@ -30,15 +30,14 @@ Test
 ----
 1. sbt clean test fastLinkJS
 
-Run
+Dev
 ---
->jvm
-1. sbt jvm/run  [ curl -v http://localhost:7979/now ]
->js
-1. open target/scala-2.13/classes/public/index.html and:
-   1. via **Intellij**, click target browser in right top corner **OR**
-   2. via **VSCode**, right click open with Live Server ( VSCode ) ( must install Live Server extension )
-2. open developer tools in index.html browser tab
+1. sbt jvm/run ( new session, curl -v http://localhost:7272/now )
+2. sbt ( new session )
+3. ~ js/fastLinkJS
+4. npx snowpack dev ( new session )
+>Edits are reflected in the **fastLinkJS** and **snowpack** sessions.
+>See **snowpack.config.json** and [Snowpack Config](https://www.snowpack.dev/reference/configuration) for configurable options.
 
 Package
 -------
