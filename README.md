@@ -4,7 +4,8 @@ PWA Pool App
 
 Note
 ----
->This project is no longer a work-in-progress. That could change in the future.
+>This project is no longer a work-in-progress. The modal-hide-show UI approach is not optimal
+>in the web space. Currently using Waypoint router in a separate project. ( 2022.3.9 )
 
 Install
 -------
