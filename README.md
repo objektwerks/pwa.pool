@@ -78,7 +78,7 @@ Dialogs
 * Register ( email )
 * Login ( email, pin )
 * Account ( license, email, pin, activated, deactivated )
-* Pool ( pool )
+* Pools ( pool )
 
 Views
 -----
