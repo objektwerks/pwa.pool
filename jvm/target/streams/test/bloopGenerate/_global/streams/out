@@ -1,4 +1,0 @@
-[debug] [jvm-test] Classpath dependencies List(sharedJVM)
-[debug] [jvm-test] Dependencies from configurations List(jvm)
-[debug] Bloop wrote the configuration of project 'jvm-test' to '/Users/tripletail/workspace/pool/.bloop/jvm-test.json'
-[success] Generated .bloop/jvm-test.json
