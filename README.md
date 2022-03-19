@@ -1,6 +1,6 @@
 Pool
 ----
->Mobile web pool management app using Cask, uPickle, Scalikejdbc, ScalaJs, Laminar, Waypoint, W3.CSS, Scaffeine, JoddMail and Postgresql.
+>Web pool management app using Cask, uPickle, Scalikejdbc, ScalaJs, Laminar, Waypoint, W3.CSS, Scaffeine, JoddMail and Postgresql.
 
 Install
 -------
