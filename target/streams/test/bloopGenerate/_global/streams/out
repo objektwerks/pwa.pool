@@ -1,0 +1,4 @@
+[debug] [poolmate-test] Classpath dependencies List()
+[debug] [poolmate-test] Dependencies from configurations List(poolmate)
+[debug] Bloop wrote the configuration of project 'poolmate-test' to '/Users/tripletail/workspace/pool/.bloop/poolmate-test.json'
+[success] Generated .bloop/poolmate-test.json

@@ -1,0 +1,4 @@
+[debug] [jvm] Classpath dependencies List(sharedJVM)
+[debug] [jvm] Dependencies from configurations List()
+[debug] Bloop wrote the configuration of project 'jvm' to '/Users/tripletail/workspace/pool/.bloop/jvm.json'
+[success] Generated .bloop/jvm.json

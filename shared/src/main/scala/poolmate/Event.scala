@@ -1,4 +1,4 @@
-package poolmate
+package pool
 
 sealed trait Event
 

@@ -1,0 +1,1443 @@
+{
+    "version": "1.4.0",
+    "project": {
+        "name": "jvm-test",
+        "directory": "/Users/tripletail/workspace/pool/jvm",
+        "workspaceDir": "/Users/tripletail/workspace/pool",
+        "sources": [
+            "/Users/tripletail/workspace/pool/jvm/src/test/scala",
+            "/Users/tripletail/workspace/pool/jvm/src/test/scala-3",
+            "/Users/tripletail/workspace/pool/jvm/src/test/java",
+            "/Users/tripletail/workspace/pool/jvm/target/scala-3.1.1/src_managed/test"
+        ],
+        "dependencies": [
+            "sharedJVM",
+            "jvm"
+        ],
+        "classpath": [
+            "/Users/tripletail/workspace/pool/.bloop/jvm/scala-3/classes",
+            "/Users/tripletail/workspace/pool/.bloop/sharedJVM/scala-3/classes",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala3-library_3/3.1.1/scala3-library_3-3.1.1.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/cask_3/0.8.0/cask_3-0.8.0.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/upickle_3/1.5.0/upickle_3-1.5.0.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalikejdbc/scalikejdbc_3/4.0.0/scalikejdbc_3-4.0.0.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/postgresql/postgresql/42.3.1/postgresql-42.3.1.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/io/github/cquiroz/scala-java-time_3/2.3.0/scala-java-time_3-2.3.0.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/twelvemonkeys/imageio/imageio-core/3.8.1/imageio-core-3.8.1.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/twelvemonkeys/imageio/imageio-bmp/3.8.1/imageio-bmp-3.8.1.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/github/blemale/scaffeine_3/5.1.2/scaffeine_3-5.1.2.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/jodd/jodd-mail/6.0.5/jodd-mail-6.0.5.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/typesafe/config/1.4.1/config-1.4.1.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/typesafe/scala-logging/scala-logging_3/3.9.4/scala-logging_3-3.9.4.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/ch/qos/logback/logback-classic/1.2.10/logback-classic-1.2.10.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest_3/3.2.10/scalatest_3-3.2.10.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.6/scala-library-2.13.6.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/io/undertow/undertow-core/2.2.3.Final/undertow-core-2.2.3.Final.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/cask-util_3/0.8.0/cask-util_3-0.8.0.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/ujson_3/1.5.0/ujson_3-1.5.0.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/upack_3/1.5.0/upack_3-1.5.0.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/upickle-implicits_3/1.5.0/upickle-implicits_3-1.5.0.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalikejdbc/scalikejdbc-core_3/4.0.0/scalikejdbc-core_3-4.0.0.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalikejdbc/scalikejdbc-interpolation_3/4.0.0/scalikejdbc-interpolation_3-4.0.0.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/checkerframework/checker-qual/3.19.0/checker-qual-3.19.0.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/portable-scala/portable-scala-reflect_2.13/1.1.1/portable-scala-reflect_2.13-1.1.1.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/twelvemonkeys/common/common-lang/3.8.1/common-lang-3.8.1.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/twelvemonkeys/common/common-io/3.8.1/common-io-3.8.1.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/twelvemonkeys/common/common-image/3.8.1/common-image-3.8.1.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/github/ben-manes/caffeine/caffeine/3.0.5/caffeine-3.0.5.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-java8-compat_3/1.0.2/scala-java8-compat_3-1.0.2.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/jodd/jodd-util/6.0.1/jodd-util-6.0.1.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/jakarta/mail/jakarta.mail-api/1.6.5/jakarta.mail-api-1.6.5.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/sun/mail/jakarta.mail/1.6.5/jakarta.mail-1.6.5.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.32/slf4j-api-1.7.32.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/ch/qos/logback/logback-core/1.2.10/logback-core-1.2.10.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-core_3/3.2.10/scalatest-core_3-3.2.10.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-featurespec_3/3.2.10/scalatest-featurespec_3-3.2.10.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-flatspec_3/3.2.10/scalatest-flatspec_3-3.2.10.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-freespec_3/3.2.10/scalatest-freespec_3-3.2.10.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-funsuite_3/3.2.10/scalatest-funsuite_3-3.2.10.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-funspec_3/3.2.10/scalatest-funspec_3-3.2.10.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-propspec_3/3.2.10/scalatest-propspec_3-3.2.10.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-refspec_3/3.2.10/scalatest-refspec_3-3.2.10.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-wordspec_3/3.2.10/scalatest-wordspec_3-3.2.10.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-diagrams_3/3.2.10/scalatest-diagrams_3-3.2.10.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-matchers-core_3/3.2.10/scalatest-matchers-core_3-3.2.10.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-shouldmatchers_3/3.2.10/scalatest-shouldmatchers_3-3.2.10.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-mustmatchers_3/3.2.10/scalatest-mustmatchers_3-3.2.10.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/jboss/logging/jboss-logging/3.4.1.Final/jboss-logging-3.4.1.Final.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/jboss/xnio/xnio-api/3.8.0.Final/xnio-api-3.8.0.Final.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/jboss/xnio/xnio-nio/3.8.0.Final/xnio-nio-3.8.0.Final.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/jboss/threads/jboss-threads/3.1.0.Final/jboss-threads-3.1.0.Final.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/sourcecode_3/0.2.7/sourcecode_3-0.2.7.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/pprint_3/0.6.6/pprint_3-0.6.6.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/geny_3/0.7.1/geny_3-0.7.1.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/castor_3/0.1.8/castor_3-0.1.8.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/java-websocket/Java-WebSocket/1.5.0/Java-WebSocket-1.5.0.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/upickle-core_3/1.5.0/upickle-core_3-1.5.0.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/apache/commons/commons-dbcp2/2.9.0/commons-dbcp2-2.9.0.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-parser-combinators_3/2.1.0/scala-parser-combinators_3-2.1.0.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-collection-compat_3/2.5.0/scala-collection-compat_3-2.5.0.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalikejdbc/scalikejdbc-interpolation-macro_3/4.0.0/scalikejdbc-interpolation-macro_3-4.0.0.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/google/errorprone/error_prone_annotations/2.10.0/error_prone_annotations-2.10.0.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/sun/activation/jakarta.activation/1.2.1/jakarta.activation-1.2.1.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalactic/scalactic_3/3.2.10/scalactic_3-3.2.10.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-compatible/3.2.10/scalatest-compatible-3.2.10.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-xml_3/2.0.0/scala-xml_3-2.0.0.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/wildfly/common/wildfly-common/1.5.2.Final/wildfly-common-1.5.2.Final.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/wildfly/client/wildfly-client-config/1.0.1.Final/wildfly-client-config-1.0.1.Final.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/fansi_3/0.2.14/fansi_3-0.2.14.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/apache/commons/commons-pool2/2.10.0/commons-pool2-2.10.0.jar",
+            "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/commons-logging/commons-logging/1.2/commons-logging-1.2.jar"
+        ],
+        "out": "/Users/tripletail/workspace/pool/.bloop/jvm",
+        "classesDir": "/Users/tripletail/workspace/pool/.bloop/jvm/scala-3/test-classes",
+        "resources": [
+            "/Users/tripletail/workspace/pool/jvm/src/test/resources",
+            "/Users/tripletail/workspace/pool/jvm/target/scala-3.1.1/resource_managed/test"
+        ],
+        "scala": {
+            "organization": "org.scala-lang",
+            "name": "scala-compiler",
+            "version": "3.1.1",
+            "options": [
+                "-encoding",
+                "utf8",
+                "-deprecation",
+                "-feature",
+                "-language:experimental.macros",
+                "-language:higherKinds",
+                "-language:implicitConversions",
+                "-unchecked",
+                "-Xfatal-warnings",
+                "-Ykind-projector"
+            ],
+            "jars": [
+                "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala3-library_3/3.1.1/scala3-library_3-3.1.1.jar",
+                "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.6/scala-library-2.13.6.jar",
+                "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala3-compiler_3/3.1.1/scala3-compiler_3-3.1.1.jar",
+                "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala3-interfaces/3.1.1/scala3-interfaces-3.1.1.jar",
+                "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/tasty-core_3/3.1.1/tasty-core_3-3.1.1.jar",
+                "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-asm/9.1.0-scala-1/scala-asm-9.1.0-scala-1.jar",
+                "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-sbt/compiler-interface/1.3.5/compiler-interface-1.3.5.jar",
+                "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/jline/jline-reader/3.19.0/jline-reader-3.19.0.jar",
+                "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/jline/jline-terminal/3.19.0/jline-terminal-3.19.0.jar",
+                "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/jline/jline-terminal-jna/3.19.0/jline-terminal-jna-3.19.0.jar",
+                "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/google/protobuf/protobuf-java/3.7.0/protobuf-java-3.7.0.jar",
+                "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-sbt/util-interface/1.3.0/util-interface-1.3.0.jar",
+                "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/net/java/dev/jna/jna/5.3.1/jna-5.3.1.jar",
+                "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scaladoc_3/3.1.1/scaladoc_3-3.1.1.jar",
+                "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala3-tasty-inspector_3/3.1.1/scala3-tasty-inspector_3-3.1.1.jar",
+                "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark/0.42.12/flexmark-0.42.12.jar",
+                "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-html-parser/0.42.12/flexmark-html-parser-0.42.12.jar",
+                "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-ext-anchorlink/0.42.12/flexmark-ext-anchorlink-0.42.12.jar",
+                "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-ext-autolink/0.42.12/flexmark-ext-autolink-0.42.12.jar",
+                "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-ext-emoji/0.42.12/flexmark-ext-emoji-0.42.12.jar",
+                "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-ext-gfm-strikethrough/0.42.12/flexmark-ext-gfm-strikethrough-0.42.12.jar",
+                "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-ext-gfm-tables/0.42.12/flexmark-ext-gfm-tables-0.42.12.jar",
+                "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-ext-gfm-tasklist/0.42.12/flexmark-ext-gfm-tasklist-0.42.12.jar",
+                "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-ext-wikilink/0.42.12/flexmark-ext-wikilink-0.42.12.jar",
+                "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-ext-yaml-front-matter/0.42.12/flexmark-ext-yaml-front-matter-0.42.12.jar",
+                "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/nl/big-o/liqp/0.6.7/liqp-0.6.7.jar",
+                "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/jsoup/jsoup/1.13.1/jsoup-1.13.1.jar",
+                "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/dataformat/jackson-dataformat-yaml/2.9.8/jackson-dataformat-yaml-2.9.8.jar",
+                "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-util/0.42.12/flexmark-util-0.42.12.jar",
+                "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-formatter/0.42.12/flexmark-formatter-0.42.12.jar",
+                "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/nibor/autolink/autolink/0.6.0/autolink-0.6.0.jar",
+                "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-jira-converter/0.42.12/flexmark-jira-converter-0.42.12.jar",
+                "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/antlr/antlr/3.5.1/antlr-3.5.1.jar",
+                "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.2.3/jackson-annotations-2.2.3.jar",
+                "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.9.8/jackson-core-2.9.8.jar",
+                "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.2.3/jackson-databind-2.2.3.jar",
+                "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/yaml/snakeyaml/1.23/snakeyaml-1.23.jar",
+                "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-ext-tables/0.42.12/flexmark-ext-tables-0.42.12.jar",
+                "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-ext-ins/0.42.12/flexmark-ext-ins-0.42.12.jar",
+                "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-ext-superscript/0.42.12/flexmark-ext-superscript-0.42.12.jar",
+                "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/antlr/antlr-runtime/3.5.1/antlr-runtime-3.5.1.jar",
+                "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/antlr/ST4/4.0.7/ST4-4.0.7.jar"
+            ],
+            "setup": {
+                "order": "mixed",
+                "addLibraryToBootClasspath": true,
+                "addCompilerToClasspath": false,
+                "addExtraJarsToClasspath": false,
+                "manageBootClasspath": true,
+                "filterLibraryFromClasspath": true
+            }
+        },
+        "java": {
+            "options": [
+                
+            ]
+        },
+        "test": {
+            "frameworks": [
+                {
+                    "names": [
+                        "org.scalacheck.ScalaCheckFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "org.specs2.runner.Specs2Framework",
+                        "org.specs2.runner.SpecsFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "org.specs.runner.SpecsFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "org.scalatest.tools.Framework",
+                        "org.scalatest.tools.ScalaTestFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "com.novocode.junit.JUnitFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "munit.Framework"
+                    ]
+                }
+            ],
+            "options": {
+                "excludes": [
+                    
+                ],
+                "arguments": [
+                    
+                ]
+            }
+        },
+        "platform": {
+            "name": "jvm",
+            "config": {
+                "home": "/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home",
+                "options": [
+                    "-Duser.dir=/Users/tripletail/workspace/pool"
+                ]
+            },
+            "mainClass": [
+                
+            ]
+        },
+        "resolution": {
+            "modules": [
+                {
+                    "organization": "org.scala-lang",
+                    "name": "scala3-library_3",
+                    "version": "3.1.1",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scala3-library_3",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala3-library_3/3.1.1/scala3-library_3-3.1.1.jar"
+                        },
+                        {
+                            "name": "scala3-library_3",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala3-library_3/3.1.1/scala3-library_3-3.1.1-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.lihaoyi",
+                    "name": "cask_3",
+                    "version": "0.8.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "cask_3",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/cask_3/0.8.0/cask_3-0.8.0.jar"
+                        },
+                        {
+                            "name": "cask_3",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/cask_3/0.8.0/cask_3-0.8.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.lihaoyi",
+                    "name": "upickle_3",
+                    "version": "1.5.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "upickle_3",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/upickle_3/1.5.0/upickle_3-1.5.0.jar"
+                        },
+                        {
+                            "name": "upickle_3",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/upickle_3/1.5.0/upickle_3-1.5.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scalikejdbc",
+                    "name": "scalikejdbc_3",
+                    "version": "4.0.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scalikejdbc_3",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalikejdbc/scalikejdbc_3/4.0.0/scalikejdbc_3-4.0.0.jar"
+                        },
+                        {
+                            "name": "scalikejdbc_3",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalikejdbc/scalikejdbc_3/4.0.0/scalikejdbc_3-4.0.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.postgresql",
+                    "name": "postgresql",
+                    "version": "42.3.1",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "postgresql",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/postgresql/postgresql/42.3.1/postgresql-42.3.1.jar"
+                        },
+                        {
+                            "name": "postgresql",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/postgresql/postgresql/42.3.1/postgresql-42.3.1-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "io.github.cquiroz",
+                    "name": "scala-java-time_3",
+                    "version": "2.3.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scala-java-time_3",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/io/github/cquiroz/scala-java-time_3/2.3.0/scala-java-time_3-2.3.0.jar"
+                        },
+                        {
+                            "name": "scala-java-time_3",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/io/github/cquiroz/scala-java-time_3/2.3.0/scala-java-time_3-2.3.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.twelvemonkeys.imageio",
+                    "name": "imageio-core",
+                    "version": "3.8.1",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "imageio-core",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/twelvemonkeys/imageio/imageio-core/3.8.1/imageio-core-3.8.1.jar"
+                        },
+                        {
+                            "name": "imageio-core",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/twelvemonkeys/imageio/imageio-core/3.8.1/imageio-core-3.8.1-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.twelvemonkeys.imageio",
+                    "name": "imageio-bmp",
+                    "version": "3.8.1",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "imageio-bmp",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/twelvemonkeys/imageio/imageio-bmp/3.8.1/imageio-bmp-3.8.1.jar"
+                        },
+                        {
+                            "name": "imageio-bmp",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/twelvemonkeys/imageio/imageio-bmp/3.8.1/imageio-bmp-3.8.1-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.github.blemale",
+                    "name": "scaffeine_3",
+                    "version": "5.1.2",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scaffeine_3",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/github/blemale/scaffeine_3/5.1.2/scaffeine_3-5.1.2.jar"
+                        },
+                        {
+                            "name": "scaffeine_3",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/github/blemale/scaffeine_3/5.1.2/scaffeine_3-5.1.2-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.jodd",
+                    "name": "jodd-mail",
+                    "version": "6.0.5",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "jodd-mail",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/jodd/jodd-mail/6.0.5/jodd-mail-6.0.5.jar"
+                        },
+                        {
+                            "name": "jodd-mail",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/jodd/jodd-mail/6.0.5/jodd-mail-6.0.5-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.typesafe",
+                    "name": "config",
+                    "version": "1.4.1",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "config",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/typesafe/config/1.4.1/config-1.4.1.jar"
+                        },
+                        {
+                            "name": "config",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/typesafe/config/1.4.1/config-1.4.1-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.typesafe.scala-logging",
+                    "name": "scala-logging_3",
+                    "version": "3.9.4",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scala-logging_3",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/typesafe/scala-logging/scala-logging_3/3.9.4/scala-logging_3-3.9.4.jar"
+                        },
+                        {
+                            "name": "scala-logging_3",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/typesafe/scala-logging/scala-logging_3/3.9.4/scala-logging_3-3.9.4-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "ch.qos.logback",
+                    "name": "logback-classic",
+                    "version": "1.2.10",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "logback-classic",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/ch/qos/logback/logback-classic/1.2.10/logback-classic-1.2.10.jar"
+                        },
+                        {
+                            "name": "logback-classic",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/ch/qos/logback/logback-classic/1.2.10/logback-classic-1.2.10-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scala-lang",
+                    "name": "scala-library",
+                    "version": "2.13.6",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scala-library",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.6/scala-library-2.13.6.jar"
+                        },
+                        {
+                            "name": "scala-library",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.6/scala-library-2.13.6-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "io.undertow",
+                    "name": "undertow-core",
+                    "version": "2.2.3.Final",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "undertow-core",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/io/undertow/undertow-core/2.2.3.Final/undertow-core-2.2.3.Final.jar"
+                        },
+                        {
+                            "name": "undertow-core",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/io/undertow/undertow-core/2.2.3.Final/undertow-core-2.2.3.Final-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.lihaoyi",
+                    "name": "cask-util_3",
+                    "version": "0.8.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "cask-util_3",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/cask-util_3/0.8.0/cask-util_3-0.8.0.jar"
+                        },
+                        {
+                            "name": "cask-util_3",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/cask-util_3/0.8.0/cask-util_3-0.8.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.lihaoyi",
+                    "name": "ujson_3",
+                    "version": "1.5.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "ujson_3",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/ujson_3/1.5.0/ujson_3-1.5.0.jar"
+                        },
+                        {
+                            "name": "ujson_3",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/ujson_3/1.5.0/ujson_3-1.5.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.lihaoyi",
+                    "name": "upack_3",
+                    "version": "1.5.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "upack_3",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/upack_3/1.5.0/upack_3-1.5.0.jar"
+                        },
+                        {
+                            "name": "upack_3",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/upack_3/1.5.0/upack_3-1.5.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.lihaoyi",
+                    "name": "upickle-implicits_3",
+                    "version": "1.5.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "upickle-implicits_3",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/upickle-implicits_3/1.5.0/upickle-implicits_3-1.5.0.jar"
+                        },
+                        {
+                            "name": "upickle-implicits_3",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/upickle-implicits_3/1.5.0/upickle-implicits_3-1.5.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scalikejdbc",
+                    "name": "scalikejdbc-core_3",
+                    "version": "4.0.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scalikejdbc-core_3",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalikejdbc/scalikejdbc-core_3/4.0.0/scalikejdbc-core_3-4.0.0.jar"
+                        },
+                        {
+                            "name": "scalikejdbc-core_3",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalikejdbc/scalikejdbc-core_3/4.0.0/scalikejdbc-core_3-4.0.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scalikejdbc",
+                    "name": "scalikejdbc-interpolation_3",
+                    "version": "4.0.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scalikejdbc-interpolation_3",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalikejdbc/scalikejdbc-interpolation_3/4.0.0/scalikejdbc-interpolation_3-4.0.0.jar"
+                        },
+                        {
+                            "name": "scalikejdbc-interpolation_3",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalikejdbc/scalikejdbc-interpolation_3/4.0.0/scalikejdbc-interpolation_3-4.0.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.checkerframework",
+                    "name": "checker-qual",
+                    "version": "3.19.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "checker-qual",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/checkerframework/checker-qual/3.19.0/checker-qual-3.19.0.jar"
+                        },
+                        {
+                            "name": "checker-qual",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/checkerframework/checker-qual/3.19.0/checker-qual-3.19.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.portable-scala",
+                    "name": "portable-scala-reflect_2.13",
+                    "version": "1.1.1",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "portable-scala-reflect_2.13",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/portable-scala/portable-scala-reflect_2.13/1.1.1/portable-scala-reflect_2.13-1.1.1.jar"
+                        },
+                        {
+                            "name": "portable-scala-reflect_2.13",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/portable-scala/portable-scala-reflect_2.13/1.1.1/portable-scala-reflect_2.13-1.1.1-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.twelvemonkeys.common",
+                    "name": "common-lang",
+                    "version": "3.8.1",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "common-lang",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/twelvemonkeys/common/common-lang/3.8.1/common-lang-3.8.1.jar"
+                        },
+                        {
+                            "name": "common-lang",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/twelvemonkeys/common/common-lang/3.8.1/common-lang-3.8.1-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.twelvemonkeys.common",
+                    "name": "common-io",
+                    "version": "3.8.1",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "common-io",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/twelvemonkeys/common/common-io/3.8.1/common-io-3.8.1.jar"
+                        },
+                        {
+                            "name": "common-io",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/twelvemonkeys/common/common-io/3.8.1/common-io-3.8.1-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.twelvemonkeys.common",
+                    "name": "common-image",
+                    "version": "3.8.1",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "common-image",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/twelvemonkeys/common/common-image/3.8.1/common-image-3.8.1.jar"
+                        },
+                        {
+                            "name": "common-image",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/twelvemonkeys/common/common-image/3.8.1/common-image-3.8.1-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.github.ben-manes.caffeine",
+                    "name": "caffeine",
+                    "version": "3.0.5",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "caffeine",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/github/ben-manes/caffeine/caffeine/3.0.5/caffeine-3.0.5.jar"
+                        },
+                        {
+                            "name": "caffeine",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/github/ben-manes/caffeine/caffeine/3.0.5/caffeine-3.0.5-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scala-lang.modules",
+                    "name": "scala-java8-compat_3",
+                    "version": "1.0.2",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scala-java8-compat_3",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-java8-compat_3/1.0.2/scala-java8-compat_3-1.0.2.jar"
+                        },
+                        {
+                            "name": "scala-java8-compat_3",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-java8-compat_3/1.0.2/scala-java8-compat_3-1.0.2-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.jodd",
+                    "name": "jodd-util",
+                    "version": "6.0.1",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "jodd-util",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/jodd/jodd-util/6.0.1/jodd-util-6.0.1.jar"
+                        },
+                        {
+                            "name": "jodd-util",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/jodd/jodd-util/6.0.1/jodd-util-6.0.1-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "jakarta.mail",
+                    "name": "jakarta.mail-api",
+                    "version": "1.6.5",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "jakarta.mail-api",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/jakarta/mail/jakarta.mail-api/1.6.5/jakarta.mail-api-1.6.5.jar"
+                        },
+                        {
+                            "name": "jakarta.mail-api",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/jakarta/mail/jakarta.mail-api/1.6.5/jakarta.mail-api-1.6.5-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.sun.mail",
+                    "name": "jakarta.mail",
+                    "version": "1.6.5",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "jakarta.mail",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/sun/mail/jakarta.mail/1.6.5/jakarta.mail-1.6.5.jar"
+                        },
+                        {
+                            "name": "jakarta.mail",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/sun/mail/jakarta.mail/1.6.5/jakarta.mail-1.6.5-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.slf4j",
+                    "name": "slf4j-api",
+                    "version": "1.7.32",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "slf4j-api",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.32/slf4j-api-1.7.32.jar"
+                        },
+                        {
+                            "name": "slf4j-api",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.32/slf4j-api-1.7.32-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "ch.qos.logback",
+                    "name": "logback-core",
+                    "version": "1.2.10",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "logback-core",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/ch/qos/logback/logback-core/1.2.10/logback-core-1.2.10.jar"
+                        },
+                        {
+                            "name": "logback-core",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/ch/qos/logback/logback-core/1.2.10/logback-core-1.2.10-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.jboss.logging",
+                    "name": "jboss-logging",
+                    "version": "3.4.1.Final",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "jboss-logging",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/jboss/logging/jboss-logging/3.4.1.Final/jboss-logging-3.4.1.Final.jar"
+                        },
+                        {
+                            "name": "jboss-logging",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/jboss/logging/jboss-logging/3.4.1.Final/jboss-logging-3.4.1.Final-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.jboss.xnio",
+                    "name": "xnio-api",
+                    "version": "3.8.0.Final",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "xnio-api",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/jboss/xnio/xnio-api/3.8.0.Final/xnio-api-3.8.0.Final.jar"
+                        },
+                        {
+                            "name": "xnio-api",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/jboss/xnio/xnio-api/3.8.0.Final/xnio-api-3.8.0.Final-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.jboss.xnio",
+                    "name": "xnio-nio",
+                    "version": "3.8.0.Final",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "xnio-nio",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/jboss/xnio/xnio-nio/3.8.0.Final/xnio-nio-3.8.0.Final.jar"
+                        },
+                        {
+                            "name": "xnio-nio",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/jboss/xnio/xnio-nio/3.8.0.Final/xnio-nio-3.8.0.Final-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.jboss.threads",
+                    "name": "jboss-threads",
+                    "version": "3.1.0.Final",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "jboss-threads",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/jboss/threads/jboss-threads/3.1.0.Final/jboss-threads-3.1.0.Final.jar"
+                        },
+                        {
+                            "name": "jboss-threads",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/jboss/threads/jboss-threads/3.1.0.Final/jboss-threads-3.1.0.Final-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.lihaoyi",
+                    "name": "sourcecode_3",
+                    "version": "0.2.7",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "sourcecode_3",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/sourcecode_3/0.2.7/sourcecode_3-0.2.7.jar"
+                        },
+                        {
+                            "name": "sourcecode_3",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/sourcecode_3/0.2.7/sourcecode_3-0.2.7-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.lihaoyi",
+                    "name": "pprint_3",
+                    "version": "0.6.6",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "pprint_3",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/pprint_3/0.6.6/pprint_3-0.6.6.jar"
+                        },
+                        {
+                            "name": "pprint_3",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/pprint_3/0.6.6/pprint_3-0.6.6-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.lihaoyi",
+                    "name": "geny_3",
+                    "version": "0.7.1",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "geny_3",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/geny_3/0.7.1/geny_3-0.7.1.jar"
+                        },
+                        {
+                            "name": "geny_3",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/geny_3/0.7.1/geny_3-0.7.1-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.lihaoyi",
+                    "name": "castor_3",
+                    "version": "0.1.8",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "castor_3",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/castor_3/0.1.8/castor_3-0.1.8.jar"
+                        },
+                        {
+                            "name": "castor_3",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/castor_3/0.1.8/castor_3-0.1.8-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.java-websocket",
+                    "name": "Java-WebSocket",
+                    "version": "1.5.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "Java-WebSocket",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/java-websocket/Java-WebSocket/1.5.0/Java-WebSocket-1.5.0.jar"
+                        },
+                        {
+                            "name": "Java-WebSocket",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/java-websocket/Java-WebSocket/1.5.0/Java-WebSocket-1.5.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.lihaoyi",
+                    "name": "upickle-core_3",
+                    "version": "1.5.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "upickle-core_3",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/upickle-core_3/1.5.0/upickle-core_3-1.5.0.jar"
+                        },
+                        {
+                            "name": "upickle-core_3",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/upickle-core_3/1.5.0/upickle-core_3-1.5.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.apache.commons",
+                    "name": "commons-dbcp2",
+                    "version": "2.9.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "commons-dbcp2",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/apache/commons/commons-dbcp2/2.9.0/commons-dbcp2-2.9.0.jar"
+                        },
+                        {
+                            "name": "commons-dbcp2",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/apache/commons/commons-dbcp2/2.9.0/commons-dbcp2-2.9.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scala-lang.modules",
+                    "name": "scala-parser-combinators_3",
+                    "version": "2.1.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scala-parser-combinators_3",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-parser-combinators_3/2.1.0/scala-parser-combinators_3-2.1.0.jar"
+                        },
+                        {
+                            "name": "scala-parser-combinators_3",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-parser-combinators_3/2.1.0/scala-parser-combinators_3-2.1.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scala-lang.modules",
+                    "name": "scala-collection-compat_3",
+                    "version": "2.5.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scala-collection-compat_3",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-collection-compat_3/2.5.0/scala-collection-compat_3-2.5.0.jar"
+                        },
+                        {
+                            "name": "scala-collection-compat_3",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-collection-compat_3/2.5.0/scala-collection-compat_3-2.5.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scalikejdbc",
+                    "name": "scalikejdbc-interpolation-macro_3",
+                    "version": "4.0.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scalikejdbc-interpolation-macro_3",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalikejdbc/scalikejdbc-interpolation-macro_3/4.0.0/scalikejdbc-interpolation-macro_3-4.0.0.jar"
+                        },
+                        {
+                            "name": "scalikejdbc-interpolation-macro_3",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalikejdbc/scalikejdbc-interpolation-macro_3/4.0.0/scalikejdbc-interpolation-macro_3-4.0.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.google.errorprone",
+                    "name": "error_prone_annotations",
+                    "version": "2.10.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "error_prone_annotations",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/google/errorprone/error_prone_annotations/2.10.0/error_prone_annotations-2.10.0.jar"
+                        },
+                        {
+                            "name": "error_prone_annotations",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/google/errorprone/error_prone_annotations/2.10.0/error_prone_annotations-2.10.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.sun.activation",
+                    "name": "jakarta.activation",
+                    "version": "1.2.1",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "jakarta.activation",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/sun/activation/jakarta.activation/1.2.1/jakarta.activation-1.2.1.jar"
+                        },
+                        {
+                            "name": "jakarta.activation",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/sun/activation/jakarta.activation/1.2.1/jakarta.activation-1.2.1-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.wildfly.common",
+                    "name": "wildfly-common",
+                    "version": "1.5.2.Final",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "wildfly-common",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/wildfly/common/wildfly-common/1.5.2.Final/wildfly-common-1.5.2.Final.jar"
+                        },
+                        {
+                            "name": "wildfly-common",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/wildfly/common/wildfly-common/1.5.2.Final/wildfly-common-1.5.2.Final-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.wildfly.client",
+                    "name": "wildfly-client-config",
+                    "version": "1.0.1.Final",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "wildfly-client-config",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/wildfly/client/wildfly-client-config/1.0.1.Final/wildfly-client-config-1.0.1.Final.jar"
+                        },
+                        {
+                            "name": "wildfly-client-config",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/wildfly/client/wildfly-client-config/1.0.1.Final/wildfly-client-config-1.0.1.Final-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.lihaoyi",
+                    "name": "fansi_3",
+                    "version": "0.2.14",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "fansi_3",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/fansi_3/0.2.14/fansi_3-0.2.14.jar"
+                        },
+                        {
+                            "name": "fansi_3",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/fansi_3/0.2.14/fansi_3-0.2.14-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.apache.commons",
+                    "name": "commons-pool2",
+                    "version": "2.10.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "commons-pool2",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/apache/commons/commons-pool2/2.10.0/commons-pool2-2.10.0.jar"
+                        },
+                        {
+                            "name": "commons-pool2",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/apache/commons/commons-pool2/2.10.0/commons-pool2-2.10.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "commons-logging",
+                    "name": "commons-logging",
+                    "version": "1.2",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "commons-logging",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/commons-logging/commons-logging/1.2/commons-logging-1.2.jar"
+                        },
+                        {
+                            "name": "commons-logging",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/commons-logging/commons-logging/1.2/commons-logging-1.2-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scalatest",
+                    "name": "scalatest_3",
+                    "version": "3.2.10",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scalatest_3",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest_3/3.2.10/scalatest_3-3.2.10.jar"
+                        },
+                        {
+                            "name": "scalatest_3",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest_3/3.2.10/scalatest_3-3.2.10-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scalatest",
+                    "name": "scalatest-core_3",
+                    "version": "3.2.10",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scalatest-core_3",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-core_3/3.2.10/scalatest-core_3-3.2.10.jar"
+                        },
+                        {
+                            "name": "scalatest-core_3",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-core_3/3.2.10/scalatest-core_3-3.2.10-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scalatest",
+                    "name": "scalatest-featurespec_3",
+                    "version": "3.2.10",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scalatest-featurespec_3",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-featurespec_3/3.2.10/scalatest-featurespec_3-3.2.10.jar"
+                        },
+                        {
+                            "name": "scalatest-featurespec_3",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-featurespec_3/3.2.10/scalatest-featurespec_3-3.2.10-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scalatest",
+                    "name": "scalatest-flatspec_3",
+                    "version": "3.2.10",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scalatest-flatspec_3",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-flatspec_3/3.2.10/scalatest-flatspec_3-3.2.10.jar"
+                        },
+                        {
+                            "name": "scalatest-flatspec_3",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-flatspec_3/3.2.10/scalatest-flatspec_3-3.2.10-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scalatest",
+                    "name": "scalatest-freespec_3",
+                    "version": "3.2.10",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scalatest-freespec_3",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-freespec_3/3.2.10/scalatest-freespec_3-3.2.10.jar"
+                        },
+                        {
+                            "name": "scalatest-freespec_3",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-freespec_3/3.2.10/scalatest-freespec_3-3.2.10-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scalatest",
+                    "name": "scalatest-funsuite_3",
+                    "version": "3.2.10",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scalatest-funsuite_3",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-funsuite_3/3.2.10/scalatest-funsuite_3-3.2.10.jar"
+                        },
+                        {
+                            "name": "scalatest-funsuite_3",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-funsuite_3/3.2.10/scalatest-funsuite_3-3.2.10-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scalatest",
+                    "name": "scalatest-funspec_3",
+                    "version": "3.2.10",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scalatest-funspec_3",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-funspec_3/3.2.10/scalatest-funspec_3-3.2.10.jar"
+                        },
+                        {
+                            "name": "scalatest-funspec_3",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-funspec_3/3.2.10/scalatest-funspec_3-3.2.10-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scalatest",
+                    "name": "scalatest-propspec_3",
+                    "version": "3.2.10",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scalatest-propspec_3",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-propspec_3/3.2.10/scalatest-propspec_3-3.2.10.jar"
+                        },
+                        {
+                            "name": "scalatest-propspec_3",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-propspec_3/3.2.10/scalatest-propspec_3-3.2.10-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scalatest",
+                    "name": "scalatest-refspec_3",
+                    "version": "3.2.10",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scalatest-refspec_3",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-refspec_3/3.2.10/scalatest-refspec_3-3.2.10.jar"
+                        },
+                        {
+                            "name": "scalatest-refspec_3",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-refspec_3/3.2.10/scalatest-refspec_3-3.2.10-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scalatest",
+                    "name": "scalatest-wordspec_3",
+                    "version": "3.2.10",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scalatest-wordspec_3",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-wordspec_3/3.2.10/scalatest-wordspec_3-3.2.10.jar"
+                        },
+                        {
+                            "name": "scalatest-wordspec_3",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-wordspec_3/3.2.10/scalatest-wordspec_3-3.2.10-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scalatest",
+                    "name": "scalatest-diagrams_3",
+                    "version": "3.2.10",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scalatest-diagrams_3",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-diagrams_3/3.2.10/scalatest-diagrams_3-3.2.10.jar"
+                        },
+                        {
+                            "name": "scalatest-diagrams_3",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-diagrams_3/3.2.10/scalatest-diagrams_3-3.2.10-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scalatest",
+                    "name": "scalatest-matchers-core_3",
+                    "version": "3.2.10",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scalatest-matchers-core_3",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-matchers-core_3/3.2.10/scalatest-matchers-core_3-3.2.10.jar"
+                        },
+                        {
+                            "name": "scalatest-matchers-core_3",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-matchers-core_3/3.2.10/scalatest-matchers-core_3-3.2.10-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scalatest",
+                    "name": "scalatest-shouldmatchers_3",
+                    "version": "3.2.10",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scalatest-shouldmatchers_3",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-shouldmatchers_3/3.2.10/scalatest-shouldmatchers_3-3.2.10.jar"
+                        },
+                        {
+                            "name": "scalatest-shouldmatchers_3",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-shouldmatchers_3/3.2.10/scalatest-shouldmatchers_3-3.2.10-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scalatest",
+                    "name": "scalatest-mustmatchers_3",
+                    "version": "3.2.10",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scalatest-mustmatchers_3",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-mustmatchers_3/3.2.10/scalatest-mustmatchers_3-3.2.10.jar"
+                        },
+                        {
+                            "name": "scalatest-mustmatchers_3",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-mustmatchers_3/3.2.10/scalatest-mustmatchers_3-3.2.10-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scalactic",
+                    "name": "scalactic_3",
+                    "version": "3.2.10",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scalactic_3",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalactic/scalactic_3/3.2.10/scalactic_3-3.2.10.jar"
+                        },
+                        {
+                            "name": "scalactic_3",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalactic/scalactic_3/3.2.10/scalactic_3-3.2.10-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scalatest",
+                    "name": "scalatest-compatible",
+                    "version": "3.2.10",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scalatest-compatible",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-compatible/3.2.10/scalatest-compatible-3.2.10.jar"
+                        },
+                        {
+                            "name": "scalatest-compatible",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-compatible/3.2.10/scalatest-compatible-3.2.10-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scala-lang.modules",
+                    "name": "scala-xml_3",
+                    "version": "2.0.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scala-xml_3",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-xml_3/2.0.0/scala-xml_3-2.0.0.jar"
+                        },
+                        {
+                            "name": "scala-xml_3",
+                            "classifier": "sources",
+                            "path": "/Users/tripletail/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-xml_3/2.0.0/scala-xml_3-2.0.0-sources.jar"
+                        }
+                    ]
+                }
+            ]
+        },
+        "tags": [
+            "test"
+        ]
+    }
+}

@@ -1,0 +1,4 @@
+[debug] [sharedJS] Classpath dependencies List()
+[debug] [sharedJS] Dependencies from configurations List()
+[debug] Bloop wrote the configuration of project 'sharedJS' to '/Users/tripletail/workspace/pool/.bloop/sharedJS.json'
+[success] Generated .bloop/sharedJS.json

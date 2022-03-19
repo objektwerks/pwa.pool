@@ -1,4 +1,4 @@
-package poolmate
+package pool
 
 object Validators:
   extension (value: String)

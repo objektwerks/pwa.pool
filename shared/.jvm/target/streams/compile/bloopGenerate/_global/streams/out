@@ -1,0 +1,4 @@
+[debug] [sharedJVM] Classpath dependencies List()
+[debug] [sharedJVM] Dependencies from configurations List()
+[debug] Bloop wrote the configuration of project 'sharedJVM' to '/Users/tripletail/workspace/pool/.bloop/sharedJVM.json'
+[success] Generated .bloop/sharedJVM.json

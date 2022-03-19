@@ -1,0 +1,74 @@
+2022.03.19 11:23:35 INFO  tracing is disabled for protocol LSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /Users/tripletail/workspace/pool/.metals/lsp.trace.json or /Users/tripletail/Library/Caches/org.scalameta.metals/lsp.trace.json[0m
+2022.03.19 11:23:35 INFO  logging to file /Users/tripletail/workspace/pool/.metals/metals.log[0m
+2022.03.19 11:23:35 INFO  Started: Metals version 0.11.2 in workspace '/Users/tripletail/workspace/pool' for client Visual Studio Code - Insiders 1.66.0-insider.[0m
+2022.03.19 11:23:35 INFO  Parse release: 17.0.2[0m
+2022.03.19 11:23:36 INFO  time: initialize in 1.08s[0m
+2022.03.19 11:23:37 WARN  Build server is not auto-connectable.[0m
+2022.03.19 11:23:43 INFO  running '/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home/bin/java -Djline.terminal=jline.UnsupportedTerminal -Dsbt.log.noformat=true -Dfile.encoding=UTF-8 -jar /var/folders/ft/6_7fn0ls0499mm6rb0q4q1hw0000gn/T/metals2201242205894003373/sbt-launch.jar -Dbloop.export-jar-classifiers=sources bloopInstall'[0m
+2022.03.19 11:23:43 WARN  no build target for: /Users/tripletail/workspace/pool/project/metals.sbt[0m
+2022.03.19 11:23:43 WARN  no build target for: /Users/tripletail/workspace/pool/project/project/metals.sbt[0m
+2022.03.19 11:23:43 INFO  skipping build import with status 'Started'[0m
+2022.03.19 11:23:44 INFO  [info] welcome to sbt 1.6.2 (Azul Systems, Inc. Java 17.0.2)[0m
+2022.03.19 11:23:45 INFO  [info] loading global plugins from /Users/tripletail/.sbt/1.0/plugins[0m
+2022.03.19 11:23:45 INFO  no build target found for /Users/tripletail/workspace/pool/project/metals.sbt. Using presentation compiler with project's scala-library version: 3.1.1[0m
+2022.03.19 11:23:46 INFO  [info] loading settings for project pool-build-build-build from metals.sbt ...[0m
+2022.03.19 11:23:46 INFO  [info] loading project definition from /Users/tripletail/workspace/pool/project/project/project[0m
+2022.03.19 11:23:46 INFO  [info] loading settings for project pool-build-build from metals.sbt ...[0m
+2022.03.19 11:23:46 INFO  [info] loading project definition from /Users/tripletail/workspace/pool/project/project[0m
+2022.03.19 11:23:48 INFO  [success] Generated .bloop/pool-build-build.json[0m
+2022.03.19 11:23:48 INFO  [success] Total time: 1 s, completed Mar 19, 2022, 11:23:48 AM[0m
+2022.03.19 11:23:48 INFO  [info] loading settings for project pool-build from metals.sbt,plugins.sbt ...[0m
+2022.03.19 11:23:48 INFO  [info] loading project definition from /Users/tripletail/workspace/pool/project[0m
+2022.03.19 11:23:50 INFO  [success] Generated .bloop/pool-build.json[0m
+2022.03.19 11:23:50 INFO  [success] Total time: 1 s, completed Mar 19, 2022, 11:23:50 AM[0m
+2022.03.19 11:23:51 INFO  [info] loading settings for project poolmate from build.sbt ...[0m
+2022.03.19 11:23:51 INFO  [info] set current project to poolmate.web (in build file:/Users/tripletail/workspace/pool/)[0m
+2022.03.19 11:23:51 INFO  [success] Generated .bloop/sharedJS.json[0m
+2022.03.19 11:23:51 INFO  [success] Generated .bloop/sharedJS-test.json[0m
+2022.03.19 11:23:51 INFO  [success] Generated .bloop/poolmate-test.json[0m
+2022.03.19 11:23:51 INFO  [success] Generated .bloop/poolmate.json[0m
+2022.03.19 11:23:52 INFO  [success] Generated .bloop/sharedJVM.json[0m
+2022.03.19 11:23:52 INFO  [success] Generated .bloop/sharedJVM-test.json[0m
+2022.03.19 11:23:52 INFO  [success] Generated .bloop/js.json[0m
+2022.03.19 11:23:52 INFO  [success] Generated .bloop/js-test.json[0m
+2022.03.19 11:23:52 INFO  [success] Generated .bloop/jvm.json[0m
+2022.03.19 11:23:52 INFO  [success] Generated .bloop/jvm-test.json[0m
+2022.03.19 11:23:52 INFO  [success] Total time: 1 s, completed Mar 19, 2022, 11:23:52 AM[0m
+2022.03.19 11:23:52 INFO  time: ran 'sbt bloopInstall' in 9.46s[0m
+2022.03.19 11:23:52 INFO  Attempting to connect to the build server...[0m
+2022.03.19 11:23:53 INFO  tracing is disabled for protocol BSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /Users/tripletail/workspace/pool/.metals/bsp.trace.json or /Users/tripletail/Library/Caches/org.scalameta.metals/bsp.trace.json[0m
+2022.03.19 11:23:53 INFO  Attempting to connect to the build server...[0m
+2022.03.19 11:23:53 INFO  Attempting to connect to the build server...[0m
+2022.03.19 11:23:53 INFO  tracing is disabled for protocol BSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /Users/tripletail/workspace/pool/project/project/.metals/bsp.trace.json or /Users/tripletail/Library/Caches/org.scalameta.metals/bsp.trace.json[0m
+2022.03.19 11:23:53 INFO  tracing is disabled for protocol BSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /Users/tripletail/workspace/pool/project/.metals/bsp.trace.json or /Users/tripletail/Library/Caches/org.scalameta.metals/bsp.trace.json[0m
+2022.03.19 11:23:53 INFO  time: Connected to build server in 1.39s[0m
+2022.03.19 11:23:53 INFO  Connected to Build server: Bloop v1.4.13[0m
+2022.03.19 11:23:57 INFO  time: indexed workspace in 3.3s[0m
+2022.03.19 11:24:20 INFO  compiling sharedjvm (6 scala sources)[0m
+2022.03.19 11:24:27 INFO  compiling sharedjvm-test (1 scala source)[0m
+2022.03.19 11:24:27 INFO  time: compiled sharedJVM-test in 0.21s[0m
+2022.03.19 11:24:27 INFO  time: compiled sharedJVM in 7.94s[0m
+2022.03.19 11:24:27 INFO  compiling sharedjvm-test (1 scala source)[0m
+2022.03.19 11:24:27 INFO  time: compiled sharedJVM-test in 0.13s[0m
+2022.03.19 11:24:29 INFO  compiling sharedjvm-test (1 scala source)[0m
+2022.03.19 11:24:29 INFO  time: compiled sharedJVM-test in 0.11s[0m
+2022.03.19 11:24:31 INFO  compiling sharedjs (6 scala sources)[0m
+2022.03.19 11:24:36 INFO  time: compiled sharedJS in 4.36s[0m
+2022.03.19 11:24:39 INFO  compiling sharedjs (1 scala source)[0m
+2022.03.19 11:24:40 INFO  time: compiled sharedJS in 1.63s[0m
+2022.03.19 11:24:40 INFO  compiling sharedjs (1 scala source)[0m
+2022.03.19 11:24:42 INFO  time: compiled sharedJS in 1.35s[0m
+2022.03.19 11:24:42 INFO  compiling sharedjs (2 scala sources)[0m
+2022.03.19 11:24:44 INFO  time: compiled sharedJS in 1.49s[0m
+2022.03.19 11:24:44 INFO  compiling sharedjs (2 scala sources)[0m
+2022.03.19 11:24:45 INFO  time: compiled sharedJS in 1.15s[0m
+2022.03.19 11:24:46 INFO  compiling sharedjs (3 scala sources)[0m
+2022.03.19 11:24:46 INFO  time: compiled sharedJS in 0.89s[0m
+2022.03.19 11:24:46 INFO  compiling sharedjs (3 scala sources)[0m
+2022.03.19 11:24:48 INFO  time: compiled sharedJS in 0.78s[0m
+2022.03.19 11:24:50 INFO  compiling sharedjs (6 scala sources)[0m
+2022.03.19 11:24:50 INFO  time: compiled sharedJS in 0.92s[0m
+2022.03.19 11:24:50 INFO  compiling sharedjs (6 scala sources)[0m
+2022.03.19 11:24:52 INFO  time: compiled sharedJS in 0.95s[0m
+2022.03.19 11:24:53 INFO  compiling sharedjs (6 scala sources)[0m
+2022.03.19 11:24:56 INFO  time: compiled sharedJS in 2.83s[0m
