@@ -49,9 +49,9 @@ Client
 
 Server
 ------
-1. Resource url: /
-2. Now url: /now
-3. Api url: /command
+1. Resources: /
+2. Now: /now
+3. Api: /command
 
 Account
 -------
