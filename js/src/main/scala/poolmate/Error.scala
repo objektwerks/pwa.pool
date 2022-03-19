@@ -1,4 +1,4 @@
-package poolmate
+package pool
 
 object Error:
   val emailAddressError = "Enter a valid email address."

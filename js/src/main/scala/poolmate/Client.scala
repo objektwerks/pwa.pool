@@ -1,4 +1,4 @@
-package poolmate
+package pool
 
 import com.raquo.laminar.api.L._
 
