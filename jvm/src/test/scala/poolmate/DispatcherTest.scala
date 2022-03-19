@@ -1,4 +1,4 @@
-package poolmate
+package pool
 
 import com.typesafe.config.ConfigFactory
 import com.typesafe.scalalogging.LazyLogging
