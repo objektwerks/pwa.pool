@@ -1,6 +1,6 @@
 PWA Pool
 --------
->PWA app.
+>PWA pool maintenance app.
 
 Install
 -------
