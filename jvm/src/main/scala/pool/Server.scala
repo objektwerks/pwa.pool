@@ -26,7 +26,7 @@ object Server extends Main with LazyLogging:
   val emailProcesor = EmailProcessor(conf, store)
   val scheduler = Scheduler(emailProcesor)
 
-  val router = CommandEventRouter(dispatcher, store)
+  val router = Router(dispatcher, store)
 
   override val allRoutes = Seq(router)
   
