@@ -1,6 +1,6 @@
 Pool
 ----
->Pool maintenance prototype.
+>Pool maintenance app prototype. **Work on this prototype effectively ceased on 2022.3.18.**
 
 Install
 -------
