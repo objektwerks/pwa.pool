@@ -4,11 +4,16 @@ import cask.main.Routes
 import cask.model.{Request, Response}
 import com.typesafe.scalalogging.LazyLogging
 
+import java.time.Instant
+
 import Serializers.given
 
 import upickle.default.{read, write}
 
 final class CommandEventRouter(dispatcher: Dispatcher, store: Store) extends Routes with LazyLogging:
+  @cask.get("/now")
+  def index() = Response(Instant.now.toString)
+
   @cask.post("/command")
   def command(request: Request) =
     val command = read[Command](request.text())
