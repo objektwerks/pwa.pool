@@ -49,9 +49,8 @@ Client
 
 Server
 ------
-1. Resources: /
-2. Now: /now
-3. Api: /command
+1. Now: /now
+2. Api: /command
 
 Account
 -------
