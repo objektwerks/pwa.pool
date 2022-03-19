@@ -1,6 +1,6 @@
 Pool
 ----
->Pool maintenance app.
+>Pool maintenance prototype.
 
 Install
 -------
