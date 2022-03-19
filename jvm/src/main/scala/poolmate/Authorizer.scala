@@ -1,4 +1,4 @@
-package poolmate
+package pool
 
 final class Authorizer(service: Service):
   def authorize(command: Command): Event =

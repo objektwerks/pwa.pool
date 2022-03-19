@@ -1,4 +1,4 @@
-package poolmate
+package pool
 
 final class Handler(emailSender: EmailSender, service: Service):
   def handle(command: Command): Event =

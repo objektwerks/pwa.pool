@@ -72,3 +72,177 @@
 2022.03.19 11:24:52 INFO  time: compiled sharedJS in 0.95s[0m
 2022.03.19 11:24:53 INFO  compiling sharedjs (6 scala sources)[0m
 2022.03.19 11:24:56 INFO  time: compiled sharedJS in 2.83s[0m
+2022.03.19 11:25:22 INFO  compiling sharedjvm (6 scala sources)[0m
+2022.03.19 11:25:23 INFO  compiling sharedjvm-test (1 scala source)[0m
+2022.03.19 11:25:23 INFO  time: compiled sharedJVM in 2.05s[0m
+2022.03.19 11:25:23 INFO  time: compiled sharedJVM-test in 0.47s[0m
+2022.03.19 11:25:36 INFO  compiling jvm (14 scala sources)[0m
+2022.03.19 11:25:38 INFO  time: compiled jvm in 1.58s[0m
+2022.03.19 11:25:39 INFO  compiling jvm (14 scala sources)[0m
+2022.03.19 11:25:39 INFO  time: compiled jvm in 0.97s[0m
+2022.03.19 11:25:43 INFO  compiling jvm (14 scala sources)[0m
+2022.03.19 11:25:43 INFO  time: compiled jvm in 0.97s[0m
+2022.03.19 11:25:46 INFO  compiling jvm (14 scala sources)[0m
+2022.03.19 11:25:46 INFO  time: compiled jvm in 0.95s[0m
+2022.03.19 11:25:46 INFO  compiling jvm (14 scala sources)[0m
+2022.03.19 11:25:48 INFO  time: compiled jvm in 1.01s[0m
+2022.03.19 11:25:50 INFO  compiling jvm (14 scala sources)[0m
+2022.03.19 11:25:50 INFO  time: compiled jvm in 0.78s[0m
+2022.03.19 11:25:50 INFO  compiling jvm (14 scala sources)[0m
+2022.03.19 11:25:51 INFO  time: compiled jvm in 0.79s[0m
+2022.03.19 11:25:53 INFO  compiling jvm (14 scala sources)[0m
+2022.03.19 11:25:53 INFO  time: compiled jvm in 0.61s[0m
+2022.03.19 11:25:53 INFO  compiling jvm (14 scala sources)[0m
+2022.03.19 11:25:55 INFO  time: compiled jvm in 0.57s[0m
+2022.03.19 11:25:57 INFO  compiling jvm (14 scala sources)[0m
+2022.03.19 11:25:57 INFO  time: compiled jvm in 0.65s[0m
+2022.03.19 11:25:57 INFO  compiling jvm (14 scala sources)[0m
+2022.03.19 11:25:58 INFO  time: compiled jvm in 0.62s[0m
+2022.03.19 11:26:01 INFO  compiling jvm (14 scala sources)[0m
+2022.03.19 11:26:01 INFO  time: compiled jvm in 0.67s[0m
+2022.03.19 11:26:01 INFO  compiling jvm (14 scala sources)[0m
+2022.03.19 11:26:02 INFO  time: compiled jvm in 0.55s[0m
+2022.03.19 11:26:04 INFO  compiling jvm (14 scala sources)[0m
+2022.03.19 11:26:04 INFO  time: compiled jvm in 0.55s[0m
+2022.03.19 11:26:04 INFO  compiling jvm (14 scala sources)[0m
+2022.03.19 11:26:06 INFO  time: compiled jvm in 0.61s[0m
+2022.03.19 11:26:09 INFO  compiling jvm (14 scala sources)[0m
+2022.03.19 11:26:09 INFO  time: compiled jvm in 0.58s[0m
+2022.03.19 11:26:09 INFO  compiling jvm (14 scala sources)[0m
+2022.03.19 11:26:10 INFO  time: compiled jvm in 0.57s[0m
+2022.03.19 11:26:12 INFO  compiling jvm (14 scala sources)[0m
+2022.03.19 11:26:12 INFO  time: compiled jvm in 0.56s[0m
+2022.03.19 11:26:12 INFO  compiling jvm (14 scala sources)[0m
+Mar 19, 2022 11:26:13 AM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint fallbackResponseError
+SEVERE: Internal error: java.lang.ArrayIndexOutOfBoundsException: Index 3175 out of bounds for length 3175
+java.util.concurrent.CompletionException: java.lang.ArrayIndexOutOfBoundsException: Index 3175 out of bounds for length 3175
+	at java.base/java.util.concurrent.CompletableFuture.encodeThrowable(CompletableFuture.java:332)
+	at java.base/java.util.concurrent.CompletableFuture.completeThrowable(CompletableFuture.java:347)
+	at java.base/java.util.concurrent.CompletableFuture$UniAccept.tryFire(CompletableFuture.java:708)
+	at java.base/java.util.concurrent.CompletableFuture.postComplete(CompletableFuture.java:510)
+	at java.base/java.util.concurrent.CompletableFuture.completeExceptionally(CompletableFuture.java:2162)
+	at scala.meta.internal.metals.CancelTokens$.$anonfun$future$1(CancelTokens.scala:40)
+	at scala.meta.internal.metals.CancelTokens$.$anonfun$future$1$adapted(CancelTokens.scala:38)
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:64)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.ArrayIndexOutOfBoundsException: Index 3175 out of bounds for length 3175
+	at scala.meta.internal.parsing.FoldingRangeExtractor$Foldable$.unapply(FoldingRangeExtractor.scala:173)
+	at scala.meta.internal.parsing.FoldingRangeExtractor.extractFrom(FoldingRangeExtractor.scala:36)
+	at scala.meta.internal.parsing.FoldingRangeExtractor.$anonfun$extractFrom$2(FoldingRangeExtractor.scala:56)
+	at scala.meta.internal.parsing.FoldingRangeExtractor.$anonfun$extractFrom$2$adapted(FoldingRangeExtractor.scala:51)
+	at scala.collection.immutable.List.foreach(List.scala:431)
+	at scala.meta.internal.parsing.FoldingRangeExtractor.extractFrom(FoldingRangeExtractor.scala:51)
+	at scala.meta.internal.parsing.FoldingRangeExtractor.$anonfun$extractFrom$2(FoldingRangeExtractor.scala:56)
+	at scala.meta.internal.parsing.FoldingRangeExtractor.$anonfun$extractFrom$2$adapted(FoldingRangeExtractor.scala:51)
+	at scala.collection.immutable.List.foreach(List.scala:431)
+	at scala.meta.internal.parsing.FoldingRangeExtractor.extractFrom(FoldingRangeExtractor.scala:51)
+	at scala.meta.internal.parsing.FoldingRangeExtractor.$anonfun$extractFrom$2(FoldingRangeExtractor.scala:56)
+	at scala.meta.internal.parsing.FoldingRangeExtractor.$anonfun$extractFrom$2$adapted(FoldingRangeExtractor.scala:51)
+	at scala.collection.immutable.List.foreach(List.scala:431)
+	at scala.meta.internal.parsing.FoldingRangeExtractor.extractFrom(FoldingRangeExtractor.scala:51)
+	at scala.meta.internal.parsing.FoldingRangeExtractor.$anonfun$extractFrom$2(FoldingRangeExtractor.scala:56)
+	at scala.meta.internal.parsing.FoldingRangeExtractor.$anonfun$extractFrom$2$adapted(FoldingRangeExtractor.scala:51)
+	at scala.collection.immutable.List.foreach(List.scala:431)
+	at scala.meta.internal.parsing.FoldingRangeExtractor.extractFrom(FoldingRangeExtractor.scala:51)
+	at scala.meta.internal.parsing.FoldingRangeExtractor.$anonfun$extractFrom$2(FoldingRangeExtractor.scala:56)
+	at scala.meta.internal.parsing.FoldingRangeExtractor.$anonfun$extractFrom$2$adapted(FoldingRangeExtractor.scala:51)
+	at scala.collection.immutable.List.foreach(List.scala:431)
+	at scala.meta.internal.parsing.FoldingRangeExtractor.extractFrom(FoldingRangeExtractor.scala:51)
+	at scala.meta.internal.parsing.FoldingRangeExtractor.$anonfun$extractFrom$2(FoldingRangeExtractor.scala:56)
+	at scala.meta.internal.parsing.FoldingRangeExtractor.$anonfun$extractFrom$2$adapted(FoldingRangeExtractor.scala:51)
+	at scala.collection.immutable.List.foreach(List.scala:431)
+	at scala.meta.internal.parsing.FoldingRangeExtractor.extractFrom(FoldingRangeExtractor.scala:51)
+	at scala.meta.internal.parsing.FoldingRangeExtractor.extract(FoldingRangeExtractor.scala:29)
+	at scala.meta.internal.parsing.FoldingRangeProvider.$anonfun$getRangedForScala$3(FoldingRangeProvider.scala:40)
+	at scala.Option.map(Option.scala:230)
+	at scala.meta.internal.parsing.FoldingRangeProvider.$anonfun$getRangedForScala$2(FoldingRangeProvider.scala:33)
+	at scala.Option$WithFilter.flatMap(Option.scala:271)
+	at scala.meta.internal.parsing.FoldingRangeProvider.getRangedForScala(FoldingRangeProvider.scala:31)
+	at scala.meta.internal.metals.MetalsLanguageServer.$anonfun$foldingRange$2(MetalsLanguageServer.scala:1640)
+	at scala.util.Success.$anonfun$map$1(Try.scala:255)
+	at scala.util.Success.map(Try.scala:213)
+	at scala.concurrent.Future.$anonfun$map$1(Future.scala:292)
+	at scala.concurrent.impl.Promise.liftedTree1$1(Promise.scala:33)
+	at scala.concurrent.impl.Promise.$anonfun$transform$1(Promise.scala:33)
+	... 4 more
+
+2022.03.19 11:26:14 INFO  time: compiled jvm in 0.59s[0m
+Mar 19, 2022 11:26:15 AM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint fallbackResponseError
+SEVERE: Internal error: java.lang.ArrayIndexOutOfBoundsException: Index 3171 out of bounds for length 3171
+java.util.concurrent.CompletionException: java.lang.ArrayIndexOutOfBoundsException: Index 3171 out of bounds for length 3171
+	at java.base/java.util.concurrent.CompletableFuture.encodeThrowable(CompletableFuture.java:332)
+	at java.base/java.util.concurrent.CompletableFuture.completeThrowable(CompletableFuture.java:347)
+	at java.base/java.util.concurrent.CompletableFuture$UniAccept.tryFire(CompletableFuture.java:708)
+	at java.base/java.util.concurrent.CompletableFuture.postComplete(CompletableFuture.java:510)
+	at java.base/java.util.concurrent.CompletableFuture.completeExceptionally(CompletableFuture.java:2162)
+	at scala.meta.internal.metals.CancelTokens$.$anonfun$future$1(CancelTokens.scala:40)
+	at scala.meta.internal.metals.CancelTokens$.$anonfun$future$1$adapted(CancelTokens.scala:38)
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:64)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.ArrayIndexOutOfBoundsException: Index 3171 out of bounds for length 3171
+	at scala.meta.internal.parsing.FoldingRangeExtractor$Foldable$.unapply(FoldingRangeExtractor.scala:173)
+	at scala.meta.internal.parsing.FoldingRangeExtractor.extractFrom(FoldingRangeExtractor.scala:36)
+	at scala.meta.internal.parsing.FoldingRangeExtractor.$anonfun$extractFrom$2(FoldingRangeExtractor.scala:56)
+	at scala.meta.internal.parsing.FoldingRangeExtractor.$anonfun$extractFrom$2$adapted(FoldingRangeExtractor.scala:51)
+	at scala.collection.immutable.List.foreach(List.scala:431)
+	at scala.meta.internal.parsing.FoldingRangeExtractor.extractFrom(FoldingRangeExtractor.scala:51)
+	at scala.meta.internal.parsing.FoldingRangeExtractor.$anonfun$extractFrom$2(FoldingRangeExtractor.scala:56)
+	at scala.meta.internal.parsing.FoldingRangeExtractor.$anonfun$extractFrom$2$adapted(FoldingRangeExtractor.scala:51)
+	at scala.collection.immutable.List.foreach(List.scala:431)
+	at scala.meta.internal.parsing.FoldingRangeExtractor.extractFrom(FoldingRangeExtractor.scala:51)
+	at scala.meta.internal.parsing.FoldingRangeExtractor.$anonfun$extractFrom$2(FoldingRangeExtractor.scala:56)
+	at scala.meta.internal.parsing.FoldingRangeExtractor.$anonfun$extractFrom$2$adapted(FoldingRangeExtractor.scala:51)
+	at scala.collection.immutable.List.foreach(List.scala:431)
+	at scala.meta.internal.parsing.FoldingRangeExtractor.extractFrom(FoldingRangeExtractor.scala:51)
+	at scala.meta.internal.parsing.FoldingRangeExtractor.$anonfun$extractFrom$2(FoldingRangeExtractor.scala:56)
+	at scala.meta.internal.parsing.FoldingRangeExtractor.$anonfun$extractFrom$2$adapted(FoldingRangeExtractor.scala:51)
+	at scala.collection.immutable.List.foreach(List.scala:431)
+	at scala.meta.internal.parsing.FoldingRangeExtractor.extractFrom(FoldingRangeExtractor.scala:51)
+	at scala.meta.internal.parsing.FoldingRangeExtractor.$anonfun$extractFrom$2(FoldingRangeExtractor.scala:56)
+	at scala.meta.internal.parsing.FoldingRangeExtractor.$anonfun$extractFrom$2$adapted(FoldingRangeExtractor.scala:51)
+	at scala.collection.immutable.List.foreach(List.scala:431)
+	at scala.meta.internal.parsing.FoldingRangeExtractor.extractFrom(FoldingRangeExtractor.scala:51)
+	at scala.meta.internal.parsing.FoldingRangeExtractor.$anonfun$extractFrom$2(FoldingRangeExtractor.scala:56)
+	at scala.meta.internal.parsing.FoldingRangeExtractor.$anonfun$extractFrom$2$adapted(FoldingRangeExtractor.scala:51)
+	at scala.collection.immutable.List.foreach(List.scala:431)
+	at scala.meta.internal.parsing.FoldingRangeExtractor.extractFrom(FoldingRangeExtractor.scala:51)
+	at scala.meta.internal.parsing.FoldingRangeExtractor.extract(FoldingRangeExtractor.scala:29)
+	at scala.meta.internal.parsing.FoldingRangeProvider.$anonfun$getRangedForScala$3(FoldingRangeProvider.scala:40)
+	at scala.Option.map(Option.scala:230)
+	at scala.meta.internal.parsing.FoldingRangeProvider.$anonfun$getRangedForScala$2(FoldingRangeProvider.scala:33)
+	at scala.Option$WithFilter.flatMap(Option.scala:271)
+	at scala.meta.internal.parsing.FoldingRangeProvider.getRangedForScala(FoldingRangeProvider.scala:31)
+	at scala.meta.internal.metals.MetalsLanguageServer.$anonfun$foldingRange$2(MetalsLanguageServer.scala:1640)
+	at scala.util.Success.$anonfun$map$1(Try.scala:255)
+	at scala.util.Success.map(Try.scala:213)
+	at scala.concurrent.Future.$anonfun$map$1(Future.scala:292)
+	at scala.concurrent.impl.Promise.liftedTree1$1(Promise.scala:33)
+	at scala.concurrent.impl.Promise.$anonfun$transform$1(Promise.scala:33)
+	... 4 more
+
+2022.03.19 11:26:16 INFO  compiling jvm (14 scala sources)[0m
+2022.03.19 11:26:16 INFO  time: compiled jvm in 0.56s[0m
+2022.03.19 11:26:16 INFO  compiling jvm (14 scala sources)[0m
+2022.03.19 11:26:17 INFO  time: compiled jvm in 0.54s[0m
+2022.03.19 11:26:20 INFO  compiling jvm (14 scala sources)[0m
+2022.03.19 11:26:20 INFO  time: compiled jvm in 0.55s[0m
+2022.03.19 11:26:20 INFO  compiling jvm (14 scala sources)[0m
+2022.03.19 11:26:21 INFO  time: compiled jvm in 0.55s[0m
+2022.03.19 11:26:24 INFO  compiling jvm (14 scala sources)[0m
+2022.03.19 11:26:24 INFO  time: compiled jvm in 0.55s[0m
+2022.03.19 11:26:24 INFO  compiling jvm (14 scala sources)[0m
+2022.03.19 11:26:25 INFO  time: compiled jvm in 0.56s[0m
+2022.03.19 11:26:28 INFO  compiling jvm (14 scala sources)[0m
+2022.03.19 11:26:28 INFO  time: compiled jvm in 0.62s[0m
+2022.03.19 11:26:28 INFO  compiling jvm (14 scala sources)[0m
+2022.03.19 11:26:29 INFO  time: compiled jvm in 0.47s[0m
+2022.03.19 11:26:32 INFO  compiling jvm (14 scala sources)[0m
+2022.03.19 11:26:32 INFO  time: compiled jvm in 0.41s[0m
+2022.03.19 11:26:32 INFO  compiling jvm (14 scala sources)[0m
+2022.03.19 11:26:32 INFO  time: compiled jvm in 0.44s[0m
+2022.03.19 11:26:36 INFO  compiling jvm (14 scala sources)[0m
+2022.03.19 11:26:36 INFO  time: compiled jvm in 0.39s[0m

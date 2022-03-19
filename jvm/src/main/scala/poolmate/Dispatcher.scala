@@ -1,4 +1,4 @@
-package poolmate
+package pool
 
 final class Dispatcher(authorizer: Authorizer,
                        validator: Validator,

@@ -1,4 +1,4 @@
-package poolmate
+package pool
 
 import com.github.blemale.scaffeine.{Cache, Scaffeine}
 import com.typesafe.config.Config

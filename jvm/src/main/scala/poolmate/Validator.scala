@@ -1,4 +1,4 @@
-package poolmate
+package pool
 
 import Validators.*
 
