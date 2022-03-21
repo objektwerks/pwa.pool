@@ -11,7 +11,7 @@ final class Dispatcher(authorizer: Authorizer,
         if validator.isValid(command) then handle(command)
         else Fault(s"Invalid command: $command")
 
-  def handle(command: Command): Event =
+  private def handle(command: Command): Event =
     command match
       case register: Register =>
         emailSender.send(register).fold(_ => Fault(s"Invalid email address: ${register.emailAddress}"), registering => registering)
