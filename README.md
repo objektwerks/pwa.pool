@@ -70,21 +70,21 @@ View(Menu) ! Action -> Page
 2. Pool **
    * Pools(Home) ! N -> Pool(Pools, Hardware, Maintenance, Expenses) ! AU -> Pools
 3. Maintenance **, ***
-   * Measurements(Pool) !  N -> Measurement(Measurements) ! AU -> Measurements
-   * Cleanings(Pool) !  N -> Cleaning(Cleanings) ! AU -> Cleanings
-   * Chemicals(Pool) !  N -> Chemical(Chemicals) ! AU -> Chemicals
+   * Measurements(Pool) ! N -> Measurement(Measurements) ! AU -> Measurements
+   * Cleanings(Pool) ! N -> Cleaning(Cleanings) ! AU -> Cleanings
+   * Chemicals(Pool) ! N -> Chemical(Chemicals) ! AU -> Chemicals
 4. Expenses **, ***
-   * Supplies(Pool) !  N -> Supply(Supplies) ! AU -> Supplies
-   * Repairs(Pool) !  N -> Repair(Repairs) ! AU -> Repairs
+   * Supplies(Pool) ! N -> Supply(Supplies) ! AU -> Supplies
+   * Repairs(Pool) ! N -> Repair(Repairs) ! AU -> Repairs
 5. Hardware **
-   * Pumps(Pool) !  N -> Pump(Pumps) ! AU -> Pumps
-   * Timers(Pool) !  N -> Timer(Timers) ! AU -> Timers
-     * Timer !  N -> TimerSettings(Timer) ! N -> TimerSetting ! AU -> TimerSettings
+   * Pumps(Pool) ! N -> Pump(Pumps) ! AU -> Pumps
+   * Timers(Pool) ! N -> Timer(Timers) ! AU -> Timers
+     * Timer ! N -> TimerSettings(Timer) ! N -> TimerSetting ! AU -> TimerSettings
    * Heaters(Pool) ! N -> Heater(Heaters) ! AU -> Heaters
-     * Heater !  N -> HeaterSettings(Heater) ! N -> HeaterSetting ! AU -> HeaterSettings
+     * Heater ! N -> HeaterSettings(Heater) ! N -> HeaterSetting ! AU -> HeaterSettings
 6. Aesthetics **
-   * Surfaces(Pool) !  N -> Surface(Surfaces) ! AU -> Surfaces
-   * Decks(Pool) !  N -> Deck(Surfaces) ! AU -> Decks
+   * Surfaces(Pool) ! N -> Surface(Surfaces) ! AU -> Surfaces
+   * Decks(Pool) ! N -> Deck(Surfaces) ! AU -> Decks
 
 ** Actions:
 * New = N
