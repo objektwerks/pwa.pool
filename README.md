@@ -68,28 +68,29 @@ View(Menu) ! Action -> Page
    * Home(Account, Pools)
    * Account(Home) ! Deactivate, Reactivate -> Home
 2. Pool **
-   * Pools(Home) ! NR -> Pool(Pools, Hardware, Maintenance, Expenses) ! AU -> Pools
+   * Pools(Home) ! N -> Pool(Pools, Hardware, Maintenance, Expenses) ! AU -> Pools
 3. Maintenance **, ***
-   * Measurements(Pool) !  NR -> Measurement(Measurements) ! AU -> Measurements
-   * Cleanings(Pool) !  NR -> Cleaning(Cleanings) ! AU -> Cleanings
-   * Chemicals(Pool) !  NR -> Chemical(Chemicals) ! AU -> Chemicals
+   * Measurements(Pool) !  N -> Measurement(Measurements) ! AU -> Measurements
+   * Cleanings(Pool) !  N -> Cleaning(Cleanings) ! AU -> Cleanings
+   * Chemicals(Pool) !  N -> Chemical(Chemicals) ! AU -> Chemicals
 4. Expenses **, ***
-   * Supplies(Pool) !  NR -> Supply(Supplies) ! AU -> Supplies
-   * Repairs(Pool) !  NR -> Repair(Repairs) ! AU -> Repairs
+   * Supplies(Pool) !  N -> Supply(Supplies) ! AU -> Supplies
+   * Repairs(Pool) !  N -> Repair(Repairs) ! AU -> Repairs
 5. Hardware **
-   * Pumps(Pool) !  NR -> Pump(Pumps) ! AU -> Pumps
-   * Timers(Pool) !  NR -> Timer(Timers) ! AU -> Timers
-     * Timer !  NR -> TimerSettings(Timer) ! NR -> TimerSetting ! AU -> TimerSettings
-   * Heaters(Pool) ! NR -> Heater(Heaters) ! AU -> Heaters
-     * Heater !  NR -> HeaterSettings(Heater) ! NR -> HeaterSetting ! AU -> HeaterSettings
+   * Pumps(Pool) !  N -> Pump(Pumps) ! AU -> Pumps
+   * Timers(Pool) !  N -> Timer(Timers) ! AU -> Timers
+     * Timer !  N -> TimerSettings(Timer) ! N -> TimerSetting ! AU -> TimerSettings
+   * Heaters(Pool) ! N -> Heater(Heaters) ! AU -> Heaters
+     * Heater !  N -> HeaterSettings(Heater) ! N -> HeaterSetting ! AU -> HeaterSettings
 6. Aesthetics **
-   * Surfaces(Pool) !  NR -> Surface(Surfaces) ! AU -> Surfaces
-   * Decks(Pool) !  NR -> Deck(Surfaces) ! AU -> Decks
+   * Surfaces(Pool) !  N -> Surface(Surfaces) ! AU -> Surfaces
+   * Decks(Pool) !  N -> Deck(Surfaces) ! AU -> Decks
 
 ** Actions:
-* New Refresh = NR
+* New = N
 * Add, Update = AU
-
+* Refresh = R ( all list views have a refresh button)
+  
 *** Charts:
 * measurements, cleanings, chemicals
 * supplies, repairs
