@@ -113,8 +113,7 @@ Object Model
 * Router 1 ---> 1 Dispatcher, Store
 * Service 1 ---> 1 Store
 * Authorizer 1 ---> 1 Service
-* Handler 1 ---> 1 EmailSender, Service
-* Dispatcher 1 ---> 1 Authorizer, Validator, Handler
+* Dispatcher 1 ---> 1 Authorizer, Validator, Service, EmailSender
 * Scheduler 1 ---> 1 EmailProcesor 1 ---> 1 Store
 * Server 1 ---> 1 Router
 * Client
@@ -124,14 +123,12 @@ Sequence
 1. Client --- Command ---> Server
 2. Server --- Command ---> Router
 3. Router --- Command ---> Dispatcher
-4. Dispatcher --- Command ---> Authorizer, Validator, Handler
-5. Handler --- Command ---> EmailSender, Service
-6. EmailSender, Service --- Either[Throwable, T] ---> Handler
-7. Handler --- Event ---> Dispatcher
-8. Dispatcher --- Event ---> Router
-9. Router --- Event ---> Server
-10. Server --- Event ---> Client
-11. Scheduler ---> EmailProcessor
+4. Dispatcher --- Command ---> Authorizer, Validator, Service, EmailSender
+5. Authorizer, Validator, Service, EmailSender --- Event ---> Dispatcher
+6. Dispatcher --- Event ---> Router
+7. Router --- Event ---> Server
+8. Server --- Event ---> Client
+9. Scheduler ---> EmailProcessor
 
 Measurements
 ------------
