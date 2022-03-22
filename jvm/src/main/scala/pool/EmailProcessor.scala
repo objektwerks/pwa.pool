@@ -12,7 +12,8 @@ import scala.concurrent.duration._
 import scala.language.postfixOps
 import scala.util.{Failure, Success, Using}
 
-class EmailProcessor(conf: Config, store: Store) extends LazyLogging:
+class EmailProcessor(conf: Config,
+                     store: Store) extends LazyLogging:
   private val host = conf.getString("email.host")
   private val to = conf.getString("email.to")
   private val password = conf.getString("email.password")
