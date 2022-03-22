@@ -43,7 +43,7 @@ object PageRouter:
     .collectStatic(RootPage) { RootView() }
     .collectStatic(RegisterPage) { RegisterView(Model.emailAddressVar, Model.pinVar, Model.accountVar) }
     .collectStatic(LoginPage) { LoginView(Model.emailAddressVar, Model.pinVar, Model.accountVar) }
-    .collectStatic(AppPage) { HomeView(Model.accountVar) }
+    .collectStatic(AppPage) { AppView(Model.accountVar) }
     .collectStatic(AccountPage) { AccountView(Model.accountVar) }
     .collectStatic(PoolsPage) { PoolsView(Model.pools, Model.accountVar) }
     .collect[PoolPage] { page => PoolView(Model.pools.setSelectedEntityById(page.id), Model.accountVar) }

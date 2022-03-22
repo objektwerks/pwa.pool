@@ -7,7 +7,7 @@ import org.scalajs.dom.console.log
 import Components.*
 import Validators.*
 
-object HomeView extends View:
+object AppView extends View:
   def apply(accountVar: Var[Account]): HtmlElement =
     div(
       bar(
