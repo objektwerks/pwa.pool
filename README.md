@@ -61,8 +61,8 @@ Account
 
 View(Menu) ! Action -> Page
 ---------------------------
-1. Index
-   * Index(Login, Register) ! Login | Register -> Login
+1. Root
+   * Root(Login, Register) ! Login | Register -> Login
    * Login ! Login -> Home
 2. Home
    * Home(Account, Pools)
@@ -234,13 +234,7 @@ Config
 
 Cache
 -----
->See jvm/Resources.cache and jvm/Store.cache
-
-Resources
----------
-> See jvm/Resources and jvm/ResourceRouter on resource loading:
-1. index.html at /public/index.html
-2. web resources at /public/
+>See jvm/Store.cache
 
 Cors Handler
 ------------
