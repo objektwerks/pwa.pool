@@ -24,8 +24,8 @@ object PageRouter:
     Route.static(RegisterPage, root / "register" / endOfSegments),
     Route.static(LoginPage, root / "login" / endOfSegments),
     Route.static(HomePage, root / "home" / endOfSegments),
-    Route.static(AccountPage, root / "account" / endOfSegments),
-    Route.static(PoolsPage, root / "pools" / endOfSegments),
+    Route.static(AccountPage, root / "home" / "account" / endOfSegments),
+    Route.static(PoolsPage, root / "home" / "pools" / endOfSegments),
     poolRoute
   )
 
