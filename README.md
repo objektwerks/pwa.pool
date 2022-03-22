@@ -61,13 +61,12 @@ Account
 
 View(Menu) ! Action -> Page
 ---------------------------
-1. Home
-   * Index(Login, Register)
-   * Register ! Register -> Login
+1. Index
+   * Index(Login, Register) ! Login | Register -> Login
    * Login ! Login -> Home
+2. Home
    * Home(Account, Pools)
    * Account(Home) ! Deactivate, Reactivate -> Home
-2. Pool **
    * Pools(Home) ! N -> Pool(Pools, Hardware, Maintenance, Expenses) ! AU -> Pools
 3. Maintenance **, ***
    * Measurements(Pool) ! N -> Measurement(Measurements) ! AU -> Measurements
