@@ -21,7 +21,7 @@ object LoginView extends View:
             case LoggedIn(account) =>
               clearErrors()
               accountVar.set(account)
-              route(HomePage)
+              route(AppPage)
             case _ => log(s"Login view handler failed: $event")
         case Left(fault) => errorBus.emit(s"Login failed: ${fault.cause}")
       

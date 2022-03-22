@@ -16,7 +16,7 @@ object AccountView extends View:
             case Deactivated(account) =>
               clearErrors()
               accountVar.set(account)
-              route(HomePage)
+              route(AppPage)
             case _ => log(s"Account view handler failed: $event")
         case Left(fault) => errorBus.emit(s"Deactivate failed: ${fault.cause}")
  
@@ -27,7 +27,7 @@ object AccountView extends View:
             case Reactivated(account) =>
               clearErrors()
               accountVar.set(account)
-              route(HomePage)
+              route(AppPage)
             case _ =>
         case Left(fault) => errorBus.emit(s"Reactivate failed: ${fault.cause}")
 
@@ -36,7 +36,7 @@ object AccountView extends View:
         btn("Home").amend {
           onClick --> { _ =>
             log("Account -> Home onClick")
-            route(HomePage)
+            route(AppPage)
           }
         }      
       ),

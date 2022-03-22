@@ -23,7 +23,7 @@ object PoolsView extends View:
         btn("Home").amend {
           onClick --> { _ =>
             log("Pools -> Home menu item onClick")
-            route(HomePage)
+            route(AppPage)
           }
         }      
       ),

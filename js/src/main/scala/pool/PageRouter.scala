@@ -23,7 +23,7 @@ object PageRouter:
     Route.static(RootPage, root / endOfSegments),
     Route.static(RegisterPage, root / "register" / endOfSegments),
     Route.static(LoginPage, root / "login" / endOfSegments),
-    Route.static(HomePage, root / "app" / endOfSegments),
+    Route.static(AppPage, root / "app" / endOfSegments),
     Route.static(AccountPage, root / "app" / "account" / endOfSegments),
     Route.static(PoolsPage, root / "app" / "pools" / endOfSegments),
     poolRoute
@@ -43,7 +43,7 @@ object PageRouter:
     .collectStatic(RootPage) { RootView() }
     .collectStatic(RegisterPage) { RegisterView(Model.emailAddressVar, Model.pinVar, Model.accountVar) }
     .collectStatic(LoginPage) { LoginView(Model.emailAddressVar, Model.pinVar, Model.accountVar) }
-    .collectStatic(HomePage) { HomeView(Model.accountVar) }
+    .collectStatic(AppPage) { HomeView(Model.accountVar) }
     .collectStatic(AccountPage) { AccountView(Model.accountVar) }
     .collectStatic(PoolsPage) { PoolsView(Model.pools, Model.accountVar) }
     .collect[PoolPage] { page => PoolView(Model.pools.setSelectedEntityById(page.id), Model.accountVar) }

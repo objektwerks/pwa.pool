@@ -9,7 +9,7 @@ case object RootPage extends Page
 case object RegisterPage extends Page
 case object LoginPage extends Page
 
-case object HomePage extends Page
+case object AppPage extends Page
 case object AccountPage extends Page
 case object PoolsPage extends Page
 
