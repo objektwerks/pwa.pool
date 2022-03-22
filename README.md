@@ -63,11 +63,11 @@ View(Menu) ! Action -> Page
 ---------------------------
 1. Root
    * Root(Login, Register) ! Login | Register -> Login
-   * Login ! Login -> Home
-2. Home
-   * Home(Account, Pools)
-   * Account(Home) ! Deactivate, Reactivate -> Home
-   * Pools(Home) ! N -> Pool(Pools, Hardware, Maintenance, Expenses) ! AU -> Pools
+   * Login ! Login -> App
+2. App
+   * App(Account, Pools)
+   * Account(App) ! Deactivate, Reactivate -> App
+   * Pools(App) ! N -> Pool(Pools, Hardware, Maintenance, Expenses) ! AU -> Pools
 3. Maintenance **, ***
    * Measurements(Pool) ! N -> Measurement(Measurements) ! AU -> Measurements
    * Cleanings(Pool) ! N -> Cleaning(Cleanings) ! AU -> Cleanings
