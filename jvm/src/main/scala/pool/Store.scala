@@ -8,14 +8,17 @@ import scalikejdbc.*
 import scala.concurrent.duration.FiniteDuration
 
 object Store:
-  def cache(minSize: Int, maxSize: Int, expireAfter: FiniteDuration): Cache[String, String] =
+  def cache(minSize: Int,
+            maxSize: Int,
+            expireAfter: FiniteDuration): Cache[String, String] =
     Scaffeine()
       .initialCapacity(minSize)
       .maximumSize(maxSize)
       .expireAfterWrite(expireAfter)
       .build[String, String]()
 
-final class Store(conf: Config, cache: Cache[String, String]) extends LazyLogging:
+final class Store(conf: Config,
+                  cache: Cache[String, String]) extends LazyLogging:
   private val url = conf.getString("db.url")
   private val user = conf.getString("db.user")
   private val password = conf.getString("db.password")
