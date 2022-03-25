@@ -1,0 +1,12 @@
+.*
+!.gitignore
+!.sbtopts
+*.log
+package-lock.json
+project/metals.sbt
+project/project/
+project/target/
+target/
+js/target/
+jvm/target/
+shared/target/
