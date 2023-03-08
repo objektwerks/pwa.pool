@@ -5,7 +5,7 @@ lazy val akkaHttpVersion = "10.2.10" // Don't upgrade due to BSL 1.1!
 lazy val quillVersion = "3.10.0"  // 3.11 contains dev.zio
 lazy val laminarVersion = "15.0.0-M7"
 lazy val scalaJavaTimeVersion = "2.5.0"
-lazy val upickleVersion = "2.0.0"
+lazy val upickleVersion = "3.0.0-M2"
 lazy val scalaTestVersion = "3.2.15"
 
 lazy val common = Defaults.coreDefaultSettings ++ Seq(
