@@ -1,6 +1,6 @@
 name := "pwa.pool"
 
-lazy val akkaVersion = "2.6.20" // Don't upgrade due to BUSL 1.1!
+lazy val akkaVersion = "2.6.21" // Don't upgrade due to BUSL 1.1!
 lazy val akkaHttpVersion = "10.2.10" // Don't upgrade due to BUSL 1.1!
 lazy val quillVersion = "3.10.0"  // 3.11 contains dev.zio
 lazy val laminarVersion = "16.0.0"
