@@ -177,14 +177,20 @@ Relational Model
 
 Measurements
 ------------
-1. total hardness 0 - 1000      ok = 250 - 500      ideal = 375
-2. total chlorine 0 - 10        ok = 1 - 5          ideal = 3
-3. total bromine 0 - 20         ok = 2 - 10         ideal = 5
-4. free chlorine 0 - 10         ok = 1 - 5          ideal = 3
-5. ph 6.2 - 8.4                 ok = 7.2 - 7.6      ideal = 7.4
-6. total alkalinity 0 - 240     ok = 80 - 120       ideal = 100
-7. cyanuric acid 0 - 300        ok = 30 - 100       ideal = 50
-8. temp 0 - 100
+>Measured in ppm ( parts per million ).
+
+| Measurement                       | Range     | Good        | Ideal |
+|-----------------------------------|-----------|-------------|-------|
+| total chlorine (tc = fc + cc)     | 0 - 10    | 1 - 5       | 3     |
+| free chlorine (fc)                | 0 - 10    | 1 - 5       | 3     |
+| combinded chlorine (cc = tc - fc) | 0.0 - 0.5 | 0.0 - 0.2   | 0.0   |
+| ph                                | 6.2 - 8.4 | 7.2 - 7.6   | 7.4   |
+| calcium hardness                  | 0 - 1000  | 250 - 500   | 375   |
+| total alkalinity                  | 0 - 240   | 80 - 120    | 100   |
+| cyanuric acid                     | 0 - 300   | 30 - 100    | 50    |
+| total bromine                     | 0 - 20    | 2 - 10      | 5     |
+| salt                              | 0 - 3600  | 2700 - 3400 | 3200  |
+| temperature                       | 50 - 100  | 75 - 85     | 82    |
 
 ** Units of Measure - oz, gl, lb
 
