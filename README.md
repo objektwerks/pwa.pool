@@ -196,6 +196,19 @@ Measurements
 
 Chemicals
 ---------
+* Liquids measured in: gallons ( gl ) and liters ( l ).
+* Granules measured in: pounds ( lbs ) and kilograms ( kg ).
+1. LiquidChlorine ( gl/l )
+2. Trichlor ( tablet )
+3. Dichlor ( lbs/kg )
+4. CalciumHypochlorite ( lbs/kg )
+5. Stabilizer ( lbs/kg )
+6. Algaecide ( gl/l )
+7. MuriaticAcid ( gl/l )
+8. Salt ( lbs/kg )
+
+Products
+--------
 1. Chlorine for pool.
 2. Chlorine tablets for pool filtration system.
 3. Pool Shock
