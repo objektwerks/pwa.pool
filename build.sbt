@@ -6,7 +6,7 @@ lazy val quillVersion = "3.10.0"  // 3.11 contains dev.zio
 lazy val laminarVersion = "16.0.0"
 lazy val scalaJavaTimeVersion = "2.5.0"
 lazy val upickleVersion = "3.1.3"
-lazy val scalaTestVersion = "3.2.16"
+lazy val scalaTestVersion = "3.2.17"
 
 lazy val common = Defaults.coreDefaultSettings ++ Seq(
   organization := "objektwerks",
