@@ -5,7 +5,7 @@ lazy val akkaHttpVersion = "10.2.10" // Don't upgrade due to BUSL 1.1!
 lazy val quillVersion = "3.10.0"  // 3.11 contains dev.zio
 lazy val laminarVersion = "17.0.0-M2"
 lazy val scalaJavaTimeVersion = "2.5.0"
-lazy val upickleVersion = "3.1.3"
+lazy val upickleVersion = "3.1.4"
 lazy val scalaTestVersion = "3.2.17"
 
 lazy val common = Defaults.coreDefaultSettings ++ Seq(
