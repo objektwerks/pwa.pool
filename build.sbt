@@ -4,7 +4,7 @@ lazy val akkaVersion = "2.6.21" // Don't upgrade due to BUSL 1.1!
 lazy val akkaHttpVersion = "10.2.10" // Don't upgrade due to BUSL 1.1!
 lazy val quillVersion = "3.10.0"  // Don't upgrade, 3.11 contains dev.zio
 lazy val laminarVersion = "17.1.0"
-lazy val scalaJavaTimeVersion = "2.5.0"
+lazy val scalaJavaTimeVersion = "2.6.0"
 lazy val upickleVersion = "4.0.2"
 lazy val scalaTestVersion = "3.2.19"
 
